@@ -1,0 +1,11 @@
+History.txt
+Manifest.txt
+README.txt
+Rakefile
+lib/spidr.rb
+lib/spidr/page.rb
+lib/spidr/rules.rb
+lib/spidr/agent.rb
+lib/spidr/spidr.rb
+lib/spidr/version.rb
+test/test_spidr.rb
