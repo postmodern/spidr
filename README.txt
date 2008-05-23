@@ -12,10 +12,14 @@ and easy to use.
 == FEATURES/PROBLEMS:
 
 * Black-list or white-list URLs based upon:
- * Hostname
+ * Host name
  * Port number
  * Full link
- * File extension
+ * URL extension
+* Provides call-backs for:
+ * Every visited Page.
+ * Every visited URL.
+ * Every visited URL that matches a specified pattern.
 
 == REQUIREMENTS:
 

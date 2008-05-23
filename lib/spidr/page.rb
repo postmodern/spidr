@@ -13,6 +13,10 @@ module Spidr
     # Headers returned with the body
     attr_reader :headers
 
+    #
+    # Creates a new Page object from the specified _url_ and HTTP
+    # _response_.
+    #
     def initialize(url,response)
       @url = url
       @response = response
@@ -74,6 +78,9 @@ module Spidr
       (content_type =~ /application\/atom\+xml/) == 0
     end
 
+    #
+    # Returns the body of the page in +String+ form.
+    #
     def body
       @response.body
     end
@@ -88,6 +95,9 @@ module Spidr
       end
     end
 
+    #
+    # Returns all links from the HTML page.
+    #
     def links
       if html?
         return doc.search('a[@href]').map do |a|
@@ -98,12 +108,19 @@ module Spidr
       return []
     end
 
+    #
+    # Returns all links from the HtML page as absolute URLs.
+    #
     def urls
       links.map { |link| to_absolute(link) }
     end
 
     protected
 
+    #
+    # Converts the specified _link_ into an absolute URL
+    # based on the url of the page.
+    #
     def to_absolute(link)
       link = URI.encode(link.to_s.gsub(/#.*$/,''))
       relative = URI(link)
