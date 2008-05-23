@@ -1,4 +1,13 @@
-=== 1.0.0 / 2008-05-17
+=== 0.1.0 / 2008-05-23
 
 * Initial release.
+ * Black-list or white-list URLs based upon:
+  * Host name
+  * Port number
+  * Full link
+  * URL extension
+ * Provides call-backs for:
+  * Every visited Page.
+  * Every visited URL.
+  * Every visited URL that matches a specified pattern.
 
