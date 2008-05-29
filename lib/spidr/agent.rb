@@ -366,6 +366,32 @@ module Spidr
       end
     end
 
+    #
+    # Creates a new Page object from the specified _url_. If a _block_ is
+    # given, it will be passed the newly created Page object.
+    #
+    def get_page(url,&block)
+      host = url.host
+      port = url.port
+
+      proxy_host = @proxy[:host]
+      proxy_port = @proxy[:port]
+      proxy_user = @proxy[:user]
+      proxy_password = @proxy[:password]
+
+      Net::HTTP::Proxy(proxy_host,proxy_port,proxy_user,proxy_password).start(host,port) do |sess|
+        headers = {}
+
+        headers['User-Agent'] = @user_agent if @user_agent
+        headers['Referer'] = @referer if @referer
+
+        new_page = Page.new(url,sess.get(url.path,headers))
+
+        block.call(new_page) if block
+        return new_page
+      end
+    end
+
     protected
 
     #
@@ -462,28 +488,6 @@ module Spidr
 
     def visit_ext?(url)
       @ext_rules.accept?(File.extname(url.path)[1..-1])
-    end
-
-    def get_page(url,&block)
-      host = url.host
-      port = url.port
-
-      proxy_host = @proxy[:host]
-      proxy_port = @proxy[:port]
-      proxy_user = @proxy[:user]
-      proxy_password = @proxy[:password]
-
-      Net::HTTP::Proxy(proxy_host,proxy_port,proxy_user,proxy_password).start(host,port) do |sess|
-        headers = {}
-
-        headers['User-Agent'] = @user_agent if @user_agent
-        headers['Referer'] = @referer if @referer
-
-        new_page = Page.new(url,sess.get(url.path,headers))
-
-        block.call(new_page) if block
-        return new_page
-      end
     end
 
   end
