@@ -12,14 +12,36 @@ and easy to use.
 == FEATURES/PROBLEMS:
 
 * Black-list or white-list URLs based upon:
- * Host name
- * Port number
- * Full link
- * URL extension
+  * Host name
+  * Port number
+  * Full link
+  * URL extension
 * Provides call-backs for:
- * Every visited Page.
- * Every visited URL.
- * Every visited URL that matches a specified pattern.
+  * Every visited Page.
+  * Every visited URL.
+  * Every visited URL that matches a specified pattern.
+* Custom User-Agent strings.
+* Custom proxy settings.
+
+== EXAMPLES:
+
+* Start spidering from a URL:
+
+    Spidr.start_at('http://tenderlovemaking.com/')
+
+* Spider a host:
+
+    Spidr.host('www.0x000000.com')
+
+* Spider a site:
+
+    Spidr.site('http://hackety.org/')
+
+* Print out visited URLs:
+
+    Spidr.site('http://rubyinside.org/') do |spider|
+      spider.every_url { |url| puts url }
+    end
 
 == REQUIREMENTS:
 
