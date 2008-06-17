@@ -95,6 +95,14 @@ module Spidr
     end
 
     #
+    # Returns +true+ if the page is a plain text document, returns +false+
+    # otherwise.
+    #
+    def plain_text?
+      (content_type =~ /text\/plain/) == 0
+    end
+
+    #
     # Returns +true+ if the page is a HTML document, returns +false+
     # otherwise.
     #
@@ -140,6 +148,30 @@ module Spidr
     #
     def atom?
       (content_type =~ /application\/atom\+xml/) == 0
+    end
+
+    #
+    # Returns +true+ if the page is a MS Word document, returns +false+
+    # otherwise.
+    #
+    def ms_word?
+      (content_type =~ /application\/msword/) == 0
+    end
+
+    #
+    # Returns +true+ if the page is a PDF document, returns +false+
+    # otherwise.
+    #
+    def pdf?
+      (content_type =~ /application\/pdf/) == 0
+    end
+
+    #
+    # Returns +true+ if the page is a ZIP archive, returns +false+
+    # otherwise.
+    #
+    def zip?
+      (content_type =~ /application\/zip/) == 0
     end
 
     #
