@@ -24,6 +24,70 @@ module Spidr
     end
 
     #
+    # Returns the response code from the page.
+    #
+    def code
+      @response.code
+    end
+
+    #
+    # Returns +true+ if the response code is 200, returns +false+ otherwise.
+    #
+    def is_ok?
+      code == 200
+    end
+
+    #
+    # Returns +true+ if the response code is 301 or 307, returns +false+
+    # otherwise.
+    #
+    def is_redirect?
+      (code == 301 || code == 307)
+    end
+
+    #
+    # Returns +true+ if the response code is 308, returns +false+ otherwise.
+    #
+    def timedout?
+      code == 308
+    end
+
+    #
+    # Returns +true+ if the response code is 400, returns +false+ otherwise.
+    #
+    def bad_request?
+      code == 400
+    end
+
+    #
+    # Returns +true+ if the response code is 401, returns +false+ otherwise.
+    #
+    def is_unauthorized?
+      code == 401
+    end
+
+    #
+    # Returns +true+ if the response code is 403, returns +false+ otherwise.
+    #
+    def is_forbidden?
+      code == 403
+    end
+
+    #
+    # Returns +true+ if the response code is 404, returns +false+ otherwise.
+    #
+    def is_missing?
+      code == 404
+    end
+
+    #
+    # Returns +true+ if the response code is 500, returns +false+ otherwise.
+    #
+    def had_internal_server_error?
+      code == 500
+    end
+
+    #
     # Returns the content-type of the page.
     #
     def content_type
