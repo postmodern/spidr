@@ -218,24 +218,11 @@ module Spidr
     # based on the url of the page.
     #
     def to_absolute(link)
+      # clean the link
       link = URI.encode(link.to_s.gsub(/#.*$/,''))
+
       relative = URI(link)
-
-      if relative.scheme.nil?
-        new_url = @url.clone
-
-        if relative.path[0..0] == '/'
-          new_url.path = relative.path
-        elsif relative.path[-1..-1] == '/'
-          new_url.path = File.expand_path(File.join(new_url.path,relative.path))
-        elsif !(relative.path.empty?)
-          new_url.path = File.expand_path(File.join(File.dirname(new_url.path),relative.path))
-        end
-
-        return new_url
-      end
-
-      return relative
+      return @url.merge(relative)
     end
 
     #
