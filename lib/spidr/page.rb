@@ -7,6 +7,9 @@ module Spidr
     # URL of the page
     attr_reader :url
 
+    # HTTP Response
+    attr_reader :response
+
     # Body returned for the page
     attr_reader :body
 
@@ -232,7 +235,7 @@ module Spidr
       if (args.empty? && block.nil?)
         name = sym.id2name.sub('_','-')
 
-        return @response[name] if @response.has_key?(name)
+        return @response[name] if @response.key?(name)
       end
 
       return super(sym,*args,&block)
