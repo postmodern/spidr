@@ -1,3 +1,8 @@
+=== 0.1.1 / 2008-10-04
+
+* Added a reader method for the response instance variable in Page.
+* Fixed a bug in Page#method_missing.
+
 === 0.1.0 / 2008-05-23
 
 * Initial release.
