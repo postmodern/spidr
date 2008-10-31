@@ -2,6 +2,7 @@
 
 require 'rubygems'
 require 'hoe'
+require './tasks/spec.rb'
 require './lib/spidr/version.rb'
 
 Hoe.new('spidr', Spidr::VERSION) do |p|
