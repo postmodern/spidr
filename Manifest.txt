@@ -8,4 +8,16 @@ lib/spidr/rules.rb
 lib/spidr/agent.rb
 lib/spidr/spidr.rb
 lib/spidr/version.rb
-test/test_spidr.rb
+tasks/spec.rb
+spec/spec_helper.rb
+spec/agent_spec.rb
+static/obstacle_course/start.html
+static/obstacle_course/fail.html
+static/obstacle_course/loop/start.html
+static/obstacle_course/loop/next.html
+static/obstacle_course/relative/start.html
+static/obstacle_course/relative/normal.html
+static/obstacle_course/relative/current_directory.html
+static/obstacle_course/relative/same_directory.html
+static/obstacle_course/empty/start.html
+static/obstacle_course/javascript/start.html
