@@ -198,13 +198,17 @@ module Spidr
     # Returns all links from the HTML page.
     #
     def links
+      urls = []
+
       if html?
-        return doc.search('a[@href]').map do |a|
-          a.attributes['href'].strip
+        doc.search('a[@href]') do |a|
+          url = a.attributes['href'].strip
+
+          urls << url unless url.empty?
         end
       end
 
-      return []
+      return urls
     end
 
     #
