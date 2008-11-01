@@ -13,10 +13,10 @@ $(document).ready(function() {
   });
 
   $.each($(".ignore"), function() {
-    $("<li></li>").appendTo(ignored).innerText($(this).innerHTML);
+    $("<li></li>").appendTo(ignored).text($(this).html);
   });
 
   $.each($(".follow"), function() {
-    $("<li></li>").appendTo(followed).innerText($(this).innerHTML);
+    $("<li></li>").appendTo(followed).text($(this).html);
   });
 });
