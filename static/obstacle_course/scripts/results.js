@@ -1,5 +1,5 @@
 $(document).ready(function() {
-  $("body").append("<a class='show'>Expected Results</a><div id='expected'><ul id='ignored'></ul><ul id='followed'></ul></div>");
+  $("body").append("<a href='#' class='show'>Expected Results</a><div id='expected'><ul id='ignored'></ul><ul id='followed'></ul></div>");
 
   var expected = $("#expected");
 
