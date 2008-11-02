@@ -16,15 +16,15 @@ namespace :course do
           doc = Hpricot(open(page))
 
           doc.search('.follow[a]') do |follow|
-            link = follow.at('a')['href']
+            link = follow.at('a')
 
-            hash[:followed][link] = follow.inner_html
+            hash[:followed][link['href']] = link.to_html
           end
 
           doc.search('.ignore[a]') do |ignore|
-            link = ignore.at('a')['href']
+            link = ignore.at('a')
 
-            hash[:ignored][link] = ignore.inner_html
+            hash[:ignored][link['href']] = link.to_html
           end
         end
 
