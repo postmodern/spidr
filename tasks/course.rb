@@ -4,7 +4,9 @@ require 'json'
 namespace :course do
   COURSE_URL = URI('http://spidr.rubyforge.org/course/')
 
-  COURSE_DIR = File.expand_path(File.join(File.dirname(__FILE__),'..','static','course'))
+  STATIC_DIR = File.expand_path(File.join(File.dirname(__FILE__),'..','static'))
+
+  COURSE_DIR = File.join(STATIC_DIR,'course')
 
   desc "Build the JSON spec file for the course"
   task :specs do
@@ -13,7 +15,7 @@ namespace :course do
 
       Dir[File.join(COURSE_DIR,'**','*.html')].each do |page|
         doc = Hpricot(open(page))
-        page_url = COURSE_URL.merge(page.sub(COURSE_DIR,''))
+        page_url = COURSE_URL.merge(page.sub(STATIC_DIR,''))
 
         link_to_spec = lambda { |container|
           link = container.at('a')
@@ -27,6 +29,10 @@ namespace :course do
 
         doc.search('.follow[a]') do |follow|
           specs << link_to_spec.call(follow).merge(:behavior => :follow)
+        end
+
+        doc.search('.nofollow[a]') do |follow|
+          specs << link_to_spec.call(follow).merge(:behavior => :nofollow)
         end
 
         doc.search('.ignore[a]') do |ignore|
