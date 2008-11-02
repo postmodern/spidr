@@ -9,7 +9,7 @@ namespace :course do
   COURSE_DIR = File.join(STATIC_DIR,'course')
 
   desc "Build the JSON spec file for the course"
-  task :specs do
+  task :spec do
     File.open(File.join(COURSE_DIR,'specs.json'),'w') do |spec|
       specs = []
 
