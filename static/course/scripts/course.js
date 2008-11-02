@@ -24,7 +24,7 @@ function fail() { window.location = "/course/fail.html"; }
 
 function addResults()
 {
-  $("body").append("<a href='#' class='results show_results'>Show Expected Results</a><a href='#' class='results hide_results'>Hide Expected Results</a><div id='expected'><ul id='followed'></ul><ul id='ignored'></ul></div>");
+  $("body").append("<a href='#' class='results show_results'>Show Expected Results</a><a href='#' class='results hide_results'>Hide Expected Results</a><div id='expected'><p>Links that should be followed:<ul id='followed'></ul><p>Links that should be ignored:<ul id='ignored'></ul></div>");
 
   var expected = $("#expected");
 
