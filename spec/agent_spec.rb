@@ -7,6 +7,6 @@ describe Agent do
   include Helpers::Course
 
   before(:all) do
-    @agent = Agent.new
+    @agent = run_course
   end
 end
