@@ -2,34 +2,32 @@ require 'hpricot'
 require 'json'
 
 namespace :course do
-  DIR_BLACKLIST = ['scripts']
+  COURSE_DIR = File.expand_path(File.join(File.dirname(__FILE__),'..','static','course'))
 
-  desc "Build Expected Results files"
-  task :build do
-    Dir["static/course/*/"].each do |section|
-      next if DIR_BLACKLIST.include?(File.basename(section))
+  desc "Build the JSON spec file for the course"
+  task :spec do
+    File.open(File.join(COURSE_DIR,'spec.json'),'w') do |spec|
+      specs = []
 
-      File.open(File.join(section,'results.json'),'w') do |results|
-        hash = {:followed => {}, :ignored => {}}
+      Dir[File.join(COURSE_DIR,'**','*.html')].each do |page|
+        doc = Hpricot(open(page))
 
-        Dir[File.join(section,'*.html')].each do |page|
-          doc = Hpricot(open(page))
+        link_to_spec = lambda { |container|
+          link = container.at('a')
 
-          doc.search('.follow[a]') do |follow|
-            link = follow.at('a')
+          {:link => link['href'], :message => link.inner_text}
+        }
 
-            hash[:followed][link['href']] = link.to_html
-          end
-
-          doc.search('.ignore[a]') do |ignore|
-            link = ignore.at('a')
-
-            hash[:ignored][link['href']] = link.to_html
-          end
+        doc.search('.follow[a]') do |follow|
+          specs << link_to_spec.call(follow).merge(:behavior => :follow)
         end
 
-        results.write(hash.to_json)
+        doc.search('.ignore[a]') do |ignore|
+          specs << link_to_spec.call(ignore).merge(:behavior => :ignore)
+        end
       end
+
+      spec.write(specs.to_json)
     end
   end
 end
