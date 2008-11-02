@@ -4,13 +4,24 @@
   </head>
 
   <body>
-    <p>Relative links.</p>
+    <h1>Relative links.</h1>
 
     <ul>
-      <li class="ignore"><a href="#">In-page link</a></li>
-      <li class="follow"><a href="normal.html">Normal relative link</a></li>
-      <li class="follow"><a href="./current_directory.html">Link to a file in the current directory.</a></li>
-      <li class="follow"><a href="../relative/same_directory.html">Link to a file up one directory, then back into the same directory.</a></li>
+      <li class="ignore">
+        <a href="#">Should ignore in-page links</a>
+      </li>
+
+      <li class="follow">
+        <a href="normal.html">Should follow relative links</a>
+      </li>
+
+      <li class="follow">
+        <a href="./current_directory.html">Should follow relative links to files in the current directory</a>
+      </li>
+
+      <li class="follow">
+        <a href="../relative/same_directory.html">Should follow links that transverse directories</a>
+      </li>
     </ul>
   </body>
 </html>

@@ -7,9 +7,16 @@
     <p>Empty links.</p>
 
     <ul>
-      <li class="ignore"><a>Link without an href</a></li>
-      <li class="ignore"><a href="">Link with an empty href</a></li>
-      <li class="ignore"><a href=" ">Link with spaces in the href</a></li>
+      <li class="ignore">
+        <a>Should ignore links with no href attributes</a>
+      </li>
+      <li class="ignore">
+        <a href="">Should ignore links with empty href attributes</a>
+      </li>
+
+      <li class="ignore">
+        <a href=" ">Should ignore links with blank href attributes</a>
+      </li>
     </ul>
   </body>
 </html>

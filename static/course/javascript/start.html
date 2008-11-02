@@ -7,8 +7,12 @@
     <p>JavaScript links.</p>
 
     <ul>
-      <li class="ignore"><a href="javascript:fail();">Links beginning with "javascript:"</a></li>
-      <li class="ignore"><a href="#" onclick="fail();">Links with an onclick method</a></li>
+      <li class="ignore">
+        <a href="javascript:fail();">Should ignore links beginning with "javascript:"</a>
+      </li>
+      <li class="ignore">
+        <a href="#" onclick="fail();">Should ignore links with an onclick attribute and a href pointing to the page.</a>
+      </li>
     </ul>
   </body>
 </html>
