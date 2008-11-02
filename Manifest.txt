@@ -10,6 +10,7 @@ lib/spidr/spidr.rb
 lib/spidr/version.rb
 tasks/spec.rb
 spec/spec_helper.rb
+spec/helpers/course.rb
 spec/agent_spec.rb
 static/obstacle_course/start.html
 static/obstacle_course/fail.html
