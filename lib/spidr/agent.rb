@@ -464,8 +464,6 @@ module Spidr
       end
     end
 
-    private
-
     def visit_scheme?(url)
       if url.scheme
         return SCHEMES.include?(url.scheme)
