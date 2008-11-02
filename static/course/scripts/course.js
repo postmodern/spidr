@@ -1,74 +1,28 @@
-var sections = {
-  empty: {
-    name: "Empty Links",
-    results_url: "/course/empty/results.json"
-  },
-
-  javascript: {
-    name: "JavaScript Links",
-    results_url: "/course/javascript/results.json"
-  },
-
-  loop: {
-    name: "Looping Links",
-    results_url: "/course/loop/results.json"
-  },
-
-  relative: {
-    name: "Relative Links",
-    results_url: "/course/relative/results.json"
-  }
-};
-
 function fail() { window.location = "/course/fail.html"; }
 
-function addResults()
+function getSpecs()
 {
-  $("body").append("<a href='#' class='results show_results'>Show Expected Results</a><a href='#' class='results hide_results'>Hide Expected Results</a><div id='expected'><p>Links that should be followed:<ul id='followed'></ul><p>Links that should be ignored:<ul id='ignored'></ul></div>");
+  $.getJSON("/course/specs.json",function(specs) {
+    $("body").append("<a href='#' class='specs show_specs'>Show Specs</a><a href='#' class='specs hide_specs'>Hide Specs</a><ul id='specs'></ul>");
 
-  var expected = $("#expected");
+    var spec_list = $("#specs");
 
-  expected.hide();
+    spec_list.hide();
 
-  $("a.hide_results").hide();
+    $("a.hide_specs").hide();
 
-  $("a.results").click(function() {
-    expected.slideToggle("normal",function() {
-      $("a.show_results").toggle();
-      $("a.hide_results").toggle();
-    });
-  });
-
-  return expected;
-}
-
-function getSectionResults(name)
-{
-  $.getJSON(sections[name]['results_url'],function(results) {
-    var ignored = $("#ignored");
-    var followed = $("#followed");
-
-    $.each(results.followed,function(link,example) {
-      $("<li></li>").appendTo(followed).text(example);
+    $("a.specs").click(function() {
+      spec_list.slideToggle("normal",function() {
+        $("a.show_specs").toggle();
+        $("a.hide_specs").toggle();
+      });
     });
 
-    $.each(results.ignored,function(link,example) {
-      $("<li></li>").appendTo(ignored).text(example);
+    $.each(specs,function(index,spec_data) {
+      var spec = $("<li class='spec'></li>").appendTo(spec_list);
+
+      $("<p class='spec_message'></p>").appendTo(spec).text(spec_data.message);
+      $("<pre class='spec_example'></pre>").appendTo(spec).text(spec_data.example);
     });
-  });
-}
-
-function addSectionResults(name)
-{
-  addResults();
-  getSectionResults(name);
-}
-
-function addAllResults()
-{
-  addResults();
-
-  $.each(sections,function(name,settings) {
-    getSectionResults(name);
   });
 }
