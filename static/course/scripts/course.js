@@ -1,6 +1,8 @@
-function getResults(url)
+function fail() { window.location = "/course/fail.html"; }
+
+function getSectionResults(section)
 {
-  $.getJSON(url,function(results) {
+  $.getJSON("/course/" + section + "/results.json",function(results) {
     $("body").append("<a href='#' class='show'>Expected Results</a><div id='expected'><ul id='followed'></ul><ul id='ignored'></ul></div>");
 
     var expected = $("#expected");

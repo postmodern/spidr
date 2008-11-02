@@ -2,15 +2,10 @@
   <head>
     <title>Spidr :: Web-Spider Obstacle Course :: JavaScript Links</title>
     <script type="text/javascript" src="../scripts/jquery-1.2.6.min.js"></script>
-    <script type="text/javascript" src="../scripts/results.js"></script>
+    <script type="text/javascript" src="../scripts/course.js"></script>
     <script type="text/javascript">
-      function func()
-      {
-        window.location = "../fail.html";
-      }
-
       $(document).ready(function() {
-        getResults('results.json');
+        getSectionResults("javascript");
       });
     </script>
   </head>
@@ -19,8 +14,8 @@
     <p>JavaScript links.</p>
 
     <ul>
-      <li class="ignore"><a href="javascript:func();">Links beginning with "javascript:"</a></li>
-      <li class="ignore"><a href="" onclick="func();">Links with an onclick method</a></li>
+      <li class="ignore"><a href="javascript:fail();">Links beginning with "javascript:"</a></li>
+      <li class="ignore"><a href="" onclick="fail();">Links with an onclick method</a></li>
     </ul>
   </body>
 </html>
