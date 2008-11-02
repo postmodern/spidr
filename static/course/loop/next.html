@@ -1,13 +1,18 @@
 <html>
   <head>
     <title>Spidr :: Web-Spider Obstacle Course :: Infinite Looping Links</title>
+    <script type="text/javascript" src="../scripts/jquery-1.2.6.min.js"></script>
+    <script type="text/javascript" src="../scripts/results.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function() {
+        getResults('results.json');
+      });
+    </script>
   </head>
 
   <body>
     <p>Linking back...</p>
 
-    <p>
-      <a href="start.html">Linking back to start.</a>
-    </p>
+    <p class="ignore"><a href="start.html">Linking back to start.</a></p>
   </body>
 </html>

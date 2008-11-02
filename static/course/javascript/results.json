@@ -1,0 +1,1 @@
+{"ignored":{"":"<a href=\"\" onclick=\"func();\">Links with an onclick method<\/a>","javascript:func();":"<a href=\"javascript:func();\">Links beginning with \"javascript:\"<\/a>"},"followed":{}}
