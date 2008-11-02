@@ -36,7 +36,7 @@ function addResults()
     $("a.show_results").toggle();
     $("a.hide_results").toggle();
 
-    expected.slideToggle("normal");
+    expected.fadeToggle("slow");
   });
 
   return expected;
