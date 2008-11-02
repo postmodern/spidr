@@ -33,8 +33,8 @@ function addResults()
   $("a.hide_results").hide();
 
   $("a.results").click(function() {
-    $("a.show_results").toggleShow();
-    $("a.hide_results").toggleShow();
+    $("a.show_results").toggle();
+    $("a.hide_results").toggle();
 
     expected.slideToggle("normal");
   });
