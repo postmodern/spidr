@@ -18,7 +18,7 @@ function getResults(url)
       $("<li></li>").appendTo(followed).text(example);
     });
 
-    $.each(results.ignored function(link,example) {
+    $.each(results.ignored,function(link,example) {
       $("<li></li>").appendTo(ignored).text(example);
     });
   });
