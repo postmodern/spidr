@@ -24,4 +24,4 @@ function getSectionResults(section)
       $("<li></li>").appendTo(ignored).text(example);
     });
   });
-});
+}
