@@ -5,8 +5,8 @@ namespace :course do
   COURSE_DIR = File.expand_path(File.join(File.dirname(__FILE__),'..','static','course'))
 
   desc "Build the JSON spec file for the course"
-  task :spec do
-    File.open(File.join(COURSE_DIR,'spec.json'),'w') do |spec|
+  task :specs do
+    File.open(File.join(COURSE_DIR,'specs.json'),'w') do |spec|
       specs = []
 
       Dir[File.join(COURSE_DIR,'**','*.html')].each do |page|
@@ -15,7 +15,11 @@ namespace :course do
         link_to_spec = lambda { |container|
           link = container.at('a')
 
-          {:link => link['href'], :message => link.inner_text}
+          {
+            :message => link.inner_text,
+            :link => link['href'],
+            :example => link.to_html
+          }
         }
 
         doc.search('.follow[a]') do |follow|
