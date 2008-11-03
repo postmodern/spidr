@@ -229,7 +229,14 @@ module Spidr
       link = URI.encode(link.to_s.gsub(/#[a-zA-Z0-9_-]*$/,''))
 
       relative = URI(link)
-      return @url.merge(relative)
+      absolute = @url.merge(relative)
+
+      if absolute.path.empty?
+        # default the absolute path to '/'
+        absolute.path = '/'
+      end
+
+      return absolute
     end
 
     #
