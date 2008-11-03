@@ -231,7 +231,7 @@ module Spidr
       relative = URI(link)
       absolute = @url.merge(relative)
 
-      if absolute.path.empty?
+      if (absolute.path && absolute.path.empty?)
         # default the absolute path to '/'
         absolute.path = '/'
       end
