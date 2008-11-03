@@ -374,7 +374,7 @@ module Spidr
       host = url.host
       port = url.port
 
-      unless path.empty?
+      unless url.path.empty?
         path = url.path
       else
         path = '/'
