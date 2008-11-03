@@ -374,6 +374,12 @@ module Spidr
       host = url.host
       port = url.port
 
+      unless path.empty?
+        path = url.path
+      else
+        path = '/'
+      end
+
       proxy_host = @proxy[:host]
       proxy_port = @proxy[:port]
       proxy_user = @proxy[:user]
@@ -385,7 +391,7 @@ module Spidr
         headers['User-Agent'] = @user_agent if @user_agent
         headers['Referer'] = @referer if @referer
 
-        new_page = Page.new(url,sess.get(url.path,headers))
+        new_page = Page.new(url,sess.get(path,headers))
 
         block.call(new_page) if block
         return new_page
