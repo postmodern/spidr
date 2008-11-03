@@ -226,7 +226,7 @@ module Spidr
     #
     def to_absolute(link)
       # clean the link
-      link = URI.encode(link.to_s.gsub(/#.*$/,''))
+      link = URI.encode(link.to_s.gsub(/#[a-zA-Z0-9_-]*$/,''))
 
       relative = URI(link)
       return @url.merge(relative)
