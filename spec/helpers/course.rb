@@ -13,24 +13,27 @@ module Helpers
       if specs.kind_of?(Array)
         specs.each do |spec|
           message = spec['message'].to_s.dump
-          link = spec['link'].to_s.dump
+          url = spec['url'].to_s.dump
 
           if spec['behavior'] == 'follow'
             base.module_eval %{
               it #{message} do
-                should_visit_link(#{link})
+                should_visit_link(#{url})
               end
             }
           elsif spec['behavior'] == 'nofollow'
             base.module_eval %{
               it #{message} do
-                should_visit_once(#{link})
+                should_visit_once(#{url})
               end
             }
           else
+            link = spec['link'].to_s.dump
+
             base.module_eval %{
               it #{message} do
                 should_ignore_link(#{link})
+                should_ignore_link(#{url})
               end
             }
           end

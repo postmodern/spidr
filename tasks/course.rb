@@ -20,9 +20,17 @@ namespace :course do
         link_to_spec = lambda { |container|
           link = container.at('a')
 
+          relative_url = link['href'].to_s
+          absolute_url = page_url.merge(URI.encode(relative_url))
+
+          if absolute_url.path
+            absolute_url.path = File.expand_path(absolute_url.path)
+          end
+
           {
             :message => link.inner_text,
-            :link => page_url.merge(URI.encode(link['href'].to_s)),
+            :link => relative_url,
+            :url => absolute_url,
             :example => link.to_html
           }
         }
