@@ -24,4 +24,6 @@ static/course/relative/start.html
 static/course/relative/normal.html
 static/course/relative/current_directory.html
 static/course/relative/same_directory.html
+static/course/remote/start.html
+static/course/remote/next.html
 static/course/specs.json
