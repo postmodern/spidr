@@ -17,7 +17,7 @@ namespace :course do
         doc = Hpricot(open(page))
         page_url = COURSE_URL.merge(page.sub(STATIC_DIR,''))
 
-        link_to_spec = lambda { |container|
+        link_to_spec = lambda { |container,spec_data|
           link = container.at('a')
 
           relative_url = link['href'].to_s
@@ -27,24 +27,24 @@ namespace :course do
             absolute_url.path = File.expand_path(absolute_url.path)
           end
 
-          {
+          spec_data.merge(
             :message => link.inner_text,
             :link => relative_url,
             :url => absolute_url,
             :example => link.to_html
-          }
+          )
         }
 
         doc.search('.follow[a]') do |follow|
-          specs << link_to_spec.call(follow).merge(:behavior => :follow)
+          specs << link_to_spec.call(follow, :behavior => :follow)
         end
 
-        doc.search('.nofollow[a]') do |follow|
-          specs << link_to_spec.call(follow).merge(:behavior => :nofollow)
+        doc.search('.nofollow[a]') do |nofollow|
+          specs << link_to_spec.call(nofollow, :behavior => :nofollow)
         end
 
         doc.search('.ignore[a]') do |ignore|
-          specs << link_to_spec.call(ignore).merge(:behavior => :ignore)
+          specs << link_to_spec.call(ignore, :behavior => :ignore)
         end
       end
 
