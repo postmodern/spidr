@@ -1,3 +1,16 @@
+=== 0.1.2 / 2008-11-06
+
+* Fixed a bug in Page#to_absolute where URLs with no path were not
+  receiving a default path of <tt>/</tt>.
+* Fixed a bug in Page#to_absolute where URL paths were not being
+  expanded, in order to remove <tt>..</tt> and <tt>.</tt> directories.
+* Fixed a bug where absolute URLs could have a blank path, thus causing
+  Agent#get_page to crash when it performed the HTTP request.
+* Added RSpec spec tests.
+* Created a Web-Spider Obstacle Course
+  (http://spidr.rubyforge.org/course/start.html) which is used in the spec
+  tests.
+
 === 0.1.1 / 2008-10-04
 
 * Added a reader method for the response instance variable in Page.

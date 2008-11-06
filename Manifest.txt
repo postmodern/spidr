@@ -9,9 +9,11 @@ lib/spidr/agent.rb
 lib/spidr/spidr.rb
 lib/spidr/version.rb
 tasks/spec.rb
+tasks/course.rb
 spec/spec_helper.rb
 spec/helpers/course.rb
 spec/agent_spec.rb
+static/course/index.html
 static/course/start.html
 static/course/fail.html
 static/course/scripts/jquery-1.2.6.min.js
