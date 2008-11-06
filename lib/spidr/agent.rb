@@ -52,14 +52,22 @@ module Spidr
       @user_agent = (options[:user_agent] || Spidr.user_agent)
       @referer = options[:referer]
 
-      @host_rules = Rules.new(:accept => options[:hosts],
-                              :reject => options[:ignore_hosts])
-      @port_rules = Rules.new(:accept => options[:ports],
-                              :reject => options[:ignore_ports])
-      @link_rules = Rules.new(:accept => options[:links],
-                              :reject => options[:ignore_links])
-      @ext_rules = Rules.new(:accept => options[:exts],
-                             :reject => options[:ignore_exts])
+      @host_rules = Rules.new(
+        :accept => options[:hosts],
+        :reject => options[:ignore_hosts]
+      )
+      @port_rules = Rules.new(
+        :accept => options[:ports],
+        :reject => options[:ignore_ports]
+      )
+      @link_rules = Rules.new(
+        :accept => options[:links],
+        :reject => options[:ignore_links]
+      )
+      @ext_rules = Rules.new(
+        :accept => options[:exts],
+        :reject => options[:ignore_exts]
+      )
 
       @every_url_blocks = []
       @urls_like_blocks = Hash.new { |hash,key| hash[key] = [] }
