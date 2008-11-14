@@ -341,12 +341,7 @@ module Spidr
       return self
     end
 
-    #
-    # Returns the +Array+ of visited URLs.
-    #
-    def visited_urls
-      @history
-    end
+    alias visited_urls history
 
     #
     # Returns the +Array+ of visited URLs.
