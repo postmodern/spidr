@@ -37,6 +37,7 @@ module Spidr
     # <tt>:referer</tt>:: The referer URL to send.
     # <tt>:delay</tt>:: Duration in seconds to pause between spidering each
     #                   link. Defaults to 0.
+    # <tt>:host</tt>:: The host-name to visit.
     # <tt>:hosts</tt>:: An +Array+ of host patterns to visit.
     # <tt>:ignore_hosts</tt>:: An +Array+ of host patterns to not visit.
     # <tt>:ports</tt>:: An +Array+ of port patterns to visit.
@@ -78,6 +79,10 @@ module Spidr
       @history = []
       @queue = []
 
+      if options[:host]
+        visit_hosts_like(options[:host])
+      end
+
       block.call(self) if block
     end
 
@@ -102,7 +107,7 @@ module Spidr
     # spidering.
     #
     def self.host(name,options={},&block)
-      self.new(options.merge(:hosts => [name.to_s])) do |spider|
+      self.new(options.merge(:host => name)) do |spider|
         block.call(spider) if block
 
         spider.start_at("http://#{name}/")
@@ -118,7 +123,7 @@ module Spidr
     def self.site(url,options={},&block)
       url = URI(url.to_s)
 
-      return self.new(options.merge(:hosts => [url.host])) do |spider|
+      return self.new(options.merge(:host => url.host)) do |spider|
         block.call(spider) if block
 
         spider.start_at(url)
