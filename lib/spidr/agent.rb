@@ -33,7 +33,7 @@ module Spidr
     #
     # _options_ may contain the following keys:
     # <tt>:proxy</tt>:: The proxy to use while spidering.
-    # <tt>:user_agent</tt>:: the User-Agent string to send.
+    # <tt>:user_agent</tt>:: The User-Agent string to send.
     # <tt>:referer</tt>:: The referer URL to send.
     # <tt>:delay</tt>:: Duration in seconds to pause between spidering each
     #                   link. Defaults to 0.
