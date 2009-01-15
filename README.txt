@@ -25,7 +25,7 @@ and easy to use.
 
 == REQUIREMENTS:
 
-* Hpricot
+* Nokogiri
 
 == INSTALL:
 
