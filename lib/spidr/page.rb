@@ -207,7 +207,7 @@ module Spidr
 
       if html?
         self.doc.search('a[@href]').each do |a|
-          url = a.attributes['href'].to_s
+          url = a.get_attribute('href')
 
           urls << url unless url.empty?
         end
