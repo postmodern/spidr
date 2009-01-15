@@ -3,7 +3,6 @@ require 'spidr/page'
 require 'spidr/spidr'
 
 require 'net/http'
-require 'hpricot'
 
 module Spidr
   class Agent

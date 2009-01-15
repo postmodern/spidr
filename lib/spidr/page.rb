@@ -1,5 +1,5 @@
 require 'uri'
-require 'hpricot'
+require 'nokogiri'
 
 module Spidr
   class Page
@@ -185,12 +185,17 @@ module Spidr
     end
 
     #
-    # Returns an Hpricot::Doc if the page represents a HTML document,
-    # returns +nil+ otherwise.
+    # If the page has a <tt>text/html</tt> content-type, a
+    # Nokogiri::HTML::Document object will be returned. If the page has a
+    # <tt>text/xml</tt> content-type, a Nokogiri::XML::Document object
+    # will be returned. Other content-types will cause +nil+ to be
+    # returned.
     #
     def doc
       if html?
-        return @doc ||= Hpricot(body)
+        return @doc ||= Nokogiri::HTML(body)
+      elsif xml?
+        return @doc ||= Nokogiri::XML(body)
       end
     end
 
@@ -201,8 +206,8 @@ module Spidr
       urls = []
 
       if html?
-        doc.search('a[@href]') do |a|
-          url = a.attributes['href'].strip
+        self.doc.search('a[@href]').each do |a|
+          url = a.get_attribute('href')
 
           urls << url unless url.empty?
         end

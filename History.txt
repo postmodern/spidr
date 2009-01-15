@@ -1,3 +1,13 @@
+=== 0.1.4 / 2009-01-15
+
+* Use Nokogiri for HTML and XML parsing.
+
+=== 0.1.3 / 2009-01-10
+
+* Added the :host options to Spidr::Agent#initialize.
+* Added the Web Spider Obstacle Course files to the Manifest.
+* Aliased Spidr::Agent#visited_urls to Spidr::Agent#history.
+
 === 0.1.2 / 2008-11-06
 
 * Fixed a bug in Page#to_absolute where URLs with no path were not
@@ -19,13 +29,13 @@
 === 0.1.0 / 2008-05-23
 
 * Initial release.
- * Black-list or white-list URLs based upon:
-  * Host name
-  * Port number
-  * Full link
-  * URL extension
- * Provides call-backs for:
-  * Every visited Page.
-  * Every visited URL.
-  * Every visited URL that matches a specified pattern.
+  * Black-list or white-list URLs based upon:
+    * Host name
+    * Port number
+    * Full link
+    * URL extension
+  * Provides call-backs for:
+    * Every visited Page.
+    * Every visited URL.
+    * Every visited URL that matches a specified pattern.
 
