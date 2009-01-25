@@ -1,4 +1,4 @@
-require 'hpricot'
+require 'nokogiri'
 require 'json'
 
 namespace :course do
@@ -14,13 +14,11 @@ namespace :course do
       specs = []
 
       Dir[File.join(COURSE_DIR,'**','*.html')].each do |page|
-        doc = Hpricot(open(page))
+        doc = Nokogiri::HTML(open(page))
         page_url = COURSE_URL.merge(page.sub(STATIC_DIR,''))
 
-        link_to_spec = lambda { |container,spec_data|
-          link = container.at('a')
-
-          relative_url = link['href'].to_s
+        link_to_spec = lambda { |link,spec_data|
+          relative_url = (link.get_attribute('href') || '')
           absolute_url = page_url.merge(URI.encode(relative_url))
 
           if absolute_url.path
@@ -35,15 +33,15 @@ namespace :course do
           )
         }
 
-        doc.search('.follow[a]') do |follow|
+        doc.search('.follow//a').each do |follow|
           specs << link_to_spec.call(follow, :behavior => :follow)
         end
 
-        doc.search('.nofollow[a]') do |nofollow|
+        doc.search('.nofollow//a').each do |nofollow|
           specs << link_to_spec.call(nofollow, :behavior => :nofollow)
         end
 
-        doc.search('.ignore[a]') do |ignore|
+        doc.search('.ignore//a').each do |ignore|
           specs << link_to_spec.call(ignore, :behavior => :ignore)
         end
       end
