@@ -192,10 +192,14 @@ module Spidr
     # returned.
     #
     def doc
-      if html?
-        return @doc ||= Nokogiri::HTML(body)
-      elsif xml?
-        return @doc ||= Nokogiri::XML(body)
+      begin
+        if html?
+          return @doc ||= Nokogiri::HTML(body)
+        elsif xml?
+          return @doc ||= Nokogiri::XML(body)
+        end
+      rescue
+        return nil
       end
     end
 
@@ -205,7 +209,7 @@ module Spidr
     def links
       urls = []
 
-      if html?
+      if (html? && self.doc)
         self.doc.search('a[@href]').each do |a|
           url = a.get_attribute('href')
 
