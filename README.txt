@@ -25,7 +25,7 @@ and easy to use.
 
 == REQUIREMENTS:
 
-* nokogiri
+* {nokogiri}[http://nokogiri.rubyforge.org/]
 
 == INSTALL:
 
