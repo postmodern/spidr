@@ -1,0 +1,7 @@
+pkg
+doc
+web
+tmp
+.DS_Store
+*.swp
+*~
