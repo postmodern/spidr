@@ -1,6 +1,7 @@
 = Spidr
 
 * http://spidr.rubyforge.org/
+* http://github.com/postmodern/spidr/
 * Postmodern (postmodern.mod3 at gmail.com)
 
 == DESCRIPTION:
