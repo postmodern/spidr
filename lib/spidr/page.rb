@@ -224,7 +224,7 @@ module Spidr
     # Returns all links from the HtML page as absolute URLs.
     #
     def urls
-      links.map { |link| to_absolute(link) }
+      links.map { |link| to_absolute(link) }.compact
     end
 
     protected
@@ -237,20 +237,24 @@ module Spidr
       # clean the link
       link = URI.encode(link.to_s.gsub(/#[a-zA-Z0-9_-]*$/,''))
 
-      relative = URI(link)
-      absolute = @url.merge(relative)
+      begin
+        relative = URI(link)
+        absolute = @url.merge(relative)
 
-      if absolute.path
-        if absolute.path.empty?
-          # default the absolute path to '/'
-          absolute.path = '/'
-        else
-          # make sure the path does not contain any .. or . directories.
-          absolute.path = File.expand_path(absolute.path)
+        if absolute.path
+          if absolute.path.empty?
+            # default the absolute path to '/'
+            absolute.path = '/'
+          else
+            # make sure the path does not contain any .. or . directories.
+            absolute.path = File.expand_path(absolute.path)
+          end
         end
-      end
 
-      return absolute
+        return absolute
+      rescue URI::InvalidURIError => e
+        return nil
+      end
     end
 
     #
