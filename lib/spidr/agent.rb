@@ -25,6 +25,9 @@ module Spidr
     # History containing visited URLs
     attr_accessor :history
 
+    # List of unreachable URLs
+    attr_reader :failed
+
     #
     # Creates a new Agent object with the given _options_ and _block_.
     # If a _block_ is given, it will be passed the newly created
@@ -77,6 +80,7 @@ module Spidr
       @delay = (options[:delay] || 0)
       @history = []
       @queue = []
+      @failed = []
 
       if options[:host]
         visit_hosts_like(options[:host])
@@ -398,7 +402,13 @@ module Spidr
         headers['User-Agent'] = @user_agent if @user_agent
         headers['Referer'] = @referer if @referer
 
-        new_page = Page.new(url,sess.get(path,headers))
+        begin
+          response = sess.get(path,headers)
+        rescue => e
+          @failed << url
+        end
+
+        new_page = Page.new(url,response)
 
         block.call(new_page) if block
         return new_page
