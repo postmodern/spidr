@@ -426,6 +426,7 @@ module Spidr
           response = sess.get(path,headers)
         rescue => e
           failed(url)
+          return nil
         end
 
         new_page = Page.new(url,response)
