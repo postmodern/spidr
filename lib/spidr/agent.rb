@@ -73,6 +73,7 @@ module Spidr
       )
 
       @every_url_blocks = []
+      @every_failed_url_blocks = []
       @urls_like_blocks = Hash.new { |hash,key| hash[key] = [] }
 
       @every_page_blocks = []
@@ -311,6 +312,15 @@ module Spidr
     end
 
     #
+    # For every URL that the agent is unable to visit, it will be passed
+    # to the specified _block_.
+    #
+    def every_failed_url(&block)
+      @every_failed_url_blocks << block
+      return self
+    end
+
+    #
     # For every URL that the agent visits and matches the specified
     # _pattern_, it will be passed to the specified _block_.
     #
@@ -415,7 +425,7 @@ module Spidr
         begin
           response = sess.get(path,headers)
         rescue => e
-          @failed << url
+          failed(url)
         end
 
         new_page = Page.new(url,response)
@@ -426,6 +436,17 @@ module Spidr
     end
 
     protected
+
+    #
+    # Adds the specified _url_ to the failed list of URLs.
+    #
+    def failed(url)
+      url = URI(url.to_s)
+
+      @every_failed_url_blocks.each { |block| block.call(url) }
+      @failed << url
+      return true
+    end
 
     #
     # Returns +true+ if the specified _url_ is queued for visiting, returns
