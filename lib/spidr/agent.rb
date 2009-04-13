@@ -519,6 +519,10 @@ module Spidr
       end
     end
 
+    #
+    # Returns +true+ if the specified _url_ should be visited, based on
+    # it's scheme, returns +false+ otherwise.
+    #
     def visit_scheme?(url)
       if url.scheme
         return SCHEMES.include?(url.scheme)
@@ -527,18 +531,34 @@ module Spidr
       end
     end
 
+    #
+    # Returns +true+ if the specified _url_ should be visited, based on
+    # the host of the _url_, returns +false+ otherwise.
+    #
     def visit_host?(url)
       @host_rules.accept?(url.host)
     end
 
+    #
+    # Returns +true+ if the specified _url_ should be visited, based on
+    # the port of the _url_, returns +false+ otherwise.
+    #
     def visit_port?(url)
       @port_rules.accept?(url.port)
     end
 
+    #
+    # Returns +true+ if the specified _url_ should be visited, based on
+    # the pattern of the _url_, returns +false+ otherwise.
+    #
     def visit_link?(url)
       @link_rules.accept?(url.to_s)
     end
 
+    #
+    # Returns +true+ if the specified _url_ should be visited, based on
+    # the file extension of the _url_, returns +false+ otherwise.
+    #
     def visit_ext?(url)
       @ext_rules.accept?(File.extname(url.path)[1..-1])
     end
