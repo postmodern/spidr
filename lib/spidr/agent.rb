@@ -329,10 +329,20 @@ module Spidr
     end
 
     #
+    # Clears the history of the agent.
+    #
+    def clear
+      @queue.clear
+      @history.clear
+      @failed.clear
+      return self
+    end
+
+    #
     # Clear the history and start spidering at the specified _url_.
     #
     def start_at(url)
-      @history.clear
+      clear
       return run(url)
     end
 
