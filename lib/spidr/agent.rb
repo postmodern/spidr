@@ -436,7 +436,7 @@ module Spidr
 
         begin
           response = sess.get(path,headers)
-        rescue Errno::ECONNREFUSED, Errno::ECONNRESET, Net::HTTPBadResponse
+        rescue SystemCallError, Net::HTTPBadResponse
           failed(url)
           return nil
         end
