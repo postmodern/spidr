@@ -403,7 +403,7 @@ module Spidr
     #
     def failed?(url)
       unless url.kind_of?(URI)
-        url = URI(url.to_s)
+        url = URI(url)
       end
 
       return @failed.include?(url)
