@@ -26,7 +26,7 @@ module Spidr
     attr_accessor :history
 
     # List of unreachable URLs
-    attr_reader :failed
+    attr_reader :failures
 
     #
     # Creates a new Agent object with the given _options_ and _block_.
@@ -81,7 +81,7 @@ module Spidr
       @delay = (options[:delay] || 0)
       @history = []
       @queue = []
-      @failed = []
+      @failures = []
 
       if options[:host]
         visit_hosts_like(options[:host])
@@ -344,7 +344,7 @@ module Spidr
     def clear
       @queue.clear
       @history.clear
-      @failed.clear
+      @failures.clear
       return self
     end
 
@@ -406,7 +406,7 @@ module Spidr
         url = URI(url)
       end
 
-      return @failed.include?(url)
+      return @failures.include?(url)
     end
 
     #
@@ -457,7 +457,7 @@ module Spidr
       url = URI(url.to_s)
 
       @every_failed_url_blocks.each { |block| block.call(url) }
-      @failed << url
+      @failures << url
       return true
     end
 
