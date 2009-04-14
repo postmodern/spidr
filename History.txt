@@ -1,3 +1,16 @@
+=== 0.1.6 / 2009-04-14
+
+* Added Agent#failures, a list of URLs which could not be visited.
+* Added Agent#failed?.
+* Added Agent#every_failed_url.
+* Added Agent#clear, which clears the history and failures URL lists.
+* Improved fault tolerance in Agent#get_page.
+  * If a Network or HTTP error is encountered, the URL will be added to
+    the failures list and the next URL will be visited.
+* Fixed a typo in Agent#ignore_exts_like.
+* Updated the Web Spider Obstacle Course with links that always fail to be
+  visited.
+
 === 0.1.5 / 2009-03-22
 
 * Catch malformed URIs in Page#to_absolute and return +nil+.
