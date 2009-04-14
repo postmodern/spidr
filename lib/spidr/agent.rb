@@ -80,8 +80,8 @@ module Spidr
 
       @delay = (options[:delay] || 0)
       @history = []
-      @queue = []
       @failures = []
+      @queue = []
 
       if options[:host]
         visit_hosts_like(options[:host])
