@@ -292,7 +292,7 @@ module Spidr
     # Adds the given _pattern_ to the ignore_exts. If a _block_ is given,
     # it will be added to the ignore_exts.
     #
-    def ignore_exts_like(&block)
+    def ignore_exts_like(pattern=nil,&block)
       if pattern
         ignore_exts << pattern
       elsif block
