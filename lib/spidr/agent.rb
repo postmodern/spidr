@@ -563,7 +563,7 @@ module Spidr
     end
 
     #
-    # Adds the specified _url_ to the failed list of URLs.
+    # Adds the specified _url_ to the failures list.
     #
     def failed(url)
       unless url.kind_of?(URI)
