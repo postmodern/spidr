@@ -398,6 +398,18 @@ module Spidr
     end
 
     #
+    # Returns +true+ if the specified _url_ was unable to be visited,
+    # returns +false+ otherwise.
+    #
+    def failed?(url)
+      unless url.kind_of?(URI)
+        url = URI(url.to_s)
+      end
+
+      return @failed.include?(url)
+    end
+
+    #
     # Creates a new Page object from the specified _url_. If a _block_ is
     # given, it will be passed the newly created Page object.
     #
