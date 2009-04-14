@@ -21,6 +21,7 @@ and easy to use.
   * Every visited Page.
   * Every visited URL.
   * Every visited URL that matches a specified pattern.
+  * Every URL that failed to be visited.
 * Custom User-Agent strings.
 * Custom proxy settings.
 
