@@ -428,23 +428,21 @@ module Spidr
       proxy_user = @proxy[:user]
       proxy_password = @proxy[:password]
 
-      Net::HTTP::Proxy(proxy_host,proxy_port,proxy_user,proxy_password).start(host,port) do |sess|
-        headers = {}
+      begin
+        Net::HTTP::Proxy(proxy_host,proxy_port,proxy_user,proxy_password).start(host,port) do |sess|
+          headers = {}
 
-        headers['User-Agent'] = @user_agent if @user_agent
-        headers['Referer'] = @referer if @referer
+          headers['User-Agent'] = @user_agent if @user_agent
+          headers['Referer'] = @referer if @referer
 
-        begin
-          response = sess.get(path,headers)
-        rescue SystemCallError, Net::HTTPBadResponse
-          failed(url)
-          return nil
+          new_page = Page.new(url,sess.get(path,headers))
+
+          block.call(new_page) if block
+          return new_page
         end
-
-        new_page = Page.new(url,response)
-
-        block.call(new_page) if block
-        return new_page
+      rescue SystemCallError, Net::HTTPBadResponse
+        failed(url)
+        return nil
       end
     end
 
