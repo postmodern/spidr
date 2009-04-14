@@ -44,6 +44,10 @@ namespace :course do
         doc.search('.ignore//a').each do |ignore|
           specs << link_to_spec.call(ignore, :behavior => :ignore)
         end
+
+        doc.search('.fail//a').each do |ignore|
+          specs << link_to_spec.call(ignore, :behavior => :fail)
+        end
       end
 
       spec.write(specs.to_json)
