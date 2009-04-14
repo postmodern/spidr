@@ -15,16 +15,23 @@ module Helpers
           message = spec['message'].to_s.dump
           url = spec['url'].to_s.dump
 
-          if spec['behavior'] == 'follow'
+          case spec['behavior']
+          when 'follow'
             base.module_eval %{
               it #{message} do
                 should_visit_link(#{url})
               end
             }
-          elsif spec['behavior'] == 'nofollow'
+          when 'nofollow'
             base.module_eval %{
               it #{message} do
                 should_visit_once(#{url})
+              end
+            }
+          when 'fail'
+            base.module_eval %{
+              it #{message} do
+                should_fail_link(#{url})
               end
             }
           else
@@ -42,7 +49,10 @@ module Helpers
     end
 
     def run_course
-      Agent.start_at(COURSE_URL,:hosts => [COURSE_URL.host])
+      Agent.start_at(COURSE_URL,:hosts => [COURSE_URL.host]) do |agent|
+        agent.every_failed_url { |url| puts "[FAILED] #{url}" }
+        agent.every_url { |url| puts url }
+      end
     end
 
     def visited_once?(link)
@@ -58,13 +68,11 @@ module Helpers
     # +false+ otherwise.
     #
     def visited_link?(link)
-      url = COURSE_URL.merge(URI.encode(link))
+      @agent.visited?(COURSE_URL.merge(URI.encode(link)))
+    end
 
-      @agent.visited_urls.each do |visited_url|
-        return true if visited_url == url
-      end
-
-      return false
+    def visit_failed?(link)
+      @agent.failed?(COURSE_URL.merge(URI.encode(link)))
     end
 
     def should_visit_link(link)
@@ -77,6 +85,11 @@ module Helpers
 
     def should_visit_once(link)
       visited_once?(link).should == true
+    end
+
+    def should_fail_link(link)
+      visited_link?(link).should == false
+      visit_failed?(link).should == true
     end
   end
 end
