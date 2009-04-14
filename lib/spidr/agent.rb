@@ -390,11 +390,11 @@ module Spidr
     # otherwise.
     #
     def visited?(url)
-      if url.kind_of?(URI)
-        return @history.include?(url)
-      else
-        return @history.include?(URI(url).to_s)
+      unless url.kind_of?(URI)
+        url = URI(url)
       end
+
+      return @history.include?(url)
     end
 
     #
