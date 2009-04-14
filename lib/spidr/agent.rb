@@ -451,17 +451,6 @@ module Spidr
     protected
 
     #
-    # Adds the specified _url_ to the failed list of URLs.
-    #
-    def failed(url)
-      url = URI(url.to_s)
-
-      @every_failed_url_blocks.each { |block| block.call(url) }
-      @failures << url
-      return true
-    end
-
-    #
     # Returns +true+ if the specified _url_ is queued for visiting, returns
     # +false+ otherwise.
     #
@@ -499,36 +488,6 @@ module Spidr
     #
     def dequeue
       @queue.shift
-    end
-
-    #
-    # Returns +true+ if the specified URL should be visited, returns
-    # +false+ otherwise.
-    #
-    def visit?(url)
-      (!(visited?(url)) &&
-       visit_scheme?(url) &&
-       visit_host?(url) &&
-       visit_port?(url) &&
-       visit_link?(url) &&
-       visit_ext?(url))
-    end
-
-    #
-    # Visits the spedified _url_ and enqueus it's links for visiting. If a
-    # _block_ is given, it will be passed a newly created Page object
-    # for the specified _url_.
-    #
-    def visit_page(url,&block)
-      get_page(url) do |page|
-        @history << page.url
-
-        page.urls.each { |next_url| enqueue(next_url) }
-
-        @every_page_blocks.each { |page_block| page_block.call(page) }
-
-        block.call(page) if block
-      end
     end
 
     #
@@ -573,6 +532,47 @@ module Spidr
     #
     def visit_ext?(url)
       @ext_rules.accept?(File.extname(url.path)[1..-1])
+    end
+
+    #
+    # Returns +true+ if the specified URL should be visited, returns
+    # +false+ otherwise.
+    #
+    def visit?(url)
+      (!(visited?(url)) &&
+       visit_scheme?(url) &&
+       visit_host?(url) &&
+       visit_port?(url) &&
+       visit_link?(url) &&
+       visit_ext?(url))
+    end
+
+    #
+    # Visits the spedified _url_ and enqueus it's links for visiting. If a
+    # _block_ is given, it will be passed a newly created Page object
+    # for the specified _url_.
+    #
+    def visit_page(url,&block)
+      get_page(url) do |page|
+        @history << page.url
+
+        page.urls.each { |next_url| enqueue(next_url) }
+
+        @every_page_blocks.each { |page_block| page_block.call(page) }
+
+        block.call(page) if block
+      end
+    end
+
+    #
+    # Adds the specified _url_ to the failed list of URLs.
+    #
+    def failed(url)
+      url = URI(url.to_s)
+
+      @every_failed_url_blocks.each { |block| block.call(url) }
+      @failures << url
+      return true
     end
 
   end
