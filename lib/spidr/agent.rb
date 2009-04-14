@@ -23,7 +23,7 @@ module Spidr
     attr_accessor :delay
 
     # History containing visited URLs
-    attr_accessor :history
+    attr_reader :history
 
     # List of unreachable URLs
     attr_reader :failures
