@@ -330,12 +330,20 @@ module Spidr
     end
 
     #
-    # For every Page that the agent visits it will be passed to the
+    # For every Page that the agent visits, pass the page to the
     # specified _block_.
     #
     def every_page(&block)
       @every_page_blocks << block
       return self
+    end
+
+    #
+    # For every Page that the agent visits, pass the headers to the given
+    # _block_.
+    #
+    def every_headers(&block)
+      every_page { |page| block.call(page.headers) }
     end
 
     #
