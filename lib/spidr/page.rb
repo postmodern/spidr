@@ -23,6 +23,7 @@ module Spidr
     def initialize(url,response)
       @url = url
       @response = response
+      @headers = response.to_hash
       @doc = nil
     end
 
@@ -208,6 +209,15 @@ module Spidr
     #
     def links
       urls = []
+
+      case code
+      when 300..303, 307
+        location = @headers['location']
+
+        unless (location.nil? || location.empty?)
+          urls << location
+        end
+      end
 
       if (html? && self.doc)
         self.doc.search('a[@href]').each do |a|
