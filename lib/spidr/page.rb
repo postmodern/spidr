@@ -193,6 +193,8 @@ module Spidr
     # returned.
     #
     def doc
+      return nil if (body.nil? || body.empty?)
+
       begin
         if html?
           return @doc ||= Nokogiri::HTML(body)
