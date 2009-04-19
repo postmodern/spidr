@@ -212,20 +212,22 @@ module Spidr
     def links
       urls = []
 
+      add_url = lambda { |url|
+        urls << url unless (url.nil? || url.empty?)
+      }
+
       case code
       when 300..303, 307
-        location = @headers['location']
-
-        unless (location.nil? || location.empty?)
-          urls << location
-        end
+        add_url.call(@headers['location'])
       end
 
-      if (html? && self.doc)
-        self.doc.search('a[@href]').each do |a|
-          url = a.get_attribute('href')
+      if (html? && doc)
+        doc.search('a[@href]').each do |a|
+          add_url.call(a.get_attribute('href'))
+        end
 
-          urls << url unless url.empty?
+        doc.search('frame[@src] | iframe[@src]').each do |iframe|
+          add_url.call(iframe.get_attribute('src'))
         end
       end
 
