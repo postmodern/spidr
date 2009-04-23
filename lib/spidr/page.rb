@@ -226,7 +226,11 @@ module Spidr
           add_url.call(a.get_attribute('href'))
         end
 
-        doc.search('frame[@src] | iframe[@src]').each do |iframe|
+        doc.search('frame[@src]').each do |iframe|
+          add_url.call(iframe.get_attribute('src'))
+        end
+
+        doc.search('iframe[@src]').each do |iframe|
           add_url.call(iframe.get_attribute('src'))
         end
       end
