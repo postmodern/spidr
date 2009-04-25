@@ -10,8 +10,13 @@ Spidr is a versatile Ruby web spidering library that can spider a site,
 multiple domains, certain links or infinitely. Spidr is designed to be fast
 and easy to use.
 
-== FEATURES/PROBLEMS:
+== FEATURES:
 
+* Follows:
+  * a tags.
+  * iframe tags.
+  * frame tags.
+  * HTTP 300, 301, 302, 303 and 307 Redirects.
 * Black-list or white-list URLs based upon:
   * Host name
   * Port number
