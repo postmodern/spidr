@@ -36,4 +36,10 @@ static/course/absolute/next.html
 static/course/remote/index.html
 static/course/remote/start.html
 static/course/remote/next.html
+static/course/frames/index.html
+static/course/frames/start.html
+static/course/frames/iframe.html
+static/course/frames/iframe_next.html
+static/course/frames/frame.html
+static/course/frames/frame_next.html
 static/course/specs.json
