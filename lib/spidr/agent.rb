@@ -342,7 +342,7 @@ module Spidr
     # For every Page that the agent visits, pass the headers to the given
     # _block_.
     #
-    def every_headers(&block)
+    def all_headers(&block)
       every_page { |page| block.call(page.headers) }
     end
 
