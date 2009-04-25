@@ -8,9 +8,9 @@ namespace :course do
 
   COURSE_DIR = File.join(STATIC_DIR,'course')
 
-  desc "Build the JSON spec file for the course"
-  task :spec do
-    File.open(File.join(COURSE_DIR,'specs.json'),'w') do |spec|
+  desc "Build the JSON specs file for the course"
+  task :specs do
+    File.open(File.join(COURSE_DIR,'specs.json'),'w') do |file|
       specs = []
 
       Dir[File.join(COURSE_DIR,'**','*.html')].each do |page|
@@ -50,7 +50,7 @@ namespace :course do
         end
       end
 
-      spec.write(specs.to_json)
+      file.write(specs.to_json)
     end
   end
 end
