@@ -1,3 +1,11 @@
+=== 0.1.7 / 2009-04-24
+
+* Added Agent#all_headers.
+* Fixed a bug where Page#headers was always +nil+.
+* Spidr::Agent will now follow the Location header in HTTP 300, 301, 302,
+  303 and 307 Redirects.
+* Spidr::Agent will now follow iframe and frame tags.
+
 === 0.1.6 / 2009-04-14
 
 * Added Agent#failures, a list of URLs which could not be visited.
