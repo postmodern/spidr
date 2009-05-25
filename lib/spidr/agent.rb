@@ -495,8 +495,6 @@ module Spidr
       {:history => @history, :queue => @queue}
     end
 
-    protected
-
     #
     # Returns +true+ if the specified _url_ is queued for visiting, returns
     # +false+ otherwise.
@@ -529,6 +527,8 @@ module Spidr
 
       return false
     end
+
+    protected
 
     #
     # Dequeues a URL that will later be visited.
