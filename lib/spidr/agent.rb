@@ -433,9 +433,7 @@ module Spidr
     # otherwise.
     #
     def visited?(url)
-      unless url.kind_of?(URI)
-        url = URI(url)
-      end
+      url = URI(url) unless url.kind_of?(URI)
 
       return @history.include?(url)
     end
@@ -445,9 +443,7 @@ module Spidr
     # returns +false+ otherwise.
     #
     def failed?(url)
-      unless url.kind_of?(URI)
-        url = URI(url)
-      end
+      url = URI(url) unless url.kind_of?(URI)
 
       return @failures.include?(url)
     end
@@ -611,9 +607,7 @@ module Spidr
     # Adds the specified _url_ to the failures list.
     #
     def failed(url)
-      unless url.kind_of?(URI)
-        url = URI(url.to_s)
-      end
+      url = URI(url.to_s) unless url.kind_of?(URI)
 
       @every_failed_url_blocks.each { |block| block.call(url) }
       @failures << url
