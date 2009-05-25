@@ -85,6 +85,7 @@ module Spidr
       @history = []
       @failures = []
       @queue = []
+      @paused = true
 
       if options[:host]
         visit_hosts_like(options[:host])
@@ -364,19 +365,34 @@ module Spidr
     #
     def start_at(url)
       clear
-      return run(url)
+      enqueue(url)
+
+      return run
     end
 
     #
-    # Start spidering at the specified _url_.
+    # Start spidering.
     #
-    def run(url)
-      enqueue(url)
-
-      until @queue.empty?
+    def run
+      until (@queue.empty? || @paused == true)
         visit_page(dequeue)
       end
 
+      return self
+    end
+
+    alias continue! run
+
+    def running?
+      @paused == false
+    end
+
+    def paused?
+      @paused == true
+    end
+
+    def pause!
+      @paused = true
       return self
     end
 
