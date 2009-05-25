@@ -487,6 +487,14 @@ module Spidr
       end
     end
 
+    #
+    # Returns the agent represented as a Hash containing the agents
+    # +history+ and +queue+ information.
+    #
+    def to_hash
+      {:history => @history, :queue => @queue}
+    end
+
     protected
 
     #
