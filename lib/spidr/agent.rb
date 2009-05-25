@@ -28,6 +28,9 @@ module Spidr
     # List of unreachable URLs
     attr_reader :failures
 
+    # Queue of URLs to visit
+    attr_reader :queue
+
     #
     # Creates a new Agent object with the given _options_ and _block_.
     # If a _block_ is given, it will be passed the newly created
