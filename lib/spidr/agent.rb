@@ -381,7 +381,13 @@ module Spidr
       return self
     end
 
-    alias continue! run
+    #
+    # Continue spidering.
+    #
+    def continue!
+      @paused = false
+      return run
+    end
 
     #
     # Returns +true+ if the agent is still spidering, returns +false+
