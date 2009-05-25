@@ -420,6 +420,8 @@ module Spidr
       return @failures.include?(url)
     end
 
+    alias pending_urls queue
+
     #
     # Creates a new Page object from the specified _url_. If a _block_ is
     # given, it will be passed the newly created Page object.
