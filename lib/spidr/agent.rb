@@ -367,7 +367,7 @@ module Spidr
       clear
       enqueue(url)
 
-      return run
+      return continue!
     end
 
     #
