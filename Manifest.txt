@@ -13,6 +13,7 @@ tasks/course.rb
 spec/spec_helper.rb
 spec/helpers/course.rb
 spec/agent_spec.rb
+spec/spidr_spec.rb
 static/course/index.html
 static/course/start.html
 static/course/fail.html
