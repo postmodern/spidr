@@ -371,7 +371,8 @@ module Spidr
     end
 
     #
-    # Start spidering.
+    # Start spidering until the queue becomes empty or the agent is
+    # paused.
     #
     def run
       until (@queue.empty? || @paused == true)
