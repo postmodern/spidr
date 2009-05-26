@@ -18,6 +18,40 @@ describe Agent do
     @agent.queue.should be_empty
   end
 
+  it "should be able to restore the history" do
+    agent = Agent.new
+    previous_history = [URI('http://www.example.com')]
+
+    agent.history = previous_history
+    agent.history.should == previous_history
+  end
+
+  it "should convert new histories to an Array of URIs" do
+    agent = Agent.new
+    previous_history = ['http://www.example.com']
+
+    agent.history = previous_history
+    agent.history.should_not == previous_history
+    agent.history.should == previous_history.map { |url| URI(url) }
+  end
+
+  it "should be able to restore the queue" do
+    agent = Agent.new
+    previous_queue = [URI('http://www.example.com')]
+
+    agent.queue = previous_queue
+    agent.queue.should == previous_queue
+  end
+
+  it "should convert new queues to an Array of URIs" do
+    agent = Agent.new
+    previous_queue = ['http://www.example.com']
+
+    agent.queue = previous_queue
+    agent.queue.should_not == previous_queue
+    agent.queue.should == previous_queue.map { |url| URI(url) }
+  end
+
   it "should be able to pause spidering" do
     count = 0
     agent = Agent.host('spidr.rubyforge.org') do |spider|
@@ -43,5 +77,12 @@ describe Agent do
     agent.continue!
 
     agent.visited?('http://spidr.rubyforge.org/').should == true
+  end
+
+  it "should provide a to_hash method that returns the queue and history" do
+    hash = @agent.to_hash
+
+    hash[:queue].should be_empty
+    hash[:history].should_not be_empty
   end
 end
