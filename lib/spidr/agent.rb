@@ -413,6 +413,22 @@ module Spidr
       return self
     end
 
+    #
+    # Resets the history of links that were previously visited to the
+    # specified _new_history_.
+    #
+    #   agent.history = ['http://tenderlovemaking.com/2009/05/06/ann-nokogiri-130rc1-has-been-released/']
+    #
+    def history=(new_history)
+      @history = new_history.map do |url|
+        unless url.kind_of?(URI)
+          URI(url.to_s)
+        else
+          url
+        end
+      end
+    end
+
     alias visited_urls history
 
     #
@@ -494,6 +510,21 @@ module Spidr
     #
     def to_hash
       {:history => @history, :queue => @queue}
+    end
+
+    #
+    # Reset the queue of links to visit to the specified _new_queue_.
+    #
+    #   agent.queue = ['http://www.vimeo.com/', 'http://www.reddit.com/']
+    #
+    def queue=(new_queue)
+      @queue = new_queue.map do |url|
+        unless url.kind_of?(URI)
+          URI(url.to_s)
+        else
+          url
+        end
+      end
     end
 
     #
