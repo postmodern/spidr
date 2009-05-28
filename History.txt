@@ -1,6 +1,6 @@
 === 0.1.8 / 2009-05-27
 
-* Added the Agent#pause!, Agent#continue! methods.
+* Added the Agent#pause! and Agent#continue! methods.
 * Added the Agent#running? and Agent#paused? methods.
 * Added an alias pending_urls to the queue methods.
 * Added Agent#queue to provide read access to the queue.
