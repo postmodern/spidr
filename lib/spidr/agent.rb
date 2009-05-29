@@ -369,10 +369,9 @@ module Spidr
     end
 
     #
-    # Clear the history and start spidering at the specified _url_.
+    # Start spidering at the specified _url_.
     #
     def start_at(url)
-      clear
       enqueue(url)
 
       return continue!
