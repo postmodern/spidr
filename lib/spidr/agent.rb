@@ -52,6 +52,8 @@ module Spidr
     # <tt>:exts</tt>:: An +Array+ of File extension patterns to visit.
     # <tt>:ignore_exts</tt>:: An +Array+ of File extension patterns to not
     #                         visit.
+    # <tt>:queue</tt>:: An initial queue of URLs to visit.
+    # <tt>:history</tt>:: An initial list of visited URLs.
     #
     def initialize(options={},&block)
       @proxy = (options[:proxy] || Spidr.proxy)
