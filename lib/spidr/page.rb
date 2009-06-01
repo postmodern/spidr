@@ -252,8 +252,8 @@ module Spidr
     # based on the url of the page.
     #
     def to_absolute(link)
-      # clean the link
-      link = URI.encode(link.to_s.gsub(/#[a-zA-Z0-9_-]*$/,''))
+      # decode, clean then re-encode the URL
+      link = URI.encode(URI.decode(link.to_s).gsub(/#[a-zA-Z0-9_-]*$/,''))
 
       begin
         relative = URI(link)
