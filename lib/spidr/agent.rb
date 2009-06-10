@@ -8,7 +8,17 @@ module Spidr
   class Agent
 
     # URL schemes to visit
-    SCHEMES = ['http', 'https']
+    SCHEMES = ['http']
+
+    begin
+      require 'net/https'
+
+      SCHEMES << 'https'
+    rescue Gem::LoadError => e
+      raise(e)
+    rescue ::LoadError
+      STDERR.puts "Warning: cannot load 'net/https', https support disabled"
+    end
 
     # Proxy to use
     attr_accessor :proxy
