@@ -451,6 +451,15 @@ module Spidr
     end
 
     #
+    # Sets the list of acceptable URL schemes to follow to the _new_schemes_.
+    #
+    #   agent.schemes = ['http']
+    #
+    def schemes=(new_schemes)
+      @schemes = new_schemes.map { |scheme| scheme.to_s }
+    end
+
+    #
     # Sets the history of links that were previously visited to the
     # specified _new_history_.
     #
