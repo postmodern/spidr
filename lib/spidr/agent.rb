@@ -19,6 +19,9 @@ module Spidr
     # Delay in between fetching pages
     attr_accessor :delay
 
+    # List of acceptable URL schemes to follow
+    attr_reader :schemes
+
     # History containing visited URLs
     attr_reader :history
 
