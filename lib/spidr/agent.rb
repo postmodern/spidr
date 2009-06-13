@@ -7,19 +7,6 @@ require 'net/http'
 module Spidr
   class Agent
 
-    # URL schemes to visit
-    SCHEMES = ['http']
-
-    begin
-      require 'net/https'
-
-      SCHEMES << 'https'
-    rescue Gem::LoadError => e
-      raise(e)
-    rescue ::LoadError
-      STDERR.puts "Warning: cannot load 'net/https', https support disabled"
-    end
-
     # Proxy to use
     attr_accessor :proxy
 
@@ -52,6 +39,9 @@ module Spidr
     # <tt>:referer</tt>:: The referer URL to send.
     # <tt>:delay</tt>:: Duration in seconds to pause between spidering each
     #                   link. Defaults to 0.
+    # <tt>:schemes</tt>:: The list of URL schemes to follow. Defaults to
+    #                     +http+ and +https+. +https+ URL schemes will be
+    #                     ignored if <tt>net/http</tt> cannot be loaded.
     # <tt>:host</tt>:: The host-name to visit.
     # <tt>:hosts</tt>:: An +Array+ of host patterns to visit.
     # <tt>:ignore_hosts</tt>:: An +Array+ of host patterns to not visit.
@@ -69,6 +59,24 @@ module Spidr
       @proxy = (options[:proxy] || Spidr.proxy)
       @user_agent = (options[:user_agent] || Spidr.user_agent)
       @referer = options[:referer]
+
+      @schemes = []
+
+      if options[:schemes]
+        @schemes += options[:schemes]
+      else
+        @schemes << 'http'
+
+        begin
+          require 'net/https'
+
+          @schemes << 'https'
+        rescue Gem::LoadError => e
+          raise(e)
+        rescue ::LoadError
+          STDERR.puts "Warning: cannot load 'net/https', https support disabled"
+        end
+      end
 
       @host_rules = Rules.new(
         :accept => options[:hosts],
@@ -112,6 +120,16 @@ module Spidr
       end
 
       block.call(self) if block
+    end
+
+    @@spidr_agent_schemes = ['http']
+
+
+    #
+    # URI schemes to follow.
+    #
+    def Spidr.schemes
+      @@spidr_agent_schemes
     end
 
     #
@@ -594,7 +612,7 @@ module Spidr
     #
     def visit_scheme?(url)
       if url.scheme
-        return SCHEMES.include?(url.scheme)
+        return @schemes.include?(url.scheme)
       else
         return true
       end
