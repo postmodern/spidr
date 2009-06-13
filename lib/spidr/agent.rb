@@ -42,9 +42,10 @@ module Spidr
     # <tt>:referer</tt>:: The referer URL to send.
     # <tt>:delay</tt>:: Duration in seconds to pause between spidering each
     #                   link. Defaults to 0.
-    # <tt>:schemes</tt>:: The list of URL schemes to follow. Defaults to
-    #                     +http+ and +https+. +https+ URL schemes will be
-    #                     ignored if <tt>net/http</tt> cannot be loaded.
+    # <tt>:schemes</tt>:: The list of acceptable URL schemes to follow.
+    #                     Defaults to +http+ and +https+. +https+ URL
+    #                     schemes will be ignored if <tt>net/http</tt>
+    #                     cannot be loaded.
     # <tt>:host</tt>:: The host-name to visit.
     # <tt>:hosts</tt>:: An +Array+ of host patterns to visit.
     # <tt>:ignore_hosts</tt>:: An +Array+ of host patterns to not visit.
