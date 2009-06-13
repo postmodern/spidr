@@ -122,16 +122,6 @@ module Spidr
       block.call(self) if block
     end
 
-    @@spidr_agent_schemes = ['http']
-
-
-    #
-    # URI schemes to follow.
-    #
-    def Spidr.schemes
-      @@spidr_agent_schemes
-    end
-
     #
     # Creates a new Agent object with the given _options_ and will begin
     # spidering at the specified _url_. If a _block_ is given it will be
