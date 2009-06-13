@@ -18,6 +18,7 @@ and easy to use.
   * frame tags.
   * HTTP 300, 301, 302, 303 and 307 Redirects.
 * Black-list or white-list URLs based upon:
+  * URL scheme.
   * Host name
   * Port number
   * Full link
