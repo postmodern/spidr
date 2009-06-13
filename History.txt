@@ -1,3 +1,18 @@
+=== 0.1.9 / 2009-06-13
+
+* Upgraded to Hoe 2.0.0.
+  * Use Hoe.spec instead of Hoe.new.
+  * Use the Hoe signing task for signed gems.
+* Added the Agent#schemes and Agent#schemes= methods.
+* Added a warning message if 'net/https' cannot be loaded.
+* Allow the list of acceptable URL schemes to be passed into Agent.new.
+* Allow history and queue information to be passed into Agent.new.
+* Agent#start_at no longer clears the history or the queue.
+* Fixed a bug in the sanitization of semi-escaped URLs.
+* Fixed a bug where https URLs would be followed even if 'net/https'
+  could not be loaded.
+* Removed Agent::SCHEMES.
+
 === 0.1.8 / 2009-05-27
 
 * Added the Agent#pause! and Agent#continue! methods.
