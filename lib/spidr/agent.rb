@@ -445,7 +445,8 @@ module Spidr
     end
 
     #
-    # Sets the list of acceptable URL schemes to follow to the _new_schemes_.
+    # Sets the list of acceptable URL schemes to follow to the
+    # _new_schemes_.
     #
     #   agent.schemes = ['http']
     #
