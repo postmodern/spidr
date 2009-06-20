@@ -539,7 +539,7 @@ module Spidr
           block.call(new_page) if block
           return new_page
         end
-      rescue SystemCallError, Net::HTTPBadResponse
+      rescue SystemCallError, Timeout::Error, Net::HTTPBadResponse
         failed(url)
         return nil
       end
