@@ -218,7 +218,7 @@ module Spidr
 
       case code
       when 300..303, 307
-        add_url.call(@headers['location'])
+        add_url.call(@headers['location'].first)
       end
 
       if (html? && doc)
