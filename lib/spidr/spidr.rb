@@ -26,21 +26,21 @@ module Spidr
   end
 
   #
-  # See Agent.start_at.
+  # @see Agent.start_at.
   #
   def Spidr.start_at(url,options={},&block)
     Agent.start_at(url,options,&block)
   end
 
   #
-  # See Agent.host.
+  # @see Agent.host.
   #
   def Spidr.host(name,options={},&block)
     Agent.host(name,options,&block)
   end
 
   #
-  # See Agent.site.
+  # @see Agent.site.
   #
   def Spidr.site(url,options={},&block)
     Agent.site(url,options,&block)

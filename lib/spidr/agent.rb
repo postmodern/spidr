@@ -458,6 +458,7 @@ module Spidr
     # Sets the history of links that were previously visited to the
     # specified _new_history_.
     #
+    # @example
     #   agent.history = ['http://tenderlovemaking.com/2009/05/06/ann-nokogiri-130rc1-has-been-released/']
     #
     def history=(new_history)
