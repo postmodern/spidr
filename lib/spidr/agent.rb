@@ -448,6 +448,7 @@ module Spidr
     # Sets the list of acceptable URL schemes to follow to the
     # _new_schemes_.
     #
+    # @example
     #   agent.schemes = ['http']
     #
     def schemes=(new_schemes)
@@ -557,6 +558,7 @@ module Spidr
     #
     # Sets the queue of links to visit to the specified _new_queue_.
     #
+    # @example
     #   agent.queue = ['http://www.vimeo.com/', 'http://www.reddit.com/']
     #
     def queue=(new_queue)
