@@ -6,4 +6,5 @@ Spec::Rake::SpecTask.new(:spec) do |t|
   t.spec_opts = ['--colour', '--format', 'specdoc']
 end
 
+task :test => :spec
 task :default => :spec
