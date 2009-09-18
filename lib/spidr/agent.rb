@@ -524,6 +524,7 @@ module Spidr
         path = '/'
       end
 
+      # append the URL query to the path
       path += "?#{url.query}" if url.query
 
       proxy_host = @proxy[:host]

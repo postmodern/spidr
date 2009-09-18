@@ -221,8 +221,10 @@ module Spidr
         location = @headers['location']
 
         if location.kind_of?(Array)
+          # handle multiple location URLs
           location.each(&add_url)
         else
+          # usually the location header contains a single String
           add_url.call(location)
         end
       end
