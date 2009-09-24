@@ -413,9 +413,7 @@ module Spidr
       end
 
       @sessions.each_value do |ports|
-        ports.each_value do |sess|
-          sess.finish
-        end
+        ports.each_value { |sess| sess.finish }
       end
 
       @sessions.clear
