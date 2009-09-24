@@ -656,6 +656,7 @@ module Spidr
 
       @sessions.delete(key)
       block.call if block
+      return nil
     end
 
     #
