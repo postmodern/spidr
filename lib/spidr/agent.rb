@@ -614,7 +614,7 @@ module Spidr
     # Returns the Net::HTTP session for the specified _host_ and _port_.
     # If a block is given, it will be passed the Net::HTTP session object.
     #
-    def get_session(host,port)
+    def get_session(host,port,&block)
       unless @sessions[host][port]
         session = @sessions[host][port] = Net::HTTP::Proxy(
           @proxy[:host],
