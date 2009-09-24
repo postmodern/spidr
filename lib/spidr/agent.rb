@@ -625,7 +625,7 @@ module Spidr
       end
 
       session = @sessions[host][port]
-      block.call(sessions) if block
+      block.call(session) if block
       return session
     end
 
