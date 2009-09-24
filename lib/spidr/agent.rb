@@ -123,7 +123,7 @@ module Spidr
         self.history = options[:history]
       end
 
-      @sessions = Hash.new { |hash,key| hash[key] = {} }
+      @sessions = {}
 
       block.call(self) if block
     end
@@ -412,8 +412,12 @@ module Spidr
         visit_page(dequeue)
       end
 
-      @sessions.each_value do |ports|
-        ports.each_value { |sess| sess.finish }
+      @sessions.each_value do |sess|
+        begin
+          sess.finish
+        rescue IOError
+          nil
+        end
       end
 
       @sessions.clear
@@ -535,12 +539,7 @@ module Spidr
       path += "?#{url.query}" if url.query
 
       begin
-        get_session(host,port) do |sess|
-          if url.scheme == 'https'
-            sess.use_ssl = true
-            sess.verify_mode = OpenSSL::SSL::VERIFY_NONE
-          end
-
+        get_session(url.scheme,host,port) do |sess|
           headers = {}
           headers['User-Agent'] = @user_agent if @user_agent
           headers['Referer'] = @referer if @referer
@@ -550,8 +549,9 @@ module Spidr
           block.call(new_page) if block
           return new_page
         end
-      rescue SystemCallError, Timeout::Error, Net::HTTPBadResponse
+      rescue SystemCallError, Timeout::Error, Net::HTTPBadResponse, IOError
         failed(url)
+        kill_session(url.scheme,host,port)
         return nil
       end
     end
@@ -619,19 +619,41 @@ module Spidr
     # Returns the Net::HTTP session for the specified _host_ and _port_.
     # If a block is given, it will be passed the Net::HTTP session object.
     #
-    def get_session(host,port,&block)
-      unless @sessions[host][port]
-        session = @sessions[host][port] = Net::HTTP::Proxy(
+    def get_session(scheme,host,port,&block)
+      key = [scheme,host,port]
+      unless @sessions[key]
+        session = Net::HTTP::Proxy(
           @proxy[:host],
           @proxy[:port],
           @proxy[:user],
           @proxy[:password]
-        ).start(host,port)
+        ).new(host,port)
+        if scheme == 'https'
+          session.use_ssl = true
+          session.verify_mode = OpenSSL::SSL::VERIFY_NONE
+        end
+        
+        @sessions[key] = session
       end
 
-      session = @sessions[host][port]
+      session = @sessions[key]
       block.call(session) if block
       return session
+    end
+
+    #
+    # Destroys a Net::HTTP session for a given _scheme_, _host_, and _port_
+    #
+    def kill_session(scheme,host,port,&block)
+      key = [scheme,host,port]
+      sess = @sessions[key]
+      begin 
+        sess.finish
+      rescue IOError
+        nil
+      end
+      @sessions.delete(key)
+      block.call
     end
 
     #
