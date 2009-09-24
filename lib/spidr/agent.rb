@@ -529,15 +529,9 @@ module Spidr
       # append the URL query to the path
       path += "?#{url.query}" if url.query
 
-      proxy_host = @proxy[:host]
-      proxy_port = @proxy[:port]
-      proxy_user = @proxy[:user]
-      proxy_password = @proxy[:password]
-
       begin
-        Net::HTTP::Proxy(proxy_host,proxy_port,proxy_user,proxy_password).start(host,port) do |sess|
+        get_session(host,port) do |sess|
           headers = {}
-
           headers['User-Agent'] = @user_agent if @user_agent
           headers['Referer'] = @referer if @referer
 
