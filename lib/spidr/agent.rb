@@ -531,6 +531,11 @@ module Spidr
 
       begin
         get_session(host,port) do |sess|
+          if url.scheme == 'https'
+            sess.use_ssl = true
+            sess.verify_mode = OpenSSL::SSL::VERIFY_NONE
+          end
+
           headers = {}
           headers['User-Agent'] = @user_agent if @user_agent
           headers['Referer'] = @referer if @referer
