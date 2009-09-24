@@ -123,6 +123,8 @@ module Spidr
         self.history = options[:history]
       end
 
+      @sessions = Hash.new { |hash,key| hash[key] = {} }
+
       block.call(self) if block
     end
 
@@ -608,6 +610,25 @@ module Spidr
     end
 
     protected
+
+    #
+    # Returns the Net::HTTP session for the specified _host_ and _port_.
+    # If a block is given, it will be passed the Net::HTTP session object.
+    #
+    def get_session(host,port)
+      unless @sessions[host][port]
+        session = @sessions[host][port] = Net::HTTP::Proxy(
+          @proxy[:host],
+          @proxy[:port],
+          @proxy[:user],
+          @proxy[:password]
+        ).start(host,port)
+      end
+
+      session = @sessions[host][port]
+      block.call(sessions) if block
+      return session
+    end
 
     #
     # Dequeues a URL that will later be visited.
