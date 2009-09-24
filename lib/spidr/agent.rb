@@ -412,6 +412,13 @@ module Spidr
         visit_page(dequeue)
       end
 
+      @sessions.each_value do |ports|
+        ports.each_value do |sess|
+          sess.finish
+        end
+      end
+
+      @sessions.clear
       return self
     end
 
