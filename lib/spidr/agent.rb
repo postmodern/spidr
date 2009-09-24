@@ -647,13 +647,15 @@ module Spidr
     def kill_session(scheme,host,port,&block)
       key = [scheme,host,port]
       sess = @sessions[key]
+
       begin 
         sess.finish
       rescue IOError
         nil
       end
+
       @sessions.delete(key)
-      block.call
+      block.call if block
     end
 
     #
