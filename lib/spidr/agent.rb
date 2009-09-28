@@ -620,6 +620,7 @@ module Spidr
     #
     def get_session(scheme,host,port,&block)
       key = [scheme,host,port]
+
       unless @sessions[key]
         session = Net::HTTP::Proxy(
           @proxy[:host],
@@ -627,11 +628,12 @@ module Spidr
           @proxy[:user],
           @proxy[:password]
         ).new(host,port)
+
         if scheme == 'https'
           session.use_ssl = true
           session.verify_mode = OpenSSL::SSL::VERIFY_NONE
         end
-        
+
         @sessions[key] = session
       end
 
