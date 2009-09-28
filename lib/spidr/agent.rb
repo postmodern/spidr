@@ -406,11 +406,11 @@ module Spidr
 
     #
     # Start spidering until the queue becomes empty or the agent is
-    # paused.
+    # paused. If a _block_ is given, pass it every visited page.
     #
-    def run
+    def run(&block)
       until (@queue.empty? || @paused == true)
-        visit_page(dequeue)
+        visit_page(dequeue,&block)
       end
 
       @sessions.each_value do |sess|
