@@ -3,6 +3,7 @@ require 'spidr/page'
 require 'spidr/spidr'
 
 require 'net/http'
+require 'set'
 
 module Spidr
   class Agent
@@ -106,7 +107,7 @@ module Spidr
       @every_page_blocks = []
 
       @delay = (options[:delay] || 0)
-      @history = []
+      @history = SortedSet[]
       @failures = []
       @queue = []
       @paused = true
@@ -474,29 +475,29 @@ module Spidr
     #   agent.history = ['http://tenderlovemaking.com/2009/05/06/ann-nokogiri-130rc1-has-been-released/']
     #
     def history=(new_history)
-      @history = new_history.map do |url|
-        unless url.kind_of?(URI)
-          URI(url.to_s)
-        else
-          url
-        end
-      end
-    end
+      @history.clear
 
-    alias visited_urls history
+      new_history.each do |url|
+        @history << url.to_s
+      end
+
+      return @history
+    end
 
     #
     # Returns the +Array+ of visited URLs.
     #
-    def visited_links
-      @history.map { |uri| uri.to_s }
+    def visited_urls
+      @history.map { |link| URI(link) }
     end
+
+    alias visited_links history
 
     #
     # Return the +Array+ of hosts that were visited.
     #
     def visited_hosts
-      @history.map { |uri| uri.host }.uniq
+      visited_urls.map { |uri| uri.host }.uniq
     end
 
     #
@@ -504,9 +505,7 @@ module Spidr
     # otherwise.
     #
     def visited?(url)
-      url = URI(url) unless url.kind_of?(URI)
-
-      return @history.include?(url)
+      @history.include?(url.to_s)
     end
 
     #
@@ -730,7 +729,7 @@ module Spidr
     #
     def visit_page(url,&block)
       get_page(url) do |page|
-        @history << page.url
+        @history << page.url.to_s
 
         page.urls.each { |next_url| enqueue(next_url) }
 
