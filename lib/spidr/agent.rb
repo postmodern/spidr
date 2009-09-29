@@ -157,6 +157,8 @@ module Spidr
       return run(&block)
     end
 
+    alias start continue!
+
     #
     # Returns +true+ if the agent is still spidering, returns +false+
     # otherwise.
