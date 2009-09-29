@@ -668,47 +668,47 @@ module Spidr
     end
 
     #
-    # Returns +true+ if the specified _url_ should be visited, based on
-    # it's scheme, returns +false+ otherwise.
+    # Returns +true+ if the specified _scheme_ should be visited, returns
+    # +false+ otherwise.
     #
-    def visit_scheme?(url)
-      if url.scheme
-        return @schemes.include?(url.scheme)
+    def visit_scheme?(scheme)
+      if scheme
+        return @schemes.include?(scheme)
       else
         return true
       end
     end
 
     #
-    # Returns +true+ if the specified _url_ should be visited, based on
-    # the host of the _url_, returns +false+ otherwise.
+    # Returns +true+ if the specified _host_ should be visited returns
+    # +false+ otherwise.
     #
-    def visit_host?(url)
-      @host_rules.accept?(url.host)
+    def visit_host?(host)
+      @host_rules.accept?(host)
     end
 
     #
-    # Returns +true+ if the specified _url_ should be visited, based on
-    # the port of the _url_, returns +false+ otherwise.
+    # Returns +true+ if the specified _port_ should be visited, returns
+    # +false+ otherwise.
     #
-    def visit_port?(url)
-      @port_rules.accept?(url.port)
+    def visit_port?(port)
+      @port_rules.accept?(port)
     end
 
     #
-    # Returns +true+ if the specified _url_ should be visited, based on
-    # the pattern of the _url_, returns +false+ otherwise.
+    # Returns +true+ if the specified _link_ should be visited, returns
+    # +false+ otherwise.
     #
-    def visit_link?(url)
-      @link_rules.accept?(url.to_s)
+    def visit_link?(link)
+      @link_rules.accept?(link)
     end
 
     #
-    # Returns +true+ if the specified _url_ should be visited, based on
-    # the file extension of the _url_, returns +false+ otherwise.
+    # Returns +true+ if the specified _path_ should be visited, based on
+    # the file extension of the _path_, returns +false+ otherwise.
     #
-    def visit_ext?(url)
-      @ext_rules.accept?(File.extname(url.path)[1..-1])
+    def visit_ext?(path)
+      @ext_rules.accept?(File.extname(path)[1..-1])
     end
 
     #
@@ -717,11 +717,11 @@ module Spidr
     #
     def visit?(url)
       (!(visited?(url)) &&
-       visit_scheme?(url) &&
-       visit_host?(url) &&
-       visit_port?(url) &&
-       visit_link?(url) &&
-       visit_ext?(url))
+       visit_scheme?(url.scheme) &&
+       visit_host?(url.host) &&
+       visit_port?(url.port) &&
+       visit_link?(url.to_s) &&
+       visit_ext?(url.path))
     end
 
     #
