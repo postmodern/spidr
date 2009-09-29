@@ -56,7 +56,7 @@ module Spidr
 
       @running = false
       @delay = (options[:delay] || 0)
-      @history = SortedSet[]
+      @history = Set[]
       @failures = []
       @queue = []
 
@@ -177,20 +177,24 @@ module Spidr
       @history.clear
 
       new_history.each do |url|
-        @history << url.to_s
+        @history << unless url.kind_of?(URI)
+                      URI(url.to_s)
+                    else
+                      url
+                    end
       end
 
       return @history
     end
 
-    #
-    # Returns the +Array+ of visited URLs.
-    #
-    def visited_urls
-      @history.map { |link| URI(link) }
-    end
+    alias visited_urls history
 
-    alias visited_links history
+    #
+    # Returns the +Array+ of visited links.
+    #
+    def visited_links
+      @history.map { |url| url.to_s }
+    end
 
     #
     # Return the +Array+ of hosts that were visited.
@@ -204,7 +208,9 @@ module Spidr
     # otherwise.
     #
     def visited?(url)
-      @history.include?(url.to_s)
+      url = URI(url) unless url.kind_of?(URI)
+
+      return @history.include?(url)
     end
 
     #
@@ -212,7 +218,7 @@ module Spidr
     # returns +false+ otherwise.
     #
     def failed?(url)
-      url = URI(url) unless url.kind_of?(URI)
+      url = URI(url.to_s) unless url.kind_of?(URI)
 
       return @failures.include?(url)
     end
@@ -293,7 +299,7 @@ module Spidr
     #
     def enqueue(url)
       link = url.to_s
-      url = URI(link)
+      url = URI(link) unless url.kind_of?(URI)
 
       if (!(queued?(url)) && visit?(url))
         begin
@@ -393,7 +399,7 @@ module Spidr
     #
     def visit_page(url,&block)
       get_page(url) do |page|
-        @history << page.url.to_s
+        @history << page.url
 
         begin
           @every_page_blocks.each { |page_block| page_block.call(page) }

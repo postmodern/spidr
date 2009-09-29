@@ -20,7 +20,7 @@ describe Agent do
 
   it "should be able to restore the history" do
     agent = Agent.new
-    previous_history = SortedSet['http://www.example.com']
+    previous_history = Set[URI('http://www.example.com')]
 
     agent.history = previous_history
     agent.history.should == previous_history
@@ -28,8 +28,8 @@ describe Agent do
 
   it "should convert new histories to an Array of links" do
     agent = Agent.new
-    previous_history = [URI('http://www.example.com')]
-    expected_history = SortedSet['http://www.example.com']
+    previous_history = ['http://www.example.com']
+    expected_history = Set[URI('http://www.example.com')]
 
     agent.history = previous_history
     agent.history.should_not == previous_history
