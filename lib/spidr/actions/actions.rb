@@ -1,4 +1,5 @@
 require 'spidr/actions/exceptions/paused'
+require 'spidr/actions/exceptions/skip_link'
 
 module Spidr
   module Actions
@@ -30,6 +31,13 @@ module Spidr
     #
     def paused?
       @paused == true
+    end
+
+    #
+    # Causes the agent to skip the link being enqueued.
+    #
+    def skip_link!
+      raise(SkipLink)
     end
   end
 end

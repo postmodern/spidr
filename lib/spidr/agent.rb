@@ -295,12 +295,16 @@ module Spidr
       url = URI(link)
 
       if (!(queued?(url)) && visit?(url))
-        @every_url_blocks.each { |block| block.call(url) }
+        begin
+          @every_url_blocks.each { |block| block.call(url) }
 
-        @urls_like_blocks.each do |pattern,blocks|
-          if ((pattern.kind_of?(Regexp) && link =~ pattern) || pattern == link || pattern == url)
-            blocks.each { |url_block| url_block.call(url) }
+          @urls_like_blocks.each do |pattern,blocks|
+            if ((pattern.kind_of?(Regexp) && link =~ pattern) || pattern == link || pattern == url)
+              blocks.each { |url_block| url_block.call(url) }
+            end
           end
+        rescue Actions::SkipLink
+          return false
         end
 
         @queue << url
