@@ -2,7 +2,7 @@ require 'spidr/actions/exceptions/action'
 
 module Spidr
   module Actions
-    class SkipLink < Action
+    class SkipPage < Action
     end
   end
 end
