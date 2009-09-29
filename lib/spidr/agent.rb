@@ -208,7 +208,7 @@ module Spidr
     # otherwise.
     #
     def visited?(url)
-      url = URI(url) unless url.kind_of?(URI)
+      url = URI(url.to_s) unless url.kind_of?(URI)
 
       return @history.include?(url)
     end
@@ -275,13 +275,17 @@ module Spidr
     #   agent.queue = ['http://www.vimeo.com/', 'http://www.reddit.com/']
     #
     def queue=(new_queue)
-      @queue = new_queue.map do |url|
-        unless url.kind_of?(URI)
-          URI(url.to_s)
-        else
-          url
-        end
+      @queue.clear
+
+      new_queue.each do |url|
+        @queue << unless url.kind_of?(URI)
+                    URI(url.to_s)
+                  else
+                    url
+                  end
       end
+
+      return @queue
     end
 
     #
