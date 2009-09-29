@@ -165,8 +165,6 @@ module Spidr
       @running == true
     end
 
-    alias start continue!
-
     #
     # Sets the history of links that were previously visited to the
     # specified _new_history_.
