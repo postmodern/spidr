@@ -207,6 +207,40 @@ module Spidr
     end
 
     #
+    # Searches the document for XPath or CSS Path paths, with an optional
+    # Hash of namespaces may be appended. Returns +[]+ if nothing could be
+    # found, or if the page does not have either a +text/html+ or
+    # +text/xml+ content-type.
+    #
+    #   page.search('//a[@href]')
+    #
+    def search(*paths)
+      if doc
+        return doc.search(*paths)
+      end
+
+      return []
+    end
+
+    #
+    # Searches for the first occurrence an XPath or CSS Path expression.
+    # Returns +nil+ if nothing could be found, or if the page does not have
+    # either a +text/html+ or +text/xml+ content-type.
+    #
+    #   page.at('//title')
+    #
+    def at(*arguments)
+      if doc
+        return doc.at(*arguments)
+      end
+
+      return nil
+    end
+
+    alias / search
+    alias % at
+
+    #
     # Returns all links from the HTML page.
     #
     def links
