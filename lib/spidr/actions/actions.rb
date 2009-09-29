@@ -20,6 +20,13 @@ module Spidr
     end
 
     #
+    # Sets the pause state of the agent.
+    #
+    def pause=(state)
+      @paused = state
+    end
+
+    #
     # Pauses the agent, causing spidering to temporarily stop.
     #
     def pause!

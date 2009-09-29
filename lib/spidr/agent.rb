@@ -136,7 +136,7 @@ module Spidr
     def run(&block)
       @running = true
 
-      until @queue.empty?
+      until (@queue.empty? && paused?)
         begin
           visit_page(dequeue,&block)
         rescue Actions::Paused
