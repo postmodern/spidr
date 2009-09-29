@@ -126,7 +126,7 @@ module Spidr
     def start_at(url,&block)
       enqueue(url)
 
-      return continue!(&block)
+      return run(&block)
     end
 
     #
@@ -304,6 +304,8 @@ module Spidr
               blocks.each { |url_block| url_block.call(url) }
             end
           end
+        rescue Actions::Paused => action
+          raise(action)
         rescue Actions::SkipLink
           return false
         rescue Actions::Action
@@ -397,6 +399,8 @@ module Spidr
           @every_page_blocks.each { |page_block| page_block.call(page) }
 
           block.call(page) if block
+        rescue Actions::Paused => action
+          raise(action)
         rescue Actions::SkipPage
           return nil
         rescue Actions::Action
