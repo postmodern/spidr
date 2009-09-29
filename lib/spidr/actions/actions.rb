@@ -3,7 +3,7 @@ require 'spidr/actions/exceptions/paused'
 module Spidr
   module Actions
     def initialize(options={},&block)
-      @paused = true
+      @paused = false
 
       super(options,&block)
     end
