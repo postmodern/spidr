@@ -118,12 +118,13 @@ module Spidr
     end
 
     #
-    # Start spidering at the specified _url_.
+    # Start spidering at the specified _url_. If a _block_ is given, it will
+    # be passed every page visited.
     #
-    def start_at(url)
+    def start_at(url,&block)
       enqueue(url)
 
-      return continue!
+      return continue!(&block)
     end
 
     #
@@ -148,11 +149,12 @@ module Spidr
     end
 
     #
-    # Continue spidering.
+    # Continue spidering. If a _block_ is given, it will be passed every
+    # page visited.
     #
-    def continue!
+    def continue!(&block)
       @paused = false
-      return run
+      return run(&block)
     end
 
     #
