@@ -141,6 +141,7 @@ module Spidr
           visit_page(dequeue,&block)
         rescue Actions::Paused
           return self
+        rescue Actions::Action
         end
       end
 
@@ -305,6 +306,7 @@ module Spidr
           end
         rescue Actions::SkipLink
           return false
+        rescue Actions::Action
         end
 
         @queue << url
@@ -397,6 +399,7 @@ module Spidr
           block.call(page) if block
         rescue Actions::SkipPage
           return nil
+        rescue Actions::Action
         end
 
         page.urls.each { |next_url| enqueue(next_url) }
