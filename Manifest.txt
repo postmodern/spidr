@@ -5,6 +5,7 @@ Rakefile
 lib/spidr.rb
 lib/spidr/page.rb
 lib/spidr/rules.rb
+lib/spidr/filters.rb
 lib/spidr/events.rb
 lib/spidr/agent.rb
 lib/spidr/spidr.rb

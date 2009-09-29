@@ -1,6 +1,8 @@
 module Spidr
   module Events
-    def initialize(&block)
+    def initialize(options={},&block)
+      super(options)
+
       @every_url_blocks = []
       @every_failed_url_blocks = []
       @urls_like_blocks = Hash.new { |hash,key| hash[key] = [] }
