@@ -75,7 +75,6 @@ describe Agent do
       end
     end
 
-    agent.pause!
     agent.continue!
 
     agent.visited?('http://spidr.rubyforge.org/').should == true
