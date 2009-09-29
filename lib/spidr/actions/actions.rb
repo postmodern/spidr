@@ -1,5 +1,6 @@
 require 'spidr/actions/exceptions/paused'
 require 'spidr/actions/exceptions/skip_link'
+require 'spidr/actions/exceptions/skip_page'
 
 module Spidr
   module Actions
@@ -38,6 +39,13 @@ module Spidr
     #
     def skip_link!
       raise(SkipLink)
+    end
+
+    #
+    # Causes the agent to skip the page being visited.
+    #
+    def skip_page!
+      raise(SkipPage)
     end
   end
 end

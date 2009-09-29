@@ -12,6 +12,7 @@ lib/spidr/actions/exceptions.rb
 lib/spidr/actions/exceptions/action.rb
 lib/spidr/actions/exceptions/paused.rb
 lib/spidr/actions/exceptions/skip_link.rb
+lib/spidr/actions/exceptions/skip_page.rb
 lib/spidr/actions/actions.rb
 lib/spidr/agent.rb
 lib/spidr/spidr.rb

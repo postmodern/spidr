@@ -391,11 +391,15 @@ module Spidr
       get_page(url) do |page|
         @history << page.url.to_s
 
+        begin
+          @every_page_blocks.each { |page_block| page_block.call(page) }
+
+          block.call(page) if block
+        rescue Actions::SkipPage
+          return nil
+        end
+
         page.urls.each { |next_url| enqueue(next_url) }
-
-        @every_page_blocks.each { |page_block| page_block.call(page) }
-
-        block.call(page) if block
       end
     end
 
