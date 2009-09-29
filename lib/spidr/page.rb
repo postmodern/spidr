@@ -241,6 +241,15 @@ module Spidr
     alias % at
 
     #
+    # Returns the title of the HTML page.
+    #
+    def title
+      if (node = at('//title'))
+        return node.inner_text
+      end
+    end
+
+    #
     # Returns all links from the HTML page.
     #
     def links
