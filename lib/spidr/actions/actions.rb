@@ -26,14 +26,6 @@ module Spidr
     end
 
     #
-    # Returns +true+ if the agent is still spidering, returns +false+
-    # otherwise.
-    #
-    def running?
-      @paused == false
-    end
-
-    #
     # Returns +true+ if the agent is paused, returns +false+ otherwise.
     #
     def paused?

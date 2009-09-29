@@ -54,6 +54,7 @@ module Spidr
       @user_agent = (options[:user_agent] || Spidr.user_agent)
       @referer = options[:referer]
 
+      @running = false
       @delay = (options[:delay] || 0)
       @history = SortedSet[]
       @failures = []
@@ -133,6 +134,8 @@ module Spidr
     # paused. If a _block_ is given, pass it every visited page.
     #
     def run(&block)
+      @running = true
+
       until @queue.empty?
         begin
           visit_page(dequeue,&block)
@@ -140,6 +143,8 @@ module Spidr
           return self
         end
       end
+
+      @running = false
 
       @sessions.each_value do |sess|
         begin
@@ -151,6 +156,13 @@ module Spidr
 
       @sessions.clear
       return self
+    end
+
+    #
+    # Returns +true+ if the agent is running, returns +false+ otherwise.
+    #
+    def running?
+      @running == true
     end
 
     alias start continue!
