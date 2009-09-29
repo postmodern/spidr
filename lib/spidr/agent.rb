@@ -1,5 +1,6 @@
 require 'spidr/filters'
 require 'spidr/events'
+require 'spidr/actions'
 require 'spidr/page'
 require 'spidr/spidr'
 
@@ -11,6 +12,7 @@ module Spidr
 
     include Filters
     include Events
+    include Actions
 
     # Proxy to use
     attr_accessor :proxy
@@ -56,7 +58,6 @@ module Spidr
       @history = SortedSet[]
       @failures = []
       @queue = []
-      @paused = true
 
       @sessions = {}
 
@@ -132,8 +133,12 @@ module Spidr
     # paused. If a _block_ is given, pass it every visited page.
     #
     def run(&block)
-      until (@queue.empty? || @paused == true)
-        visit_page(dequeue,&block)
+      until @queue.empty?
+        begin
+          visit_page(dequeue,&block)
+        rescue Actions::Paused
+          return self
+        end
       end
 
       @sessions.each_value do |sess|
@@ -148,39 +153,7 @@ module Spidr
       return self
     end
 
-    #
-    # Continue spidering. If a _block_ is given, it will be passed every
-    # page visited.
-    #
-    def continue!(&block)
-      @paused = false
-      return run(&block)
-    end
-
     alias start continue!
-
-    #
-    # Returns +true+ if the agent is still spidering, returns +false+
-    # otherwise.
-    #
-    def running?
-      @paused == false
-    end
-
-    #
-    # Returns +true+ if the agent is paused, returns +false+ otherwise.
-    #
-    def paused?
-      @paused == true
-    end
-
-    #
-    # Pauses the agent, causing spidering to temporarily stop.
-    #
-    def pause!
-      @paused = true
-      return self
-    end
 
     #
     # Sets the history of links that were previously visited to the

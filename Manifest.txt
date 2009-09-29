@@ -7,6 +7,11 @@ lib/spidr/page.rb
 lib/spidr/rules.rb
 lib/spidr/filters.rb
 lib/spidr/events.rb
+lib/spidr/actions.rb
+lib/spidr/actions/exceptions.rb
+lib/spidr/actions/exceptions/action.rb
+lib/spidr/actions/exceptions/paused.rb
+lib/spidr/actions/actions.rb
 lib/spidr/agent.rb
 lib/spidr/spidr.rb
 lib/spidr/version.rb
