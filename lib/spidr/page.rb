@@ -28,7 +28,7 @@ module Spidr
     # Returns the response code from the page.
     #
     def code
-      @response.code
+      @response.code.to_i
     end
 
     #
