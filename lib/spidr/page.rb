@@ -325,9 +325,9 @@ module Spidr
 
       dirs.each do |dir|
         if dir == '..'
-          dirs.pop
+          new_dirs.pop
         elsif dir != '.'
-          dirs.push(dir)
+          new_dirs.push(dir)
         end
       end
 
