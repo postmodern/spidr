@@ -307,7 +307,9 @@ module Spidr
       end
 
       unless url.path.empty?
-        # make sure the path does not contain any .. or . directories.
+        # make sure the path does not contain any .. or . directories,
+        # since URI::Generic#merge cannot normalize paths such as
+        # "/stuff/../"
         url.path = normalize_path(url.path)
       end
 
