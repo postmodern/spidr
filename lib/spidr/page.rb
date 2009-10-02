@@ -296,35 +296,46 @@ module Spidr
       links.map { |link| to_absolute(link) }.compact
     end
 
-    protected
-
     #
-    # Converts the specified _link_ into an absolute URL
-    # based on the url of the page.
+    # Normalizes a link into a proper URI.
     #
-    def to_absolute(link)
-      # decode, clean then re-encode the URL
-      link = URI.encode(URI.decode(link.to_s).gsub(/#[a-zA-Z0-9_-]*$/,''))
-
+    def normalize_link(link)
       begin
-        relative = URI(link)
-        absolute = @url.merge(relative)
-
-        if absolute.path
-          if absolute.path.empty?
-            # default the absolute path to '/'
-            absolute.path = '/'
-          else
-            # make sure the path does not contain any .. or . directories.
-            absolute.path = File.expand_path(absolute.path)
-          end
-        end
-
-        return absolute
-      rescue URI::InvalidURIError => e
+        url = @url.merge(link.to_s)
+      rescue URI::InvalidURIError
         return nil
       end
+
+      unless url.path.empty?
+        # make sure the path does not contain any .. or . directories.
+        url.path = normalize_path(url.path)
+      else
+        # default the absolute path to '/'
+        url.path = '/'
+      end
+
+      return url
     end
+
+    #
+    # Normalizes a URI decoded path, into a proper absolute path.
+    #
+    def normalize_path(path)
+      dirs = path.split('/')
+      new_dirs = []
+
+      dirs.each do |dir|
+        if dir == '..'
+          dirs.pop
+        elsif dir != '.'
+          dirs.push(dir)
+        end
+      end
+
+      return new_dirs.join('/')
+    end
+
+    protected
 
     #
     # Provides transparent access to the values in the +headers+ +Hash+.
