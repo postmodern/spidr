@@ -176,6 +176,14 @@ module Spidr
     end
 
     #
+    # Returns +true+ if the page is a plain text file, returns +false+
+    # otherwise.
+    #
+    def txt?
+      (content_type =~ /text\/plain/) == 0
+    end
+
+    #
     # Returns the body of the page in +String+ form.
     #
     def body
