@@ -306,7 +306,7 @@ module Spidr
         return nil
       end
 
-      unless url.path.empty?
+      unless (url.path.nil? || url.path.empty?)
         # make sure the path does not contain any .. or . directories,
         # since URI::Generic#merge cannot normalize paths such as
         # "/stuff/../"
