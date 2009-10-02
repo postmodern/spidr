@@ -293,7 +293,7 @@ module Spidr
     # Returns all links from the HtML page as absolute URLs.
     #
     def urls
-      links.map { |link| to_absolute(link) }.compact
+      links.map { |link| normalize_link(link) }.compact
     end
 
     #
