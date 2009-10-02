@@ -309,9 +309,6 @@ module Spidr
       unless url.path.empty?
         # make sure the path does not contain any .. or . directories.
         url.path = normalize_path(url.path)
-      else
-        # default the absolute path to '/'
-        url.path = '/'
       end
 
       return url
