@@ -10,9 +10,6 @@ module Spidr
     # HTTP Response
     attr_reader :response
 
-    # Body returned for the page
-    attr_reader :body
-
     # Headers returned with the body
     attr_reader :headers
 
