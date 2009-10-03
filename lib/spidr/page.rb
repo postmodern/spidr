@@ -335,18 +335,20 @@ module Spidr
     # Normalizes a URI decoded path, into a proper absolute path.
     #
     def normalize_path(path)
-      dirs = path.split('/')
+      dirs = path.gsub(/[\/]{2,}/,'/').scan(/[^\/]*\/|[^\/]+$/)
       new_dirs = []
 
       dirs.each do |dir|
-        if dir == '..'
-          new_dirs.pop
-        elsif dir != '.'
+        if (dir == '..' || dir == '../')
+          unless new_dirs == ['/']
+            new_dirs.pop
+          end
+        elsif (dir != '.' && dir != './')
           new_dirs.push(dir)
         end
       end
 
-      return new_dirs.join('/')
+      return new_dirs.join
     end
 
     protected
