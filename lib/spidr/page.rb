@@ -38,6 +38,8 @@ module Spidr
       code == 200
     end
 
+    alias ok? is_ok?
+
     #
     # Returns +true+ if the response code is 301 or 307, returns +false+
     # otherwise.
@@ -45,6 +47,8 @@ module Spidr
     def is_redirect?
       (code == 301 || code == 307)
     end
+
+    alias redirect? is_redirect?
 
     #
     # Returns +true+ if the response code is 308, returns +false+ otherwise.
@@ -67,6 +71,8 @@ module Spidr
       code == 401
     end
 
+    alias unauthorized? is_unauthorized?
+
     #
     # Returns +true+ if the response code is 403, returns +false+ otherwise.
     #
@@ -74,12 +80,16 @@ module Spidr
       code == 403
     end
 
+    alias forbidden? is_forbidden?
+
     #
     # Returns +true+ if the response code is 404, returns +false+ otherwise.
     #
     def is_missing?
       code == 404
     end
+
+    alias missing? is_missing?
 
     #
     # Returns +true+ if the response code is 500, returns +false+ otherwise.
