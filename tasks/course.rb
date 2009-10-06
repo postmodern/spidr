@@ -1,3 +1,10 @@
+lib_dir = File.expand_path(File.join(File.dirname(__FILE__),'..','lib'))
+unless $LOAD_PATH.include?(lib_dir)
+  $LOAD_PATH.unshift(lib_dir)
+end
+
+require 'spidr/extensions/uri'
+
 require 'nokogiri'
 require 'json'
 
@@ -22,7 +29,7 @@ namespace :course do
           absolute_url = page_url.merge(URI.encode(relative_url))
 
           if absolute_url.path
-            absolute_url.path = File.expand_path(absolute_url.path)
+            absolute_url.path = URI.expand_path(absolute_url.path)
           end
 
           spec_data.merge(
