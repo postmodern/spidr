@@ -57,7 +57,7 @@ module Spidr
       @running = false
       @delay = (options[:delay] || 0)
       @history = Set[]
-      @failures = []
+      @failures = Set[]
       @queue = []
 
       @sessions = {}
