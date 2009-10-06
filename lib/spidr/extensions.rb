@@ -1,0 +1,1 @@
+require 'spidr/extensions/uri'

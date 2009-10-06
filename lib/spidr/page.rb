@@ -1,3 +1,5 @@
+require 'spidr/extensions/uri'
+
 require 'uri'
 require 'nokogiri'
 
@@ -325,30 +327,10 @@ module Spidr
         # make sure the path does not contain any .. or . directories,
         # since URI::Generic#merge cannot normalize paths such as
         # "/stuff/../"
-        url.path = normalize_path(url.path)
+        url.path = url.expand_path
       end
 
       return url
-    end
-
-    #
-    # Normalizes a URI decoded path, into a proper absolute path.
-    #
-    def normalize_path(path)
-      dirs = path.gsub(/[\/]{2,}/,'/').scan(/[^\/]*\/|[^\/]+$/)
-      new_dirs = []
-
-      dirs.each do |dir|
-        if (dir == '..' || dir == '../')
-          unless new_dirs == ['/']
-            new_dirs.pop
-          end
-        elsif (dir != '.' && dir != './')
-          new_dirs.push(dir)
-        end
-      end
-
-      return new_dirs.join
     end
 
     protected

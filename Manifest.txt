@@ -3,6 +3,8 @@ Manifest.txt
 README.txt
 Rakefile
 lib/spidr.rb
+lib/spidr/extensions.rb
+lib/spidr/extensions/uri.rb
 lib/spidr/page.rb
 lib/spidr/rules.rb
 lib/spidr/filters.rb
@@ -23,6 +25,7 @@ tasks/course.rb
 spec/spec_helper.rb
 spec/helpers/course.rb
 spec/helpers/page.rb
+spec/extensions/uri_spec.rb
 spec/page_examples.rb
 spec/page_spec.rb
 spec/agent_spec.rb

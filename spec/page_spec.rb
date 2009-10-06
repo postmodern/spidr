@@ -78,47 +78,4 @@ describe Page do
       @page.title.should be_nil
     end
   end
-
-  describe "normalize" do
-    before(:all) do
-      @page = get_page('http://spidr.rubyforge.org/course/')
-    end
-
-    describe "path" do
-      it "should preserve single directory paths" do
-        @page.normalize_path('path').should == 'path'
-      end
-
-      it "should preserve trailing '/'" do
-        @page.normalize_path('test/path/').should == 'test/path/'
-      end
-
-      it "should remove multiple '/' characters" do
-        @page.normalize_path('///test///path///').should == '/test/path/'
-      end
-
-      it "should remove '.' directories from the path" do
-        @page.normalize_path('test/./path').should == 'test/path'
-      end
-
-      it "should handle '..' directories properly" do
-        @page.normalize_path('test/../path').should == 'path'
-      end
-
-      it "should limit the number of '..' directories resolved" do
-        @page.normalize_path('/test/../../../..').should == '/'
-      end
-
-      it "should preserve absolute paths" do
-        @page.normalize_path('/test/path').should == '/test/path'
-      end
-
-      it "should preserve the root path" do
-        @page.normalize_path('/').should == '/'
-      end
-    end
-
-    describe "link" do
-    end
-  end
 end
