@@ -310,13 +310,13 @@ module Spidr
     # Returns all links from the HtML page as absolute URLs.
     #
     def urls
-      links.map { |link| normalize_link(link) }.compact
+      links.map { |link| to_absolute(link) }.compact
     end
 
     #
     # Normalizes a link into a proper URI.
     #
-    def normalize_link(link)
+    def to_absolute(link)
       begin
         url = @url.merge(link.to_s)
       rescue URI::InvalidURIError
@@ -327,7 +327,7 @@ module Spidr
         # make sure the path does not contain any .. or . directories,
         # since URI::Generic#merge cannot normalize paths such as
         # "/stuff/../"
-        url.path = url.expand_path
+        url.path = URI.expand_path(url.path)
       end
 
       return url
