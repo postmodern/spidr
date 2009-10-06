@@ -424,8 +424,6 @@ module Spidr
     # Adds the specified _url_ to the failures list.
     #
     def failed(url)
-      url = URI(url.to_s) unless url.kind_of?(URI)
-
       @every_failed_url_blocks.each { |block| block.call(url) }
       @failures << url
       return true
