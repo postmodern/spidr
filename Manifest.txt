@@ -28,6 +28,7 @@ spec/helpers/page.rb
 spec/extensions/uri_spec.rb
 spec/page_examples.rb
 spec/page_spec.rb
+spec/actions_spec.rb
 spec/agent_spec.rb
 spec/spidr_spec.rb
 static/course/index.html
