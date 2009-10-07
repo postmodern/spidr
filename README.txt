@@ -49,11 +49,11 @@ and easy to use.
 
 * Spider a host:
 
-    Spidr.host('www.0x000000.com')
+    Spidr.host('coderrr.wordpress.com')
 
 * Spider a site:
 
-    Spidr.site('http://hackety.org/')
+    Spidr.site('http://rubyflow.com/')
 
 * Print out visited URLs:
 
