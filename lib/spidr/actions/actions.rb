@@ -4,10 +4,10 @@ require 'spidr/actions/exceptions/skip_page'
 
 module Spidr
   module Actions
-    def initialize(options={},&block)
+    def initialize(options={})
       @paused = false
 
-      super(options,&block)
+      super(options)
     end
 
     #

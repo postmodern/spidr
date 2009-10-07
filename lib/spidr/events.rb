@@ -1,6 +1,6 @@
 module Spidr
   module Events
-    def initialize(options={},&block)
+    def initialize(options={})
       super(options)
 
       @every_url_blocks = []
@@ -8,8 +8,6 @@ module Spidr
       @urls_like_blocks = Hash.new { |hash,key| hash[key] = [] }
 
       @every_page_blocks = []
-
-      block.call(self) if block
     end
 
     #

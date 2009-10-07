@@ -28,7 +28,7 @@ module Spidr
     # <tt>:ignore_exts</tt>:: An +Array+ of File extension patterns to not
     #                         visit.
     #
-    def initialize(options={},&block)
+    def initialize(options={})
       @schemes = []
 
       if options[:schemes]

@@ -62,7 +62,9 @@ module Spidr
 
       @sessions = {}
 
-      super(options,&block)
+      super(options)
+
+      block.call(self) if block
     end
 
     #
