@@ -33,14 +33,6 @@ and easy to use.
 * Custom User-Agent strings.
 * Custom proxy settings.
 
-== REQUIREMENTS:
-
-* {nokogiri}[http://nokogiri.rubyforge.org/]
-
-== INSTALL:
-
-  $ sudo gem install spidr
-
 == EXAMPLES:
 
 * Start spidering from a URL:
@@ -60,6 +52,14 @@ and easy to use.
     Spidr.site('http://rubyinside.org/') do |spider|
       spider.every_url { |url| puts url }
     end
+
+== REQUIREMENTS:
+
+* {nokogiri}[http://nokogiri.rubyforge.org/]
+
+== INSTALL:
+
+  $ sudo gem install spidr
 
 == LICENSE:
 
