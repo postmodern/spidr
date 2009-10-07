@@ -32,7 +32,6 @@ and easy to use.
   * Pause spidering.
   * Skip processing of links.
   * Skip processing of pages.
-* Pause and continue spidering.
 * Restore the spidering queue and history from a previous session.
 * Custom User-Agent strings.
 * Custom proxy settings.
