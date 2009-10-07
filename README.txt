@@ -28,6 +28,10 @@ and easy to use.
   * Every visited URL.
   * Every visited URL that matches a specified pattern.
   * Every URL that failed to be visited.
+* Provides action methods to:
+  * Pause spidering.
+  * Skip processing of links.
+  * Skip processing of pages.
 * Pause and continue spidering.
 * Restore the spidering queue and history from a previous session.
 * Custom User-Agent strings.
