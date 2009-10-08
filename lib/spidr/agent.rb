@@ -328,6 +328,8 @@ module Spidr
     # for the specified _url_.
     #
     def visit_page(url,&block)
+      url = URI(url.to_s) unless url.kind_of?(URI)
+
       get_page(url) do |page|
         @history << page.url
 
