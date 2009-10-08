@@ -3,7 +3,7 @@ require 'spidr/agent'
 
 require 'spec_helper'
 
-describe Spidr::Actions do
+describe Actions do
   before(:all) do
     @url = URI('http://spidr.rubyforge.org/')
   end
