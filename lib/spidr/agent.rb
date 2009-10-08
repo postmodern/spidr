@@ -405,8 +405,6 @@ module Spidr
     #
     def visit_page(url,&block)
       get_page(url) do |page|
-        @history << page.url
-
         begin
           @every_page_blocks.each { |page_block| page_block.call(page) }
 
@@ -417,6 +415,8 @@ module Spidr
           return nil
         rescue Actions::Action
         end
+
+        @history << page.url
 
         page.urls.each { |next_url| enqueue(next_url) }
       end
