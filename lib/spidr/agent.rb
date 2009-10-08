@@ -263,6 +263,30 @@ module Spidr
     end
 
     #
+    # Visits the spedified _url_ and enqueus it's links for visiting. If a
+    # _block_ is given, it will be passed a newly created Page object
+    # for the specified _url_.
+    #
+    def visit_page(url,&block)
+      get_page(url) do |page|
+        begin
+          @every_page_blocks.each { |page_block| page_block.call(page) }
+
+          block.call(page) if block
+        rescue Actions::Paused => action
+          raise(action)
+        rescue Actions::SkipPage
+          return nil
+        rescue Actions::Action
+        end
+
+        @history << page.url
+
+        page.urls.each { |next_url| enqueue(next_url) }
+      end
+    end
+
+    #
     # Returns the agent represented as a Hash containing the agents
     # +history+ and +queue+ information.
     #
@@ -396,30 +420,6 @@ module Spidr
        visit_port?(url.port) &&
        visit_link?(url.to_s) &&
        visit_ext?(url.path))
-    end
-
-    #
-    # Visits the spedified _url_ and enqueus it's links for visiting. If a
-    # _block_ is given, it will be passed a newly created Page object
-    # for the specified _url_.
-    #
-    def visit_page(url,&block)
-      get_page(url) do |page|
-        begin
-          @every_page_blocks.each { |page_block| page_block.call(page) }
-
-          block.call(page) if block
-        rescue Actions::Paused => action
-          raise(action)
-        rescue Actions::SkipPage
-          return nil
-        rescue Actions::Action
-        end
-
-        @history << page.url
-
-        page.urls.each { |next_url| enqueue(next_url) }
-      end
     end
 
     #
