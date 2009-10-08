@@ -228,6 +228,66 @@ module Spidr
     alias pending_urls queue
 
     #
+    # Sets the queue of links to visit to the specified _new_queue_.
+    #
+    # @example
+    #   agent.queue = ['http://www.vimeo.com/', 'http://www.reddit.com/']
+    #
+    def queue=(new_queue)
+      @queue.clear
+
+      new_queue.each do |url|
+        @queue << unless url.kind_of?(URI)
+                    URI(url.to_s)
+                  else
+                    url
+                  end
+      end
+
+      return @queue
+    end
+
+    #
+    # Returns +true+ if the specified _url_ is queued for visiting, returns
+    # +false+ otherwise.
+    #
+    def queued?(url)
+      @queue.include?(url)
+    end
+
+    #
+    # Enqueues the specified _url_ for visiting, only if it passes all the
+    # agent's rules for visiting a given URL. Returns +true+ if the _url_
+    # was successfully enqueued, returns +false+ otherwise.
+    #
+    def enqueue(url)
+      link = url.to_s
+      url = URI(link) unless url.kind_of?(URI)
+
+      if (!(queued?(url)) && visit?(url))
+        begin
+          @every_url_blocks.each { |block| block.call(url) }
+
+          @urls_like_blocks.each do |pattern,blocks|
+            if ((pattern.kind_of?(Regexp) && link =~ pattern) || pattern == link || pattern == url)
+              blocks.each { |url_block| url_block.call(url) }
+            end
+          end
+        rescue Actions::Paused => action
+          raise(action)
+        rescue Actions::SkipLink
+          return false
+        rescue Actions::Action
+        end
+
+        @queue << url
+        return true
+      end
+
+      return false
+    end
+
+    #
     # Creates a new Page object from the specified _url_. If a _block_ is
     # given, it will be passed the newly created Page object.
     #
@@ -292,66 +352,6 @@ module Spidr
     #
     def to_hash
       {:history => @history, :queue => @queue}
-    end
-
-    #
-    # Sets the queue of links to visit to the specified _new_queue_.
-    #
-    # @example
-    #   agent.queue = ['http://www.vimeo.com/', 'http://www.reddit.com/']
-    #
-    def queue=(new_queue)
-      @queue.clear
-
-      new_queue.each do |url|
-        @queue << unless url.kind_of?(URI)
-                    URI(url.to_s)
-                  else
-                    url
-                  end
-      end
-
-      return @queue
-    end
-
-    #
-    # Returns +true+ if the specified _url_ is queued for visiting, returns
-    # +false+ otherwise.
-    #
-    def queued?(url)
-      @queue.include?(url)
-    end
-
-    #
-    # Enqueues the specified _url_ for visiting, only if it passes all the
-    # agent's rules for visiting a given URL. Returns +true+ if the _url_
-    # was successfully enqueued, returns +false+ otherwise.
-    #
-    def enqueue(url)
-      link = url.to_s
-      url = URI(link) unless url.kind_of?(URI)
-
-      if (!(queued?(url)) && visit?(url))
-        begin
-          @every_url_blocks.each { |block| block.call(url) }
-
-          @urls_like_blocks.each do |pattern,blocks|
-            if ((pattern.kind_of?(Regexp) && link =~ pattern) || pattern == link || pattern == url)
-              blocks.each { |url_block| url_block.call(url) }
-            end
-          end
-        rescue Actions::Paused => action
-          raise(action)
-        rescue Actions::SkipLink
-          return false
-        rescue Actions::Action
-        end
-
-        @queue << url
-        return true
-      end
-
-      return false
     end
 
     protected
