@@ -103,7 +103,7 @@ module Spidr
     #   The URL to start spidering at.
     #
     # @param [Hash] options
-    #   Additional options. See {initialize}.
+    #   Additional options. See {Agent#initialize}.
     #
     # @yield [agent]
     #   If a block is given, it will be passed the newly created agent
@@ -127,7 +127,7 @@ module Spidr
     #   The host-name to spider.
     #
     # @param [Hash] options
-    #   Additional options. See {initialize}.
+    #   Additional options. See {Agent#initialize}.
     #
     # @yield [agent]
     #   If a block is given, it will be passed the newly created agent
@@ -151,7 +151,7 @@ module Spidr
     #   The web-site to spider.
     #
     # @param [Hash] options
-    #   Additional options. See {initialize}.
+    #   Additional options. See {Agent#initialize}.
     #
     # @yield [agent]
     #   If a block is given, it will be passed the newly created agent
