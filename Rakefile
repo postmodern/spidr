@@ -17,6 +17,7 @@ Hoe.spec('spidr') do
   ]
 
   self.extra_dev_deps = [
+    ['rspec', '>=1.2.8'],
     ['yard', '>=0.2.3.5']
   ]
 
