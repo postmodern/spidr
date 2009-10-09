@@ -27,14 +27,14 @@ describe Rules do
     rules.accept?(3).should == true
   end
 
-  it "should reject data that does not match any acceptance rules" do
+  it "should reject data that does not match any acceptance patterns" do
     rules = Rules.new(:accept => [1, 2, 3])
 
     rules.accept?(2).should == true
     rules.accept?(4).should == false
   end
 
-  it "should accept data that does not match any rejection rules" do
+  it "should accept data that does not match any rejection patterns" do
     rules = Rules.new(:reject => [1, 2, 3])
 
     rules.accept?(2).should == false
