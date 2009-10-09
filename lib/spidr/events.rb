@@ -11,8 +11,13 @@ module Spidr
     end
 
     #
-    # For every URL that the agent visits it will be passed to the
-    # specified _block_.
+    # Pass each URL from each page visited to the given block.
+    #
+    # @yield [url]
+    #   The block will be passed every URL from every page visited.
+    #
+    # @yieldparam [URI::HTTP] url
+    #   Each URL from each page visited.
     #
     def every_url(&block)
       @every_url_blocks << block
@@ -20,8 +25,13 @@ module Spidr
     end
 
     #
-    # For every URL that the agent is unable to visit, it will be passed
-    # to the specified _block_.
+    # Pass each URL that could not be requested to the given block.
+    #
+    # @yield [url]
+    #   The block will be passed every URL that could not be requested.
+    #
+    # @yieldparam [URI::HTTP] url
+    #   A failed URL.
     #
     def every_failed_url(&block)
       @every_failed_url_blocks << block
@@ -29,8 +39,17 @@ module Spidr
     end
 
     #
-    # For every URL that the agent visits and matches the specified
-    # _pattern_, it will be passed to the specified _block_.
+    # Pass every URL that the agent visits, and matches a given pattern,
+    # to a given block.
+    #
+    # @param [Regexp, String] pattern
+    #   The pattern to match URLs with.
+    #
+    # @yield [url]
+    #   The block will be passed every URL that matches the given pattern.
+    #
+    # @yieldparam [URI::HTTP] url
+    #   A matching URL.
     #
     def urls_like(pattern,&block)
       @urls_like_blocks[pattern] << block
@@ -38,8 +57,13 @@ module Spidr
     end
 
     #
-    # For every Page that the agent visits, pass the page to the
-    # specified _block_.
+    # Pass every page that the agent visits to a given block.
+    #
+    # @yield [page]
+    #   The block will be passed every page visited.
+    #
+    # @yieldparam [Page] page
+    #   A visited page.
     #
     def every_page(&block)
       @every_page_blocks << block
@@ -47,8 +71,14 @@ module Spidr
     end
 
     #
-    # For every Page that the agent visits, pass the headers to the given
-    # _block_.
+    # Pass the headers from every response the agent receives to a given
+    # block.
+    #
+    # @yield [headers]
+    #   The block will be passed the headers of every response.
+    #
+    # @yieldparam [Hash] headers
+    #   The headers from a response.
     #
     def all_headers(&block)
       every_page { |page| block.call(page.headers) }
