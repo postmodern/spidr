@@ -7,14 +7,29 @@ module Spidr
     # Reject rules
     attr_reader :reject
 
+    #
+    # Creates a new Rules object.
+    #
+    # @param [Hash] options
+    #   Additional options.
+    #
+    # @option options [Array<String, Regexp, Proc>] :accept
+    #   Patterns and rules to accept data with.
+    #
+    # @option options [Array<String, Regexp, Proc>] :reject
+    #   Patterns and rules to reject data with.
+    #
     def initialize(options={})
       @accept = (options[:accept] || [])
       @reject = (options[:reject] || [])
     end
 
     #
-    # Returns +true+ if the _field_ is accepted by the rules,
-    # returns +false+ otherwise.
+    # Determines whether the field should be accepted or rejected.
+    #
+    # @return [Boolean]
+    #   Specifies whether the given field was accepted, using the rules
+    #   acceptance patterns.
     #
     def accept?(field)
       unless @accept.empty?
@@ -33,8 +48,11 @@ module Spidr
     end
 
     #
-    # Returns +true+ if the _field_ is rejected by the rules,
-    # returns +false+ otherwise.
+    # Determines whether the field should be rejected or accepted.
+    #
+    # @return [Boolean]
+    #   Specifies whether the given field was rejected, using the rules
+    #   rejection patterns.
     #
     def reject?(field)
       !(accept?(field))
@@ -43,9 +61,10 @@ module Spidr
     protected
 
     #
-    # Tests the specified _field_ against the specified _rule_. Returns
-    # +true+ when the _rule_ matches the specified _field_, returns
-    # +false+ otherwise.
+    # Tests a given field_ against a given pattern.
+    #
+    # @return [Boolean]
+    #   Specifies whether the given field matched the pattern.
     #
     def test_field(field,rule)
       if rule.kind_of?(Proc)
