@@ -25,22 +25,22 @@ module Spidr
     end
 
     #
-    # Determines whether the field should be accepted or rejected.
+    # Determines whether the data should be accepted or rejected.
     #
     # @return [Boolean]
-    #   Specifies whether the given field was accepted, using the rules
+    #   Specifies whether the given data was accepted, using the rules
     #   acceptance patterns.
     #
-    def accept?(field)
+    def accept?(data)
       unless @accept.empty?
         @accept.each do |rule|
-          return true if test_field(field,rule)
+          return true if test_field(data,rule)
         end
 
         return false
       else
         @reject.each do |rule|
-          return false if test_field(field,rule)
+          return false if test_field(data,rule)
         end
 
         return true
@@ -48,31 +48,31 @@ module Spidr
     end
 
     #
-    # Determines whether the field should be rejected or accepted.
+    # Determines whether the data should be rejected or accepted.
     #
     # @return [Boolean]
-    #   Specifies whether the given field was rejected, using the rules
+    #   Specifies whether the given data was rejected, using the rules
     #   rejection patterns.
     #
-    def reject?(field)
-      !(accept?(field))
+    def reject?(data)
+      !(accept?(data))
     end
 
     protected
 
     #
-    # Tests a given field_ against a given pattern.
+    # Tests a given data against a given pattern.
     #
     # @return [Boolean]
-    #   Specifies whether the given field matched the pattern.
+    #   Specifies whether the given data matched the pattern.
     #
-    def test_field(field,rule)
+    def test_field(data,rule)
       if rule.kind_of?(Proc)
-        return (rule.call(field) == true)
+        return (rule.call(data) == true)
       elsif rule.kind_of?(Regexp)
-        return !((field.to_s =~ rule).nil?)
+        return !((data.to_s =~ rule).nil?)
       else
-        return field == rule
+        return data == rule
       end
     end
 
