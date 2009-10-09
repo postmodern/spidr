@@ -37,7 +37,7 @@ module Spidr
     #
     # Pauses the agent, causing spidering to temporarily stop.
     #
-    # @raises [Paused]
+    # @raise [Paused]
     #   Indicates to the agent, that it should pause spidering.
     #
     def pause!
@@ -69,7 +69,7 @@ module Spidr
     #
     # Causes the agent to skip the page being visited.
     #
-    # @raises [SkipPage]
+    # @raise [SkipPage]
     #   Indicates to the agent, that the current page should be skipped.
     #
     def skip_page!
