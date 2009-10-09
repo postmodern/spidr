@@ -5,21 +5,30 @@ module Spidr
   COMMON_PROXY_PORT = 8080
 
   #
-  # Returns the +Hash+ of the Spidr proxy information.
+  # Proxy information used by all Agent objects by default.
+  #
+  # @return [Hash]
+  #   The Spidr proxy information.
   #
   def Spidr.proxy
     @@spidr_proxy ||= {:host => nil, :port => COMMON_PROXY_PORT, :user => nil, :password => nil}
   end
 
   #
-  # Returns the Spidr User-Agent
+  # The User-Agent string used by all Agent objects by default.
+  #
+  # @return [String]
+  #   The Spidr User-Agent string.
   #
   def Spidr.user_agent
     @@spidr_user_agent ||= nil
   end
 
   #
-  # Sets the Spidr Web User-Agent to the specified _new_agent_.
+  # Sets the Spidr Web User-Agent string.
+  #
+  # @param [String] new_agent
+  #   The new User-Agent string.
   #
   def Spidr.user_agent=(new_agent)
     @@spidr_user_agent = new_agent
