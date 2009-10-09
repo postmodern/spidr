@@ -425,7 +425,7 @@ module Spidr
     protected
 
     #
-    # Provides transparent access to the values in the {headers}.
+    # Provides transparent access to the values in the +headers+.
     #
     def method_missing(sym,*args,&block)
       if (args.empty? && block.nil?)
