@@ -10,23 +10,41 @@ module Spidr
     end
 
     #
-    # Initializes filtering rules with the given _options_.
+    # Initializes filtering rules.
     #
-    # _options_ may contain the following keys:
-    # <tt>:schemes</tt>:: The list of acceptable URL schemes to follow.
-    #                     Defaults to +http+ and +https+. +https+ URL
-    #                     schemes will be ignored if <tt>net/http</tt>
-    #                     cannot be loaded.
-    # <tt>:host</tt>:: The host-name to visit.
-    # <tt>:hosts</tt>:: An +Array+ of host patterns to visit.
-    # <tt>:ignore_hosts</tt>:: An +Array+ of host patterns to not visit.
-    # <tt>:ports</tt>:: An +Array+ of port patterns to visit.
-    # <tt>:ignore_ports</tt>:: An +Array+ of port patterns to not visit.
-    # <tt>:links</tt>:: An +Array+ of link patterns to visit.
-    # <tt>:ignore_links</tt>:: An +Array+ of link patterns to not visit.
-    # <tt>:exts</tt>:: An +Array+ of File extension patterns to visit.
-    # <tt>:ignore_exts</tt>:: An +Array+ of File extension patterns to not
-    #                         visit.
+    # @param [Hash] options
+    #   Additional options.
+    #
+    # @option options [Array] :schemes (['http', 'https'])
+    #   The list of acceptable URI schemes to visit.
+    #   The +https+ scheme will be ignored if +net/https+ cannot be loaded.
+    #
+    # @option options [String] :host
+    #   The host-name to visit.
+    #
+    # @option options [Array<String, Regexp, Proc>] :hosts
+    #   The patterns which match the host-names to visit.
+    #
+    # @option options [Array<String, Regexp, Proc>] :ignore_hosts
+    #   The patterns which match the host-names to not visit.
+    #
+    # @option options [Array<Integer, Regexp, Proc>] :ports
+    #   The patterns which match the ports to visit.
+    #
+    # @option options [Array<Integer, Regexp, Proc>] :ignore_ports
+    #   The patterns which match the ports to not visit.
+    #
+    # @option options [Array<String, Regexp, Proc>] :links
+    #   The patterns which match the links to visit.
+    #
+    # @option options [Array<String, Regexp, Proc>] :ignore_links
+    #   The patterns which match the links to not visit.
+    #
+    # @option options [Array<String, Regexp, Proc>] :exts
+    #   The patterns which match the URI path extensions to visit.
+    #
+    # @option options [Array<String, Regexp, Proc>] :ignore_exts
+    #   The patterns which match the URI path extensions to not visit.
     #
     def initialize(options={})
       @schemes = []
@@ -78,8 +96,10 @@ module Spidr
     end
 
     #
-    # Sets the list of acceptable URL schemes to follow to the
-    # _new_schemes_.
+    # Sets the list of acceptable URL schemes to visit.
+    #
+    # @param [Array] new_schemes
+    #   The new schemes to visit.
     #
     # @example
     #   agent.schemes = ['http']
@@ -89,15 +109,26 @@ module Spidr
     end
 
     #
-    # Returns the +Array+ of host patterns to visit.
+    # Specifies the patterns that match host-names to visit.
+    #
+    # @return [Array<String, Regexp, Proc>]
+    #   The host-name patterns to visit.
     #
     def visit_hosts
       @host_rules.accept
     end
 
     #
-    # Adds the given _pattern_ to the visit_hosts. If a _block_ is given,
-    # it will be added to the visit_hosts.
+    # Adds a given pattern to the visit_hosts.
+    #
+    # @param [String, Regexp] pattern
+    #   The pattern to match host-names with.
+    #
+    # @yield [host]
+    #   If a block is given, it will be used to filter host-names.
+    #
+    # @yieldparam [String] host
+    #   A host-name to accept or reject.
     #
     def visit_hosts_like(pattern=nil,&block)
       if pattern
@@ -110,15 +141,26 @@ module Spidr
     end
 
     #
-    # Returns the +Array+ of URL host patterns to not visit.
+    # Specifies the patterns that match host-names to not visit.
+    #
+    # @return [Array<String, Regexp, Proc>]
+    #   The host-name patterns to not visit.
     #
     def ignore_hosts
       @host_rules.reject
     end
 
     #
-    # Adds the given _pattern_ to the ignore_hosts. If a _block_ is given,
-    # it will be added to the ignore_hosts.
+    # Adds a given pattern to the ignore_hosts.
+    #
+    # @param [String, Regexp] pattern
+    #   The pattern to match host-names with.
+    #
+    # @yield [host]
+    #   If a block is given, it will be used to filter host-names.
+    #
+    # @yieldparam [String] host
+    #   A host-name to reject or accept.
     #
     def ignore_hosts_like(pattern=nil,&block)
       if pattern
@@ -131,15 +173,26 @@ module Spidr
     end
 
     #
-    # Returns the +Array+ of URL port patterns to visit.
+    # Specifies the patterns that match the ports to visit.
+    #
+    # @return [Array<Integer, Regexp, Proc>]
+    #   The port patterns to visit.
     #
     def visit_ports
       @port_rules.accept
     end
 
     #
-    # Adds the given _pattern_ to the visit_ports. If a _block_ is given,
-    # it will be added to the visit_ports.
+    # Adds a given pattern to the visit_ports.
+    #
+    # @param [Integer, Regexp] pattern
+    #   The pattern to match ports with.
+    #
+    # @yield [port]
+    #   If a block is given, it will be used to filter ports.
+    #
+    # @yieldparam [Integer] port
+    #   A port to accept or reject.
     #
     def visit_ports_like(pattern=nil,&block)
       if pattern
@@ -152,15 +205,26 @@ module Spidr
     end
 
     #
-    # Returns the +Array+ of URL port patterns to not visit.
+    # Specifies the patterns that match ports to not visit.
+    #
+    # @return [Array<Integer, Regexp, Proc>]
+    #   The port patterns to not visit.
     #
     def ignore_ports
       @port_rules.reject
     end
 
     #
-    # Adds the given _pattern_ to the ignore_hosts. If a _block_ is given,
-    # it will be added to the ignore_hosts.
+    # Adds a given pattern to the ignore_ports.
+    #
+    # @param [Integer, Regexp] pattern
+    #   The pattern to match ports with.
+    #
+    # @yield [port]
+    #   If a block is given, it will be used to filter ports.
+    #
+    # @yieldparam [Integer] port
+    #   A port to reject or accept.
     #
     def ignore_ports_like(pattern=nil,&block)
       if pattern
@@ -173,15 +237,26 @@ module Spidr
     end
 
     #
-    # Returns the +Array+ of link patterns to visit.
+    # Specifies the patterns that match the links to visit.
+    #
+    # @return [Array<String, Regexp, Proc>]
+    #   The link patterns to visit.
     #
     def visit_links
       @link_rules.accept
     end
 
     #
-    # Adds the given _pattern_ to the visit_links. If a _block_ is given,
-    # it will be added to the visit_links.
+    # Adds a given pattern to the visit_links.
+    #
+    # @param [String, Regexp] pattern
+    #   The pattern to match links with.
+    #
+    # @yield [link]
+    #   If a block is given, it will be used to filter links.
+    #
+    # @yieldparam [String] link
+    #   A link to accept or reject.
     #
     def visit_links_like(pattern=nil,&block)
       if pattern
@@ -194,15 +269,26 @@ module Spidr
     end
 
     #
-    # Returns the +Array+ of link patterns to not visit.
+    # Specifies the patterns that match links to not visit.
+    #
+    # @return [Array<String, Regexp, Proc>]
+    #   The link patterns to not visit.
     #
     def ignore_links
       @link_rules.reject
     end
 
     #
-    # Adds the given _pattern_ to the ignore_links. If a _block_ is given,
-    # it will be added to the ignore_links.
+    # Adds a given pattern to the ignore_links.
+    #
+    # @param [String, Regexp] pattern
+    #   The pattern to match links with.
+    #
+    # @yield [link]
+    #   If a block is given, it will be used to filter links.
+    #
+    # @yieldparam [String] link
+    #   A link to reject or accept.
     #
     def ignore_links_like(pattern=nil,&block)
       if pattern
@@ -215,15 +301,26 @@ module Spidr
     end
 
     #
-    # Returns the +Array+ of URL extension patterns to visit.
+    # Specifies the patterns that match the URI path extensions to visit.
+    #
+    # @return [Array<String, Regexp, Proc>]
+    #   The URI path extensions patterns to visit.
     #
     def visit_exts
       @ext_rules.accept
     end
 
     #
-    # Adds the given _pattern_ to the visit_exts. If a _block_ is given,
-    # it will be added to the visit_exts.
+    # Adds a given pattern to the visit_exts.
+    #
+    # @param [String, Regexp] pattern
+    #   The pattern to match URI path extensions with.
+    #
+    # @yield [ext]
+    #   If a block is given, it will be used to filter URI path extensions.
+    #
+    # @yieldparam [String] ext
+    #   A URI path extension to accept or reject.
     #
     def visit_exts_like(pattern=nil,&block)
       if pattern
@@ -236,15 +333,26 @@ module Spidr
     end
 
     #
-    # Returns the +Array+ of URL extension patterns to not visit.
+    # Specifies the patterns that match URI path extensions to not visit.
+    #
+    # @return [Array<String, Regexp, Proc>]
+    #   The URI path extension patterns to not visit.
     #
     def ignore_exts
       @ext_rules.reject
     end
 
     #
-    # Adds the given _pattern_ to the ignore_exts. If a _block_ is given,
-    # it will be added to the ignore_exts.
+    # Adds a given pattern to the ignore_exts.
+    #
+    # @param [String, Regexp] pattern
+    #   The pattern to match URI path extensions with.
+    #
+    # @yield [ext]
+    #   If a block is given, it will be used to filter URI path extensions.
+    #
+    # @yieldparam [String] ext
+    #   A URI path extension to reject or accept.
     #
     def ignore_exts_like(pattern=nil,&block)
       if pattern
@@ -259,8 +367,13 @@ module Spidr
     protected
 
     #
-    # Returns +true+ if the specified _scheme_ should be visited, returns
-    # +false+ otherwise.
+    # Determines if a given URI scheme should be visited.
+    #
+    # @param [String] scheme
+    #   The URI scheme.
+    #
+    # @return [Boolean]
+    #   Specifies whether the given scheme should be visited.
     #
     def visit_scheme?(scheme)
       if scheme
@@ -271,32 +384,52 @@ module Spidr
     end
 
     #
-    # Returns +true+ if the specified _host_ should be visited returns
-    # +false+ otherwise.
+    # Determines if a given host-name should be visited.
+    #
+    # @param [String] host
+    #   The host-name.
+    #
+    # @return [Boolean]
+    #   Specifies whether the given host-name should be visited.
     #
     def visit_host?(host)
       @host_rules.accept?(host)
     end
 
     #
-    # Returns +true+ if the specified _port_ should be visited, returns
-    # +false+ otherwise.
+    # Determines if a given port should be visited.
+    #
+    # @param [Integer] port
+    #   The port number.
+    #
+    # @return [Boolean]
+    #   Specifies whether the given port should be visited.
     #
     def visit_port?(port)
       @port_rules.accept?(port)
     end
 
     #
-    # Returns +true+ if the specified _link_ should be visited, returns
-    # +false+ otherwise.
+    # Determines if a given link should be visited.
+    #
+    # @param [String] link
+    #   The link.
+    #
+    # @return [Boolean]
+    #   Specifies whether the given link should be visited.
     #
     def visit_link?(link)
       @link_rules.accept?(link)
     end
 
     #
-    # Returns +true+ if the specified _path_ should be visited, based on
-    # the file extension of the _path_, returns +false+ otherwise.
+    # Determines if a given URI path extension should be visited.
+    #
+    # @param [String] path
+    #   The path that contains the extension.
+    #
+    # @return [Boolean]
+    #   Specifies whether the given URI path extension should be visited.
     #
     def visit_ext?(path)
       @ext_rules.accept?(File.extname(path)[1..-1])
