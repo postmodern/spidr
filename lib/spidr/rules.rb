@@ -34,13 +34,13 @@ module Spidr
     def accept?(data)
       unless @accept.empty?
         @accept.each do |rule|
-          return true if test_field(data,rule)
+          return true if test_data(data,rule)
         end
 
         return false
       else
         @reject.each do |rule|
-          return false if test_field(data,rule)
+          return false if test_data(data,rule)
         end
 
         return true
@@ -66,7 +66,7 @@ module Spidr
     # @return [Boolean]
     #   Specifies whether the given data matched the pattern.
     #
-    def test_field(data,rule)
+    def test_data(data,rule)
       if rule.kind_of?(Proc)
         return (rule.call(data) == true)
       elsif rule.kind_of?(Regexp)
