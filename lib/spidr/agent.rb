@@ -181,7 +181,7 @@ module Spidr
     end
 
     #
-    # Start spidering at the given url.
+    # Start spidering at a given URL.
     #
     # @param [URI::HTTP, String] url
     #   The URL to start spidering at.
@@ -245,7 +245,7 @@ module Spidr
     end
 
     #
-    # Sets the history of links that were previously visited.
+    # Sets the history of URLs that were previously visited.
     #
     # @param [#each] new_history
     #   A list of URLs to populate the history with.
@@ -448,7 +448,7 @@ module Spidr
     end
 
     #
-    # Visits a given URL and enqueus the links recovered from the URL,
+    # Visits a given URL, and enqueus the links recovered from the URL
     # to be visited later.
     #
     # @param [URI::HTTP, String] url
@@ -486,7 +486,7 @@ module Spidr
     end
 
     #
-    # Converts the agent to Hash form.
+    # Converts the agent into a Hash.
     #
     # @return [Hash]
     #   The agent represented as a Hash containing the +history+ and
