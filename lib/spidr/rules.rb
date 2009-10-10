@@ -23,8 +23,8 @@ module Spidr
       @accept = []
       @reject = []
 
-      @accept.merge!(options[:accept]) if options[:accept]
-      @reject.merge!(options[:reject]) if options[:reject]
+      @accept += options[:accept] if options[:accept]
+      @reject += options[:reject] if options[:reject]
     end
 
     #
