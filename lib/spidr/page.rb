@@ -151,6 +151,8 @@ module Spidr
       (content_type =~ /text\/plain/) == 0
     end
 
+    alias txt? plain_text?
+
     #
     # Determines if the page is HTML document.
     #
@@ -239,16 +241,6 @@ module Spidr
     #
     def zip?
       (content_type =~ /application\/zip/) == 0
-    end
-
-    #
-    # Determines if the page is plain-text.
-    #
-    # @return [Boolean]
-    #   Specifies whether the page is plain-text.
-    #
-    def txt?
-      (content_type =~ /text\/plain/) == 0
     end
 
     #
