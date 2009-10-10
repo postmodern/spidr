@@ -56,6 +56,21 @@ and easy to use.
       spider.every_url { |url| puts url }
     end
 
+* Search HTML and XML pages:
+
+    Spidr.site('http://company.withablog.com/') do |spider|
+      spider.every_page do |page|
+        puts "[-] #{page.url}"
+
+        page.search('//meta').each do |meta|
+	  name = (meta.attributes['name'] || meta.attributes['http-equiv'])
+	  value = meta.attributes['content']
+
+	  puts "    #{name} = #{value}"
+	end
+      end
+    end
+
 * Print out the titles from every page:
 
     Spidr.site('http://www.rubypulse.com/') do |spider|
