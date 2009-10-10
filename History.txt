@@ -1,3 +1,45 @@
+=== 0.2.0 / 2009-10-09
+
+* Added URI.expand_path.
+* Added Spidr::Page#search.
+* Added Spidr::Page#at.
+* Added Spidr::Page#title.
+* Added a HTTP session cache to Spidr::Agent, per suggestion of falter.
+  * Added Spidr::Agent#get_session.
+  * Added Spidr::Agent#kill_session.
+* Added Spidr.proxy=.
+* Added Spidr.disable_proxy!.
+* Aliased Spidr::Page#txt? to Spidr::Page#plain_text?.
+* Aliased Spidr::Page#ok? to Spidr::Page#is_ok?.
+* Aliased Spidr::Page#redirect? to Spidr::Page#is_redirect?.
+* Aliased Spidr::Page#unauthorized? to Spidr::Page#is_unauthorized?.
+* Aliased Spidr::Page#forbidden? to Spidr::Page#is_forbidden?.
+* Aliased Spidr::Page#missing? to Spidr::Page#is_missing?.
+* Split URL filtering code out of Spidr::Agent and into Spidr::Filtering.
+* Split URL / Page event code out of Spidr::Agent and into Spidr::Events.
+* Split pause / continue / skip_link / skip_page methods out of
+  Spidr::Agent and into Spidr::Actions.
+* Fixeda bug in Spidr::Page#code, where it was not returning an Integer.
+* Make sure Spidr::Page#doc return Nokogiri::XML::Document objects for
+  RSS/RDF/Atom pages as well.
+* Fixed handling of the Location header in Spidr::Page#links
+  (thanks falter).
+* Fixed a bug in Spidr::Page#to_absolute where trailing '/' characters on
+  URI paths were not being preserved (thanks falter).
+* Fixed a bug where the URL query was not being sent with the request
+  in Spidr::Agent#get_page (thanks Damian Steer).
+* Fixed a bug where SSL sessions were not being setup properly
+  (thanks falter).
+* Switched Spidr::Agent#history to be a Set, to improve search-time
+  of the history (thanks falter).
+* Switched Spidr::Agent#failures to a Set.
+* Allow a block to be passed to Spidr::Agent#run, which will receive all
+  pages visited.
+* Allow Spidr::Agent#start_at and Spidr::Agent#continue! to pass blocks to
+  Spidr::Agent#run.
+* Made Spidr::Agent#visit_page public.
+* Moved to YARD based documentation.
+
 === 0.1.9 / 2009-06-13
 
 * Upgraded to Hoe 2.0.0.
