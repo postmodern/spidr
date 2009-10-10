@@ -20,8 +20,11 @@ module Spidr
     #   The patterns to reject data with.
     #
     def initialize(options={})
-      @accept = (options[:accept] || [])
-      @reject = (options[:reject] || [])
+      @accept = []
+      @reject = []
+
+      @accept.merge!(options[:accept]) if options[:accept]
+      @reject.merge!(options[:reject]) if options[:reject]
     end
 
     #
