@@ -56,6 +56,16 @@ and easy to use.
       spider.every_url { |url| puts url }
     end
 
+* Find what kinds of web servers a host is using:
+
+    servers = Set[]
+
+    Spidr.host('generic.company.com') do |spider|
+      spider.all_headers do |headers|
+        servers << headers['server']
+      end
+    end
+
 == REQUIREMENTS:
 
 * {nokogiri}[http://nokogiri.rubyforge.org/]
