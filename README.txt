@@ -74,11 +74,11 @@ and easy to use.
       end
     end
 
-* Pause the spider on an unauthorized page:
+* Pause the spider on a forbidden page:
 
     spider = Spidr.host('overnight.startup.com') do |spider|
       spider.every_page do |page|
-        spider.pause! if page.unauthorized?
+        spider.pause! if page.forbidden?
       end
     end
 
