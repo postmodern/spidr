@@ -97,6 +97,14 @@ and easy to use.
       end
     end
 
+* Skip the processing of a Page:
+
+    Spidr.host('sketchy.content.com') do |spider|
+      spider.every_page do |page|
+        spider.skip_page! if page.not_found?
+      end
+    end
+
 == REQUIREMENTS:
 
 * {nokogiri}[http://nokogiri.rubyforge.org/]
