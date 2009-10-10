@@ -13,7 +13,7 @@ module Spidr
   }
 
   #
-  # Proxy information used by all Agent objects by default.
+  # Proxy information used by all newly created Agent objects by default.
   #
   # @return [Hash]
   #   The Spidr proxy information.
