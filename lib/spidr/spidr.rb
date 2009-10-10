@@ -4,6 +4,14 @@ module Spidr
   # Common proxy port.
   COMMON_PROXY_PORT = 8080
 
+  # Default proxy information.
+  DEFAULT_PROXY = {
+    :host => nil,
+    :port => COMMON_PROXY_PORT,
+    :user => nil,
+    :password => nil
+  }
+
   #
   # Proxy information used by all Agent objects by default.
   #
@@ -11,7 +19,7 @@ module Spidr
   #   The Spidr proxy information.
   #
   def Spidr.proxy
-    @@spidr_proxy ||= {:host => nil, :port => COMMON_PROXY_PORT, :user => nil, :password => nil}
+    @@spidr_proxy ||= DEFAULT_PROXY
   end
 
   #
@@ -37,6 +45,14 @@ module Spidr
   #
   def Spidr.proxy=(new_proxy)
     @@spidr_proxy = new_proxy.merge(:port => COMMON_PROXY_PORT)
+  end
+
+  #
+  # Disables the proxy settings used by all newly created Agent objects.
+  #
+  def Spidr.disable_proxy!
+    @@spidr_proxy = DEFAULT_PROXY
+    return true
   end
 
   #
