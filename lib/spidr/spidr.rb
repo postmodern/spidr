@@ -25,7 +25,7 @@ module Spidr
   end
 
   #
-  # Sets the Spidr Web User-Agent string.
+  # Sets the Spidr User-Agent string.
   #
   # @param [String] new_agent
   #   The new User-Agent string.
