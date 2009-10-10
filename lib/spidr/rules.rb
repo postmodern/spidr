@@ -14,10 +14,10 @@ module Spidr
     #   Additional options.
     #
     # @option options [Array<String, Regexp, Proc>] :accept
-    #   Patterns and rules to accept data with.
+    #   The patterns to accept data with.
     #
     # @option options [Array<String, Regexp, Proc>] :reject
-    #   Patterns and rules to reject data with.
+    #   The patterns to reject data with.
     #
     def initialize(options={})
       @accept = (options[:accept] || [])
@@ -61,7 +61,7 @@ module Spidr
     protected
 
     #
-    # Tests a given data against a given pattern.
+    # Tests the given data against a given pattern.
     #
     # @return [Boolean]
     #   Specifies whether the given data matched the pattern.
