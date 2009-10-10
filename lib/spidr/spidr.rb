@@ -44,7 +44,7 @@ module Spidr
   #   The new proxy information.
   #
   def Spidr.proxy=(new_proxy)
-    @@spidr_proxy = new_proxy.merge(:port => COMMON_PROXY_PORT)
+    @@spidr_proxy = {:port => COMMON_PROXY_PORT}.merge(new_proxy)
   end
 
   #
