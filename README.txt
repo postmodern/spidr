@@ -56,6 +56,14 @@ and easy to use.
       spider.every_url { |url| puts url }
     end
 
+* Print out the titles from every page:
+
+    Spidr.site('http://www.rubypulse.com/') do |spider|
+      spider.every_page do |page|
+        puts page.title if page.html?
+      end
+    end
+
 * Find what kinds of web servers a host is using:
 
     servers = Set[]
