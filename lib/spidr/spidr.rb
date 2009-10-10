@@ -15,6 +15,31 @@ module Spidr
   end
 
   #
+  # Sets the proxy information used by Agent objects.
+  #
+  # @param [Hash] new_proxy
+  #   The new proxy information.
+  #
+  # @option new_proxy [String] :host
+  #   The host-name of the proxy.
+  #
+  # @option new_proxy [Integer] :port (COMMON_PROXY_PORT)
+  #   The port of the proxy.
+  #
+  # @option new_proxy [String] :user
+  #   The user to authenticate with the proxy as.
+  #
+  # @option new_proxy [String] :password
+  #   The password to authenticate with the proxy.
+  #
+  # @return [Hash]
+  #   The new proxy information.
+  #
+  def Spidr.proxy=(new_proxy)
+    @@spidr_proxy = new_proxy.merge(:port => COMMON_PROXY_PORT)
+  end
+
+  #
   # The User-Agent string used by all Agent objects by default.
   #
   # @return [String]
