@@ -97,7 +97,7 @@ and easy to use.
       end
     end
 
-* Skip the processing of a Page:
+* Skip the processing of a page:
 
     Spidr.host('sketchy.content.com') do |spider|
       spider.every_page do |page|
