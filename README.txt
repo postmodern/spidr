@@ -66,6 +66,14 @@ and easy to use.
       end
     end
 
+* Pause the spider on an unauthorized page:
+
+    spider = Spidr.host('overnight.startup.com') do |spider|
+      spider.every_page do |page|
+        spider.pause! if page.unauthorized?
+      end
+    end
+
 == REQUIREMENTS:
 
 * {nokogiri}[http://nokogiri.rubyforge.org/]
