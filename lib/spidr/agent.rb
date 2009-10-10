@@ -417,6 +417,8 @@ module Spidr
     #   The page for the response, or +nil+ if the request failed.
     #
     def get_page(url,&block)
+      url = URI(url.to_s) unless url.kind_of?(URI)
+
       host = url.host
       port = url.port
 
