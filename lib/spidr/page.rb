@@ -182,10 +182,10 @@ module Spidr
     end
 
     #
-    # Determines if the page is CSS stylesheet.
+    # Determines if the page is a CSS stylesheet.
     #
     # @return [Boolean]
-    #   Specifies whether the page is CSS stylesheet.
+    #   Specifies whether the page is a CSS stylesheet.
     #
     def css?
       (content_type =~ /text\/css/) == 0
@@ -343,10 +343,10 @@ module Spidr
     end
 
     #
-    # The links from the page.
+    # The links from within the page.
     #
     # @return [Array<String>]
-    #   All links from the HTML page, frame/iframe source URLs and any
+    #   All links within the HTML page, frame/iframe source URLs and any
     #   links in the +Location+ header.
     #
     def links
@@ -387,10 +387,10 @@ module Spidr
     end
 
     #
-    # Absolute URIs from the page.
+    # Absolute URIs from within the page.
     #
     # @return [Array<URI::HTTP>]
-    #   The links from the page, converted to absolute URIs.
+    #   The links from within the page, converted to absolute URIs.
     #
     def urls
       links.map { |link| to_absolute(link) }.compact
@@ -425,7 +425,7 @@ module Spidr
     protected
 
     #
-    # Provides transparent access to the values in the +headers+.
+    # Provides transparent access to the values in +headers+.
     #
     def method_missing(sym,*args,&block)
       if (args.empty? && block.nil?)
