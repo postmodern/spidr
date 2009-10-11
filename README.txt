@@ -64,6 +64,13 @@ and easy to use.
 
     Spidr.site('http://matasano.com/', :ignore_links => [/log/])
 
+* Do not spider links on certain ports:
+
+    Spidr.site(
+      'http://sketchy.content.com',
+      :ignore_ports => [8000, 8010, 8080]
+    )
+
 * Print out visited URLs:
 
     Spidr.site('http://rubyinside.org/') do |spider|
