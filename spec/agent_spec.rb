@@ -26,7 +26,7 @@ describe Agent do
     agent.history.should == previous_history
   end
 
-  it "should convert new histories to an Array of links" do
+  it "should convert new histories to an Set of URIs" do
     agent = Agent.new
     previous_history = ['http://www.example.com']
     expected_history = Set[URI('http://www.example.com')]
