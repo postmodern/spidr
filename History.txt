@@ -17,7 +17,7 @@
 * Aliased Spidr::Page#missing? to Spidr::Page#is_missing?.
 * Split URL filtering code out of Spidr::Agent and into Spidr::Filtering.
 * Split URL / Page event code out of Spidr::Agent and into Spidr::Events.
-* Split pause / continue / skip_link / skip_page methods out of
+* Split pause! / continue! / skip_link! / skip_page! methods out of
   Spidr::Agent and into Spidr::Actions.
 * Fixeda bug in Spidr::Page#code, where it was not returning an Integer.
 * Make sure Spidr::Page#doc return Nokogiri::XML::Document objects for
