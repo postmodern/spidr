@@ -60,6 +60,10 @@ and easy to use.
       ]
     )
 
+* Do not spider certain links:
+
+    Spidr.site('http://matasano.com/', :ignore_links => [/log/])
+
 * Print out visited URLs:
 
     Spidr.site('http://rubyinside.org/') do |spider|
