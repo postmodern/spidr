@@ -117,7 +117,7 @@ and easy to use.
 
 == REQUIREMENTS:
 
-* {nokogiri}[http://nokogiri.rubyforge.org/]
+* {nokogiri}[http://nokogiri.rubyforge.org/] >= 1.2.0
 
 == INSTALL:
 
