@@ -67,7 +67,7 @@ and easy to use.
 * Do not spider links on certain ports:
 
     Spidr.site(
-      'http://sketchy.content.com',
+      'http://sketchy.content.com/',
       :ignore_ports => [8000, 8010, 8080]
     )
 
