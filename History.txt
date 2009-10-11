@@ -19,16 +19,16 @@
 * Split URL / Page event code out of Spidr::Agent and into Spidr::Events.
 * Split pause! / continue! / skip_link! / skip_page! methods out of
   Spidr::Agent and into Spidr::Actions.
-* Fixeda bug in Spidr::Page#code, where it was not returning an Integer.
-* Make sure Spidr::Page#doc return Nokogiri::XML::Document objects for
+* Fixed a bug in Spidr::Page#code, where it was not returning an Integer.
+* Make sure Spidr::Page#doc returns Nokogiri::XML::Document objects for
   RSS/RDF/Atom pages as well.
-* Fixed handling of the Location header in Spidr::Page#links
+* Fixed the handling of the Location header in Spidr::Page#links
   (thanks falter).
 * Fixed a bug in Spidr::Page#to_absolute where trailing '/' characters on
   URI paths were not being preserved (thanks falter).
-* Fixed a bug where the URL query was not being sent with the request
+* Fixed a bug where the URI query was not being sent with the request
   in Spidr::Agent#get_page (thanks Damian Steer).
-* Fixed a bug where SSL sessions were not being setup properly
+* Fixed a bug where SSL sessions were not being properly setup
   (thanks falter).
 * Switched Spidr::Agent#history to be a Set, to improve search-time
   of the history (thanks falter).
