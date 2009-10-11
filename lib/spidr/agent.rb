@@ -308,6 +308,32 @@ module Spidr
     end
 
     #
+    # Sets the list of failed URLs.
+    #
+    # @param [#each]
+    #   The new list of failed URLs.
+    #
+    # @return [Array<URI::HTTP>]
+    #   The list of failed URLs.
+    #
+    # @example
+    #   agent.failures = ['http://localhost/']
+    #
+    def failures=(new_failures)
+      @failures.clear
+
+      new_failures.each do |url|
+        @failures << unless url.kind_of?(URI)
+                    URI(url.to_s)
+                  else
+                    url
+                  end
+      end
+
+      return @failures
+    end
+
+    #
     # Determines whether a given URL could not be visited.
     #
     # @param [URI::HTTP, String] url

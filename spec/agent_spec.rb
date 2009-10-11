@@ -36,6 +36,24 @@ describe Agent do
     agent.history.should == expected_history
   end
 
+  it "should be able to restore the failures" do
+    agent = Agent.new
+    previous_failures = Set[URI('http://localhost/')]
+
+    agent.failures = previous_failures
+    agent.failures.should == previous_failures
+  end
+
+  it "should convert new histories to a Set of URIs" do
+    agent = Agent.new
+    previous_failures = ['http://localhost/']
+    expected_failures = Set[URI('http://localhost/')]
+
+    agent.failures = previous_failures
+    agent.failures.should_not == previous_failures
+    agent.failures.should == expected_failures
+  end
+
   it "should be able to restore the queue" do
     agent = Agent.new
     previous_queue = [URI('http://www.example.com')]
