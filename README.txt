@@ -100,7 +100,7 @@ and easy to use.
       end
     end
 
-* Find what kinds of web servers a host is using:
+* Find what kinds of web servers a host is using, by accessing the headers:
 
     servers = Set[]
 
