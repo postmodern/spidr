@@ -4,6 +4,7 @@
 * Added Spidr::Page#search.
 * Added Spidr::Page#at.
 * Added Spidr::Page#title.
+* Added Spidr::Agent#failures=.
 * Added a HTTP session cache to Spidr::Agent, per suggestion of falter.
   * Added Spidr::Agent#get_session.
   * Added Spidr::Agent#kill_session.
