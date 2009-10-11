@@ -1,4 +1,4 @@
-=== 0.2.0 / 2009-10-09
+=== 0.2.0 / 2009-10-10
 
 * Added URI.expand_path.
 * Added Spidr::Page#search.
