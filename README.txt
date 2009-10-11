@@ -50,6 +50,16 @@ and easy to use.
 
     Spidr.site('http://rubyflow.com/')
 
+* Spider multiple hosts:
+
+    Spidr.start_at(
+      'http://company.com/',
+      :hosts => [
+        'company.com',
+	/host\d\.company\.com/
+      ]
+    )
+
 * Print out visited URLs:
 
     Spidr.site('http://rubyinside.org/') do |spider|
