@@ -105,6 +105,16 @@ and easy to use.
       end
     end
 
+* Skip the processing of links:
+
+    Spidr.host('sketchy.content.com') do |spider|
+      spider.every_url do |url|
+        if url.path.split('/').find { |dir| dir.to_i > 1000 }
+	  spider.skip_link!
+	end
+      end
+    end
+
 == REQUIREMENTS:
 
 * {nokogiri}[http://nokogiri.rubyforge.org/]
