@@ -30,8 +30,8 @@ and easy to use.
   * Every URL that failed to be visited.
 * Provides action methods to:
   * Pause spidering.
-  * Skip processing of links.
   * Skip processing of pages.
+  * Skip processing of links.
 * Restore the spidering queue and history from a previous session.
 * Custom User-Agent strings.
 * Custom proxy settings.
