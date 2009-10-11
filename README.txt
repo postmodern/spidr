@@ -77,6 +77,12 @@ and easy to use.
       spider.every_url { |url| puts url }
     end
 
+* Print out the URLs that could not be requested:
+
+    Spidr.site('http://sketchy.content.com/') do |spider|
+      spider.every_failed_url { |url| puts url }
+    end
+
 * Search HTML and XML pages:
 
     Spidr.site('http://company.withablog.com/') do |spider|
