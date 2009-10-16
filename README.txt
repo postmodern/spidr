@@ -2,6 +2,7 @@
 
 * http://spidr.rubyforge.org/
 * http://github.com/postmodern/spidr/
+* irc.freenode.net #spidr
 * Postmodern (postmodern.mod3 at gmail.com)
 
 == DESCRIPTION:
