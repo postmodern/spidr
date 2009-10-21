@@ -1,9 +1,10 @@
 = Spidr
 
-* http://spidr.rubyforge.org/
-* http://github.com/postmodern/spidr/
+* http://spidr.rubyforge.org
+* http://github.com/postmodern/spidr
+* http://github.com/postmodern/spidr/issues
+* http://groups.google.com/group/spidr
 * irc.freenode.net #spidr
-* Postmodern (postmodern.mod3 at gmail.com)
 
 == DESCRIPTION:
 
