@@ -58,7 +58,7 @@ and easy to use.
       'http://company.com/',
       :hosts => [
         'company.com',
-	/host\d\.company\.com/
+        /host\d\.company\.com/
       ]
     )
 
@@ -92,10 +92,10 @@ and easy to use.
         puts "[-] #{page.url}"
 
         page.search('//meta').each do |meta|
-	  name = (meta.attributes['name'] || meta.attributes['http-equiv'])
-	  value = meta.attributes['content']
+          name = (meta.attributes['name'] || meta.attributes['http-equiv'])
+          value = meta.attributes['content']
 
-	  puts "    #{name} = #{value}"
+          puts "    #{name} = #{value}"
 	end
       end
     end
@@ -139,8 +139,8 @@ and easy to use.
     Spidr.host('sketchy.content.com') do |spider|
       spider.every_url do |url|
         if url.path.split('/').find { |dir| dir.to_i > 1000 }
-	  spider.skip_link!
-	end
+          spider.skip_link!
+        end
       end
     end
 
