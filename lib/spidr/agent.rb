@@ -458,6 +458,8 @@ module Spidr
       path += "?#{url.query}" if url.query
 
       begin
+        sleep(@delay) if @delay > 0
+
         get_session(url.scheme,host,port) do |sess|
           headers = {}
           headers['User-Agent'] = @user_agent if @user_agent
