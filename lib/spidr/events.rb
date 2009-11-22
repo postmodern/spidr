@@ -190,7 +190,8 @@ module Spidr
     end
 
     #
-    # Pass every Internal Server Error page that the agent visits to a given block.
+    # Pass every Internal Server Error page that the agent visits to a
+    # given block.
     #
     # @yield [page]
     #   The block will be passed every Internal Server Error page visited.
