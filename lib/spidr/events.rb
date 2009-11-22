@@ -236,6 +236,21 @@ module Spidr
     end
 
     #
+    # Pass every XML page that the agent visits to a given block.
+    #
+    # @yield [page]
+    #   The block will be passed every XML page visited.
+    #
+    # @yieldparam [Page] page
+    #   A visited page.
+    #
+    def every_xml_page(&block)
+      every_page do |page|
+        block.call(page) if (block && page.xml?)
+      end
+    end
+
+    #
     # Pass every HTML document that the agent parses to a given block.
     #
     # @yield [doc]
@@ -301,17 +316,18 @@ module Spidr
     end
 
     #
-    # Pass every XML page that the agent visits to a given block.
+    # Pass every XML Stylesheet (XSL) page that the agent visits to a
+    # given block.
     #
     # @yield [page]
-    #   The block will be passed every XML page visited.
+    #   The block will be passed every XML Stylesheet (XSL) page visited.
     #
     # @yieldparam [Page] page
     #   A visited page.
     #
-    def every_xml_page(&block)
+    def every_xsl_page(&block)
       every_page do |page|
-        block.call(page) if (block && page.xml?)
+        block.call(page) if (block && page.xsl?)
       end
     end
 
