@@ -235,6 +235,71 @@ module Spidr
     end
 
     #
+    # Pass every HTML document that the agent parses to a given block.
+    #
+    # @yield [doc]
+    #   The block will be passed every HTML document parsed.
+    #
+    # @yieldparam [Nokogiri::HTML::Document] doc
+    #   A parsed HTML document.
+    #
+    # @see http://nokogiri.rubyforge.org/nokogiri/Nokogiri/HTML/Document.html
+    #
+    def every_html_doc(&block)
+      every_page do |page|
+        if (block && page.html?)
+          if (doc = page.doc)
+            block.call(doc)
+          end
+        end
+      end
+    end
+
+    #
+    # Pass every XML document that the agent parses to a given block.
+    #
+    # @yield [doc]
+    #   The block will be passed every XML document parsed.
+    #
+    # @yieldparam [Nokogiri::XML::Document] doc
+    #   A parsed XML document.
+    #
+    # @see http://nokogiri.rubyforge.org/nokogiri/Nokogiri/XML/Document.html
+    #
+    def every_xml_doc(&block)
+      every_page do |page|
+        if (block && page.xml?)
+          if (doc = page.doc)
+            block.call(doc)
+          end
+        end
+      end
+    end
+
+    #
+    # Pass every HTML or XML document that the agent parses to a given
+    # block.
+    #
+    # @yield [doc]
+    #   The block will be passed every HTML or XML document parsed.
+    #
+    # @yieldparam [Nokogiri::HTML::Document, Nokogiri::XML::Document] doc
+    #   A parsed HTML or XML document.
+    #
+    # @see http://nokogiri.rubyforge.org/nokogiri/Nokogiri/XML/Document.html
+    # @see http://nokogiri.rubyforge.org/nokogiri/Nokogiri/HTML/Document.html
+    #
+    def every_doc(&block)
+      every_page do |page|
+        if block
+          if (doc = page.doc)
+            block.call(doc)
+          end
+        end
+      end
+    end
+
+    #
     # Pass every XML page that the agent visits to a given block.
     #
     # @yield [page]
