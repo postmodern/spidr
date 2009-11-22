@@ -251,6 +251,45 @@ module Spidr
     end
 
     #
+    # Pass every XML Stylesheet (XSL) page that the agent visits to a
+    # given block.
+    #
+    # @yield [page]
+    #   The block will be passed every XML Stylesheet (XSL) page visited.
+    #
+    # @yieldparam [Page] page
+    #   A visited page.
+    #
+    def every_xsl_page(&block)
+      every_page do |page|
+        block.call(page) if (block && page.xsl?)
+      end
+    end
+
+    #
+    # Pass every HTML or XML document that the agent parses to a given
+    # block.
+    #
+    # @yield [doc]
+    #   The block will be passed every HTML or XML document parsed.
+    #
+    # @yieldparam [Nokogiri::HTML::Document, Nokogiri::XML::Document] doc
+    #   A parsed HTML or XML document.
+    #
+    # @see http://nokogiri.rubyforge.org/nokogiri/Nokogiri/XML/Document.html
+    # @see http://nokogiri.rubyforge.org/nokogiri/Nokogiri/HTML/Document.html
+    #
+    def every_doc(&block)
+      every_page do |page|
+        if block
+          if (doc = page.doc)
+            block.call(doc)
+          end
+        end
+      end
+    end
+
+    #
     # Pass every HTML document that the agent parses to a given block.
     #
     # @yield [doc]
@@ -293,41 +332,24 @@ module Spidr
     end
 
     #
-    # Pass every HTML or XML document that the agent parses to a given
+    # Pass every XML Stylesheet (XSL) that the agent parses to a given
     # block.
     #
     # @yield [doc]
-    #   The block will be passed every HTML or XML document parsed.
+    #   The block will be passed every XSL Stylesheet (XSL) parsed.
     #
-    # @yieldparam [Nokogiri::HTML::Document, Nokogiri::XML::Document] doc
-    #   A parsed HTML or XML document.
+    # @yieldparam [Nokogiri::XML::Document] doc
+    #   A parsed XML document.
     #
     # @see http://nokogiri.rubyforge.org/nokogiri/Nokogiri/XML/Document.html
-    # @see http://nokogiri.rubyforge.org/nokogiri/Nokogiri/HTML/Document.html
     #
-    def every_doc(&block)
+    def every_xsl_doc(&block)
       every_page do |page|
-        if block
+        if (block && page.xsl?)
           if (doc = page.doc)
             block.call(doc)
           end
         end
-      end
-    end
-
-    #
-    # Pass every XML Stylesheet (XSL) page that the agent visits to a
-    # given block.
-    #
-    # @yield [page]
-    #   The block will be passed every XML Stylesheet (XSL) page visited.
-    #
-    # @yieldparam [Page] page
-    #   A visited page.
-    #
-    def every_xsl_page(&block)
-      every_page do |page|
-        block.call(page) if (block && page.xsl?)
       end
     end
 
