@@ -261,6 +261,9 @@ module Spidr
     #   Returns +nil+ if the page is neither HTML, XML, RSS, Atom or if
     #   the page could not be parsed properly.
     #
+    # @see http://nokogiri.rubyforge.org/nokogiri/Nokogiri/XML/Document.html
+    # @see http://nokogiri.rubyforge.org/nokogiri/Nokogiri/HTML/Document.html
+    #
     def doc
       return nil if (body.nil? || body.empty?)
 
