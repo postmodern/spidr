@@ -174,6 +174,16 @@ module Spidr
     end
 
     #
+    # Determines if the page is XML Stylesheet (XSL).
+    #
+    # @return [Boolean]
+    #   Specifies whether the page is XML Stylesheet (XSL).
+    #
+    def xsl?
+      (content_type =~ /text\/xsl/) == 0
+    end
+
+    #
     # Determines if the page is JavaScript.
     #
     # @return [Boolean]
