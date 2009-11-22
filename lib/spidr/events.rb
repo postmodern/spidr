@@ -354,6 +354,48 @@ module Spidr
     end
 
     #
+    # Pass every RSS document that the agent parses to a given block.
+    #
+    # @yield [doc]
+    #   The block will be passed every RSS document parsed.
+    #
+    # @yieldparam [Nokogiri::XML::Document] doc
+    #   A parsed XML document.
+    #
+    # @see http://nokogiri.rubyforge.org/nokogiri/Nokogiri/XML/Document.html
+    #
+    def every_rss_doc(&block)
+      every_page do |page|
+        if (block && page.rss?)
+          if (doc = page.doc)
+            block.call(doc)
+          end
+        end
+      end
+    end
+
+    #
+    # Pass every Atom document that the agent parses to a given block.
+    #
+    # @yield [doc]
+    #   The block will be passed every Atom document parsed.
+    #
+    # @yieldparam [Nokogiri::XML::Document] doc
+    #   A parsed XML document.
+    #
+    # @see http://nokogiri.rubyforge.org/nokogiri/Nokogiri/XML/Document.html
+    #
+    def every_atom_doc(&block)
+      every_page do |page|
+        if (block && page.atom?)
+          if (doc = page.doc)
+            block.call(doc)
+          end
+        end
+      end
+    end
+
+    #
     # Pass every JavaScript page that the agent visits to a given block.
     #
     # @yield [page]
