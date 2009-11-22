@@ -280,7 +280,7 @@ module Spidr
       begin
         if html?
           return @doc ||= Nokogiri::HTML(body)
-        elsif (xml? || rss? || atom?)
+        elsif (xml? || xsl? || rss? || atom?)
           return @doc ||= Nokogiri::XML(body)
         end
       rescue
