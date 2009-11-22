@@ -373,6 +373,14 @@ module Spidr
         doc.search('iframe[@src]').each do |iframe|
           add_url.call(iframe.get_attribute('src'))
         end
+
+        doc.search('link[@href]').each do |link|
+          add_url.call(link.get_attribute('href'))
+        end
+
+        doc.search('script[@src]').each do |script|
+          add_url.call(script.get_attribute('src'))
+        end
       end
 
       return urls
