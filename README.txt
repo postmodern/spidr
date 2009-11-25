@@ -103,8 +103,8 @@ and easy to use.
 * Print out the titles from every page:
 
     Spidr.site('http://www.rubypulse.com/') do |spider|
-      spider.every_page do |page|
-        puts page.title if page.html?
+      spider.every_html_page do |page|
+        puts page.title
       end
     end
 
@@ -121,16 +121,16 @@ and easy to use.
 * Pause the spider on a forbidden page:
 
     spider = Spidr.host('overnight.startup.com') do |spider|
-      spider.every_page do |page|
-        spider.pause! if page.forbidden?
+      spider.every_forbidden_page do |page|
+        spider.pause!
       end
     end
 
 * Skip the processing of a page:
 
     Spidr.host('sketchy.content.com') do |spider|
-      spider.every_page do |page|
-        spider.skip_page! if page.not_found?
+      spider.every_missing_page do |page|
+        spider.skip_page!
       end
     end
 
