@@ -1,3 +1,34 @@
+=== 0.2.1 / 2009-11-25
+
+* Added Spidr::Events#every_ok_page.
+* Added Spidr::Events#every_redirect_page.
+* Added Spidr::Events#every_timedout_page.
+* Added Spidr::Events#every_bad_request_page.
+* Added Spidr::Events#every_unauthorized_page.
+* Added Spidr::Events#every_forbidden_page.
+* Added Spidr::Events#every_missing_page.
+* Added Spidr::Events#every_internal_server_error_page.
+* Added Spidr::Events#every_txt_page.
+* Added Spidr::Events#every_html_page.
+* Added Spidr::Events#every_xml_page.
+* Added Spidr::Events#every_xsl_page.
+* Added Spidr::Events#every_doc.
+* Added Spidr::Events#every_html_doc.
+* Added Spidr::Events#every_xml_doc.
+* Added Spidr::Events#every_xsl_doc.
+* Added Spidr::Events#every_rss_doc.
+* Added Spidr::Events#every_atom_doc.
+* Added Spidr::Events#every_javascript_page.
+* Added Spidr::Events#every_css_page.
+* Added Spidr::Events#every_rss_page.
+* Added Spidr::Events#every_atom_page.
+* Added Spidr::Events#every_ms_word_page.
+* Added Spidr::Events#every_pdf_page.
+* Added Spidr::Events#every_zip_page.
+* Fixed a bug where Spidr::Agent#delay was not being used to delay
+  requesting pages.
+* Spider +link+ and +script+ tags in HTML pages (thanks Nick Plante).
+
 === 0.2.0 / 2009-10-10
 
 * Added URI.expand_path.
