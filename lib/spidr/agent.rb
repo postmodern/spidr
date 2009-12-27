@@ -446,37 +446,39 @@ module Spidr
     #   The page for the response, or +nil+ if the request failed.
     #
     def get_page(url,&block)
-      url = URI(url.to_s) unless url.kind_of?(URI)
+      setup_url_request(url) do |session,path,headers|
+        new_page = Page.new(url,session.get(path,headers))
+        block.call(new_page) if block
 
-      host = url.host
-      port = url.port
-
-      unless url.path.empty?
-        path = url.path
-      else
-        path = '/'
+        return new_page
       end
+    end
 
-      # append the URL query to the path
-      path += "?#{url.query}" if url.query
+    #
+    # Posts supplied form data and creates a new Page object from a given URL.
+    #
+    # @param [URI::HTTP] url
+    #   The URL to request.
+    #
+    # @param [String] post_data
+    #   Form option data.
+    #
+    # @yield [page]
+    #   If a block is given, it will be passed the page that represents the
+    #   response.
+    #
+    # @yieldparam [Page] page
+    #   The page for the response.
+    #
+    # @return [Page, nil]
+    #   The page for the response, or +nil+ if the request failed.
+    #
+    def post_page(url,post_data='',&block)
+      setup_url_request(url) do |session,path,headers|
+        new_page = Page.new(url,session.post(path,post_data,headers))
+        block.call(new_page) if block
 
-      begin
-        sleep(@delay) if @delay > 0
-
-        get_session(url.scheme,host,port) do |sess|
-          headers = {}
-          headers['User-Agent'] = @user_agent if @user_agent
-          headers['Referer'] = @referer if @referer
-
-          new_page = Page.new(url,sess.get(path,headers))
-
-          block.call(new_page) if block
-          return new_page
-        end
-      rescue SystemCallError, Timeout::Error, Net::HTTPBadResponse, IOError
-        failed(url)
-        kill_session(url.scheme,host,port)
-        return nil
+        return new_page
       end
     end
 
@@ -530,6 +532,57 @@ module Spidr
     end
 
     protected
+
+    #
+    # Normalizes the request path and grabs a session to handle page
+    # get and post requests.
+    #
+    # @param [URI::HTTP] url
+    #   The URL to request.
+    #
+    # @yield [request]
+    #   A block whose purpose is to make a page request.
+    #
+    # @yieldparam [Net::HTTP] session
+    #   An HTTP session object.
+    #
+    # @yieldparam [String] path
+    #   Normalized URL string.
+    #
+    # @yieldparam [Hash] headers
+    #   A Hash of request header options.
+    #
+    def setup_url_request(url,&block)
+      url = URI(url.to_s) unless url.kind_of?(URI)
+
+      host = url.host
+      port = url.port
+
+      unless url.path.empty?
+        path = url.path
+      else
+        path = '/'
+      end
+
+      # append the URL query to the path
+      path += "?#{url.query}" if url.query
+
+      begin
+        sleep(@delay) if @delay > 0
+
+        get_session(url.scheme,host,port) do |sess|
+          headers = {}
+          headers['User-Agent'] = @user_agent if @user_agent
+          headers['Referer'] = @referer if @referer
+
+          yield(sess,path,headers)
+        end
+      rescue SystemCallError, Timeout::Error, Net::HTTPBadResponse, IOError
+        failed(url)
+        kill_session(url.scheme,host,port)
+        return nil
+      end
+    end
 
     #
     # Provides an active HTTP session for the given scheme, host
