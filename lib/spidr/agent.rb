@@ -3,6 +3,7 @@ require 'spidr/filters'
 require 'spidr/events'
 require 'spidr/actions'
 require 'spidr/page'
+require 'spidr/cookie_jar'
 require 'spidr/spidr'
 
 require 'net/http'
@@ -84,6 +85,7 @@ module Spidr
       @proxy = (options[:proxy] || Spidr.proxy)
       @user_agent = (options[:user_agent] || Spidr.user_agent)
       @referer = options[:referer]
+      @cookie_jar = CookieJar.new
 
       @running = false
       @delay = (options[:delay] || 0)
@@ -446,6 +448,8 @@ module Spidr
     #   The page for the response, or +nil+ if the request failed.
     #
     def get_page(url,&block)
+      url = URI(url.to_s)
+
       setup_url_request(url) do |session,path,headers|
         new_page = Page.new(url,session.get(path,headers))
         block.call(new_page) if block
@@ -474,8 +478,12 @@ module Spidr
     #   The page for the response, or +nil+ if the request failed.
     #
     def post_page(url,post_data='',&block)
+      url = URI(url.to_s)
+
       setup_url_request(url) do |session,path,headers|
         new_page = Page.new(url,session.post(path,post_data,headers))
+        @cookie_jar.from_page(new_page)
+
         block.call(new_page) if block
 
         return new_page
@@ -553,8 +561,6 @@ module Spidr
     #   A Hash of request header options.
     #
     def setup_url_request(url,&block)
-      url = URI(url.to_s) unless url.kind_of?(URI)
-
       host = url.host
       port = url.port
 
@@ -574,6 +580,9 @@ module Spidr
           headers = {}
           headers['User-Agent'] = @user_agent if @user_agent
           headers['Referer'] = @referer if @referer
+
+          cookies = @cookie_jar.cookies_for(url.host)
+          header['Cookie'] = cookies unless cookies.empty?
 
           yield(sess,path,headers)
         end
