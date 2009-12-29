@@ -38,6 +38,9 @@ module Spidr
     # Queue of URLs to visit
     attr_reader :queue
 
+    # Cached cookies
+    attr_reader :cookies
+
     #
     # Creates a new Agent object.
     #
@@ -85,7 +88,7 @@ module Spidr
       @proxy = (options[:proxy] || Spidr.proxy)
       @user_agent = (options[:user_agent] || Spidr.user_agent)
       @referer = options[:referer]
-      @cookie_jar = CookieJar.new
+      @cookies = CookieJar.new
 
       @running = false
       @delay = (options[:delay] || 0)
@@ -482,7 +485,7 @@ module Spidr
 
       setup_url_request(url) do |session,path,headers|
         new_page = Page.new(url,session.post(path,post_data,headers))
-        @cookie_jar.from_page(new_page)
+        @cookies.from_page(new_page)
 
         block.call(new_page) if block
 
@@ -581,8 +584,8 @@ module Spidr
           headers['User-Agent'] = @user_agent if @user_agent
           headers['Referer'] = @referer if @referer
 
-          cookies = @cookie_jar.cookies_for(url.host)
-          header['Cookie'] = cookies unless cookies.empty?
+          header_cookies = @cookies.cookies_for(url.host)
+          headers['Cookie'] = header_cookies unless header_cookies.empty?
 
           yield(sess,path,headers)
         end
