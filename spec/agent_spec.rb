@@ -1,10 +1,10 @@
 require 'spidr/agent'
 
 require 'spec_helper'
-require 'helpers/course'
+require 'helpers/wsoc'
 
 describe Agent do
-  include Helpers::Course
+  include Helpers::WSOC
 
   before(:all) do
     @agent = run_course

@@ -1,11 +1,17 @@
+require 'wsoc/config'
 require 'open-uri'
 require 'json'
 
 module Helpers
-  module Course
-    COURSE_URL = URI('http://spidr.rubyforge.org/course/start.html')
+  module WSOC
+    SERVER_URL = URI::HTTP.build(
+      :host => (ENV['HOST'] || ::WSOC::Config::DEFAULT_HOST),
+      :port => (ENV['PORT'] || ::WSOC::Config::DEFAULT_PORT)
+    )
 
-    SPECS_URL = 'http://spidr.rubyforge.org/course/specs.json'
+    SPECS_URL = SERVER_URL.merge(::WSOC::Config::SPECS_PATHS[:json])
+
+    COURSE_URL = SERVER_URL.merge(::WSOC::Config::COURSE_START_PATH)
 
     def self.included(base)
       specs = JSON.parse(open(SPECS_URL).read)
@@ -16,13 +22,13 @@ module Helpers
           url = spec['url'].to_s.dump
 
           case spec['behavior']
-          when 'follow'
+          when 'visit'
             base.module_eval %{
               it #{message} do
                 should_visit_link(#{url})
               end
             }
-          when 'nofollow'
+          when 'ignore'
             base.module_eval %{
               it #{message} do
                 should_visit_once(#{url})
@@ -32,15 +38,6 @@ module Helpers
             base.module_eval %{
               it #{message} do
                 should_fail_link(#{url})
-              end
-            }
-          else
-            link = spec['link'].to_s.dump
-
-            base.module_eval %{
-              it #{message} do
-                should_ignore_link(#{link})
-                should_ignore_link(#{url})
               end
             }
           end

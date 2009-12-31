@@ -17,7 +17,8 @@ Hoe.spec('spidr') do
 
   self.extra_dev_deps = [
     ['rspec', '>=1.2.8'],
-    ['yard', '>=0.4.0']
+    ['yard', '>=0.4.0'],
+    ['wsoc', '>=0.1.0']
   ]
 
   self.spec_extras = {:has_rdoc => 'yard'}
