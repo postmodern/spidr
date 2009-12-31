@@ -18,8 +18,8 @@ module Helpers
 
       if specs.kind_of?(Array)
         specs.each do |spec|
-          message = spec['message'].to_s.dump
-          url = spec['url'].to_s.dump
+          message = spec['message'].dump
+          url = URI.encode(spec['url']).dump
 
           case spec['behavior']
           when 'visit'
@@ -52,41 +52,35 @@ module Helpers
       end
     end
 
-    def visited_once?(link)
-      url = COURSE_URL.merge(URI.encode(link))
-
+    def visited_once?(url)
       return @agent.visited_urls.select { |visited_url|
         visited_url == url
       }.length == 1
     end
 
-    #
-    # Returns +true+ if the agent has visited the specified _link_, returns
-    # +false+ otherwise.
-    #
-    def visited_link?(link)
-      @agent.visited?(COURSE_URL.merge(URI.encode(link)))
+    def visited_link?(url)
+      @agent.visited?(url)
     end
 
-    def visit_failed?(link)
-      @agent.failed?(COURSE_URL.merge(URI.encode(link)))
+    def visit_failed?(url)
+      @agent.failed?(url)
     end
 
-    def should_visit_link(link)
-      visited_link?(link).should == true
+    def should_visit_link(url)
+      visited_link?(url).should == true
     end
 
-    def should_ignore_link(link)
-      visited_link?(link).should == false
+    def should_ignore_link(url)
+      visited_link?(url).should == false
     end
 
-    def should_visit_once(link)
-      visited_once?(link).should == true
+    def should_visit_once(url)
+      visited_once?(url).should == true
     end
 
-    def should_fail_link(link)
-      visited_link?(link).should == false
-      visit_failed?(link).should == true
+    def should_fail_link(url)
+      visited_link?(url).should == false
+      visit_failed?(url).should == true
     end
   end
 end
