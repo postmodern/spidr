@@ -50,7 +50,7 @@ module Helpers
     end
 
     def run_course
-      Agent.start_at(COURSE_URL,:hosts => [COURSE_URL.host]) do |agent|
+      Agent.start_at(COURSE_URL) do |agent|
         agent.every_failed_url { |url| puts "[FAILED] #{url}" }
         agent.every_url { |url| puts url }
       end
