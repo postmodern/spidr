@@ -31,7 +31,7 @@ module Helpers
           when 'ignore'
             base.module_eval %{
               it #{message} do
-                should_visit_once(#{url})
+                should_ignore_link(#{url})
               end
             }
           when 'fail'
