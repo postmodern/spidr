@@ -23,7 +23,7 @@ module Helpers
       if specs.kind_of?(Array)
         specs.each do |spec|
           message = spec['message'].dump
-          url = URI.encode(spec['url']).dump
+          url = spec['url'].dump
 
           case spec['behavior']
           when 'visit'
