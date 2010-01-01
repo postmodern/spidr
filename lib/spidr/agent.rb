@@ -594,8 +594,9 @@ module Spidr
           yield(sess,path,headers)
         end
       rescue SystemCallError, Timeout::Error, Net::HTTPBadResponse, IOError
-        failed(url)
         kill_session(url.scheme,host,port)
+
+        failed(url)
         return nil
       end
     end
