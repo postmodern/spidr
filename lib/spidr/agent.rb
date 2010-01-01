@@ -453,7 +453,7 @@ module Spidr
     def get_page(url,&block)
       url = URI(url.to_s)
 
-      setup_url_request(url) do |session,path,headers|
+      prepare_request(url) do |session,path,headers|
         new_page = Page.new(url,session.get(path,headers))
         block.call(new_page) if block
 
@@ -483,7 +483,7 @@ module Spidr
     def post_page(url,post_data='',&block)
       url = URI(url.to_s)
 
-      setup_url_request(url) do |session,path,headers|
+      prepare_request(url) do |session,path,headers|
         new_page = Page.new(url,session.post(path,post_data,headers))
         @cookies.from_page(new_page)
 
@@ -563,7 +563,7 @@ module Spidr
     # @yieldparam [Hash] headers
     #   A Hash of request header options.
     #
-    def setup_url_request(url,&block)
+    def prepare_request(url,&block)
       host = url.host
       port = url.port
 
