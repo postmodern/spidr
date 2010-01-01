@@ -8,19 +8,22 @@ describe CookieJar do
   end
 
   it 'should add a cookie to the jar' do
-    @cookie_jar.add('zerosum.org', 'admin=ofcourseiam')
+    @cookie_jar['zerosum.org'] = 'admin=ofcourseiam'
+
     @cookie_jar.size.should == 1
   end
 
   it 'should retrieve cookies for the named host' do
-    @cookie_jar.add('zerosum.org', 'admin=ofcourseiam')
-    @cookie_jar.add('zerosum.org', 'anothercookie=cookievalue')
+    @cookie_jar['zerosum.org'] = 'admin=ofcourseiam'
+    @cookie_jar['zerosum.org'] = 'anothercookie=cookievalue'
+
     @cookie_jar.cookies_for('zerosum.org').should == 'admin=ofcourseiam; anothercookie=cookievalue'
   end
 
   it 'should clear all cookies' do
-    @cookie_jar.add('zerosum.org', 'cookie=foobar')
+    @cookie_jar['zerosum.org'] = 'cookie=foobar'
     @cookie_jar.clear!
+
     @cookie_jar.size.should == 0
   end
 end

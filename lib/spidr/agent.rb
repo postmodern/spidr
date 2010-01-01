@@ -592,7 +592,7 @@ module Spidr
           headers['User-Agent'] = @user_agent if @user_agent
           headers['Referer'] = @referer if @referer
 
-          if (header_cookies = @cookies.cookies_for(url.host))
+          if (header_cookies = @cookies[url.host])
             headers['Cookie'] = header_cookies
           end
 

@@ -35,22 +35,6 @@ module Spidr
     end
 
     # 
-    # Add a cookie to the jar for a particular domain.
-    #
-    # @param [String] host
-    #   Host or domain name to associate with the cookie.
-    #
-    # @param [String] cookie
-    #   Cookie data.
-    #
-    # @since 0.2.2
-    #
-    def add(host, cookie)
-      @cookies[host] ||= []
-      @cookies[host] << cookie
-    end
-
-    # 
     # Return all relevant cookies in a single string for the 
     # named host or domain (in browser request format).
     #
@@ -63,19 +47,23 @@ module Spidr
     #
     # @since 0.2.2
     #
-    def cookies_for(host)
-      if @cookies.has_key?(host)
-        return @cookies[host].join('; ')
-      end
+    def [](host)
+      @cookies[host]
     end
 
     # 
-    # Clear out the jar, removing all stored cookies.
+    # Add a cookie to the jar for a particular domain.
+    #
+    # @param [String] host
+    #   Host or domain name to associate with the cookie.
+    #
+    # @param [String] cookie
+    #   Cookie data.
     #
     # @since 0.2.2
     #
-    def clear!
-      @cookies.clear
+    def []=(host,cookie)
+      @cookies[host] = cookie
     end
 
     #
@@ -87,9 +75,16 @@ module Spidr
     # @since 0.2.2
     #
     def from_page(page)
-      page.cookie_values.each do |cookie|
-        add(page.url.host,cookie)
-      end
+      self[page.url.host] = page.cookie_values.join('; ')
+    end
+
+    # 
+    # Clear out the jar, removing all stored cookies.
+    #
+    # @since 0.2.2
+    #
+    def clear!
+      @cookies.clear
     end
 
     #
