@@ -75,7 +75,9 @@ module Spidr
     #   The response page from which to extract cookie data.
     #
     def from_page(page)
-      page.cookies.each { |host,cookie| add(host,cookie) }
+      page.cookie_values.each do |cookie|
+        add(page.url.host,cookie)
+      end
     end
 
     #
