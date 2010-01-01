@@ -1,3 +1,4 @@
+require 'spidr/sanitizers'
 require 'spidr/filters'
 require 'spidr/events'
 require 'spidr/actions'
@@ -10,6 +11,7 @@ require 'set'
 module Spidr
   class Agent
 
+    include Sanitizers
     include Filters
     include Events
     include Actions
@@ -400,10 +402,11 @@ module Spidr
     #   Specifies whether the URL was enqueued, or ignored.
     #
     def enqueue(url)
-      link = url.to_s
-      url = URI(link) unless url.kind_of?(URI)
+      url = sanitize_url(url)
 
       if (!(queued?(url)) && visit?(url))
+        link = url.to_s
+
         begin
           @every_url_blocks.each { |block| block.call(url) }
 

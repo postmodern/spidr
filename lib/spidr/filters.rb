@@ -47,6 +47,8 @@ module Spidr
     #   The patterns which match the URI path extensions to not visit.
     #
     def initialize(options={})
+      super(options)
+
       @schemes = []
 
       if options[:schemes]
@@ -64,6 +66,8 @@ module Spidr
           STDERR.puts "Warning: cannot load 'net/https', https support disabled"
         end
       end
+
+      @strip_fragments = (options[:strip_fragments] || false)
 
       @host_rules = Rules.new(
         :accept => options[:hosts],

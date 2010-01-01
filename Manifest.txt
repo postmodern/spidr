@@ -6,6 +6,7 @@ lib/spidr.rb
 lib/spidr/extensions.rb
 lib/spidr/extensions/uri.rb
 lib/spidr/page.rb
+lib/spidr/sanitizers.rb
 lib/spidr/rules.rb
 lib/spidr/filters.rb
 lib/spidr/events.rb
