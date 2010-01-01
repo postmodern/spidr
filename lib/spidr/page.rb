@@ -254,27 +254,44 @@ module Spidr
     end
 
     #
-    # The raw Cookies sent along with the page.
+    # The Cookie String sent along with the page.
     #
     # @return [Array<String>]
     #   The raw Cookies from the response.
     #
-    def raw_cookies
+    # @since 0.2.2
+    #
+    def raw_cookie
       page.headers['set-cookie']
     end
 
     #
-    # The cookies returned with the response.
+    # The Cookie values sent along with the page.
+    #
+    # @return [Array<String>]
+    #   The Cookies values.
+    #
+    # @since 0.2.2
+    #
+    def cookie_values
+      page.headers['set-cookie'].map do |cookie|
+        cookie.split(/;\s*/,2).first
+      end
+    end
+
+    #
+    # The Cookie key -> value pairs returned with the response.
     #
     # @return [Hash{String => String}]
-    #   The cookie values.
+    #   The cookie keys and values.
     #
-    def cookies
+    # @since 0.2.2
+    #
+    def cookie_params
       pairs = {}
 
-      raw_cookies.each do |cookie|
-        key, value = cookie.split(/;\s*/,2).first.split('=',2)
-
+      cookie_values.each do |cookie|
+        key, value = cookie.split('=',2)
         pairs[key] = value
       end
 
