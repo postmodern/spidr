@@ -262,7 +262,7 @@ module Spidr
     # @since 0.2.2
     #
     def raw_cookie
-      @response['Set-Cookie']
+      (@response['Set-Cookie'] || [])
     end
 
     #
@@ -274,7 +274,7 @@ module Spidr
     # @since 0.2.2
     #
     def cookie_values
-      @response['Set-Cookie'].map do |cookie|
+      raw_cookie.map do |cookie|
         cookie.split(/;\s*/,2).first
       end
     end
