@@ -1,3 +1,5 @@
+require 'spidr/cookie_jar'
+
 require 'spec_helper'
 
 describe CookieJar do
@@ -20,14 +22,5 @@ describe CookieJar do
     @cookie_jar.add('zerosum.org', 'cookie=foobar')
     @cookie_jar.clear!
     @cookie_jar.size.should == 0
-  end
-
-  it "should extract cookie from page headers" do
-    raw_cookie_value = '_foo_sess=BAh7DDoOcmV0dXJuX3RvMDo; domain=.foo.com; path=/'
-
-    page = mock('Page', :url => URI.parse('http://zerosum.org/foo/bar.html'), :headers => { 'set-cookie' => [raw_cookie_value] })
-    @cookie_jar.from_page(page)
-
-    @cookie_jar.cookies_for('zerosum.org').should == '_foo_sess=BAh7DDoOcmV0dXJuX3RvMDo'
   end
 end
