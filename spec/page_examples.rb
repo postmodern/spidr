@@ -12,6 +12,6 @@ shared_examples_for "Page" do
   end
 
   it "should provide transparent access to the response headers" do
-    @page.content_type.should == @page.headers['content-type']
+    @page.content_type.should == @page.response['Content-Type']
   end
 end
