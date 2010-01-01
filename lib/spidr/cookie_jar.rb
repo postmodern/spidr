@@ -1,3 +1,5 @@
+require 'spidr/page'
+
 module Spidr
   class CookieJar
 
@@ -46,7 +48,7 @@ module Spidr
     #   The response page from which to extract cookie data.
     #
     def from_page(page)
-      page.headers['set-cookie'].each do |cookie|
+      page.cookies.each do |cookie|
         cookie = cookie.split(';')[0]
         # TODO: respect domain, expire values (cookie attributes)
 

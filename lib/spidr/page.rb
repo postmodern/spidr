@@ -254,6 +254,16 @@ module Spidr
     end
 
     #
+    # The cookies sent along with the page.
+    #
+    # @return [Array<String>]
+    #   The cookies from the response.
+    #
+    def cookies
+      page.headers['set-cookie']
+    end
+
+    #
     # The body of the response.
     #
     # @return [String]
