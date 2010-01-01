@@ -15,9 +15,8 @@ describe CookieJar do
 
   it 'should retrieve cookies for the named host' do
     @cookie_jar['zerosum.org'] = 'admin=ofcourseiam'
-    @cookie_jar['zerosum.org'] = 'anothercookie=cookievalue'
 
-    @cookie_jar.cookies_for('zerosum.org').should == 'admin=ofcourseiam; anothercookie=cookievalue'
+    @cookie_jar['zerosum.org'].should == 'admin=ofcourseiam'
   end
 
   it 'should clear all cookies' do
