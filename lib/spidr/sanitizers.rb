@@ -6,6 +6,9 @@ module Spidr
       base.module_eval do
         # Specifies whether the Agent will strip URI fragments
         attr_accessor :strip_fragments
+
+        # Specifies whether the Agent will strip URI queries
+        attr_accessor :strip_query
       end
     end
 
@@ -16,7 +19,10 @@ module Spidr
     #   Additional options.
     #
     # @option options [Boolean] :strip_fragments (true)
-    #   Specifies whether or not to strip the fragments from URLs.
+    #   Specifies whether or not to strip the fragment component from URLs.
+    #
+    # @option options [Boolean] :strip_query (false)
+    #   Specifies whether or not to strip the query component from URLs.
     #
     def initialize(options={})
       @strip_fragments = true
@@ -24,6 +30,8 @@ module Spidr
       if options.has_key?(:strip_fragments)
         @strip_fragments = options[:strip_fragments]
       end
+
+      @strip_query = (options[:strip_query] || false)
     end
 
     #
@@ -39,6 +47,7 @@ module Spidr
       url = URI(url.to_s)
 
       url.fragment = nil if @strip_fragments
+      url.query = nil if @strip_query
 
       return url
     end
