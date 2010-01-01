@@ -591,7 +591,7 @@ module Spidr
           header_cookies = @cookies.cookies_for(url.host)
           headers['Cookie'] = header_cookies unless header_cookies.empty?
 
-          yield(sess,path,headers)
+          block.call(sess,path,headers)
         end
       rescue SystemCallError, Timeout::Error, Net::HTTPBadResponse, IOError
         kill_session(url.scheme,host,port)
