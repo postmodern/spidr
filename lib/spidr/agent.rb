@@ -588,8 +588,9 @@ module Spidr
           headers['User-Agent'] = @user_agent if @user_agent
           headers['Referer'] = @referer if @referer
 
-          header_cookies = @cookies.cookies_for(url.host)
-          headers['Cookie'] = header_cookies unless header_cookies.empty?
+          if (header_cookies = @cookies.cookies_for(url.host))
+            headers['Cookie'] = header_cookies
+          end
 
           block.call(sess,path,headers)
         end

@@ -50,8 +50,15 @@ module Spidr
     #
     # @param [String] host
     #   Host or domain name for cookies.
+    #
+    # @return [String, nil]
+    #   The cookie values or +nil+ if the host does not have a cookie in the
+    #   jar.
+    #
     def cookies_for(host)
-      (@cookies[host] || []).join('; ')
+      if @cookies.has_key?(host)
+        return @cookies[host].join('; ')
+      end
     end
 
     # 
