@@ -267,17 +267,18 @@ module Spidr
     # The cookies returned with the response.
     #
     # @return [Hash{String => String}]
-    #   The pairs of host-names and cookie values.
+    #   The cookie values.
     #
     def cookies
-      cookies = {}
+      pairs = {}
 
       raw_cookies.each do |cookie|
-        # TODO: respect domain, expire values (cookie attributes)
-        cookies[@url.host] = cookie.split(/;\s*/,2).first
+        key, value = cookie.split(/;\s*/,2).first.split('=',2)
+
+        pairs[key] = value
       end
 
-      return cookies
+      return pairs
     end
 
     #
