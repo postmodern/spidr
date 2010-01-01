@@ -455,8 +455,8 @@ module Spidr
 
       prepare_request(url) do |session,path,headers|
         new_page = Page.new(url,session.get(path,headers))
-        block.call(new_page) if block
 
+        block.call(new_page) if block
         return new_page
       end
     end
@@ -488,7 +488,6 @@ module Spidr
         @cookies.from_page(new_page)
 
         block.call(new_page) if block
-
         return new_page
       end
     end
