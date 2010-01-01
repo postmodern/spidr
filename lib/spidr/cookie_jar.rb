@@ -7,7 +7,7 @@ module Spidr
     # Creates a new Cookie Jar object.
     #
     def initialize
-      clear!
+      @cookies = {}
     end
 
     # 
@@ -38,7 +38,7 @@ module Spidr
     # Clear out the jar, removing all stored cookies.
     #
     def clear!
-      @cookies = {}
+      @cookies.clear
     end
 
     #
@@ -62,5 +62,6 @@ module Spidr
     def size
       @cookies.size
     end
+
   end
 end
