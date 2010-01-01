@@ -3,11 +3,31 @@ require 'spidr/page'
 module Spidr
   class CookieJar
 
+    include Enumerable
+
     #
     # Creates a new Cookie Jar object.
     #
     def initialize
       @cookies = {}
+    end
+
+    #
+    # Enumerates over the host-name and cookie value pairs in the
+    # cookie jar.
+    #
+    # @yield [host, cookie]
+    #   If a block is given, it will be passed each host-name and cookie
+    #   value pair.
+    #
+    # @yieldparam [String] host
+    #   The host-name that the cookie is bound to.
+    #
+    # @yieldparam [String] cookie
+    #   The cookie value.
+    #
+    def each(&block)
+      @cookies.each(&block)
     end
 
     # 
