@@ -48,11 +48,8 @@ module Spidr
     #   The response page from which to extract cookie data.
     #
     def from_page(page)
-      page.cookies.each do |cookie|
-        cookie = cookie.split(';')[0]
-        # TODO: respect domain, expire values (cookie attributes)
-
-        add(page.url.host, cookie)
+      page.cookies.each do |host,cookie|
+        add(host, cookie)
       end
     end
 

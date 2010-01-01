@@ -254,13 +254,30 @@ module Spidr
     end
 
     #
-    # The cookies sent along with the page.
+    # The raw Cookies sent along with the page.
     #
     # @return [Array<String>]
-    #   The cookies from the response.
+    #   The raw Cookies from the response.
+    #
+    def raw_cookies
+      page.headers['set-cookie']
+    end
+
+    #
+    # The cookies returned with the response.
+    #
+    # @return [Hash{String => String}]
+    #   The pairs of host-names and cookie values.
     #
     def cookies
-      page.headers['set-cookie']
+      cookies = {}
+
+      raw_cookies.each do |cookie|
+        # TODO: respect domain, expire values (cookie attributes)
+        cookies[@url.host] = cookie.split(/;\s*/,2).first
+      end
+
+      return cookies
     end
 
     #
