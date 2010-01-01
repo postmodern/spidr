@@ -483,6 +483,8 @@ module Spidr
     # @return [Page, nil]
     #   The page for the response, or +nil+ if the request failed.
     #
+    # @since 0.2.2
+    #
     def post_page(url,post_data='',&block)
       url = URI(url.to_s)
 
@@ -566,6 +568,8 @@ module Spidr
     #
     # @yieldparam [Hash] headers
     #   A Hash of request header options.
+    #
+    # @since 0.2.2
     #
     def prepare_request(url,&block)
       host = url.host
