@@ -24,6 +24,8 @@ module Spidr
     # @option options [Boolean] :strip_query (false)
     #   Specifies whether or not to strip the query component from URLs.
     #
+    # @since 0.2.2
+    #
     def initialize(options={})
       @strip_fragments = true
       
@@ -42,6 +44,8 @@ module Spidr
     #
     # @return [URI::HTTP, URI::HTTPS]
     #   The new sanitized URL.
+    #
+    # @since 0.2.2
     #
     def sanitize_url(url)
       url = URI(url.to_s)
