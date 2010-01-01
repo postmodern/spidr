@@ -30,6 +30,7 @@ spec/extensions/uri_spec.rb
 spec/page_examples.rb
 spec/page_spec.rb
 spec/rules_spec.rb
+spec/sanitizers_spec.rb
 spec/filters_spec.rb
 spec/actions_spec.rb
 spec/agent_spec.rb
