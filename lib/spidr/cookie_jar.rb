@@ -8,6 +8,8 @@ module Spidr
     #
     # Creates a new Cookie Jar object.
     #
+    # @since 0.2.2
+    #
     def initialize
       @cookies = {}
     end
@@ -26,6 +28,8 @@ module Spidr
     # @yieldparam [String] cookie
     #   The cookie value.
     #
+    # @since 0.2.2
+    #
     def each(&block)
       @cookies.each(&block)
     end
@@ -38,6 +42,8 @@ module Spidr
     #
     # @param [String] cookie
     #   Cookie data.
+    #
+    # @since 0.2.2
     #
     def add(host, cookie)
       @cookies[host] ||= []
@@ -55,6 +61,8 @@ module Spidr
     #   The cookie values or +nil+ if the host does not have a cookie in the
     #   jar.
     #
+    # @since 0.2.2
+    #
     def cookies_for(host)
       if @cookies.has_key?(host)
         return @cookies[host].join('; ')
@@ -63,6 +71,8 @@ module Spidr
 
     # 
     # Clear out the jar, removing all stored cookies.
+    #
+    # @since 0.2.2
     #
     def clear!
       @cookies.clear
@@ -74,6 +84,8 @@ module Spidr
     # @param [Page] page
     #   The response page from which to extract cookie data.
     #
+    # @since 0.2.2
+    #
     def from_page(page)
       page.cookie_values.each do |cookie|
         add(page.url.host,cookie)
@@ -82,6 +94,8 @@ module Spidr
 
     #
     # Size of the current cookie jar store.
+    #
+    # @since 0.2.2
     #
     def size
       @cookies.size
