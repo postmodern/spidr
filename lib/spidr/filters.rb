@@ -67,8 +67,6 @@ module Spidr
         end
       end
 
-      @strip_fragments = (options[:strip_fragments] || false)
-
       @host_rules = Rules.new(
         :accept => options[:hosts],
         :reject => options[:ignore_hosts]
