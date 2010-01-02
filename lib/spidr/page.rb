@@ -274,9 +274,9 @@ module Spidr
     # @since 0.2.2
     #
     def cookie_values
-      raw_cookie.map do |cookie|
-        cookie.split(/;\s*/,2).first
-      end
+      raw_cookie.map { |cookie|
+        cookie.split(/;\s*/,2).first.split(/,\s*/)
+      }.flatten
     end
 
     #
@@ -291,10 +291,8 @@ module Spidr
       pairs = {}
 
       cookie_values.each do |cookie|
-        cookie.split(/,\s*/).each do |key_and_value|
-          key, value = key_and_value.split('=',2)
-          pairs[key] = value
-        end
+        key, value = cookie.split('=',2)
+        pairs[key] = value
       end
 
       return pairs
