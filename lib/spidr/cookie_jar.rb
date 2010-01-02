@@ -72,10 +72,20 @@ module Spidr
     # @param [Page] page
     #   The response page from which to extract cookie data.
     #
+    # @return [Boolean]
+    #   Specifies whether cookies were added from the page.
+    #
     # @since 0.2.2
     #
     def from_page(page)
-      self[page.url.host] = page.cookie_values.join('; ')
+      cookie = page.cookie_values.join('; ')
+
+      unless cookie.empty?
+        self[page.url.host] = cookie
+        return true
+      end
+
+      return false
     end
 
     # 
