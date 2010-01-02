@@ -156,7 +156,7 @@ and easy to use.
 
 The MIT License
 
-Copyright (c) 2008-2009 Hal Brodigan
+Copyright (c) 2008-2010 Hal Brodigan
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
