@@ -1,5 +1,7 @@
 require 'spidr/page'
 
+require 'set'
+
 module Spidr
   class CookieJar
 
@@ -11,6 +13,9 @@ module Spidr
     # @since 0.2.2
     #
     def initialize
+      @params = {}
+
+      @dirty = Set[]
       @cookies = {}
     end
 
@@ -31,7 +36,7 @@ module Spidr
     # @since 0.2.2
     #
     def each(&block)
-      @cookies.each(&block)
+      @params.each(&block)
     end
 
     # 
@@ -48,7 +53,7 @@ module Spidr
     # @since 0.2.2
     #
     def [](host)
-      @cookies[host]
+      @params[host] ||= {}
     end
 
     # 
@@ -57,13 +62,24 @@ module Spidr
     # @param [String] host
     #   Host or domain name to associate with the cookie.
     #
-    # @param [String] cookie
-    #   Cookie data.
+    # @param [Hash{String => String}] cookies
+    #   Cookie params.
     #
     # @since 0.2.2
     #
-    def []=(host,cookie)
-      @cookies[host] = cookie
+    def []=(host,cookies)
+      collected = self[host]
+
+      cookies.each do |key,value|
+        if collected[key] != value
+          collected.merge!(cookies)
+          @dirty << host
+
+          break
+        end
+      end
+
+      return cookies
     end
 
     #
@@ -78,14 +94,40 @@ module Spidr
     # @since 0.2.2
     #
     def from_page(page)
-      cookie = page.cookie_values.join('; ')
+      cookies = page.cookie_params
 
-      unless cookie.empty?
-        self[page.url.host] = cookie
+      unless cookies.empty?
+        self[page.url.host] = cookies
         return true
       end
 
       return false
+    end
+
+    #
+    # Returns the pre-encoded Cookie for a given host.
+    #
+    # @param [String] host
+    #   The name of the host.
+    #
+    # @return [String]
+    #   The encoded Cookie.
+    #
+    # @since 0.2.2
+    #
+    def for_host(host)
+      if @dirty.include?(host)
+        values = []
+
+        @params[host].each do |name,value|
+          values << "#{name}=#{value}"
+        end
+
+        @cookies[host] = values.join('; ')
+        @dirty.delete(host)
+      end
+
+      return @cookies[host]
     end
 
     # 
@@ -94,7 +136,11 @@ module Spidr
     # @since 0.2.2
     #
     def clear!
+      @params.clear
+
+      @dirty.clear
       @cookies.clear
+      return self
     end
 
     #
@@ -103,7 +149,17 @@ module Spidr
     # @since 0.2.2
     #
     def size
-      @cookies.size
+      @params.size
+    end
+
+    #
+    # Inspects the cookie jar.
+    #
+    # @return [String]
+    #   The inspected version of the cookie jar.
+    #
+    def inspect
+      "#<#{self.class}: #{@params.inspect}>"
     end
 
   end
