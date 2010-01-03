@@ -85,7 +85,7 @@ describe Page do
     end
 
     it "should provide access to the raw Cookie" do
-      cookie = @page.raw_cookie
+      cookie = @page.cookie
       
       cookie.should_not be_empty
     end
