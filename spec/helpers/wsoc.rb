@@ -57,7 +57,7 @@ module Helpers
       end
     end
 
-    def course_metadata
+    def course
       WSOC::COURSE_METADATA
     end
 
