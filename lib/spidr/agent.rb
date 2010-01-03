@@ -716,8 +716,8 @@ module Spidr
     #   The URL to add to the failures list.
     #
     def failed(url)
-      @every_failed_url_blocks.each { |block| block.call(url) }
       @failures << url
+      @every_failed_url_blocks.each { |block| block.call(url) }
       return true
     end
 
