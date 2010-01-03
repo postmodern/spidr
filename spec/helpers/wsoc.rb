@@ -17,8 +17,16 @@ module Helpers
 
     COURSE_URL = SERVER_URL.merge(::WSOC::Config::COURSE_START_PATH)
 
+    COURSE_METADATA = {}
+
     def self.included(base)
-      specs = JSON.parse(open(SPECS_URL).read)
+      hash = JSON.parse(open(SPECS_URL).read)
+      metadata = hash[:metadata]
+      specs = hash[:specs]
+
+      if metadata.kind_of?(Hash)
+        COURSE_METADATA.merge!(hash[:metadata])
+      end
 
       if specs.kind_of?(Array)
         specs.each do |spec|
@@ -47,6 +55,10 @@ module Helpers
           end
         end
       end
+    end
+
+    def course_metadata
+      WSOC::COURSE_METADATA
     end
 
     def run_course
