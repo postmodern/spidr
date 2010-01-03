@@ -8,6 +8,7 @@ require 'spidr/spidr'
 
 require 'net/http'
 require 'set'
+require 'base64'
 
 module Spidr
   class Agent
@@ -22,6 +23,9 @@ module Spidr
 
     # User-Agent to use
     attr_accessor :user_agent
+
+    # HTTP Authentication credentials
+    attr_accessor :authorized
 
     # Referer to use
     attr_accessor :referer
@@ -95,6 +99,7 @@ module Spidr
       @history = Set[]
       @failures = Set[]
       @queue = []
+      @authorized = []
 
       @sessions = {}
 
@@ -592,6 +597,10 @@ module Spidr
           headers['User-Agent'] = @user_agent if @user_agent
           headers['Referer'] = @referer if @referer
 
+          if (authorization = authorization_for(url))
+            headers['Authorization'] = "Basic #{authorization}"
+          end
+
           if (header_cookies = @cookies.for_host(url.host))
             headers['Cookie'] = header_cookies
           end
@@ -719,6 +728,19 @@ module Spidr
       @failures << url
       @every_failed_url_blocks.each { |block| block.call(url) }
       return true
+    end
+
+    #
+    # Returns a Base64-encoded authorization string for 
+    # HTTP Basic Access Authentication. Uses the closest matching
+    # credentials based on URL path length.
+    #
+    def authorization_for(url)
+      if auth_data = @authorized.first
+        Base64.encode64("#{auth_data[:username]}:#{auth_data[:password]}")
+      else
+        false
+      end
     end
 
   end

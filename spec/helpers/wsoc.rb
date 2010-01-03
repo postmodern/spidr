@@ -23,6 +23,7 @@ module Helpers
       hash = JSON.parse(open(SPECS_URL).read)
       metadata = hash['metadata']
       specs = hash['specs']
+      puts "METADATA? #{metadata}"
 
       if metadata.kind_of?(Hash)
         COURSE_METADATA.merge!(metadata)
@@ -63,6 +64,7 @@ module Helpers
 
     def run_course
       Agent.start_at(COURSE_URL) do |agent|
+        agent.authorized << { :username => course['auth_user'], :password => course['auth_password'] }
         agent.every_failed_url { |url| puts "[FAILED] #{url}" }
         agent.every_url { |url| puts url }
       end
