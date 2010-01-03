@@ -598,7 +598,12 @@ module Spidr
 
           block.call(sess,path,headers)
         end
-      rescue SystemCallError, Timeout::Error, Net::HTTPBadResponse, IOError
+      rescue SystemCallError,
+             Timeout::Error,
+             SocketError,
+             Net::HTTPBadResponse,
+             IOError
+
         kill_session(url.scheme,host,port)
 
         failed(url)
