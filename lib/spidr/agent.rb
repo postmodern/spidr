@@ -4,6 +4,7 @@ require 'spidr/events'
 require 'spidr/actions'
 require 'spidr/page'
 require 'spidr/cookie_jar'
+require 'spidr/auth_store'
 require 'spidr/spidr'
 
 require 'net/http'
@@ -99,7 +100,7 @@ module Spidr
       @history = Set[]
       @failures = Set[]
       @queue = []
-      @authorized = []
+      @authorized = AuthStore.new
 
       @sessions = {}
 
@@ -597,7 +598,7 @@ module Spidr
           headers['User-Agent'] = @user_agent if @user_agent
           headers['Referer'] = @referer if @referer
 
-          if (authorization = authorization_for(url))
+          if (authorization = @authorized.for_url(url))
             headers['Authorization'] = "Basic #{authorization}"
           end
 
@@ -728,19 +729,6 @@ module Spidr
       @failures << url
       @every_failed_url_blocks.each { |block| block.call(url) }
       return true
-    end
-
-    #
-    # Returns a Base64-encoded authorization string for 
-    # HTTP Basic Access Authentication. Uses the closest matching
-    # credentials based on URL path length.
-    #
-    def authorization_for(url)
-      if auth_data = @authorized.first
-        Base64.encode64("#{auth_data[:username]}:#{auth_data[:password]}")
-      else
-        false
-      end
     end
 
   end
