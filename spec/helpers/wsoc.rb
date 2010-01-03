@@ -21,11 +21,11 @@ module Helpers
 
     def self.included(base)
       hash = JSON.parse(open(SPECS_URL).read)
-      metadata = hash[:metadata]
-      specs = hash[:specs]
+      metadata = hash['metadata']
+      specs = hash['specs']
 
       if metadata.kind_of?(Hash)
-        COURSE_METADATA.merge!(hash[:metadata])
+        COURSE_METADATA.merge!(metadata)
       end
 
       if specs.kind_of?(Array)
