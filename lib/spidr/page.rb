@@ -1,10 +1,14 @@
 require 'spidr/extensions/uri'
 
+require 'set'
 require 'uri'
 require 'nokogiri'
 
 module Spidr
   class Page
+
+    # Reserved names used within Cookie strings
+    RESERVED_COOKIE_NAMES = Set['path', 'expires', 'domain']
 
     # URL of the page
     attr_reader :url
@@ -262,21 +266,7 @@ module Spidr
     # @since 0.2.2
     #
     def raw_cookie
-      (@response['Set-Cookie'] || [])
-    end
-
-    #
-    # The Cookie values sent along with the page.
-    #
-    # @return [Array<String>]
-    #   The Cookies values.
-    #
-    # @since 0.2.2
-    #
-    def cookie_values
-      raw_cookie.map { |cookie|
-        cookie.split(/;\s*/,2).first.split(/,\s*/)
-      }.flatten
+      (@response['Set-Cookie'] || '')
     end
 
     #
@@ -288,14 +278,17 @@ module Spidr
     # @since 0.2.2
     #
     def cookie_params
-      pairs = {}
+      params = {}
 
-      cookie_values.each do |cookie|
-        key, value = cookie.split('=',2)
-        pairs[key] = value
+      raw_cookie.split(/;\s+/).each do |key_value|
+        key, value = key_value.split('=',2)
+
+        next if RESERVED_COOKIE_NAMES.include?(key)
+
+        params[key] = (value || '')
       end
 
-      return pairs
+      return params
     end
 
     #

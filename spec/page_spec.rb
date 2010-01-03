@@ -88,14 +88,6 @@ describe Page do
       cookie = @page.raw_cookie
       
       cookie.should_not be_empty
-      cookie.each { |cookie| cookie.should_not be_empty }
-    end
-
-    it "should provide access to the Cookie values" do
-      values = @page.cookie_values
-
-      values.should_not be_empty
-      values.each { |cookie| cookie.should_not be_empty }
     end
 
     it "should provide access to the key -> value pairs within the Cookie" do
@@ -105,7 +97,7 @@ describe Page do
 
       params.each do |key,value|
         key.should_not be_empty
-        value.should_not be_empty
+        value.should_not be_nil
       end
     end
   end
