@@ -52,6 +52,9 @@ module Spidr
     # @param [AuthCredential]
     #   The auth credential for this URL pattern.
     #
+    # @return [AuthCredential]
+    #   The newly added auth credential.
+    #
     # @since 0.2.2
     #
     def []=(url, auth)
@@ -74,6 +77,9 @@ module Spidr
     #
     # @param [String] password
     #   The password required to access the URL.
+    #
+    # @return [AuthCredential]
+    #   The newly added auth credential.
     #
     # @since 0.2.2
     #
@@ -102,6 +108,9 @@ module Spidr
     # 
     # Clear the contents of the auth store.
     #
+    # @return [AuthStore]
+    #   The cleared auth store.
+    #
     # @since 0.2.2
     #
     def clear!
@@ -111,6 +120,9 @@ module Spidr
 
     #
     # Size of the current auth store (number of URL paths stored).
+    #
+    # @return [Integer]
+    #   The size of the auth store.
     #
     # @since 0.2.2
     #
