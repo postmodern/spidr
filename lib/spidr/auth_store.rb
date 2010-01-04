@@ -8,7 +8,7 @@ module Spidr
   class AuthStore
 
     #
-    # Creates a new Cookie Jar object.
+    # Creates a new authentication storage.
     #
     # @since 0.2.2
     #
@@ -37,7 +37,7 @@ module Spidr
       ordered_paths = paths.keys.sort_by { |key| key.length }.reverse
 
       ordered_paths.each do |path|
-        return paths[path] if url.to_s.match(path.to_s)
+        return paths[path] if url.path[0,path.length] == path
       end
 
       return nil
