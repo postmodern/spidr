@@ -56,6 +56,7 @@ module Spidr
 
       @credentials[url.host] ||= {}
       @credentials[url.host][absolute_path] = auth
+      return auth
     end
 
     #
