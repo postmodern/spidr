@@ -1,3 +1,4 @@
+require 'spidr/extensions/uri'
 require 'spidr/page'
 
 require 'base64'
@@ -51,8 +52,10 @@ module Spidr
     # @since 0.2.2
     #
     def []=(url, auth)
+      absolute_path = URI.expand_path("#{url.path}/")
+
       @credentials[url.host] ||= {}
-      @credentials[url.host][url.path] = auth
+      @credentials[url.host][absolute_path] = auth
     end
 
     #
