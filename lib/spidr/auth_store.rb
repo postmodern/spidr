@@ -29,7 +29,9 @@ module Spidr
     # @since 0.2.2
     #
     def [](url)
-      paths = (@credentials[url.host] ||= {})
+      paths = @credentials[url.host]
+
+      return nil unless paths
 
       # longest path first
       ordered_paths = paths.keys.sort_by { |key| key.length }.reverse
