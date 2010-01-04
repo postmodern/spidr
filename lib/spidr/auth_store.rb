@@ -8,7 +8,7 @@ module Spidr
   class AuthStore
 
     #
-    # Creates a new authentication storage.
+    # Creates a new auth store.
     #
     # @since 0.2.2
     #
@@ -23,7 +23,7 @@ module Spidr
     #   A fully qualified url includig optional path.
     #
     # @return [AuthCredential, nil]
-    #   Closest matching +AuthCredential+ values for the URL,
+    #   Closest matching {AuthCredential} values for the URL,
     #   or +nil+ if nothing matches.
     #
     # @since 0.2.2
@@ -82,14 +82,14 @@ module Spidr
     end
 
     #
-    # Returns the Base64-encoded authorization string for the URL
+    # Returns the base64 encoded authorization string for the URL
     # or +nil+ if no authorization exists.
     #
     # @param [URI] url
     #   The url.
     #
     # @return [String, nil]
-    #   The Base64-encoded authorizatio string or +nil+.
+    #   The base64 encoded authorizatio string or +nil+.
     #
     # @since 0.2.2
     #
@@ -100,7 +100,7 @@ module Spidr
     end
 
     # 
-    # Clear out the jar, removing all stored cookies.
+    # Clear the contents of the auth store.
     #
     # @since 0.2.2
     #
