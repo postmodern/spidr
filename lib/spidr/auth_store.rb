@@ -1,4 +1,5 @@
 require 'spidr/extensions/uri'
+require 'spidr/auth_credential'
 require 'spidr/page'
 
 require 'base64'
@@ -123,18 +124,6 @@ module Spidr
     #
     def inspect
       "#<#{self.class}: #{@credentials.inspect}>"
-    end
-
-  end
-
-  class AuthCredential
-
-    attr_reader :username
-    attr_reader :password
-
-    def initialize(username, password)
-      @username = username
-      @password = password
     end
 
   end
