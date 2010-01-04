@@ -94,7 +94,7 @@ module Spidr
     # @since 0.2.2
     #
     def for_url(url)
-      if auth = self[url]
+      if (auth = self[url])
         return Base64.encode64("#{auth.username}:#{auth.password}")
       end
     end
