@@ -3,13 +3,13 @@ require 'spidr/filters'
 require 'spidr/events'
 require 'spidr/actions'
 require 'spidr/page'
+require 'spidr/session_cache'
 require 'spidr/cookie_jar'
 require 'spidr/auth_store'
 require 'spidr/spidr'
 
 require 'net/http'
 require 'set'
-require 'base64'
 
 module Spidr
   class Agent
@@ -18,9 +18,6 @@ module Spidr
     include Filters
     include Events
     include Actions
-
-    # Proxy to use
-    attr_accessor :proxy
 
     # User-Agent to use
     attr_accessor :user_agent
@@ -90,19 +87,18 @@ module Spidr
     #   The newly created agent.
     #
     def initialize(options={},&block)
-      @proxy = (options[:proxy] || Spidr.proxy)
       @user_agent = (options[:user_agent] || Spidr.user_agent)
       @referer = options[:referer]
+
+      @sessions = SessionCache.new(options[:proxy] || Spidr.proxy)
       @cookies = CookieJar.new
+      @authorized = AuthStore.new
 
       @running = false
       @delay = (options[:delay] || 0)
       @history = Set[]
       @failures = Set[]
       @queue = []
-      @authorized = AuthStore.new
-
-      @sessions = {}
 
       super(options)
 
@@ -235,14 +231,6 @@ module Spidr
 
       @running = false
 
-      @sessions.each_value do |sess|
-        begin
-          sess.finish
-        rescue IOError
-          nil
-        end
-      end
-
       @sessions.clear
       return self
     end
@@ -255,6 +243,37 @@ module Spidr
     #
     def running?
       @running == true
+    end
+
+    #
+    # The proxy information the agent uses.
+    #
+    # @return [Hash]
+    #   The proxy information.
+    #
+    # @see SessionCache#proxy
+    #
+    # @since 0.2.2
+    #
+    def proxy
+      @sessions.proxy
+    end
+
+    #
+    # Sets the proxy information that the agent uses.
+    #
+    # @param [Hash] new_proxy
+    #   The new proxy information.
+    #
+    # @return [Hash]
+    #   The new proxy information.
+    #
+    # @see SessionCache#proxy=
+    #
+    # @since 0.2.2
+    #
+    def proxy=(new_proxy)
+      @sessions.proxy = new_proxy
     end
 
     #
@@ -593,102 +612,30 @@ module Spidr
       begin
         sleep(@delay) if @delay > 0
 
-        get_session(url.scheme,host,port) do |sess|
-          headers = {}
-          headers['User-Agent'] = @user_agent if @user_agent
-          headers['Referer'] = @referer if @referer
+        headers = {}
+        headers['User-Agent'] = @user_agent if @user_agent
+        headers['Referer'] = @referer if @referer
 
-          if (authorization = @authorized.for_url(url))
-            headers['Authorization'] = "Basic #{authorization}"
-          end
-
-          if (header_cookies = @cookies.for_host(url.host))
-            headers['Cookie'] = header_cookies
-          end
-
-          block.call(sess,path,headers)
+        if (authorization = @authorized.for_url(url))
+          headers['Authorization'] = "Basic #{authorization}"
         end
+
+        if (header_cookies = @cookies.for_host(url.host))
+          headers['Cookie'] = header_cookies
+        end
+
+        block.call(@sessions[url],path,headers)
       rescue SystemCallError,
              Timeout::Error,
              SocketError,
              Net::HTTPBadResponse,
              IOError
 
-        kill_session(url.scheme,host,port)
+        @sessions.kill!(url)
 
         failed(url)
         return nil
       end
-    end
-
-    #
-    # Provides an active HTTP session for the given scheme, host
-    # and port.
-    #
-    # @param [String] scheme
-    #   The scheme of the URL, which will be requested later.
-    #
-    # @param [String] host
-    #   The host that the session is needed with.
-    #
-    # @param [Integer] port
-    #   The port that the session is needed for.
-    #
-    # @yield [session]
-    #   If a block is given, it will be passed the active HTTP session.
-    #
-    # @yieldparam [Net::HTTP] session
-    #   The active HTTP session object.
-    #
-    def get_session(scheme,host,port,&block)
-      key = [scheme,host,port]
-
-      unless @sessions[key]
-        session = Net::HTTP::Proxy(
-          @proxy[:host],
-          @proxy[:port],
-          @proxy[:user],
-          @proxy[:password]
-        ).new(host,port)
-
-        if scheme == 'https'
-          session.use_ssl = true
-          session.verify_mode = OpenSSL::SSL::VERIFY_NONE
-        end
-
-        @sessions[key] = session
-      end
-
-      session = @sessions[key]
-      block.call(session) if block
-      return session
-    end
-
-    #
-    # Destroys an HTTP session for the given scheme, host and port.
-    #
-    # @param [String] scheme
-    #   The scheme of the URL, which was requested through the session.
-    #
-    # @param [String] host
-    #   The host that the session was connected with.
-    #
-    # @param [Integer] port
-    #   The port that the session was connected to.
-    #
-    def kill_session(scheme,host,port,&block)
-      key = [scheme,host,port]
-      sess = @sessions[key]
-
-      begin 
-        sess.finish
-      rescue IOError
-        nil
-      end
-
-      @sessions.delete(key)
-      block.call if block
-      return nil
     end
 
     #
