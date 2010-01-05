@@ -19,6 +19,7 @@ lib/spidr/actions/exceptions/skip_page.rb
 lib/spidr/actions/actions.rb
 lib/spidr/session_cache.rb
 lib/spidr/cookie_jar.rb
+lib/spidr/auth_credential.rb
 lib/spidr/auth_store.rb
 lib/spidr/agent.rb
 lib/spidr/spidr.rb
