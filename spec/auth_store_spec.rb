@@ -23,11 +23,9 @@ describe AuthStore do
 
   it 'should add auth credentials for the URL' do
     uri = @uri.merge('/')
-    puts @auth_store.size
 
     lambda {
       @auth_store.add(uri, 'user1', 'pass1')
-      puts @auth_store.size
     }.should change(@auth_store, :size)
 
     @auth_store[uri].username.should == 'user1'
