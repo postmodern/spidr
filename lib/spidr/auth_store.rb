@@ -32,7 +32,8 @@ module Spidr
       # normalize the url
       url = URI(url) unless url.kind_of?(URI)
 
-      paths = @credentials[url.host]
+      key = [url.scheme, url.host, url.port]
+      paths = @credentials[key]
 
       return nil unless paths
 
@@ -70,8 +71,10 @@ module Spidr
       # normalize the URL path
       path = URI.expand_path(url.path)
 
-      @credentials[url.host] ||= {}
-      @credentials[url.host][path.split('/')] = auth
+      key = [url.scheme, url.host, url.port]
+
+      @credentials[key] ||= {}
+      @credentials[key][path.split('/')] = auth
       return auth
     end
 
@@ -147,7 +150,10 @@ module Spidr
     #   The inspected version of the auth store.
     #
     def inspect
-      "#<#{self.class}: #{@credentials.inspect}>"
+      code = "#<#{self.class}: {"
+      
+      @credentials.each do |host,path_to_creds|
+      end
     end
 
   end
