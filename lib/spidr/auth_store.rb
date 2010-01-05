@@ -36,8 +36,11 @@ module Spidr
       # longest path first
       ordered_paths = paths.keys.sort_by { |key| key.length }.reverse
 
+      # directories of the path
+      path_dirs = URI.expand_path(url.path).split('/')
+
       ordered_paths.each do |path|
-        return paths[path] if url.path[0,path.length] == path
+        return paths[path] if path_dirs[0,path.length] == path
       end
 
       return nil
@@ -58,10 +61,10 @@ module Spidr
     # @since 0.2.2
     #
     def []=(url, auth)
-      absolute_path = URI.expand_path("#{url.path}/")
+      path = URI.expand_path(url.path)
 
       @credentials[url.host] ||= {}
-      @credentials[url.host][absolute_path] = auth
+      @credentials[url.host][path.split('/')] = auth
       return auth
     end
 
