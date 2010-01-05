@@ -29,6 +29,9 @@ module Spidr
     # @since 0.2.2
     #
     def [](url)
+      # normalize the url
+      url = URI(url) unless url.kind_of?(URI)
+
       paths = @credentials[url.host]
 
       return nil unless paths
@@ -61,6 +64,10 @@ module Spidr
     # @since 0.2.2
     #
     def []=(url, auth)
+      # normalize the url
+      url = URI(url) unless url.kind_of?(URI)
+
+      # normalize the URL path
       path = URI.expand_path(url.path)
 
       @credentials[url.host] ||= {}
