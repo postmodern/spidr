@@ -150,10 +150,7 @@ module Spidr
     #   The inspected version of the auth store.
     #
     def inspect
-      code = "#<#{self.class}: {"
-      
-      @credentials.each do |host,path_to_creds|
-      end
+      "#<#{self.class}: #{@credentials.inspect}>"
     end
 
   end
