@@ -90,7 +90,7 @@ describe Page do
       cookie.should_not be_empty
     end
 
-    it "should provide access to the key -> value pairs within the Cookie" do
+    it "should provide access to the key->value pairs within the Cookie" do
       params = @page.cookie_params
       
       params.should_not be_empty
