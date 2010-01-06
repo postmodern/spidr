@@ -61,9 +61,20 @@ module Helpers
       WSOC::COURSE_METADATA
     end
 
+    def course_auth_store
+      course['auth_store']
+    end
+
     def run_course
       Agent.start_at(COURSE_URL) do |agent|
-        agent.authorized.add(COURSE_URL.merge('/'), course['auth_user'], course['auth_password'])
+        course_auth_store.each do |path,auth|
+          agent.authorized.add(
+            COURSE_URL.merge(path),
+            auth['user'],
+            auth['password']
+          )
+        end
+
         agent.every_failed_url { |url| puts "[FAILED] #{url}" }
         agent.every_url { |url| puts url }
       end
