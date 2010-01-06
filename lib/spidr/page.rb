@@ -272,10 +272,22 @@ module Spidr
     end
 
     #
-    # The Cookie String sent along with the page.
+    # The raw Cookie String sent along with the page.
+    #
+    # @return [String]
+    #   The raw Cookie from the response.
+    #
+    # @since 0.2.2
+    #
+    def cookie
+      (@response['Set-Cookie'] || '')
+    end
+
+    #
+    # The Cookie values sent along with the page.
     #
     # @return [Array<String>]
-    #   The raw Cookies from the response.
+    #   The Cookies from the response.
     #
     # @since 0.2.2
     #
