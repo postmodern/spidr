@@ -280,7 +280,7 @@ module Spidr
     def cookie_params
       params = {}
 
-      cookie.split(/;\s+/).each do |key_value|
+      (@headers['set-cookie'] || []).each do |key_value|
         key, value = key_value.split('=',2)
 
         next if RESERVED_COOKIE_NAMES.include?(key)

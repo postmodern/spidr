@@ -81,7 +81,7 @@ describe Page do
 
   describe "cookies" do
     before(:all) do
-      @page = get_page('http://github.com/postmodern/spidr/')
+      @page = get_page('http://twitter.com/login')
     end
 
     it "should provide access to the raw Cookie" do
@@ -97,7 +97,7 @@ describe Page do
 
       params.each do |key,value|
         key.should_not be_empty
-        value.should_not be_nil
+        value.should_not be_empty
       end
     end
   end
