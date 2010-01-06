@@ -84,10 +84,10 @@ describe Page do
       @page = get_page('http://twitter.com/login')
     end
 
-    it "should provide access to the raw Cookie" do
-      cookie = @page.cookie
+    it "should provide access to the Cookies" do
+      cookies = @page.cookies
       
-      cookie.should_not be_empty
+      cookies.should_not be_empty
     end
 
     it "should provide access to the key->value pairs within the Cookie" do
