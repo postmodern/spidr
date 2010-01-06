@@ -266,7 +266,7 @@ module Spidr
     # @since 0.2.2
     #
     def cookie
-      (@response['Set-Cookie'] || '')
+      (@headers['set-cookie'] || [])
     end
 
     #
@@ -280,7 +280,7 @@ module Spidr
     def cookie_params
       params = {}
 
-      (@headers['set-cookie'] || []).each do |key_value|
+      cookie.each do |key_value|
         key, value = key_value.split('=',2)
 
         next if RESERVED_COOKIE_NAMES.include?(key)
