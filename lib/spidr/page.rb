@@ -146,6 +146,18 @@ module Spidr
     end
 
     #
+    # The content types of the page.
+    #
+    # @return [Array<String>]
+    #   The values within the Content-Type header.
+    #
+    # @since 0.2.2
+    #
+    def content_types
+      @headers['content-type']
+    end
+
+    #
     # Determines if the page is plain-text.
     #
     # @return [Boolean]
