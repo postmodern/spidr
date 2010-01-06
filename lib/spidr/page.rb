@@ -164,7 +164,7 @@ module Spidr
     #   Specifies whether the page is plain-text.
     #
     def plain_text?
-      (content_type =~ /text\/plain/) == 0
+      content_types.include?('text/plain')
     end
 
     alias txt? plain_text?
@@ -176,7 +176,7 @@ module Spidr
     #   Specifies whether the page is HTML document.
     #
     def html?
-      (content_type =~ /text\/html/) == 0
+      content_types.include?('text/html')
     end
 
     #
@@ -186,7 +186,7 @@ module Spidr
     #   Specifies whether the page is XML document.
     #
     def xml?
-      (content_type =~ /text\/xml/) == 0
+      content_types.include?('text/xml')
     end
 
     #
@@ -196,7 +196,7 @@ module Spidr
     #   Specifies whether the page is XML Stylesheet (XSL).
     #
     def xsl?
-      (content_type =~ /text\/xsl/) == 0
+      content_types.include?('text/xsl')
     end
 
     #
@@ -206,7 +206,8 @@ module Spidr
     #   Specifies whether the page is JavaScript.
     #
     def javascript?
-      (content_type =~ /(text|application)\/javascript/) == 0
+      content_types.include?('text/javascript') || \
+        content_types.include?('application/javascript')
     end
 
     #
@@ -216,7 +217,7 @@ module Spidr
     #   Specifies whether the page is a CSS stylesheet.
     #
     def css?
-      (content_type =~ /text\/css/) == 0
+      content_types.include?('text/css')
     end
 
     #
@@ -226,7 +227,8 @@ module Spidr
     #   Specifies whether the page is a RSS feed.
     #
     def rss?
-      (content_type =~ /application\/(rss|rdf)\+xml/) == 0
+      content_types.include?('application/rss+xml') || \
+        content_types.include?('application/rdf+xml')
     end
 
     #
@@ -236,7 +238,7 @@ module Spidr
     #   Specifies whether the page is an Atom feed.
     #
     def atom?
-      (content_type =~ /application\/atom\+xml/) == 0
+      content_types.include?('application/atom+xml')
     end
 
     #
@@ -246,7 +248,7 @@ module Spidr
     #   Specifies whether the page is a MS Word document.
     #
     def ms_word?
-      (content_type =~ /application\/msword/) == 0
+      content_types.include?('application/msword')
     end
 
     #
@@ -256,7 +258,7 @@ module Spidr
     #   Specifies whether the page is a PDF document.
     #
     def pdf?
-      (content_type =~ /application\/pdf/) == 0
+      content_types.include?('application/pdf')
     end
 
     #
@@ -266,7 +268,7 @@ module Spidr
     #   Specifies whether the page is a ZIP archive.
     #
     def zip?
-      (content_type =~ /application\/zip/) == 0
+      content_types.include?('application/zip')
     end
 
     #
