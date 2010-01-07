@@ -39,6 +39,7 @@ and easy to use.
 * Restore the spidering queue and history from a previous session.
 * Custom User-Agent strings.
 * Custom proxy settings.
+* HTTPS support.
 
 == EXAMPLES:
 
