@@ -8,7 +8,6 @@ require './tasks/yard.rb'
 require './lib/spidr/version.rb'
 
 Hoe.spec('spidr') do
-  self.rubyforge_name = 'spidr'
   self.developer('Postmodern', 'postmodern.mod3@gmail.com')
   self.remote_rdoc_dir = 'docs'
   self.extra_deps = [
