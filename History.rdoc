@@ -9,9 +9,9 @@
 * Added {Spidr::Page#cookie_params}.
 * Added {Spidr::Sanitizers}.
 * Added {Spidr::SessionCache}.
-* Added {Spidr::CookieJar}.
-* Added {Spidr::AuthStore}.
-* Added {Spidr::Agent#post_page}.
+* Added {Spidr::CookieJar} (thanks Nick Plante).
+* Added {Spidr::AuthStore} (thanks Nick Plante).
+* Added {Spidr::Agent#post_page} (thanks Nick Plante).
 * Renamed Spidr::Agent#get_session to {Spidr::SessionCache#[]}.
 * Renamed Spidr::Agent#kill_session to {Spidr::SessionCache#kill!}.
 
