@@ -1,3 +1,18 @@
+=== 0.2.2 / 2010-01-06
+
+* Require WSOC >= 0.1.1.
+* Integrated the new Web Spider Obstacle Course (WSOC) into the specs.
+* Removed the built-in Web Spider Obstacle Course.
+* Added {Spidr::Page#content_types}.
+* Added {Spidr::Page#cookie}.
+* Added {Spidr::Page#cookies}.
+* Added {Spidr::Page#cookie_params}.
+* Added {Spidr::Sanitizers}.
+* Added {Spidr::SessionCache}.
+* Added {Spidr::CookieJar}.
+* Added {Spidr::AuthStore}.
+* Added {Spidr::Agent#post_page}.
+
 === 0.2.1 / 2009-11-25
 
 * Added Spidr::Events#every_ok_page.
