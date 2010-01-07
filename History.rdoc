@@ -63,7 +63,7 @@
 * Aliased Spidr::Page#forbidden? to {Spidr::Page#is_forbidden?}.
 * Aliased Spidr::Page#missing? to {Spidr::Page#is_missing?}.
 * Split URL filtering code out of {Spidr::Agent} and into
-  {Spidr::Filtering}.
+  {Spidr::Filters}.
 * Split URL / Page event code out of Spidr::Agent and into {Spidr::Events}.
 * Split pause! / continue! / skip_link! / skip_page! methods out of
   {Spidr::Agent} and into {Spidr::Actions}.
