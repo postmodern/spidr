@@ -18,7 +18,9 @@ and easy to use.
   * a tags.
   * iframe tags.
   * frame tags.
+  * Cookie protected links.
   * HTTP 300, 301, 302, 303 and 307 Redirects.
+  * HTTP Basic Auth protected links.
 * Black-list or white-list URLs based upon:
   * URL scheme.
   * Host name
