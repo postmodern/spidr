@@ -9,7 +9,11 @@ require './lib/spidr/version.rb'
 
 Hoe.spec('spidr') do
   self.developer('Postmodern', 'postmodern.mod3@gmail.com')
+
+  self.readme_file = 'README.rdoc'
+  self.history_file = 'History.rdoc'
   self.remote_rdoc_dir = 'docs'
+
   self.extra_deps = [
     ['nokogiri', '>=1.2.0']
   ]

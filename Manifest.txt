@@ -1,6 +1,6 @@
-History.txt
+History.rdoc
 Manifest.txt
-README.txt
+README.rdoc
 Rakefile
 lib/spidr.rb
 lib/spidr/extensions.rb
