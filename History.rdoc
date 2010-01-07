@@ -1,7 +1,7 @@
 === 0.2.2 / 2010-01-06
 
-* Require WSOC >= 0.1.1.
-* Integrated the new Web Spider Obstacle Course (WSOC) into the specs.
+* Require Web Spider Obstacle Course (WSOC) >= 0.1.1.
+* Integrated the new WSOC into the specs.
 * Removed the built-in Web Spider Obstacle Course.
 * Added {Spidr::Page#content_types}.
 * Added {Spidr::Page#cookie}.
@@ -99,8 +99,9 @@
 * Added the Spidr::Agent#schemes and Spidr::Agent#schemes= methods.
 * Added a warning message if 'net/https' cannot be loaded.
 * Allow the list of acceptable URL schemes to be passed into
-  Spidr::Agent.new.
-* Allow history and queue information to be passed into Spidr::Agent.new.
+  {Spidr::Agent#initialize}.
+* Allow history and queue information to be passed into
+  {Spidr::Agent#initialize}.
 * {Spidr::Agent#start_at} no longer clears the history or the queue.
 * Fixed a bug in the sanitization of semi-escaped URLs.
 * Fixed a bug where https URLs would be followed even if 'net/https'
