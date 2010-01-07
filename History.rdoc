@@ -12,6 +12,8 @@
 * Added {Spidr::CookieJar}.
 * Added {Spidr::AuthStore}.
 * Added {Spidr::Agent#post_page}.
+* Renamed Spidr::Agent#get_session to {Spidr::SessionCache#[]}.
+* Renamed Spidr::Agent#kill_session to {Spidr::SessionCache#kill!}.
 
 === 0.2.1 / 2009-11-25
 
