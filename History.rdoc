@@ -15,76 +15,77 @@
 
 === 0.2.1 / 2009-11-25
 
-* Added Spidr::Events#every_ok_page.
-* Added Spidr::Events#every_redirect_page.
-* Added Spidr::Events#every_timedout_page.
-* Added Spidr::Events#every_bad_request_page.
-* Added Spidr::Events#every_unauthorized_page.
-* Added Spidr::Events#every_forbidden_page.
-* Added Spidr::Events#every_missing_page.
-* Added Spidr::Events#every_internal_server_error_page.
-* Added Spidr::Events#every_txt_page.
-* Added Spidr::Events#every_html_page.
-* Added Spidr::Events#every_xml_page.
-* Added Spidr::Events#every_xsl_page.
-* Added Spidr::Events#every_doc.
-* Added Spidr::Events#every_html_doc.
-* Added Spidr::Events#every_xml_doc.
-* Added Spidr::Events#every_xsl_doc.
-* Added Spidr::Events#every_rss_doc.
-* Added Spidr::Events#every_atom_doc.
-* Added Spidr::Events#every_javascript_page.
-* Added Spidr::Events#every_css_page.
-* Added Spidr::Events#every_rss_page.
-* Added Spidr::Events#every_atom_page.
-* Added Spidr::Events#every_ms_word_page.
-* Added Spidr::Events#every_pdf_page.
-* Added Spidr::Events#every_zip_page.
-* Fixed a bug where Spidr::Agent#delay was not being used to delay
+* Added {Spidr::Events#every_ok_page}.
+* Added {Spidr::Events#every_redirect_page}.
+* Added {Spidr::Events#every_timedout_page}.
+* Added {Spidr::Events#every_bad_request_page}.
+* Added {Spidr::Events#every_unauthorized_page}.
+* Added {Spidr::Events#every_forbidden_page}.
+* Added {Spidr::Events#every_missing_page}.
+* Added {Spidr::Events#every_internal_server_error_page}.
+* Added {Spidr::Events#every_txt_page}.
+* Added {Spidr::Events#every_html_page}.
+* Added {Spidr::Events#every_xml_page}.
+* Added {Spidr::Events#every_xsl_page}.
+* Added {Spidr::Events#every_doc}.
+* Added {Spidr::Events#every_html_doc}.
+* Added {Spidr::Events#every_xml_doc}.
+* Added {Spidr::Events#every_xsl_doc}.
+* Added {Spidr::Events#every_rss_doc}.
+* Added {Spidr::Events#every_atom_doc}.
+* Added {Spidr::Events#every_javascript_page}.
+* Added {Spidr::Events#every_css_page}.
+* Added {Spidr::Events#every_rss_page}.
+* Added {Spidr::Events#every_atom_page}.
+* Added {Spidr::Events#every_ms_word_page}.
+* Added {Spidr::Events#every_pdf_page}.
+* Added {Spidr::Events#every_zip_page}.
+* Fixed a bug where {Spidr::Agent#delay} was not being used to delay
   requesting pages.
 * Spider +link+ and +script+ tags in HTML pages (thanks Nick Plante).
 
 === 0.2.0 / 2009-10-10
 
-* Added URI.expand_path.
-* Added Spidr::Page#search.
-* Added Spidr::Page#at.
-* Added Spidr::Page#title.
-* Added Spidr::Agent#failures=.
-* Added a HTTP session cache to Spidr::Agent, per suggestion of falter.
+* Added {URI.expand_path}.
+* Added {Spidr::Page#search}.
+* Added {Spidr::Page#at}.
+* Added {Spidr::Page#title}.
+* Added {Spidr::Agent#failures=}.
+* Added a HTTP session cache to {Spidr::Agent}, per suggestion of falter.
   * Added Spidr::Agent#get_session.
   * Added Spidr::Agent#kill_session.
-* Added Spidr.proxy=.
-* Added Spidr.disable_proxy!.
-* Aliased Spidr::Page#txt? to Spidr::Page#plain_text?.
-* Aliased Spidr::Page#ok? to Spidr::Page#is_ok?.
-* Aliased Spidr::Page#redirect? to Spidr::Page#is_redirect?.
-* Aliased Spidr::Page#unauthorized? to Spidr::Page#is_unauthorized?.
-* Aliased Spidr::Page#forbidden? to Spidr::Page#is_forbidden?.
-* Aliased Spidr::Page#missing? to Spidr::Page#is_missing?.
-* Split URL filtering code out of Spidr::Agent and into Spidr::Filtering.
-* Split URL / Page event code out of Spidr::Agent and into Spidr::Events.
+* Added {Spidr.proxy=}.
+* Added {Spidr.disable_proxy!}.
+* Aliased Spidr::Page#txt? to {Spidr::Page#plain_text?}.
+* Aliased Spidr::Page#ok? to {Spidr::Page#is_ok?}.
+* Aliased Spidr::Page#redirect? to {Spidr::Page#is_redirect?}.
+* Aliased Spidr::Page#unauthorized? to {Spidr::Page#is_unauthorized?}.
+* Aliased Spidr::Page#forbidden? to {Spidr::Page#is_forbidden?}.
+* Aliased Spidr::Page#missing? to {Spidr::Page#is_missing?}.
+* Split URL filtering code out of {Spidr::Agent} and into
+  {Spidr::Filtering}.
+* Split URL / Page event code out of Spidr::Agent and into {Spidr::Events}.
 * Split pause! / continue! / skip_link! / skip_page! methods out of
-  Spidr::Agent and into Spidr::Actions.
-* Fixed a bug in Spidr::Page#code, where it was not returning an Integer.
-* Make sure Spidr::Page#doc returns Nokogiri::XML::Document objects for
+  {Spidr::Agent} and into {Spidr::Actions}.
+* Fixed a bug in {Spidr::Page#code}, where it was not returning an Integer.
+* Make sure {Spidr::Page#doc} returns Nokogiri::XML::Document objects for
   RSS/RDF/Atom pages as well.
-* Fixed the handling of the Location header in Spidr::Page#links
+* Fixed the handling of the Location header in {Spidr::Page#links}
   (thanks falter).
-* Fixed a bug in Spidr::Page#to_absolute where trailing '/' characters on
+* Fixed a bug in {Spidr::Page#to_absolute} where trailing '/' characters on
   URI paths were not being preserved (thanks falter).
 * Fixed a bug where the URI query was not being sent with the request
-  in Spidr::Agent#get_page (thanks Damian Steer).
+  in {Spidr::Agent#get_page} (thanks Damian Steer).
 * Fixed a bug where SSL sessions were not being properly setup
   (thanks falter).
-* Switched Spidr::Agent#history to be a Set, to improve search-time
+* Switched {Spidr::Agent#history} to be a Set, to improve search-time
   of the history (thanks falter).
-* Switched Spidr::Agent#failures to a Set.
-* Allow a block to be passed to Spidr::Agent#run, which will receive all
+* Switched {Spidr::Agent#failures} to a Set.
+* Allow a block to be passed to {Spidr::Agent#run}, which will receive all
   pages visited.
-* Allow Spidr::Agent#start_at and Spidr::Agent#continue! to pass blocks to
-  Spidr::Agent#run.
-* Made Spidr::Agent#visit_page public.
+* Allow Spidr::Agent#start_at and Spidr::Agent#continue! to pass blocks
+  to {Spidr::Agent#run}.
+* Made {Spidr::Agent#visit_page} public.
 * Moved to YARD based documentation.
 
 === 0.1.9 / 2009-06-13
