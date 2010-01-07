@@ -5,7 +5,6 @@ require 'hoe'
 require 'hoe/signing'
 require './tasks/spec.rb'
 require './tasks/yard.rb'
-require './lib/spidr/version.rb'
 
 Hoe.spec('spidr') do
   self.developer('Postmodern', 'postmodern.mod3@gmail.com')
