@@ -66,7 +66,8 @@
 * Aliased Spidr::Page#missing? to {Spidr::Page#is_missing?}.
 * Split URL filtering code out of {Spidr::Agent} and into
   {Spidr::Filters}.
-* Split URL / Page event code out of Spidr::Agent and into {Spidr::Events}.
+* Split URL / Page event code out of {Spidr::Agent} and into
+  {Spidr::Events}.
 * Split pause! / continue! / skip_link! / skip_page! methods out of
   {Spidr::Agent} and into {Spidr::Actions}.
 * Fixed a bug in {Spidr::Page#code}, where it was not returning an Integer.
@@ -95,52 +96,56 @@
 * Upgraded to Hoe 2.0.0.
   * Use Hoe.spec instead of Hoe.new.
   * Use the Hoe signing task for signed gems.
-* Added the Agent#schemes and Agent#schemes= methods.
+* Added the Spidr::Agent#schemes and Spidr::Agent#schemes= methods.
 * Added a warning message if 'net/https' cannot be loaded.
-* Allow the list of acceptable URL schemes to be passed into Agent.new.
-* Allow history and queue information to be passed into Agent.new.
-* Agent#start_at no longer clears the history or the queue.
+* Allow the list of acceptable URL schemes to be passed into
+  Spidr::Agent.new.
+* Allow history and queue information to be passed into Spidr::Agent.new.
+* {Spidr::Agent#start_at} no longer clears the history or the queue.
 * Fixed a bug in the sanitization of semi-escaped URLs.
 * Fixed a bug where https URLs would be followed even if 'net/https'
   could not be loaded.
-* Removed Agent::SCHEMES.
+* Removed Spidr::Agent::SCHEMES.
 
 === 0.1.8 / 2009-05-27
 
-* Added the Agent#pause! and Agent#continue! methods.
-* Added the Agent#running? and Agent#paused? methods.
+* Added the Spidr::Agent#pause! and Spidr::Agent#continue! methods.
+* Added the Spidr::Agent#running? and Spidr::Agent#paused? methods.
 * Added an alias for pending_urls to the queue methods.
-* Added Agent#queue to provide read access to the queue.
-* Added Agent#queue= and Agent#history= for setting the queue and history.
-* Added Agent#to_hash which returns a Hash of the agents queue and history.
-* Made Agent#enqueue and Agent#queued? public.
+* Added {Spidr::Agent#queue} to provide read access to the queue.
+* Added {Spidr::Agent#queue=} and {Spidr::Agent#history=} for setting the
+  queue and history.
+* Added {Spidr::Agent#to_hash} which returns a Hash of the agents queue and
+  history.
+* Made {Spidr::Agent#enqueue} and {Spidr::Agent#queued?} public.
 * Added more specs.
 
 === 0.1.7 / 2009-04-24
 
-* Added Agent#all_headers.
+* Added Spidr::Agent#all_headers.
 * Fixed a bug where Page#headers was always +nil+.
-* Spidr::Agent will now follow the Location header in HTTP 300, 301, 302,
-  303 and 307 Redirects.
-* Spidr::Agent will now follow iframe and frame tags.
+* {Spidr::Spidr::Agent} will now follow the Location header in HTTP 300,
+  301, 302, 303 and 307 Redirects.
+* {Spidr::Agent} will now follow iframe and frame tags.
 
 === 0.1.6 / 2009-04-14
 
-* Added Agent#failures, a list of URLs which could not be visited.
-* Added Agent#failed?.
-* Added Agent#every_failed_url.
-* Added Agent#clear, which clears the history and failures URL lists.
-* Improved fault tolerance in Agent#get_page.
+* Added {Spidr::Agent#failures}, a list of URLs which could not be visited.
+* Added {Spidr::Agent#failed?}.
+* Added Spidr::Agent#every_failed_url.
+* Added {Spidr::Agent#clear}, which clears the history and failures URL
+  lists.
+* Improved fault tolerance in {Spidr::Agent#get_page}.
   * If a Network or HTTP error is encountered, the URL will be added to
     the failures list and the next URL will be visited.
-* Fixed a typo in Agent#ignore_exts_like.
+* Fixed a typo in Spidr::Agent#ignore_exts_like.
 * Updated the Web Spider Obstacle Course with links that always fail to be
   visited.
 
 === 0.1.5 / 2009-03-22
 
-* Catch malformed URIs in Page#to_absolute and return +nil+.
-* Filter out +nil+ URIs in Page#urls.
+* Catch malformed URIs in {Spidr::Page#to_absolute} and return +nil+.
+* Filter out +nil+ URIs in {Spidr::Page#urls}.
 
 === 0.1.4 / 2009-01-15
 
@@ -148,18 +153,18 @@
 
 === 0.1.3 / 2009-01-10
 
-* Added the :host options to Spidr::Agent#initialize.
+* Added the :host options to {Spidr::Agent#initialize}.
 * Added the Web Spider Obstacle Course files to the Manifest.
-* Aliased Spidr::Agent#visited_urls to Spidr::Agent#history.
+* Aliased {Spidr::Agent#visited_urls} to {Spidr::Agent#history}.
 
 === 0.1.2 / 2008-11-06
 
-* Fixed a bug in Page#to_absolute where URLs with no path were not
+* Fixed a bug in {Spidr::Page#to_absolute} where URLs with no path were not
   receiving a default path of <tt>/</tt>.
-* Fixed a bug in Page#to_absolute where URL paths were not being
+* Fixed a bug in {Spidr::Page#to_absolute} where URL paths were not being
   expanded, in order to remove <tt>..</tt> and <tt>.</tt> directories.
 * Fixed a bug where absolute URLs could have a blank path, thus causing
-  Agent#get_page to crash when it performed the HTTP request.
+  {Spidr::Agent#get_page} to crash when it performed the HTTP request.
 * Added RSpec spec tests.
 * Created a Web-Spider Obstacle Course
   (http://spidr.rubyforge.org/course/start.html) which is used in the spec
@@ -168,7 +173,7 @@
 === 0.1.1 / 2008-10-04
 
 * Added a reader method for the response instance variable in Page.
-* Fixed a bug in Page#method_missing.
+* Fixed a bug in {Spidr::Page#method_missing}.
 
 === 0.1.0 / 2008-05-23
 
