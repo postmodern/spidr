@@ -24,7 +24,6 @@ lib/spidr/auth_store.rb
 lib/spidr/agent.rb
 lib/spidr/spidr.rb
 lib/spidr/version.rb
-tasks/yard.rb
 spec/spec_helper.rb
 spec/helpers/history.rb
 spec/helpers/wsoc.rb
