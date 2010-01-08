@@ -9,9 +9,10 @@ Hoe.plugin :yard
 Hoe.spec('spidr') do
   self.developer('Postmodern', 'postmodern.mod3@gmail.com')
 
-  self.remote_yard_dir = 'docs'
-
   self.rspec_options += ['--colour', '--format', 'specdoc']
+
+  self.yard_opts = ['--protected']
+  self.remote_yard_dir = 'docs'
 
   self.extra_deps = [
     ['nokogiri', '>=1.2.0']
