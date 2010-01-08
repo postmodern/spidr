@@ -3,7 +3,6 @@
 require 'rubygems'
 require 'hoe'
 require 'hoe/signing'
-require './tasks/spec.rb'
 require './tasks/yard.rb'
 
 Hoe.spec('spidr') do
@@ -12,6 +11,8 @@ Hoe.spec('spidr') do
   self.readme_file = 'README.rdoc'
   self.history_file = 'History.rdoc'
   self.remote_rdoc_dir = 'docs'
+
+  self.rspec_options += ['--colour', '--format', 'specdoc']
 
   self.extra_deps = [
     ['nokogiri', '>=1.2.0']
