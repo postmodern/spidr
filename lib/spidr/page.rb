@@ -306,12 +306,14 @@ module Spidr
     def cookie_params
       params = {}
 
-      cookies.each do |key_value|
-        key, value = key_value.split('=',2)
+      cookies.each do |cookie|
+        cookie.split('; ').each do |key_value|
+          key, value = key_value.split('=',2)
 
-        next if RESERVED_COOKIE_NAMES.include?(key)
+          next if RESERVED_COOKIE_NAMES.include?(key)
 
-        params[key] = (value || '')
+          params[key] = (value || '')
+        end
       end
 
       return params
