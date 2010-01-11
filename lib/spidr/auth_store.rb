@@ -64,7 +64,7 @@ module Spidr
     #
     # @since 0.2.2
     #
-    def []=(url, auth)
+    def []=(url,auth)
       # normalize the url
       url = URI(url) unless url.kind_of?(URI)
 
@@ -96,8 +96,8 @@ module Spidr
     #
     # @since 0.2.2
     #
-    def add(url, username, password)
-      self[url] = AuthCredential.new(username, password)
+    def add(url,username,password)
+      self[url] = AuthCredential.new(username,password)
     end
 
     #
