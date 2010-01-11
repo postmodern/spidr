@@ -104,7 +104,6 @@ describe Page do
 
       params.each do |key,value|
         key.should_not be_empty
-        value.should_not be_empty
       end
     end
   end
