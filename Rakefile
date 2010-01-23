@@ -11,7 +11,7 @@ Hoe.spec('spidr') do
 
   self.rspec_options += ['--colour', '--format', 'specdoc']
 
-  self.yard_opts += ['--protected']
+  self.yard_options += ['--protected']
   self.remote_yard_dir = 'docs'
 
   self.extra_deps = [
