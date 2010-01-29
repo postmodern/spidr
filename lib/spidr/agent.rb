@@ -28,6 +28,9 @@ module Spidr
     # Referer to use
     attr_accessor :referer
 
+    # HTTP Host Header to use
+    attr_accessor :host_header
+
     # Delay in between fetching pages
     attr_accessor :delay
 
@@ -70,6 +73,9 @@ module Spidr
     # @option options [String] :referer
     #   The Referer URL to send with each request.
     #
+    # @option options [String] :host_header
+    #   The HTTP Host header to use with each request.
+    #
     # @option options [Integer] :delay (0)
     #   The number of seconds to pause between each request.
     #
@@ -89,6 +95,7 @@ module Spidr
     def initialize(options={},&block)
       @user_agent = (options[:user_agent] || Spidr.user_agent)
       @referer = options[:referer]
+      @host_header = options[:host_header]
 
       @sessions = SessionCache.new(options[:proxy] || Spidr.proxy)
       @cookies = CookieJar.new
@@ -615,6 +622,7 @@ module Spidr
         headers = {}
         headers['User-Agent'] = @user_agent if @user_agent
         headers['Referer'] = @referer if @referer
+        headers['Host'] = @host_header if @host_header
 
         if (authorization = @authorized.for_url(url))
           headers['Authorization'] = "Basic #{authorization}"
