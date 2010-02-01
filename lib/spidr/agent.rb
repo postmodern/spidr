@@ -628,31 +628,32 @@ module Spidr
       # append the URL query to the path
       path += "?#{url.query}" if url.query
 
-      begin
-        sleep(@delay) if @delay > 0
+      # set any additional HTTP headers
+      headers = {}
 
-        headers = {}
-
-        unless @host_headers.empty?
-          @host_headers.each do |name,header|
-            if host.match(name)
-              headers['Host'] = header
-              break
-            end
+      unless @host_headers.empty?
+        @host_headers.each do |name,header|
+          if host.match(name)
+            headers['Host'] = header
+            break
           end
         end
+      end
 
-        headers['Host'] ||= @host_header if @host_header
-        headers['User-Agent'] = @user_agent if @user_agent
-        headers['Referer'] = @referer if @referer
+      headers['Host'] ||= @host_header if @host_header
+      headers['User-Agent'] = @user_agent if @user_agent
+      headers['Referer'] = @referer if @referer
 
-        if (authorization = @authorized.for_url(url))
-          headers['Authorization'] = "Basic #{authorization}"
-        end
+      if (authorization = @authorized.for_url(url))
+        headers['Authorization'] = "Basic #{authorization}"
+      end
 
-        if (header_cookies = @cookies.for_host(url.host))
-          headers['Cookie'] = header_cookies
-        end
+      if (header_cookies = @cookies.for_host(url.host))
+        headers['Cookie'] = header_cookies
+      end
+
+      begin
+        sleep(@delay) if @delay > 0
 
         block.call(@sessions[url],path,headers)
       rescue SystemCallError,
