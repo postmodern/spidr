@@ -1,9 +1,9 @@
 # Spidr
 
-* [spidr.rubyforge.org](http://spidr.rubyforge.org/)
-* [github.com/postmodern/spidr](http://github.com/postmodern/spidr)
-* [github.com/postmodern/spidr/issues](http://github.com/postmodern/spidr/issues)
-* [groups.google.com/group/spidr](http://groups.google.com/group/spidr)
+* http://spidr.rubyforge.org/
+* http://github.com/postmodern/spidr
+* http://github.com/postmodern/spidr/issues
+* http://groups.google.com/group/spidr
 * irc.freenode.net #spidr
 
 ## DESCRIPTION:
