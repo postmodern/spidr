@@ -47,7 +47,7 @@ module Spidr
     #   Host or domain name for cookies.
     #
     # @return [String, nil]
-    #   The cookie values or +nil+ if the host does not have a cookie in the
+    #   The cookie values or `nil` if the host does not have a cookie in the
     #   jar.
     #
     # @since 0.2.2

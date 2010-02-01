@@ -17,7 +17,7 @@ module Spidr
     #
     # @option options [Array] :schemes (['http', 'https'])
     #   The list of acceptable URI schemes to visit.
-    #   The +https+ scheme will be ignored if +net/https+ cannot be loaded.
+    #   The `https` scheme will be ignored if `net/https` cannot be loaded.
     #
     # @option options [String] :host
     #   The host-name to visit.

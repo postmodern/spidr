@@ -1,4 +1,4 @@
-=== 0.2.2 / 2010-01-06
+### 0.2.2 / 2010-01-06
 
 * Require Web Spider Obstacle Course (WSOC) >= 0.1.1.
 * Integrated the new WSOC into the specs.
@@ -15,7 +15,7 @@
 * Renamed Spidr::Agent#get_session to {Spidr::SessionCache#[]}.
 * Renamed Spidr::Agent#kill_session to {Spidr::SessionCache#kill!}.
 
-=== 0.2.1 / 2009-11-25
+### 0.2.1 / 2009-11-25
 
 * Added {Spidr::Events#every_ok_page}.
 * Added {Spidr::Events#every_redirect_page}.
@@ -44,9 +44,9 @@
 * Added {Spidr::Events#every_zip_page}.
 * Fixed a bug where {Spidr::Agent#delay} was not being used to delay
   requesting pages.
-* Spider +link+ and +script+ tags in HTML pages (thanks Nick Plante).
+* Spider `link` and `script` tags in HTML pages (thanks Nick Plante).
 
-=== 0.2.0 / 2009-10-10
+### 0.2.0 / 2009-10-10
 
 * Added {URI.expand_path}.
 * Added {Spidr::Page#search}.
@@ -91,7 +91,7 @@
 * Made {Spidr::Agent#visit_page} public.
 * Moved to YARD based documentation.
 
-=== 0.1.9 / 2009-06-13
+### 0.1.9 / 2009-06-13
 
 * Upgraded to Hoe 2.0.0.
   * Use Hoe.spec instead of Hoe.new.
@@ -108,7 +108,7 @@
   could not be loaded.
 * Removed Spidr::Agent::SCHEMES.
 
-=== 0.1.8 / 2009-05-27
+### 0.1.8 / 2009-05-27
 
 * Added the Spidr::Agent#pause! and Spidr::Agent#continue! methods.
 * Added the Spidr::Agent#running? and Spidr::Agent#paused? methods.
@@ -121,15 +121,15 @@
 * Made {Spidr::Agent#enqueue} and {Spidr::Agent#queued?} public.
 * Added more specs.
 
-=== 0.1.7 / 2009-04-24
+### 0.1.7 / 2009-04-24
 
 * Added Spidr::Agent#all_headers.
-* Fixed a bug where Page#headers was always +nil+.
+* Fixed a bug where Page#headers was always `nil`.
 * {Spidr::Spidr::Agent} will now follow the Location header in HTTP 300,
   301, 302, 303 and 307 Redirects.
 * {Spidr::Agent} will now follow iframe and frame tags.
 
-=== 0.1.6 / 2009-04-14
+### 0.1.6 / 2009-04-14
 
 * Added {Spidr::Agent#failures}, a list of URLs which could not be visited.
 * Added {Spidr::Agent#failed?}.
@@ -143,27 +143,27 @@
 * Updated the Web Spider Obstacle Course with links that always fail to be
   visited.
 
-=== 0.1.5 / 2009-03-22
+### 0.1.5 / 2009-03-22
 
-* Catch malformed URIs in {Spidr::Page#to_absolute} and return +nil+.
-* Filter out +nil+ URIs in {Spidr::Page#urls}.
+* Catch malformed URIs in {Spidr::Page#to_absolute} and return `nil`.
+* Filter out `nil` URIs in {Spidr::Page#urls}.
 
-=== 0.1.4 / 2009-01-15
+### 0.1.4 / 2009-01-15
 
 * Use Nokogiri for HTML and XML parsing.
 
-=== 0.1.3 / 2009-01-10
+### 0.1.3 / 2009-01-10
 
 * Added the :host options to {Spidr::Agent#initialize}.
 * Added the Web Spider Obstacle Course files to the Manifest.
 * Aliased {Spidr::Agent#visited_urls} to {Spidr::Agent#history}.
 
-=== 0.1.2 / 2008-11-06
+### 0.1.2 / 2008-11-06
 
 * Fixed a bug in {Spidr::Page#to_absolute} where URLs with no path were not
-  receiving a default path of <tt>/</tt>.
+  receiving a default path of `/`.
 * Fixed a bug in {Spidr::Page#to_absolute} where URL paths were not being
-  expanded, in order to remove <tt>..</tt> and <tt>.</tt> directories.
+  expanded, in order to remove `..` and `.` directories.
 * Fixed a bug where absolute URLs could have a blank path, thus causing
   {Spidr::Agent#get_page} to crash when it performed the HTTP request.
 * Added RSpec spec tests.
@@ -171,12 +171,12 @@
   (http://spidr.rubyforge.org/course/start.html) which is used in the spec
   tests.
 
-=== 0.1.1 / 2008-10-04
+### 0.1.1 / 2008-10-04
 
 * Added a reader method for the response instance variable in Page.
 * Fixed a bug in {Spidr::Page#method_missing}.
 
-=== 0.1.0 / 2008-05-23
+### 0.1.0 / 2008-05-23
 
 * Initial release.
   * Black-list or white-list URLs based upon:

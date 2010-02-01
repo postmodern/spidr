@@ -1,18 +1,18 @@
-= Spidr
+# Spidr
 
-* http://spidr.rubyforge.org
-* http://github.com/postmodern/spidr
-* http://github.com/postmodern/spidr/issues
-* http://groups.google.com/group/spidr
+* [spidr.rubyforge.org](http://spidr.rubyforge.org/)
+* [github.com/postmodern/spidr](http://github.com/postmodern/spidr)
+* [github.com/postmodern/spidr/issues](http://github.com/postmodern/spidr/issues)
+* [groups.google.com/group/spidr](http://groups.google.com/group/spidr)
 * irc.freenode.net #spidr
 
-== DESCRIPTION:
+## DESCRIPTION:
 
 Spidr is a versatile Ruby web spidering library that can spider a site,
 multiple domains, certain links or infinitely. Spidr is designed to be fast
 and easy to use.
 
-== FEATURES:
+## FEATURES:
 
 * Follows:
   * a tags.
@@ -41,21 +41,21 @@ and easy to use.
 * Custom proxy settings.
 * HTTPS support.
 
-== EXAMPLES:
+## EXAMPLES:
 
-* Start spidering from a URL:
+Start spidering from a URL:
 
     Spidr.start_at('http://tenderlovemaking.com/')
 
-* Spider a host:
+Spider a host:
 
     Spidr.host('coderrr.wordpress.com')
 
-* Spider a site:
+Spider a site:
 
     Spidr.site('http://rubyflow.com/')
 
-* Spider multiple hosts:
+Spider multiple hosts:
 
     Spidr.start_at(
       'http://company.com/',
@@ -65,30 +65,30 @@ and easy to use.
       ]
     )
 
-* Do not spider certain links:
+Do not spider certain links:
 
     Spidr.site('http://matasano.com/', :ignore_links => [/log/])
 
-* Do not spider links on certain ports:
+Do not spider links on certain ports:
 
     Spidr.site(
       'http://sketchy.content.com/',
       :ignore_ports => [8000, 8010, 8080]
     )
 
-* Print out visited URLs:
+Print out visited URLs:
 
     Spidr.site('http://rubyinside.org/') do |spider|
       spider.every_url { |url| puts url }
     end
 
-* Print out the URLs that could not be requested:
+Print out the URLs that could not be requested:
 
     Spidr.site('http://sketchy.content.com/') do |spider|
       spider.every_failed_url { |url| puts url }
     end
 
-* Search HTML and XML pages:
+Search HTML and XML pages:
 
     Spidr.site('http://company.withablog.com/') do |spider|
       spider.every_page do |page|
@@ -99,11 +99,11 @@ and easy to use.
           value = meta.attributes['content']
 
           puts "    #{name} = #{value}"
-	end
+        end
       end
     end
 
-* Print out the titles from every page:
+Print out the titles from every page:
 
     Spidr.site('http://www.rubypulse.com/') do |spider|
       spider.every_html_page do |page|
@@ -111,7 +111,7 @@ and easy to use.
       end
     end
 
-* Find what kinds of web servers a host is using, by accessing the headers:
+Find what kinds of web servers a host is using, by accessing the headers:
 
     servers = Set[]
 
@@ -121,7 +121,7 @@ and easy to use.
       end
     end
 
-* Pause the spider on a forbidden page:
+Pause the spider on a forbidden page:
 
     spider = Spidr.host('overnight.startup.com') do |spider|
       spider.every_forbidden_page do |page|
@@ -129,7 +129,7 @@ and easy to use.
       end
     end
 
-* Skip the processing of a page:
+Skip the processing of a page:
 
     Spidr.host('sketchy.content.com') do |spider|
       spider.every_missing_page do |page|
@@ -137,7 +137,7 @@ and easy to use.
       end
     end
 
-* Skip the processing of links:
+Skip the processing of links:
 
     Spidr.host('sketchy.content.com') do |spider|
       spider.every_url do |url|
@@ -147,15 +147,15 @@ and easy to use.
       end
     end
 
-== REQUIREMENTS:
+## REQUIREMENTS:
 
-* {nokogiri}[http://nokogiri.rubyforge.org/] >= 1.2.0
+* [nokogiri](http://nokogiri.rubyforge.org/) >= 1.2.0
 
-== INSTALL:
+## INSTALL:
 
-  $ sudo gem install spidr
+    $ sudo gem install spidr
 
-== LICENSE:
+## LICENSE:
 
 The MIT License
 

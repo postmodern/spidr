@@ -46,10 +46,10 @@ module Spidr
     end
 
     #
-    # Determines if the response code is +200+.
+    # Determines if the response code is `200`.
     #
     # @return [Boolean]
-    #   Specifies whether the response code is +200+.
+    #   Specifies whether the response code is `200`.
     #
     def is_ok?
       code == 200
@@ -58,10 +58,10 @@ module Spidr
     alias ok? is_ok?
 
     #
-    # Determines if the response code is +301+ or +307+.
+    # Determines if the response code is `301` or `307`.
     #
     # @return [Boolean]
-    #   Specifies whether the response code is +301+ or +307+.
+    #   Specifies whether the response code is `301` or `307`.
     #
     def is_redirect?
       (code == 301 || code == 307)
@@ -70,30 +70,30 @@ module Spidr
     alias redirect? is_redirect?
 
     #
-    # Determines if the response code is +308+.
+    # Determines if the response code is `308`.
     #
     # @return [Boolean]
-    #   Specifies whether the response code is +308+.
+    #   Specifies whether the response code is `308`.
     #
     def timedout?
       code == 308
     end
 
     #
-    # Determines if the response code is +400+.
+    # Determines if the response code is `400`.
     #
     # @return [Boolean]
-    #   Specifies whether the response code is +400+.
+    #   Specifies whether the response code is `400`.
     #
     def bad_request?
       code == 400
     end
 
     #
-    # Determines if the response code is +401+.
+    # Determines if the response code is `401`.
     #
     # @return [Boolean]
-    #   Specifies whether the response code is +401+.
+    #   Specifies whether the response code is `401`.
     #
     def is_unauthorized?
       code == 401
@@ -102,10 +102,10 @@ module Spidr
     alias unauthorized? is_unauthorized?
 
     #
-    # Determines if the response code is +403+.
+    # Determines if the response code is `403`.
     #
     # @return [Boolean]
-    #   Specifies whether the response code is +403+.
+    #   Specifies whether the response code is `403`.
     #
     def is_forbidden?
       code == 403
@@ -114,10 +114,10 @@ module Spidr
     alias forbidden? is_forbidden?
 
     #
-    # Determines if the response code is +404+.
+    # Determines if the response code is `404`.
     #
     # @return [Boolean]
-    #   Specifies whether the response code is +404+.
+    #   Specifies whether the response code is `404`.
     #
     def is_missing?
       code == 404
@@ -126,10 +126,10 @@ module Spidr
     alias missing? is_missing?
 
     #
-    # Determines if the response code is +500+.
+    # Determines if the response code is `500`.
     #
     # @return [Boolean]
-    #   Specifies whether the response code is +500+.
+    #   Specifies whether the response code is `500`.
     #
     def had_internal_server_error?
       code == 500
@@ -334,7 +334,7 @@ module Spidr
     #
     # @return [Nokogiri::HTML::Document, Nokogiri::XML::Document, nil]
     #   The document that represents HTML or XML pages.
-    #   Returns +nil+ if the page is neither HTML, XML, RSS, Atom or if
+    #   Returns `nil` if the page is neither HTML, XML, RSS, Atom or if
     #   the page could not be parsed properly.
     #
     # @see http://nokogiri.rubyforge.org/nokogiri/Nokogiri/XML/Document.html
@@ -382,7 +382,7 @@ module Spidr
     # Searches for the first occurrence an XPath or CSS Path expression.
     #
     # @return [Nokogiri::HTML::Node, Nokogiri::XML::Node, nil]
-    #   The first matched node. Returns +nil+ if no nodes could be matched,
+    #   The first matched node. Returns `nil` if no nodes could be matched,
     #   or if the page is not a HTML or XML document.
     #
     # @example
@@ -418,7 +418,7 @@ module Spidr
     #
     # @return [Array<String>]
     #   All links within the HTML page, frame/iframe source URLs and any
-    #   links in the +Location+ header.
+    #   links in the `Location` header.
     #
     def links
       urls = []
@@ -504,7 +504,7 @@ module Spidr
     protected
 
     #
-    # Provides transparent access to the values in +headers+.
+    # Provides transparent access to the values in `headers`.
     #
     def method_missing(sym,*args,&block)
       if (args.empty? && block.nil?)

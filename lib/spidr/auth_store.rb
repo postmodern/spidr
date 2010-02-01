@@ -24,7 +24,7 @@ module Spidr
     #
     # @return [AuthCredential, nil]
     #   Closest matching {AuthCredential} values for the URL,
-    #   or +nil+ if nothing matches.
+    #   or `nil` if nothing matches.
     #
     # @since 0.2.2
     #
@@ -102,13 +102,13 @@ module Spidr
 
     #
     # Returns the base64 encoded authorization string for the URL
-    # or +nil+ if no authorization exists.
+    # or `nil` if no authorization exists.
     #
     # @param [URI] url
     #   The url.
     #
     # @return [String, nil]
-    #   The base64 encoded authorizatio string or +nil+.
+    #   The base64 encoded authorizatio string or `nil`.
     #
     # @since 0.2.2
     #

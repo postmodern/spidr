@@ -492,7 +492,7 @@ module Spidr
     #   The page for the response.
     #
     # @return [Page, nil]
-    #   The page for the response, or +nil+ if the request failed.
+    #   The page for the response, or `nil` if the request failed.
     #
     def get_page(url,&block)
       url = URI(url.to_s)
@@ -525,7 +525,7 @@ module Spidr
     #   The page for the response.
     #
     # @return [Page, nil]
-    #   The page for the response, or +nil+ if the request failed.
+    #   The page for the response, or `nil` if the request failed.
     #
     # @since 0.2.2
     #
@@ -557,7 +557,7 @@ module Spidr
     #   The page which was visited.
     #
     # @return [Page, nil]
-    #   The page that was visited. If +nil+ is returned, either the request
+    #   The page that was visited. If `nil` is returned, either the request
     #   for the page failed, or the page was skipped.
     #
     def visit_page(url,&block)
@@ -585,8 +585,8 @@ module Spidr
     # Converts the agent into a Hash.
     #
     # @return [Hash]
-    #   The agent represented as a Hash containing the +history+ and
-    #   the +queue+ of the agent.
+    #   The agent represented as a Hash containing the `history` and
+    #   the `queue` of the agent.
     #
     def to_hash
       {:history => @history, :queue => @queue}
