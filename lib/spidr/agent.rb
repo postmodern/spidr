@@ -22,6 +22,9 @@ module Spidr
     # HTTP Host Header to use
     attr_accessor :host_header
 
+    # HTTP Host Headers to use for specific hosts
+    attr_reader :host_headers
+
     # User-Agent to use
     attr_accessor :user_agent
 
@@ -70,6 +73,9 @@ module Spidr
     # @option options [String] :host_header
     #   The HTTP Host header to use with each request.
     #
+    # @option options [Hash{String,Regexp => String}] :host_headers
+    #   The HTTP Host headers to use for specific hosts.
+    #
     # @option options [String] :user_agent (Spidr.user_agent)
     #   The User-Agent string to send with each requests.
     #
@@ -94,6 +100,12 @@ module Spidr
     #
     def initialize(options={},&block)
       @host_header = options[:host_header]
+      @host_headers = {}
+
+      if options[:host_headers]
+        @host_headers.merge!(options[:host_headers])
+      end
+
       @user_agent = (options[:user_agent] || Spidr.user_agent)
       @referer = options[:referer]
 
@@ -620,7 +632,17 @@ module Spidr
         sleep(@delay) if @delay > 0
 
         headers = {}
-        headers['Host'] = @host_header if @host_header
+
+        unless @host_headers.empty?
+          @host_headers.each do |name,header|
+            if host.match(name)
+              headers['Host'] = header
+              break
+            end
+          end
+        end
+
+        headers['Host'] ||= @host_header if @host_header
         headers['User-Agent'] = @user_agent if @user_agent
         headers['Referer'] = @referer if @referer
 
