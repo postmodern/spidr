@@ -75,7 +75,7 @@
   RSS/RDF/Atom pages as well.
 * Fixed the handling of the Location header in {Spidr::Page#links}
   (thanks falter).
-* Fixed a bug in {Spidr::Page#to_absolute} where trailing '/' characters on
+* Fixed a bug in {Spidr::Page#to_absolute} where trailing `/` characters on
   URI paths were not being preserved (thanks falter).
 * Fixed a bug where the URI query was not being sent with the request
   in {Spidr::Agent#get_page} (thanks Damian Steer).
@@ -154,7 +154,7 @@
 
 ### 0.1.3 / 2009-01-10
 
-* Added the :host options to {Spidr::Agent#initialize}.
+* Added the `:host` options to {Spidr::Agent#initialize}.
 * Added the Web Spider Obstacle Course files to the Manifest.
 * Aliased {Spidr::Agent#visited_urls} to {Spidr::Agent#history}.
 
