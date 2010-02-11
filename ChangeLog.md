@@ -12,8 +12,8 @@
 * Added {Spidr::CookieJar} (thanks Nick Plante).
 * Added {Spidr::AuthStore} (thanks Nick Plante).
 * Added {Spidr::Agent#post_page} (thanks Nick Plante).
-* Renamed Spidr::Agent#get_session to {Spidr::SessionCache#[]}.
-* Renamed Spidr::Agent#kill_session to {Spidr::SessionCache#kill!}.
+* Renamed `Spidr::Agent#get_session` to {Spidr::SessionCache#[]}.
+* Renamed `Spidr::Agent#kill_session` to {Spidr::SessionCache#kill!}.
 
 ### 0.2.1 / 2009-11-25
 
@@ -54,16 +54,16 @@
 * Added {Spidr::Page#title}.
 * Added {Spidr::Agent#failures=}.
 * Added a HTTP session cache to {Spidr::Agent}, per suggestion of falter.
-  * Added Spidr::Agent#get_session.
-  * Added Spidr::Agent#kill_session.
+  * Added `Spidr::Agent#get_session`.
+  * Added `Spidr::Agent#kill_session`.
 * Added {Spidr.proxy=}.
 * Added {Spidr.disable_proxy!}.
-* Aliased Spidr::Page#txt? to {Spidr::Page#plain_text?}.
-* Aliased Spidr::Page#ok? to {Spidr::Page#is_ok?}.
-* Aliased Spidr::Page#redirect? to {Spidr::Page#is_redirect?}.
-* Aliased Spidr::Page#unauthorized? to {Spidr::Page#is_unauthorized?}.
-* Aliased Spidr::Page#forbidden? to {Spidr::Page#is_forbidden?}.
-* Aliased Spidr::Page#missing? to {Spidr::Page#is_missing?}.
+* Aliased `Spidr::Page#txt?` to {Spidr::Page#plain_text?}.
+* Aliased `Spidr::Page#ok?` to {Spidr::Page#is_ok?}.
+* Aliased `Spidr::Page#redirect?` to {Spidr::Page#is_redirect?}.
+* Aliased `Spidr::Page#unauthorized?` to {Spidr::Page#is_unauthorized?}.
+* Aliased `Spidr::Page#forbidden?` to {Spidr::Page#is_forbidden?}.
+* Aliased `Spidr::Page#missing?` to {Spidr::Page#is_missing?}.
 * Split URL filtering code out of {Spidr::Agent} and into
   {Spidr::Filters}.
 * Split URL / Page event code out of {Spidr::Agent} and into
@@ -71,7 +71,7 @@
 * Split pause! / continue! / skip_link! / skip_page! methods out of
   {Spidr::Agent} and into {Spidr::Actions}.
 * Fixed a bug in {Spidr::Page#code}, where it was not returning an Integer.
-* Make sure {Spidr::Page#doc} returns Nokogiri::XML::Document objects for
+* Make sure {Spidr::Page#doc} returns `Nokogiri::XML::Document` objects for
   RSS/RDF/Atom pages as well.
 * Fixed the handling of the Location header in {Spidr::Page#links}
   (thanks falter).
@@ -86,7 +86,7 @@
 * Switched {Spidr::Agent#failures} to a Set.
 * Allow a block to be passed to {Spidr::Agent#run}, which will receive all
   pages visited.
-* Allow Spidr::Agent#start_at and Spidr::Agent#continue! to pass blocks
+* Allow `Spidr::Agent#start_at` and `Spidr::Agent#continue!` to pass blocks
   to {Spidr::Agent#run}.
 * Made {Spidr::Agent#visit_page} public.
 * Moved to YARD based documentation.
@@ -96,7 +96,7 @@
 * Upgraded to Hoe 2.0.0.
   * Use Hoe.spec instead of Hoe.new.
   * Use the Hoe signing task for signed gems.
-* Added the Spidr::Agent#schemes and Spidr::Agent#schemes= methods.
+* Added the `Spidr::Agent#schemes` and `Spidr::Agent#schemes=` methods.
 * Added a warning message if 'net/https' cannot be loaded.
 * Allow the list of acceptable URL schemes to be passed into
   {Spidr::Agent#initialize}.
@@ -110,8 +110,8 @@
 
 ### 0.1.8 / 2009-05-27
 
-* Added the Spidr::Agent#pause! and Spidr::Agent#continue! methods.
-* Added the Spidr::Agent#running? and Spidr::Agent#paused? methods.
+* Added the `Spidr::Agent#pause!` and `Spidr::Agent#continue!` methods.
+* Added the `Spidr::Agent#running?` and `Spidr::Agent#paused?` methods.
 * Added an alias for pending_urls to the queue methods.
 * Added {Spidr::Agent#queue} to provide read access to the queue.
 * Added {Spidr::Agent#queue=} and {Spidr::Agent#history=} for setting the
@@ -123,8 +123,8 @@
 
 ### 0.1.7 / 2009-04-24
 
-* Added Spidr::Agent#all_headers.
-* Fixed a bug where Page#headers was always `nil`.
+* Added `Spidr::Agent#all_headers`.
+* Fixed a bug where {Spidr::Page#headers} was always `nil`.
 * {Spidr::Spidr::Agent} will now follow the Location header in HTTP 300,
   301, 302, 303 and 307 Redirects.
 * {Spidr::Agent} will now follow iframe and frame tags.
@@ -133,13 +133,13 @@
 
 * Added {Spidr::Agent#failures}, a list of URLs which could not be visited.
 * Added {Spidr::Agent#failed?}.
-* Added Spidr::Agent#every_failed_url.
+* Added `Spidr::Agent#every_failed_url`.
 * Added {Spidr::Agent#clear}, which clears the history and failures URL
   lists.
 * Improved fault tolerance in {Spidr::Agent#get_page}.
   * If a Network or HTTP error is encountered, the URL will be added to
     the failures list and the next URL will be visited.
-* Fixed a typo in Spidr::Agent#ignore_exts_like.
+* Fixed a typo in `Spidr::Agent#ignore_exts_like`.
 * Updated the Web Spider Obstacle Course with links that always fail to be
   visited.
 
