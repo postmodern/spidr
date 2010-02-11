@@ -1,18 +1,18 @@
 # Spidr
 
-* http://spidr.rubyforge.org/
-* http://github.com/postmodern/spidr
-* http://github.com/postmodern/spidr/issues
-* http://groups.google.com/group/spidr
+* [spidr.rubyforge.org](http://spidr.rubyforge.org/)
+* [github.com/postmodern/spidr](http://github.com/postmodern/spidr)
+* [github.com/postmodern/spidr/issues](http://github.com/postmodern/spidr/issues)
+* [groups.google.com/group/spidr](http://groups.google.com/group/spidr)
 * irc.freenode.net #spidr
 
-## DESCRIPTION:
+## Description
 
 Spidr is a versatile Ruby web spidering library that can spider a site,
 multiple domains, certain links or infinitely. Spidr is designed to be fast
 and easy to use.
 
-## FEATURES:
+## Features
 
 * Follows:
   * a tags.
@@ -41,7 +41,7 @@ and easy to use.
 * Custom proxy settings.
 * HTTPS support.
 
-## EXAMPLES:
+## Examples
 
 Start spidering from a URL:
 
@@ -147,35 +147,15 @@ Skip the processing of links:
       end
     end
 
-## REQUIREMENTS:
+## Requirements
 
 * [nokogiri](http://nokogiri.rubyforge.org/) >= 1.2.0
 
-## INSTALL:
+## Install
 
     $ sudo gem install spidr
 
-## LICENSE:
+## License
 
-The MIT License
+See {file:LICENSE.txt} for license information.
 
-Copyright (c) 2008-2010 Hal Brodigan
-
-Permission is hereby granted, free of charge, to any person obtaining
-a copy of this software and associated documentation files (the
-'Software'), to deal in the Software without restriction, including
-without limitation the rights to use, copy, modify, merge, publish,
-distribute, sublicense, and/or sell copies of the Software, and to
-permit persons to whom the Software is furnished to do so, subject to
-the following conditions:
-
-The above copyright notice and this permission notice shall be
-included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
-CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
-TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
-SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
