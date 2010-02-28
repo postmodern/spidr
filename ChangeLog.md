@@ -1,3 +1,11 @@
+### 0.2.3 / 2010-02-27
+
+* Migrated to Jeweler, for the packaging and releasing RubyGems.
+* Switched to MarkDown formatted YARD documentation.
+* Added {Spidr::Events#every_link}.
+* Added {Spidr::SessionCache#active?}.
+* Added specs for {Spidr::SessionCache}.
+
 ### 0.2.2 / 2010-01-06
 
 * Require Web Spider Obstacle Course (WSOC) >= 0.1.1.
