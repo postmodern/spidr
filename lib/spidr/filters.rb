@@ -1,6 +1,10 @@
 require 'spidr/rules'
 
 module Spidr
+  #
+  # The {Filters} module adds methods to {Agent} for controlling which
+  # URLs the agent will visit.
+  #
   module Filters
     def self.included(base)
       base.module_eval do

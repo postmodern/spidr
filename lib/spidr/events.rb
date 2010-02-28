@@ -1,4 +1,9 @@
 module Spidr
+  #
+  # The {Events} module adds methods to {Agent} for registering
+  # callbacks which will receive URLs, links, headers and pages, when
+  # they are visited.
+  #
   module Events
     def initialize(options={})
       super(options)

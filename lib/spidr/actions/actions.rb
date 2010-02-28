@@ -3,6 +3,10 @@ require 'spidr/actions/exceptions/skip_link'
 require 'spidr/actions/exceptions/skip_page'
 
 module Spidr
+  #
+  # The {Actions} module adds methods to {Agent} for controling the
+  # spidering of links.
+  #
   module Actions
     def initialize(options={})
       @paused = false

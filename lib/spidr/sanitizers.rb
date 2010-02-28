@@ -1,6 +1,10 @@
 require 'uri'
 
 module Spidr
+  #
+  # The {Sanitizers} module adds methods to {Agent} which control the
+  # sanitization of incoming links.
+  #
   module Sanitizers
     def self.included(base)
       base.module_eval do
