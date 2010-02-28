@@ -34,6 +34,27 @@ module Spidr
     end
 
     #
+    # Determines if there is an active HTTP session for a given URL.
+    #
+    # @param [URI::HTTP, String] url
+    #   The URL that represents a session.
+    #
+    # @return [Boolean]
+    #   Specifies whether there is an active HTTP session.
+    #
+    # @since 0.2.3
+    #
+    def active?(url)
+      # normalize the url
+      url = URI(url.to_s) unless url.kind_of?(URI)
+
+      # session key
+      key = [url.scheme, url.host, url.port]
+
+      return @sessions.has_key?(key)
+    end
+
+    #
     # Provides an active HTTP session for a given URL.
     #
     # @param [URI::HTTP, String] url
@@ -46,6 +67,7 @@ module Spidr
       # normalize the url
       url = URI(url.to_s) unless url.kind_of?(URI)
 
+      # session key
       key = [url.scheme, url.host, url.port]
 
       unless @sessions[key]
