@@ -43,6 +43,14 @@ describe SessionCache do
       @sessions[url2].should_not be_nil
     end
 
+    it "should be able to kill sessions" do
+      url2 = URI('http://www.w3c.org/')
+
+      @sessions[url2].should_not be_nil
+      @sessions.kill!(url2)
+      @sessions.should_not be_active(url2)
+    end
+
     after(:all) do
       @sessions.clear
     end
