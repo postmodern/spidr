@@ -1,4 +1,7 @@
 module Spidr
+  #
+  # Represents HTTP Authentication credentials for a website.
+  #
   class AuthCredential
 
     # The username

@@ -3,6 +3,9 @@ require 'spidr/page'
 require 'set'
 
 module Spidr
+  #
+  # Stores HTTP Cookies organized by host-name.
+  #
   class CookieJar
 
     include Enumerable

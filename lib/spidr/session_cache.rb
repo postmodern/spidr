@@ -3,6 +3,9 @@ require 'spidr/spidr'
 require 'net/http'
 
 module Spidr
+  #
+  # Stores active HTTP Sessions organized by scheme, host-name and port.
+  #
   class SessionCache
 
     # Proxy to use

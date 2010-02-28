@@ -5,6 +5,10 @@ require 'spidr/page'
 require 'base64'
 
 module Spidr
+  #
+  # Stores {AuthCredential} objects organized by a website's scheme,
+  # host-name and sub-directory.
+  #
   class AuthStore
 
     #

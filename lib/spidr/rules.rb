@@ -1,4 +1,8 @@
 module Spidr
+  #
+  # The {Rules} class represents collections of acceptance and rejection
+  # rules, which are used to filter data.
+  #
   class Rules
 
     # Accept rules

@@ -5,6 +5,9 @@ require 'uri'
 require 'nokogiri'
 
 module Spidr
+  #
+  # Represents a requested page from a website.
+  #
   class Page
 
     # Reserved names used within Cookie strings
