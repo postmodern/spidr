@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Postmodern"]
-  s.date = %q{2010-02-11}
+  s.date = %q{2010-02-27}
   s.description = %q{Spidr is a versatile Ruby web spidering library that can spider a site, multiple domains, certain links or infinitely. Spidr is designed to be fast and easy to use.}
   s.email = %q{postmodern.mod3@gmail.com}
   s.extra_rdoc_files = [
@@ -60,6 +60,7 @@ Gem::Specification.new do |s|
     "spec/page_spec.rb",
     "spec/rules_spec.rb",
     "spec/sanitizers_spec.rb",
+    "spec/session_cache.rb",
     "spec/spec_helper.rb",
     "spec/spidr_spec.rb",
     "spidr.gemspec"
@@ -68,7 +69,7 @@ Gem::Specification.new do |s|
   s.homepage = %q{http://github.com/postmodern/spidr}
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.3.5}
+  s.rubygems_version = %q{1.3.6}
   s.summary = %q{A versatile Ruby web spidering library}
   s.test_files = [
     "spec/agent_spec.rb",
@@ -85,7 +86,8 @@ Gem::Specification.new do |s|
     "spec/actions_spec.rb",
     "spec/rules_spec.rb",
     "spec/auth_store_spec.rb",
-    "spec/cookie_jar_spec.rb"
+    "spec/cookie_jar_spec.rb",
+    "spec/session_cache.rb"
   ]
 
   if s.respond_to? :specification_version then
