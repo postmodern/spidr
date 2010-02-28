@@ -103,10 +103,10 @@ module Spidr
       # normalize the url
       url = URI(url.to_s) unless url.kind_of?(URI)
 
+      # session key
       key = [url.scheme, url.host, url.port]
 
       if (sess = @sessions[key])
-
         begin 
           sess.finish
         rescue IOError
