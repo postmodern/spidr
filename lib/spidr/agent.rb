@@ -577,7 +577,20 @@ module Spidr
         rescue Actions::Action
         end
 
-        page.urls.each { |next_url| enqueue(next_url) }
+        page.urls.each do |next_url|
+          begin
+            @every_link_blocks.each do |link_block|
+              link_block.call(page.url,next_url)
+            end
+          rescue Actions::Paused => action
+            raise(action)
+          rescue Actions::SkipLink
+            next
+          rescue Actions::Action
+          end
+
+          enqueue(next_url)
+        end
       end
     end
 

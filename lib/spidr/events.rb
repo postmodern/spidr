@@ -8,6 +8,7 @@ module Spidr
       @urls_like_blocks = Hash.new { |hash,key| hash[key] = [] }
 
       @every_page_blocks = []
+      @every_link_blocks = []
     end
 
     #
@@ -498,6 +499,25 @@ module Spidr
       every_page do |page|
         block.call(page) if (block && page.zip?)
       end
+    end
+
+    #
+    # Passes every source URI and destination URI of each link to a given
+    # block.
+    #
+    # @yield [src,dest]
+    #   The block will be passed every source URI and destination URI of
+    #   each link.
+    #
+    # @yieldparam [URI::HTTP] src
+    #   The URI that a link originated from.
+    #
+    # @yieldparam [URI::HTTP] dest
+    #   The destination URI of a link.
+    #
+    def every_link(&block)
+      @every_link_blocks << block
+      return self
     end
   end
 end
