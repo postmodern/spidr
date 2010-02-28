@@ -507,14 +507,14 @@ module Spidr
     end
 
     #
-    # Passes every source URI and destination URI of each link to a given
+    # Passes every origin and destination URI of each link to a given
     # block.
     #
-    # @yield [src,dest]
-    #   The block will be passed every source URI and destination URI of
+    # @yield [origin,dest]
+    #   The block will be passed every origin and destination URI of
     #   each link.
     #
-    # @yieldparam [URI::HTTP] src
+    # @yieldparam [URI::HTTP] origin
     #   The URI that a link originated from.
     #
     # @yieldparam [URI::HTTP] dest
