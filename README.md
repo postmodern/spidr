@@ -31,6 +31,7 @@ and easy to use.
   * Every visited Page.
   * Every visited URL.
   * Every visited URL that matches a specified pattern.
+  * Every origin and destination URI of a link.
   * Every URL that failed to be visited.
 * Provides action methods to:
   * Pause spidering.
@@ -82,10 +83,36 @@ Print out visited URLs:
       spider.every_url { |url| puts url }
     end
 
+Build a URL map of a site:
+
+    url_map = Hash.new { |hash,key| hash[key] = [] }
+
+    Spidr.site('http://intranet.com/') do |spider|
+      spider.every_link do |origin,dest|
+        url_map[dest] << origin
+      end
+    end
+
 Print out the URLs that could not be requested:
 
     Spidr.site('http://sketchy.content.com/') do |spider|
       spider.every_failed_url { |url| puts url }
+    end
+
+Finds all pages which have broken links:
+
+    url_map = Hash.new { |hash,key| hash[key] = [] }
+
+    spider = Spidr.site('http://intranet.com/') do |spider|
+      spider.every_link do |origin,dest|
+        url_map[dest] << origin
+      end
+    end
+
+    spider.failures.each do |url|
+      puts "Broken link #{url} found in:"
+
+      url_map[url].each { |page| puts "  #{page}" }
     end
 
 Search HTML and XML pages:
