@@ -507,6 +507,22 @@ module Spidr
     protected
 
     #
+    # Determines if any of the content-types of the page include a given
+    # type.
+    #
+    # @param [String] type
+    #   The content-type to test for.
+    #
+    # @return [Boolean]
+    #   Specifies whether the page includes the given content-type.
+    #
+    # @since 0.2.4
+    #
+    def is_content_type?(type)
+      content_types.any? { |content| content.include?(type) }
+    end
+
+    #
     # Provides transparent access to the values in `headers`.
     #
     def method_missing(sym,*args,&block)
@@ -519,9 +535,5 @@ module Spidr
       return super(sym,*args,&block)
     end
   
-    def is_content_type?(type)
-      content_types.any? { |content| content.include?(type) }
-    end
-
   end
 end
