@@ -520,8 +520,7 @@ module Spidr
     end
   
     def is_content_type?(type)
-      content_types.each { |content| return true if content.include?(type) }
-      return false
+      content_types.any? { |content| content.include?(type) }
     end
 
   end
