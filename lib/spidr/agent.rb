@@ -702,12 +702,13 @@ module Spidr
     #   Specifies whether the given URL should be visited.
     #
     def visit?(url)
-      (!(visited?(url)) &&
+      !(visited?(url)) &&
        visit_scheme?(url.scheme) &&
        visit_host?(url.host) &&
        visit_port?(url.port) &&
        visit_link?(url.to_s) &&
-       visit_ext?(url.path))
+       visit_url?(url) &&
+       visit_ext?(url.path)
     end
 
     #

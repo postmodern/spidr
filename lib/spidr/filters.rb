@@ -44,6 +44,12 @@ module Spidr
     # @option options [Array<String, Regexp, Proc>] :ignore_links
     #   The patterns which match the links to not visit.
     #
+    # @option options [Array<String, Regexp, Proc>] :urls
+    #   The patterns which match the URLs to visit.
+    #
+    # @option options [Array<String, Regexp, Proc>] :ignore_urls
+    #   The patterns which match the URLs to not visit.
+    #
     # @option options [Array<String, Regexp, Proc>] :exts
     #   The patterns which match the URI path extensions to visit.
     #
@@ -82,6 +88,10 @@ module Spidr
       @link_rules = Rules.new(
         :accept => options[:links],
         :reject => options[:ignore_links]
+      )
+      @url_rules = Rules.new(
+        :accept => options[:urls],
+        :reject => options[:ignore_urls]
       )
       @ext_rules = Rules.new(
         :accept => options[:exts],
@@ -248,21 +258,25 @@ module Spidr
     # @return [Array<String, Regexp, Proc>]
     #   The link patterns to visit.
     #
+    # @since 0.2.4
+    #
     def visit_links
       @link_rules.accept
     end
 
     #
-    # Adds a given pattern to the visit_links.
+    # Adds a given pattern to the {#visit_links}
     #
     # @param [String, Regexp] pattern
-    #   The pattern to match links with.
+    #   The pattern to match link with.
     #
     # @yield [link]
     #   If a block is given, it will be used to filter links.
     #
     # @yieldparam [String] link
     #   A link to accept or reject.
+    # 
+    # @since 0.2.4
     #
     def visit_links_like(pattern=nil,&block)
       if pattern
@@ -301,6 +315,78 @@ module Spidr
         ignore_links << pattern
       elsif block
         ignore_links << block
+      end
+
+      return self
+    end
+
+    #
+    # Specifies the patterns that match the URLs to visit.
+    #
+    # @return [Array<String, Regexp, Proc>]
+    #   The link patterns to visit.
+    #
+    # @since 0.2.4
+    #
+    def visit_urls
+      @url_rules.accept
+    end
+
+    #
+    # Adds a given pattern to the {#visit_urls}
+    #
+    # @param [String, Regexp] pattern
+    #   The pattern to match URLs with.
+    #
+    # @yield [url]
+    #   If a block is given, it will be used to filter URLs.
+    #
+    # @yieldparam [URI::HTTP, URI::HTTPS] url
+    #   A URL to accept or reject.
+    # 
+    # @since 0.2.4
+    #
+    def visit_urls_like(pattern=nil,&block)
+      if pattern
+        visit_urls << pattern
+      elsif block
+        visit_urls << block
+      end
+
+      return self
+    end
+
+    #
+    # Specifies the patterns that match URLs to not visit.
+    #
+    # @return [Array<String, Regexp, Proc>]
+    #   The URL patterns to not visit.
+    #
+    # @since 0.2.4
+    #
+    def ignore_urls
+      @url_rules.reject
+    end
+
+    #
+    # Adds a given pattern to the {#ignore_urls}.
+    #
+    # @param [String, Regexp] pattern
+    #   The pattern to match URLs with.
+    #
+    # @yield [url]
+    #   If a block is given, it will be used to filter URLs.
+    #
+    # @yieldparam [URI::HTTP, URI::HTTPS] url
+    #   A URL to reject or accept.
+    #
+    # @since 0.2.4
+    #
+    def ignore_urls_like(pattern=nil,&block)
+      if pattern
+        ignore_urls << pattern
+      elsif block
+        ignore_urls << block
       end
 
       return self
@@ -426,6 +512,21 @@ module Spidr
     #
     def visit_link?(link)
       @link_rules.accept?(link)
+    end
+
+    #
+    # Determines if a given URL should be visited.
+    #
+    # @param [URI::HTTP, URI::HTTPS] url
+    #   The URL.
+    #
+    # @return [Boolean]
+    #   Specifies whether the given URL should be visited.
+    #
+    # @since 0.2.4
+    #
+    def visit_url?(link)
+      @url_rules.accept?(link)
     end
 
     #
