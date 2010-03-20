@@ -135,7 +135,7 @@ module Spidr
     end
 
     #
-    # Adds a given pattern to the visit_hosts.
+    # Adds a given pattern to the {#visit_hosts}.
     #
     # @param [String, Regexp] pattern
     #   The pattern to match host-names with.
@@ -167,7 +167,7 @@ module Spidr
     end
 
     #
-    # Adds a given pattern to the ignore_hosts.
+    # Adds a given pattern to the {#ignore_hosts}.
     #
     # @param [String, Regexp] pattern
     #   The pattern to match host-names with.
@@ -199,7 +199,7 @@ module Spidr
     end
 
     #
-    # Adds a given pattern to the visit_ports.
+    # Adds a given pattern to the {#visit_ports}.
     #
     # @param [Integer, Regexp] pattern
     #   The pattern to match ports with.
@@ -231,7 +231,7 @@ module Spidr
     end
 
     #
-    # Adds a given pattern to the ignore_ports.
+    # Adds a given pattern to the {#ignore_ports}.
     #
     # @param [Integer, Regexp] pattern
     #   The pattern to match ports with.
@@ -299,7 +299,7 @@ module Spidr
     end
 
     #
-    # Adds a given pattern to the ignore_links.
+    # Adds a given pattern to the {#ignore_links}.
     #
     # @param [String, Regexp] pattern
     #   The pattern to match links with.
@@ -403,7 +403,7 @@ module Spidr
     end
 
     #
-    # Adds a given pattern to the visit_exts.
+    # Adds a given pattern to the {#visit_exts}.
     #
     # @param [String, Regexp] pattern
     #   The pattern to match URI path extensions with.
@@ -435,7 +435,7 @@ module Spidr
     end
 
     #
-    # Adds a given pattern to the ignore_exts.
+    # Adds a given pattern to the {#ignore_exts}.
     #
     # @param [String, Regexp] pattern
     #   The pattern to match URI path extensions with.
