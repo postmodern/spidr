@@ -7,6 +7,7 @@ begin
   Jeweler::Tasks.new do |gem|
     gem.name = 'spidr'
     gem.version = Spidr::VERSION
+    gem.license = 'MIT'
     gem.summary = %Q{A versatile Ruby web spidering library}
     gem.description = %Q{Spidr is a versatile Ruby web spidering library that can spider a site, multiple domains, certain links or infinitely. Spidr is designed to be fast and easy to use.}
     gem.email = 'postmodern.mod3@gmail.com'
