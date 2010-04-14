@@ -19,6 +19,7 @@ begin
     gem.add_development_dependency 'wsoc', '>= 0.1.1'
     gem.has_rdoc = 'yard'
   end
+  Jeweler::GemcutterTasks.new
 rescue LoadError
   puts "Jeweler (or a dependency) not available. Install it with: gem install jeweler"
 end
