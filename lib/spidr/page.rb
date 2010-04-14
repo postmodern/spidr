@@ -61,13 +61,19 @@ module Spidr
     alias ok? is_ok?
 
     #
-    # Determines if the response code is `301` or `307`.
+    # Determines if the response code is `300`, `301`, `302`, `303`
+    # or `307`.
     #
     # @return [Boolean]
-    #   Specifies whether the response code is `301` or `307`.
+    #   Specifies whether the response code is a HTTP Redirect code.
     #
     def is_redirect?
-      (code == 301 || code == 307)
+      case code
+      when 300..303, 307
+        true
+      else
+        false
+      end
     end
 
     alias redirect? is_redirect?
@@ -430,8 +436,7 @@ module Spidr
         urls << url unless (url.nil? || url.empty?)
       }
 
-      case code
-      when 300..303, 307
+      if self.is_redirect?
         location = @headers['location']
 
         if location.kind_of?(Array)
