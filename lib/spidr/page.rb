@@ -163,7 +163,7 @@ module Spidr
     # @since 0.2.2
     #
     def content_types
-      @headers['content-type']
+      (@headers['content-type'] || [])
     end
 
     #
