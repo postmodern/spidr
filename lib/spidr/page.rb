@@ -151,7 +151,7 @@ module Spidr
     #   The Content-Type of the page.
     #
     def content_type
-      @response['Content-Type']
+      (@response['Content-Type'] || '')
     end
 
     #
