@@ -381,10 +381,10 @@ module Spidr
     #
     def search(*paths)
       if doc
-        return doc.search(*paths)
+        doc.search(*paths)
+      else
+        []
       end
-
-      return []
     end
 
     #
@@ -401,10 +401,8 @@ module Spidr
     #
     def at(*arguments)
       if doc
-        return doc.at(*arguments)
+        doc.at(*arguments)
       end
-
-      return nil
     end
 
     alias / search
@@ -418,7 +416,7 @@ module Spidr
     #
     def title
       if (node = at('//title'))
-        return node.inner_text
+        node.inner_text
       end
     end
 
