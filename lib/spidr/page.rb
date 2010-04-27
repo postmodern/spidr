@@ -335,7 +335,7 @@ module Spidr
     #   The body of the response.
     #
     def body
-      @response.body
+      (@response.body || '')
     end
 
     #
@@ -350,7 +350,7 @@ module Spidr
     # @see http://nokogiri.rubyforge.org/nokogiri/Nokogiri/HTML/Document.html
     #
     def doc
-      return nil if (body.nil? || body.empty?)
+      return nil if body.empty?
 
       begin
         if html?
