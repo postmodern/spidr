@@ -72,8 +72,8 @@ module Spidr
     # @yieldparam [Hash] headers
     #   The headers from a response.
     #
-    def all_headers(&block)
-      every_page { |page| block.call(page.headers) }
+    def all_headers
+      every_page { |page| yield page.headers }
     end
 
     #
@@ -99,9 +99,9 @@ module Spidr
     # @yieldparam [Page] page
     #   A visited page.
     #
-    def every_ok_page(&block)
+    def every_ok_page
       every_page do |page|
-        block.call(page) if (block && page.ok?)
+        yield page if (block_given? && page.ok?)
       end
     end
 
@@ -114,9 +114,9 @@ module Spidr
     # @yieldparam [Page] page
     #   A visited page.
     #
-    def every_redirect_page(&block)
+    def every_redirect_page
       every_page do |page|
-        block.call(page) if (block && page.redirect?)
+        yield page if (block_given? && page.redirect?)
       end
     end
 
@@ -129,9 +129,9 @@ module Spidr
     # @yieldparam [Page] page
     #   A visited page.
     #
-    def every_timedout_page(&block)
+    def every_timedout_page
       every_page do |page|
-        block.call(page) if (block && page.timedout?)
+        yield page if (block_given? && page.timedout?)
       end
     end
 
@@ -144,9 +144,9 @@ module Spidr
     # @yieldparam [Page] page
     #   A visited page.
     #
-    def every_bad_request_page(&block)
+    def every_bad_request_page
       every_page do |page|
-        block.call(page) if (block && page.bad_request?)
+        yield page if (block_given? && page.bad_request?)
       end
     end
 
@@ -159,9 +159,9 @@ module Spidr
     # @yieldparam [Page] page
     #   A visited page.
     #
-    def every_unauthorized_page(&block)
+    def every_unauthorized_page
       every_page do |page|
-        block.call(page) if (block && page.unauthorized?)
+        yield page if (block_given? && page.unauthorized?)
       end
     end
 
@@ -174,9 +174,9 @@ module Spidr
     # @yieldparam [Page] page
     #   A visited page.
     #
-    def every_forbidden_page(&block)
+    def every_forbidden_page
       every_page do |page|
-        block.call(page) if (block && page.forbidden?)
+        yield page if (block_given? && page.forbidden?)
       end
     end
 
@@ -189,9 +189,9 @@ module Spidr
     # @yieldparam [Page] page
     #   A visited page.
     #
-    def every_missing_page(&block)
+    def every_missing_page
       every_page do |page|
-        block.call(page) if (block && page.missing?)
+        yield page if (block_given? && page.missing?)
       end
     end
 
@@ -205,9 +205,9 @@ module Spidr
     # @yieldparam [Page] page
     #   A visited page.
     #
-    def every_internal_server_error_page(&block)
+    def every_internal_server_error_page
       every_page do |page|
-        block.call(page) if (block && page.had_internal_server_error?)
+        yield page if (block_given? && page.had_internal_server_error?)
       end
     end
 
@@ -220,9 +220,9 @@ module Spidr
     # @yieldparam [Page] page
     #   A visited page.
     #
-    def every_txt_page(&block)
+    def every_txt_page
       every_page do |page|
-        block.call(page) if (block && page.txt?)
+        yield page if (block_given? && page.txt?)
       end
     end
 
@@ -235,9 +235,9 @@ module Spidr
     # @yieldparam [Page] page
     #   A visited page.
     #
-    def every_html_page(&block)
+    def every_html_page
       every_page do |page|
-        block.call(page) if (block && page.html?)
+        yield page if (block_given? && page.html?)
       end
     end
 
@@ -250,9 +250,9 @@ module Spidr
     # @yieldparam [Page] page
     #   A visited page.
     #
-    def every_xml_page(&block)
+    def every_xml_page
       every_page do |page|
-        block.call(page) if (block && page.xml?)
+        yield page if (block_given? && page.xml?)
       end
     end
 
@@ -266,9 +266,9 @@ module Spidr
     # @yieldparam [Page] page
     #   A visited page.
     #
-    def every_xsl_page(&block)
+    def every_xsl_page
       every_page do |page|
-        block.call(page) if (block && page.xsl?)
+        yield page if (block_given? && page.xsl?)
       end
     end
 
@@ -285,11 +285,11 @@ module Spidr
     # @see http://nokogiri.rubyforge.org/nokogiri/Nokogiri/XML/Document.html
     # @see http://nokogiri.rubyforge.org/nokogiri/Nokogiri/HTML/Document.html
     #
-    def every_doc(&block)
+    def every_doc
       every_page do |page|
-        if block
+        if block_given?
           if (doc = page.doc)
-            block.call(doc)
+            yield doc
           end
         end
       end
@@ -306,11 +306,11 @@ module Spidr
     #
     # @see http://nokogiri.rubyforge.org/nokogiri/Nokogiri/HTML/Document.html
     #
-    def every_html_doc(&block)
+    def every_html_doc
       every_page do |page|
-        if (block && page.html?)
+        if (block_given? && page.html?)
           if (doc = page.doc)
-            block.call(doc)
+            yield doc
           end
         end
       end
@@ -327,11 +327,11 @@ module Spidr
     #
     # @see http://nokogiri.rubyforge.org/nokogiri/Nokogiri/XML/Document.html
     #
-    def every_xml_doc(&block)
+    def every_xml_doc
       every_page do |page|
-        if (block && page.xml?)
+        if (block_given? && page.xml?)
           if (doc = page.doc)
-            block.call(doc)
+            yield doc
           end
         end
       end
@@ -349,11 +349,11 @@ module Spidr
     #
     # @see http://nokogiri.rubyforge.org/nokogiri/Nokogiri/XML/Document.html
     #
-    def every_xsl_doc(&block)
+    def every_xsl_doc
       every_page do |page|
-        if (block && page.xsl?)
+        if (block_given? && page.xsl?)
           if (doc = page.doc)
-            block.call(doc)
+            yield doc
           end
         end
       end
@@ -370,11 +370,11 @@ module Spidr
     #
     # @see http://nokogiri.rubyforge.org/nokogiri/Nokogiri/XML/Document.html
     #
-    def every_rss_doc(&block)
+    def every_rss_doc
       every_page do |page|
-        if (block && page.rss?)
+        if (block_given? && page.rss?)
           if (doc = page.doc)
-            block.call(doc)
+            yield doc
           end
         end
       end
@@ -391,11 +391,11 @@ module Spidr
     #
     # @see http://nokogiri.rubyforge.org/nokogiri/Nokogiri/XML/Document.html
     #
-    def every_atom_doc(&block)
+    def every_atom_doc
       every_page do |page|
-        if (block && page.atom?)
+        if (block_given? && page.atom?)
           if (doc = page.doc)
-            block.call(doc)
+            yield doc
           end
         end
       end
@@ -410,9 +410,9 @@ module Spidr
     # @yieldparam [Page] page
     #   A visited page.
     #
-    def every_javascript_page(&block)
+    def every_javascript_page
       every_page do |page|
-        block.call(page) if (block && page.javascript?)
+        yield page if (block_given? && page.javascript?)
       end
     end
 
@@ -425,9 +425,9 @@ module Spidr
     # @yieldparam [Page] page
     #   A visited page.
     #
-    def every_css_page(&block)
+    def every_css_page
       every_page do |page|
-        block.call(page) if (block && page.css?)
+        yield page if (block_given? && page.css?)
       end
     end
 
@@ -440,9 +440,9 @@ module Spidr
     # @yieldparam [Page] feed
     #   A visited page.
     #
-    def every_rss_page(&block)
+    def every_rss_page
       every_page do |page|
-        block.call(page) if (block && page.rss?)
+        yield page if (block_given? && page.rss?)
       end
     end
 
@@ -455,9 +455,9 @@ module Spidr
     # @yieldparam [Page] feed
     #   A visited page.
     #
-    def every_atom_page(&block)
+    def every_atom_page
       every_page do |page|
-        block.call(page) if (block && page.atom?)
+        yield page if (block_given? && page.atom?)
       end
     end
 
@@ -470,9 +470,9 @@ module Spidr
     # @yieldparam [Page] page
     #   A visited page.
     #
-    def every_ms_word_page(&block)
+    def every_ms_word_page
       every_page do |page|
-        block.call(page) if (block && page.ms_word?)
+        yield page if (block_given? && page.ms_word?)
       end
     end
 
@@ -485,9 +485,9 @@ module Spidr
     # @yieldparam [Page] page
     #   A visited page.
     #
-    def every_pdf_page(&block)
+    def every_pdf_page
       every_page do |page|
-        block.call(page) if (block && page.pdf?)
+        yield page if (block_given? && page.pdf?)
       end
     end
 
@@ -500,9 +500,9 @@ module Spidr
     # @yieldparam [Page] page
     #   A visited page.
     #
-    def every_zip_page(&block)
+    def every_zip_page
       every_page do |page|
-        block.call(page) if (block && page.zip?)
+        yield page if (block_given? && page.zip?)
       end
     end
 

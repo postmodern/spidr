@@ -98,7 +98,7 @@ module Spidr
     # @yieldparam [Agent] agent
     #   The newly created agent.
     #
-    def initialize(options={},&block)
+    def initialize(options={})
       @host_header = options[:host_header]
       @host_headers = {}
 
@@ -121,7 +121,7 @@ module Spidr
 
       super(options)
 
-      block.call(self) if block
+      yield self if block_given?
     end
 
     #
@@ -140,9 +140,9 @@ module Spidr
     # @yieldparam [Agent] agent
     #   The newly created agent.
     #
-    def self.start_at(url,options={},&block)
+    def self.start_at(url,options={})
       self.new(options) do |spider|
-        block.call(spider) if block
+        yield spider if block_given?
 
         spider.start_at(url)
       end
@@ -164,9 +164,9 @@ module Spidr
     # @yieldparam [Agent] agent
     #   The newly created agent.
     #
-    def self.host(name,options={},&block)
+    def self.host(name,options={})
       self.new(options.merge(:host => name)) do |spider|
-        block.call(spider) if block
+        yield spider if block_given?
 
         spider.start_at("http://#{name}/")
       end
@@ -188,11 +188,11 @@ module Spidr
     # @yieldparam [Agent] agent
     #   The newly created agent.
     #
-    def self.site(url,options={},&block)
+    def self.site(url,options={})
       url = URI(url.to_s)
 
       return self.new(options.merge(:host => url.host)) do |spider|
-        block.call(spider) if block
+        yield spider if block_given?
 
         spider.start_at(url)
       end
@@ -494,7 +494,7 @@ module Spidr
     # @return [Page, nil]
     #   The page for the response, or `nil` if the request failed.
     #
-    def get_page(url,&block)
+    def get_page(url)
       url = URI(url.to_s)
 
       prepare_request(url) do |session,path,headers|
@@ -503,7 +503,7 @@ module Spidr
         # save any new cookies
         @cookies.from_page(new_page)
 
-        block.call(new_page) if block
+        yield new_page if block_given?
         return new_page
       end
     end
@@ -529,7 +529,7 @@ module Spidr
     #
     # @since 0.2.2
     #
-    def post_page(url,post_data='',&block)
+    def post_page(url,post_data='')
       url = URI(url.to_s)
 
       prepare_request(url) do |session,path,headers|
@@ -538,7 +538,7 @@ module Spidr
         # save any new cookies
         @cookies.from_page(new_page)
 
-        block.call(new_page) if block
+        yield new_page if block_given?
         return new_page
       end
     end
@@ -560,7 +560,7 @@ module Spidr
     #   The page that was visited. If `nil` is returned, either the request
     #   for the page failed, or the page was skipped.
     #
-    def visit_page(url,&block)
+    def visit_page(url)
       url = URI(url.to_s) unless url.kind_of?(URI)
 
       get_page(url) do |page|
@@ -569,7 +569,7 @@ module Spidr
         begin
           @every_page_blocks.each { |page_block| page_block.call(page) }
 
-          block.call(page) if block
+          yield page if block_given?
         rescue Actions::Paused => action
           raise(action)
         rescue Actions::SkipPage
@@ -668,7 +668,7 @@ module Spidr
       begin
         sleep(@delay) if @delay > 0
 
-        block.call(@sessions[url],path,headers)
+        yield @sessions[url], path, headers
       rescue SystemCallError,
              Timeout::Error,
              SocketError,
