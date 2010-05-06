@@ -14,9 +14,9 @@ begin
     gem.homepage = 'http://github.com/postmodern/spidr'
     gem.authors = ['Postmodern']
     gem.add_dependency 'nokogiri', '>= 1.3.0'
-    gem.add_development_dependency 'rspec', '>= 1.3.0'
-    gem.add_development_dependency 'yard', '>= 0.5.3'
-    gem.add_development_dependency 'wsoc', '>= 0.1.1'
+    gem.add_development_dependency 'rspec', '~> 1.3.0'
+    gem.add_development_dependency 'yard', '~> 0.5.3'
+    gem.add_development_dependency 'wsoc', '~> 0.1.1'
     gem.has_rdoc = 'yard'
   end
   Jeweler::GemcutterTasks.new
