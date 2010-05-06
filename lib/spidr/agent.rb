@@ -457,11 +457,11 @@ module Spidr
         link = url.to_s
 
         begin
-          @every_url_blocks.each { |block| block.call(url) }
+          @every_url_blocks.each { |url_block| url_block.call(url) }
 
-          @urls_like_blocks.each do |pattern,blocks|
+          @urls_like_blocks.each do |pattern,url_blocks|
             if ((pattern.kind_of?(Regexp) && link =~ pattern) || pattern == link || pattern == url)
-              blocks.each { |url_block| url_block.call(url) }
+              url_blocks.each { |url_block| url_block.call(url) }
             end
           end
         rescue Actions::Paused => action
@@ -719,7 +719,7 @@ module Spidr
     #
     def failed(url)
       @failures << url
-      @every_failed_url_blocks.each { |block| block.call(url) }
+      @every_failed_url_blocks.each { |fail_block| fail_block.call(url) }
       return true
     end
 
