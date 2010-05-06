@@ -1,3 +1,17 @@
+### 0.2.4 / 2010-05-05
+
+* Added {Spidr::Filters#visit_urls}.
+* Added {Spidr::Filters#visit_urls_like}.
+* Added {Spidr::Filters#ignore_urls}.
+* Added {Spidr::Filters#ignore_urls_like}.
+* Added {Spidr::Page#is_content_type?}.
+* Default {Spidr::Page#body} to an empty String.
+* Default {Spidr::Page#content_type} to an empty String.
+* Default {Spidr::Page#content_types} to an empty Array.
+* Improved reliability of {Spidr::Page#is_redirect?}.
+* Improved content type detection in {Spidr::Page} to handle `Content-Type`
+  headers containing charsets (thanks Josh Lindsey).
+
 ### 0.2.3 / 2010-02-27
 
 * Migrated to Jeweler, for the packaging and releasing RubyGems.
