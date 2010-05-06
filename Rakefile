@@ -13,7 +13,7 @@ begin
     gem.email = 'postmodern.mod3@gmail.com'
     gem.homepage = 'http://github.com/postmodern/spidr'
     gem.authors = ['Postmodern']
-    gem.add_dependency 'nokogiri', '>= 1.2.0'
+    gem.add_dependency 'nokogiri', '>= 1.3.0'
     gem.add_development_dependency 'rspec', '>= 1.3.0'
     gem.add_development_dependency 'yard', '>= 0.5.3'
     gem.add_development_dependency 'wsoc', '>= 0.1.1'
