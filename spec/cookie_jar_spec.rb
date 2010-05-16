@@ -101,8 +101,11 @@ describe CookieJar do
     it "should encode multiple cookie params" do
       @cookie_jar['zerosum.org'] = {'admin' => 'ofcourseiam'}
       @cookie_jar['zerosum.org'] = {'other' => '1'}
+      cookie = @cookie_jar.for_host('zerosum.org')
 
-      @cookie_jar.for_host('zerosum.org').should == 'admin=ofcourseiam; other=1'
+      cookie.should include('admin=ofcourseiam')
+      cookie.should include('; ')
+      cookie.should include('other=1')
     end
   end
 end
