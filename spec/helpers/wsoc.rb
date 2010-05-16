@@ -66,7 +66,7 @@ module Helpers
     end
 
     def run_course
-      Agent.start_at(COURSE_URL) do |agent|
+      Spidr::Agent.start_at(COURSE_URL) do |agent|
         course_auth_store.each do |path,auth|
           agent.authorized.add(
             COURSE_URL.merge(path),
