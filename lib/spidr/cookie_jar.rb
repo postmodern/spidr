@@ -130,6 +130,11 @@ module Spidr
         @dirty.delete(host)
       end
 
+      hdomain = host.split('.')
+      if hdomain.length > 2 && (parent_cookies = for_host(hdomain[1..-1].join('.')))
+        @cookies[host] = @cookies[host].nil? ? parent_cookies : "#{parent_cookies}; #{@cookies[host]}"
+      end
+
       return @cookies[host]
     end
 

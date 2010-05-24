@@ -107,5 +107,15 @@ describe CookieJar do
       cookie.should include('; ')
       cookie.should include('other=1')
     end
+
+    it "should include cookies for the parent domain" do
+      @cookie_jar['zerosum.org'] = {'admin' => 'ofcourseiam'}
+      @cookie_jar['sub.zerosum.org'] = {'other' => '1'}
+      cookie = @cookie_jar.for_host('sub.zerosum.org')
+
+      cookie.should include('admin=ofcourseiam')
+      cookie.should include('; ')
+      cookie.should include('other=1')
+    end
   end
 end
