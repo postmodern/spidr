@@ -131,8 +131,19 @@ module Spidr
       end
 
       hdomain = host.split('.')
-      if hdomain.length > 2 && (parent_cookies = for_host(hdomain[1..-1].join('.')))
-        @cookies[host] = @cookies[host].nil? ? parent_cookies : "#{parent_cookies}; #{@cookies[host]}"
+
+      if hdomain.length > 2
+        parent_cookies = for_host(hdomain[1..-1].join('.'))
+
+        unless parent_cookies.empty?
+          @cookies[host] = if @cookies[host].nil?
+                             # inherit the parent cookies
+                             parent_cookies
+                           else
+                             # merge the parent cookies with any host-specific cookies
+                             "#{parent_cookies}; #{@cookies[host]}"
+                           end
+        end
       end
 
       return @cookies[host]
