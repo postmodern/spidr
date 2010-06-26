@@ -135,7 +135,7 @@ module Spidr
       if hdomain.length > 2
         parent_cookies = for_host(hdomain[1..-1].join('.'))
 
-        unless parent_cookies.empty?
+        unless parent_cookies.nil? || parent_cookies.empty?
           @cookies[host] = if @cookies[host].nil?
                              # inherit the parent cookies
                              parent_cookies
