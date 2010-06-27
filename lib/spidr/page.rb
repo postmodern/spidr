@@ -521,8 +521,6 @@ module Spidr
       return url
     end
 
-    protected
-
     #
     # Determines if a page-level "soft" redirect is present. If yes,
     # returns an array of those redirects (usually a single URL).
@@ -557,6 +555,8 @@ module Spidr
     def meta_redirect?
       !meta_redirect.empty?
     end
+
+    protected
 
     #
     # Determines if any of the content-types of the page include a given
