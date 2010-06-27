@@ -533,11 +533,13 @@ module Spidr
       redirects = []
 
       if (html? && doc)
-        search('meta[@http-equiv]').each do |node|
-          if node.attr('http-equiv').match(/refresh/i)
+        search('//meta[@http-equiv and @content]').each do |node|
+          if node.attr('http-equiv') =~ /refresh/i
             content = node.attr('content')
-            redirect = (content || '').scan(/url=(\S+)$/).flatten.first
-            redirects << redirect
+
+            if (redirect = content.match(/url=(\S+)$/))
+              redirects << redirect[1]
+            end
           end
         end
       end
