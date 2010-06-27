@@ -82,7 +82,7 @@ describe Page do
   describe "redirects" do
     before(:all) do
       @page = get_page('http://spidr.rubyforge.org/course/start.html')
-      @page.stub!(:body).and_return("<meta HTTP-EQUIV=\"REFRESH\" content=\"0; url=http://spidr.rubyforge.org/redirected\">")
+      @page.stub!(:body).and_return('<meta HTTP-EQUIV="REFRESH" content="0; url=http://spidr.rubyforge.org/redirected">')
     end
 
     it "should provide access to page-level redirects" do
