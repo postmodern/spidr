@@ -79,6 +79,21 @@ describe Page do
     end
   end
 
+  describe "redirects" do
+    before(:all) do
+      @page = get_page('http://spidr.rubyforge.org/course/start.html')
+      @page.stub!(:body).and_return("<meta HTTP-EQUIV=\"REFRESH\" content=\"0; url=http://spidr.rubyforge.org/redirected\">")
+    end
+
+    it "should provide access to page-level redirects" do
+      @page.redirects_to.should == ['http://spidr.rubyforge.org/redirected']
+    end 
+
+    it "should include meta refresh redirects in the list of links" do
+      @page.links.should include('http://spidr.rubyforge.org/redirected')
+    end
+  end
+
   describe "cookies" do
     before(:all) do
       @page = get_page('http://twitter.com/login')

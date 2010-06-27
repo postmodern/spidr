@@ -62,7 +62,8 @@ module Spidr
 
     #
     # Determines if the response code is `300`, `301`, `302`, `303`
-    # or `307`.
+    # or `307`. Also checks for "soft" redirects added at the page 
+    # level by a meta refresh tag.
     #
     # @return [Boolean]
     #   Specifies whether the response code is a HTTP Redirect code.
@@ -71,6 +72,8 @@ module Spidr
       case code
       when 300..303, 307
         true
+      when 200
+        meta_redirect?
       else
         false
       end
@@ -434,17 +437,7 @@ module Spidr
         urls << url unless (url.nil? || url.empty?)
       }
 
-      if self.is_redirect?
-        location = @headers['location']
-
-        if location.kind_of?(Array)
-          # handle multiple location URLs
-          location.each(&add_url)
-        else
-          # usually the location header contains a single String
-          add_url.call(location)
-        end
-      end
+      self.redirects_to.each(&add_url) if self.is_redirect?
 
       if (html? && doc)
         doc.search('a[@href]').each do |a|
@@ -469,6 +462,27 @@ module Spidr
       end
 
       return urls
+    end
+
+    #
+    # URL(s) that this document redirects to.
+    #
+    # @return [Array<String>]
+    #   The links that this page redirects to (usually found in a
+    #   location header or by way of a page-level meta redirect).
+    #
+    def redirects_to
+      location = @headers['location']
+
+      if location.nil?
+        # check page-level meta redirects if there isn't a location header
+        meta_redirect
+      elsif location.kind_of?(Array)
+        location
+      else
+        # usually the location header contains a single String
+        [location]
+      end
     end
 
     #
@@ -508,6 +522,41 @@ module Spidr
     end
 
     protected
+
+    #
+    # Determines if a page-level "soft" redirect is present. If yes,
+    # returns an array of those redirects (usually a single URL).
+    # Otherwise, returns false.
+    #
+    # @return [Array<String>]
+    #   An array of redirect URLs
+    #
+    def meta_redirect
+      redirects = []
+
+      if (html? && doc)
+        search('meta[@http-equiv]').each do |node|
+          if node.attr('http-equiv').match(/refresh/i)
+            content = node.attr('content')
+            redirect = (content || '').scan(/url=(\S+)$/).flatten.first
+            redirects << redirect
+          end
+        end
+      end
+
+      return redirects.uniq
+    end
+
+    #
+    # Returns a boolean indicating whether or not page-level meta
+    # redirects are present in this page.
+    #
+    # @return [Boolean]
+    #   Specifies whether the page includes page-level redirects.
+    #
+    def meta_redirect?
+      !meta_redirect.empty?
+    end
 
     #
     # Determines if any of the content-types of the page include a given
