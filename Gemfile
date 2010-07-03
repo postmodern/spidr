@@ -21,7 +21,7 @@ group(:doc) do
 end
 
 group(:test) do
-  gem 'wsoc',	'~> 0.1.1'
+  gem 'wsoc',	'~> 0.1.3'
 end
 
 gem 'rspec',	'~> 1.3.0', :group => [:development, :test]
