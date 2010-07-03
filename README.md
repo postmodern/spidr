@@ -20,6 +20,7 @@ and easy to use.
   * frame tags.
   * Cookie protected links.
   * HTTP 300, 301, 302, 303 and 307 Redirects.
+  * Meta-Refresh Redirects.
   * HTTP Basic Auth protected links.
 * Black-list or white-list URLs based upon:
   * URL scheme.
