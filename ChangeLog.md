@@ -1,3 +1,13 @@
+### 0.2.5 / 2010-07-02
+
+* Added {Spidr::Page#meta_redirect}.
+* Added {Spidr::Page#meta_redirect?}.
+* Manage development dependencies with Bundler.
+* Support following "old-school" meta-refresh redirects (thanks zapnap).
+* Allow {Spidr::CookieJar} inherit cookies set by a parent domain.
+* Fixed a constant lookup issue in {Spidr::Agent}.
+* Use `yield` instead of `block.call` when necessary.
+
 ### 0.2.4 / 2010-05-05
 
 * Added {Spidr::Filters#visit_urls}.
