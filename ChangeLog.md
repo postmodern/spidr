@@ -1,3 +1,8 @@
+### 0.2.6 / 2010-07-05
+
+* Fixed a bug in {Spidr::Page#meta_redirect}, by calling
+  `Nokogiri::XML::Element#get_attribute` instead of `attr`.
+
 ### 0.2.5 / 2010-07-02
 
 * Added {Spidr::Page#meta_redirect}.
