@@ -289,10 +289,26 @@ module Spidr
     # @return [String]
     #   The raw Cookie from the response.
     #
+    # @since 0.2.7
+    #
+    def raw_cookie
+      (@response['Set-Cookie'] || '')
+    end
+
+    #
+    # The raw Cookie String sent along with the page.
+    #
+    # @return [String]
+    #   The raw Cookie from the response.
+    #
+    # @deprecated
+    #   Deprecated in 0.2.7. Use {#raw_cookie} instead.
+    #
     # @since 0.2.2
     #
     def cookie
-      (@response['Set-Cookie'] || '')
+      STDERR.puts 'DEPRECATION: Use Spidr::Page#raw_cookie instead'
+      return raw_cookie
     end
 
     #
