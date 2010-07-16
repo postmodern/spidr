@@ -77,6 +77,40 @@ describe CookieJar do
     end
   end
 
+  describe "cookies_for_host" do
+    before(:each) do
+      @cookie_jar = CookieJar.new
+    end
+
+    it "should return an empty Hash for unknown hosts" do
+      @cookie_jar.cookies_for_host('lol.com').should be_empty
+    end
+
+    it "should return an empty Hash for hosts with no cookie params" do
+      @cookie_jar['lol.com'] = {}
+
+      @cookie_jar.cookies_for_host('lol.com').should be_empty
+    end
+
+    it "should return cookie parameters for the host" do
+      @cookie_jar['zerosum.org'] = {'admin' => 'ofcourseiam'}
+      @cookie_jar['zerosum.org'] = {'other' => '1'}
+      cookie = @cookie_jar.cookies_for_host('zerosum.org')
+
+      cookie['admin'].should == 'ofcourseiam'
+      cookie['other'].should == '1'
+    end
+
+    it "should include cookies for the parent domain" do
+      @cookie_jar['zerosum.org'] = {'admin' => 'ofcourseiam'}
+      @cookie_jar['sub.zerosum.org'] = {'other' => '1'}
+      cookie = @cookie_jar.cookies_for_host('sub.zerosum.org')
+
+      cookie['admin'].should == 'ofcourseiam'
+      cookie['other'].should == '1'
+    end
+  end
+
   describe "for_host" do
     before(:each) do
       @cookie_jar = CookieJar.new

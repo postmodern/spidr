@@ -122,7 +122,7 @@ module Spidr
       if @dirty.include?(host)
         values = []
 
-        @params[host].each do |name,value|
+        cookies_for_host(host).each do |name,value|
           values << "#{name}=#{value}"
         end
 
@@ -130,23 +130,31 @@ module Spidr
         @dirty.delete(host)
       end
 
+      return @cookies[host]
+    end
+
+    #
+    # Returns raw cookie value pairs for a given host. Includes cookies set on
+    # parent domain(s).
+    #
+    # @param [String] host
+    #   The name of the host.
+    #
+    # @return [Hash{String => String}]
+    #   Cookie params.
+    #
+    # @since 0.2.7
+    #
+    def cookies_for_host(host)
+      host_cookies = @params[host] || {}
       hdomain = host.split('.')
 
       if hdomain.length > 2
-        parent_cookies = for_host(hdomain[1..-1].join('.'))
-
-        unless (parent_cookies.nil? || parent_cookies.empty?)
-          @cookies[host] = if @cookies[host].nil?
-                             # inherit the parent cookies
-                             parent_cookies
-                           else
-                             # merge the parent cookies with any host-specific cookies
-                             "#{parent_cookies}; #{@cookies[host]}"
-                           end
-        end
+        parent_cookies = cookies_for_host(hdomain[1..-1].join('.'))
+        host_cookies = parent_cookies.merge(host_cookies)
       end
 
-      return @cookies[host]
+      return host_cookies
     end
 
     # 
