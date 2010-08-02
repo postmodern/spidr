@@ -146,12 +146,15 @@ module Spidr
     # @since 0.2.7
     #
     def cookies_for_host(host)
-      host_cookies = @params[host] || {}
+      host_cookies = (@params[host] || {})
       sub_domains = host.split('.')
 
-      if sub_domains.length > 2
-        parent_cookies = cookies_for_host(sub_domains[1..-1].join('.'))
-        host_cookies = parent_cookies.merge(host_cookies)
+      while sub_domains.length > 2
+        sub_domains.shift
+
+        if (parent_cookies = @params[sub_domains.join('.')])
+          host_cookies = parent_cookies.merge(host_cookies)
+        end
       end
 
       return host_cookies
