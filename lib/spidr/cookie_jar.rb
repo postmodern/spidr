@@ -153,7 +153,12 @@ module Spidr
         sub_domains.shift
 
         if (parent_cookies = @params[sub_domains.join('.')])
-          host_cookies = parent_cookies.merge(host_cookies)
+          parent_cookies.each do |name,value|
+            # merge in the parent cookie, if it's not already set
+            unless host_cookies.has_key?(name)
+              host_cookies[name] = value
+            end
+          end
         end
       end
 
