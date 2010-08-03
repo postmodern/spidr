@@ -154,7 +154,8 @@ module Spidr
 
         if (parent_cookies = @params[sub_domains.join('.')])
           parent_cookies.each do |name,value|
-            # merge in the parent cookie, if it's not already set
+            # copy in the parent cookies, only if they haven't been
+            # overridden yet.
             unless host_cookies.has_key?(name)
               host_cookies[name] = value
             end
