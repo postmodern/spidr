@@ -1,3 +1,10 @@
+### 0.2.7 / 2010-08-17
+
+* Added {Spidr::CookieJar#cookies_for_host} (thanks zapnap).
+* Renamed `Spidr::Page#cookie` to {Spidr::Page#raw_cookie}.
+* Rescue `URI::InvalidComponentError` exceptions in
+  {Spidr::Page#to_absolute} (thanks zapnap).
+
 ### 0.2.6 / 2010-07-05
 
 * Fixed a bug in {Spidr::Page#meta_redirect}, by calling
