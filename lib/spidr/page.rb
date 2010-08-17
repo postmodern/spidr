@@ -302,12 +302,15 @@ module Spidr
     #   The raw Cookie from the response.
     #
     # @deprecated
-    #   Deprecated in 0.2.7. Use {#raw_cookie} instead.
+    #   Deprecated in 0.2.7 and will be removed in 0.3.0.
+    #   Use {#raw_cookie} instead.
     #
     # @since 0.2.2
     #
     def cookie
+      STDERR.puts 'DEPRECATION: Spidr::Page#cookie will be removed in 0.3.0'
       STDERR.puts 'DEPRECATION: Use Spidr::Page#raw_cookie instead'
+
       return raw_cookie
     end
 
