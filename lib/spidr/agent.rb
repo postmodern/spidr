@@ -584,7 +584,7 @@ module Spidr
         rescue Actions::Action
         end
 
-        page.urls.each do |next_url|
+        page.each_url do |next_url|
           begin
             @every_link_blocks.each do |link_block|
               link_block.call(page.url,next_url)
