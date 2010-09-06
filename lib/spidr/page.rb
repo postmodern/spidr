@@ -10,6 +10,8 @@ module Spidr
   #
   class Page
 
+    include Enumerable
+
     # Reserved names used within Cookie strings
     RESERVED_COOKIE_NAMES = Set['path', 'expires', 'domain']
 
@@ -59,27 +61,6 @@ module Spidr
     end
 
     alias ok? is_ok?
-
-    #
-    # Determines if the response code is `300`, `301`, `302`, `303`
-    # or `307`. Also checks for "soft" redirects added at the page 
-    # level by a meta refresh tag.
-    #
-    # @return [Boolean]
-    #   Specifies whether the response code is a HTTP Redirect code.
-    #
-    def is_redirect?
-      case code
-      when 300..303, 307
-        true
-      when 200
-        meta_redirect?
-      else
-        false
-      end
-    end
-
-    alias redirect? is_redirect?
 
     #
     # Determines if the response code is `308`.
@@ -443,6 +424,185 @@ module Spidr
     end
 
     #
+    # Enumerates over the meta-redirect links in the page.
+    #
+    # @yield [link]
+    #   If a block is given, it will be passed every meta-redirect link
+    #   from the page.
+    #
+    # @yieldparam [String] link
+    #   A meta-redirect link from the page.
+    #
+    # @return [Enumerator]
+    #   If no block is given, an enumerator object will be returned.
+    #
+    # @since 0.2.8
+    #
+    def each_meta_redirect
+      return enum_for(:each_meta_redirect) unless block_given?
+
+      if (html? && doc)
+        search('//meta[@http-equiv and @content]').each do |node|
+          if node.get_attribute('http-equiv') =~ /refresh/i
+            content = node.get_attribute('content')
+
+            if (redirect = content.match(/url=(\S+)$/))
+              yield redirect[1]
+            end
+          end
+        end
+      end
+    end
+
+    #
+    # Returns a boolean indicating whether or not page-level meta
+    # redirects are present in this page.
+    #
+    # @return [Boolean]
+    #   Specifies whether the page includes page-level redirects.
+    #
+    def meta_redirect?
+      !(each_meta_redirect.first.nil?)
+    end
+
+    #
+    # The meta-redirect links of the page.
+    #
+    # @return [Array<String>]
+    #   All meta-redirect links in the page.
+    #
+    # @since 0.2.8
+    #
+    def meta_redirects
+      each_meta_redirect.to_a
+    end
+
+    #
+    # The meta-redirect links of the page.
+    #
+    # @return [Array<String>]
+    #   All meta-redirect links in the page.
+    #
+    # @deprecated
+    #   Deprecated in 0.2.8 and will be removed in 0.3.0.
+    #   Use {#meta_redirects} instead.
+    #
+    def meta_redirect
+      STDERR.puts 'DEPRECATION: Spidr::Page#meta_redirect will be removed in 0.3.0'
+      STDERR.puts 'DEPRECATION: Use Spidr::Page#meta_redirects instead'
+
+      meta_redirects
+    end
+
+    #
+    # Determines if the response code is `300`, `301`, `302`, `303`
+    # or `307`. Also checks for "soft" redirects added at the page 
+    # level by a meta refresh tag.
+    #
+    # @return [Boolean]
+    #   Specifies whether the response code is a HTTP Redirect code.
+    #
+    def is_redirect?
+      case code
+      when 300..303, 307
+        true
+      when 200
+        meta_redirect?
+      else
+        false
+      end
+    end
+
+    alias redirect? is_redirect?
+
+    #
+    # Enumerates over every HTTP or meta-redirect link in the page.
+    #
+    # @yield [link]
+    #   The given block will be passed every redirection link from the page.
+    #
+    # @yieldparam [String] link
+    #   A HTTP or meta-redirect link from the page.
+    #
+    # @return [Enumerator]
+    #   If no block is given, an enumerator object will be returned.
+    #
+    # @since 0.2.8
+    #
+    def each_redirect(&block)
+      return enum_for(:each_redirect) unless block
+
+      location = @headers['location']
+
+      if location.nil?
+        # check page-level meta redirects if there isn't a location header
+        each_meta_redirect(&block)
+      elsif location.kind_of?(Array)
+        location.each(&block)
+      else
+        # usually the location header contains a single String
+        block.call(location)
+      end
+    end
+
+    #
+    # URLs that this document redirects to.
+    #
+    # @return [Array<String>]
+    #   The links that this page redirects to (usually found in a
+    #   location header or by way of a page-level meta redirect).
+    #
+    def redirects_to
+      each_redirect.to_a
+    end
+
+    #
+    # Enumerates over every link in the page.
+    #
+    # @yield [link]
+    #   The given block will be passed every non-empty link in the page.
+    #
+    # @yieldparam [String] link
+    #   A link in the page.
+    #
+    # @return [Enumerator]
+    #   If no block is given, an enumerator object will be returned.
+    #
+    # @since 0.2.8
+    #
+    def each_link
+      return enum_for(:each_link) unless block_given?
+
+      filter = lambda { |url|
+        yield url unless (url.nil? || url.empty?)
+      }
+
+      each_redirect(&filter) if is_redirect?
+
+      if (html? && doc)
+        doc.search('a[@href]').each do |a|
+          filter.call(a.get_attribute('href'))
+        end
+
+        doc.search('frame[@src]').each do |iframe|
+          filter.call(iframe.get_attribute('src'))
+        end
+
+        doc.search('iframe[@src]').each do |iframe|
+          filter.call(iframe.get_attribute('src'))
+        end
+
+        doc.search('link[@href]').each do |link|
+          filter.call(link.get_attribute('href'))
+        end
+
+        doc.search('script[@src]').each do |script|
+          filter.call(script.get_attribute('src'))
+        end
+      end
+    end
+
+    #
     # The links from within the page.
     #
     # @return [Array<String>]
@@ -450,59 +610,34 @@ module Spidr
     #   links in the `Location` header.
     #
     def links
-      urls = []
-
-      add_url = lambda { |url|
-        urls << url unless (url.nil? || url.empty?)
-      }
-
-      self.redirects_to.each(&add_url) if self.is_redirect?
-
-      if (html? && doc)
-        doc.search('a[@href]').each do |a|
-          add_url.call(a.get_attribute('href'))
-        end
-
-        doc.search('frame[@src]').each do |iframe|
-          add_url.call(iframe.get_attribute('src'))
-        end
-
-        doc.search('iframe[@src]').each do |iframe|
-          add_url.call(iframe.get_attribute('src'))
-        end
-
-        doc.search('link[@href]').each do |link|
-          add_url.call(link.get_attribute('href'))
-        end
-
-        doc.search('script[@src]').each do |script|
-          add_url.call(script.get_attribute('src'))
-        end
-      end
-
-      return urls
+      each_link.to_a
     end
 
     #
-    # URL(s) that this document redirects to.
+    # Enumerates over every absolute URL in the page.
     #
-    # @return [Array<String>]
-    #   The links that this page redirects to (usually found in a
-    #   location header or by way of a page-level meta redirect).
+    # @yield [url]
+    #   The given block will be passed every URL in the page.
     #
-    def redirects_to
-      location = @headers['location']
+    # @yieldparam [URI::HTTP] url
+    #   An absolute URL in the page.
+    #
+    # @return [Enumerator]
+    #   If no block is given, an enumerator object will be returned.
+    #
+    # @since 0.2.8
+    #
+    def each_url
+      return enum_for(:each_url) unless block_given?
 
-      if location.nil?
-        # check page-level meta redirects if there isn't a location header
-        meta_redirect
-      elsif location.kind_of?(Array)
-        location
-      else
-        # usually the location header contains a single String
-        [location]
+      each_link do |link|
+        if (url = to_absolute(link))
+          yield url
+        end
       end
     end
+
+    alias each each_url
 
     #
     # Absolute URIs from within the page.
@@ -511,7 +646,7 @@ module Spidr
     #   The links from within the page, converted to absolute URIs.
     #
     def urls
-      links.map { |link| to_absolute(link) }.compact
+      each_url.to_a
     end
 
     #
@@ -538,43 +673,6 @@ module Spidr
       end
 
       return url
-    end
-
-    #
-    # Determines if a page-level "soft" redirect is present. If yes,
-    # returns an array of those redirects (usually a single URL).
-    # Otherwise, returns false.
-    #
-    # @return [Array<String>]
-    #   An array of redirect URLs
-    #
-    def meta_redirect
-      redirects = []
-
-      if (html? && doc)
-        search('//meta[@http-equiv and @content]').each do |node|
-          if node.get_attribute('http-equiv') =~ /refresh/i
-            content = node.get_attribute('content')
-
-            if (redirect = content.match(/url=(\S+)$/))
-              redirects << redirect[1]
-            end
-          end
-        end
-      end
-
-      return redirects.uniq
-    end
-
-    #
-    # Returns a boolean indicating whether or not page-level meta
-    # redirects are present in this page.
-    #
-    # @return [Boolean]
-    #   Specifies whether the page includes page-level redirects.
-    #
-    def meta_redirect?
-      !meta_redirect.empty?
     end
 
     protected
