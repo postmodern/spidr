@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Postmodern"]
-  s.date = %q{2010-08-17}
+  s.date = %q{2010-09-20}
   s.description = %q{Spidr is a versatile Ruby web spidering library that can spider a site, multiple domains, certain links or infinitely. Spidr is designed to be fast and easy to use.}
   s.email = %q{postmodern.mod3@gmail.com}
   s.extra_rdoc_files = [
@@ -38,11 +38,14 @@ Gem::Specification.new do |s|
     "lib/spidr/agent.rb",
     "lib/spidr/auth_credential.rb",
     "lib/spidr/auth_store.rb",
+    "lib/spidr/body.rb",
     "lib/spidr/cookie_jar.rb",
     "lib/spidr/events.rb",
     "lib/spidr/extensions.rb",
     "lib/spidr/extensions/uri.rb",
     "lib/spidr/filters.rb",
+    "lib/spidr/headers.rb",
+    "lib/spidr/links.rb",
     "lib/spidr/page.rb",
     "lib/spidr/rules.rb",
     "lib/spidr/sanitizers.rb",
@@ -97,17 +100,20 @@ Gem::Specification.new do |s|
     s.specification_version = 3
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
+      s.add_runtime_dependency(%q<nokogiri>, [">= 1.3.0"])
       s.add_development_dependency(%q<rake>, ["~> 0.8.7"])
-      s.add_development_dependency(%q<jeweler>, ["~> 1.4.0"])
+      s.add_development_dependency(%q<jeweler>, ["~> 1.5.0.pre"])
       s.add_development_dependency(%q<rspec>, ["~> 1.3.0"])
     else
+      s.add_dependency(%q<nokogiri>, [">= 1.3.0"])
       s.add_dependency(%q<rake>, ["~> 0.8.7"])
-      s.add_dependency(%q<jeweler>, ["~> 1.4.0"])
+      s.add_dependency(%q<jeweler>, ["~> 1.5.0.pre"])
       s.add_dependency(%q<rspec>, ["~> 1.3.0"])
     end
   else
+    s.add_dependency(%q<nokogiri>, [">= 1.3.0"])
     s.add_dependency(%q<rake>, ["~> 0.8.7"])
-    s.add_dependency(%q<jeweler>, ["~> 1.4.0"])
+    s.add_dependency(%q<jeweler>, ["~> 1.5.0.pre"])
     s.add_dependency(%q<rspec>, ["~> 1.3.0"])
   end
 end
