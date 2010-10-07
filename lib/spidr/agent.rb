@@ -48,6 +48,9 @@ module Spidr
 
     # Cached cookies
     attr_reader :cookies
+    
+    # Maximum depth
+    attr_reader :depth
 
     #
     # Creates a new Agent object.
@@ -118,6 +121,7 @@ module Spidr
       @history = Set[]
       @failures = Set[]
       @queue = []
+      @depth = (options[:depth] || -1)
 
       super(options)
 
@@ -450,7 +454,7 @@ module Spidr
     # @return [Boolean]
     #   Specifies whether the URL was enqueued, or ignored.
     #
-    def enqueue(url)
+    def enqueue(url, level=0)
       url = sanitize_url(url)
 
       if (!(queued?(url)) && visit?(url))
@@ -477,12 +481,18 @@ module Spidr
           return false
         rescue Actions::Action
         end
-
+        
+        levels[url] = level
         @queue << url
         return true
       end
 
       return false
+    end
+    
+    # Keeps information about on which level given link has been found. 
+    def levels
+      @levels ||= {}
     end
 
     #
@@ -568,6 +578,7 @@ module Spidr
     #   for the page failed, or the page was skipped.
     #
     def visit_page(url)
+      orig = sanitize_url(url.to_s)
       url = URI(url.to_s) unless url.kind_of?(URI)
 
       get_page(url) do |page|
@@ -596,7 +607,7 @@ module Spidr
           rescue Actions::Action
           end
 
-          enqueue(next_url)
+          enqueue(next_url, levels[orig]+1) if depth < 0 || depth > levels[orig]
         end
       end
     end
