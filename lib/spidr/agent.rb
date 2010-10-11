@@ -50,7 +50,10 @@ module Spidr
     attr_reader :cookies
     
     # Maximum depth
-    attr_reader :depth
+    attr_reader :max_depth
+
+    # The visited URLs and their depth within a site
+    attr_reader :levels
 
     #
     # Creates a new Agent object.
@@ -94,6 +97,9 @@ module Spidr
     # @option options [Set, Array] :history
     #   The initial list of visited URLs.
     #
+    # @option options [Integer] :max_depth
+    #   The maximum link depth to follow.
+    #
     # @yield [agent]
     #   If a block is given, it will be passed the newly created agent
     #   for further configuration.
@@ -121,7 +127,9 @@ module Spidr
       @history = Set[]
       @failures = Set[]
       @queue = []
-      @depth = (options[:depth] || -1)
+
+      @levels = Hash.new(0)
+      @max_depth = options[:max_depth]
 
       super(options)
 
@@ -454,7 +462,7 @@ module Spidr
     # @return [Boolean]
     #   Specifies whether the URL was enqueued, or ignored.
     #
-    def enqueue(url, level=0)
+    def enqueue(url,level=0)
       url = sanitize_url(url)
 
       if (!(queued?(url)) && visit?(url))
@@ -482,19 +490,14 @@ module Spidr
         rescue Actions::Action
         end
         
-        levels[url] = level
         @queue << url
+        @levels[url] = level
         return true
       end
 
       return false
     end
     
-    # Keeps information about on which level given link has been found. 
-    def levels
-      @levels ||= {}
-    end
-
     #
     # Requests and creates a new Page object from a given URL.
     #
@@ -578,8 +581,7 @@ module Spidr
     #   for the page failed, or the page was skipped.
     #
     def visit_page(url)
-      orig = sanitize_url(url.to_s)
-      url = URI(url.to_s) unless url.kind_of?(URI)
+      url = sanitize_url(url)
 
       get_page(url) do |page|
         @history << page.url
@@ -607,7 +609,9 @@ module Spidr
           rescue Actions::Action
           end
 
-          enqueue(next_url, levels[orig]+1) if depth < 0 || depth > levels[orig]
+          if (@max_depth.nil? || @max_depth > @levels[url])
+            enqueue(next_url,@levels[url] + 1)
+          end
         end
       end
     end
