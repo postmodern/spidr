@@ -22,4 +22,4 @@ group(:test) do
   gem 'wsoc',	'~> 0.1.3'
 end
 
-gem 'rspec',	'~> 1.3.0', :group => [:development, :test]
+gem 'rspec',	'~> 2.0.0', :group => [:development, :test]
