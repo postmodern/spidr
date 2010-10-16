@@ -93,5 +93,7 @@ module Spidr
         node.inner_text
       end
     end
+
+    alias to_s body
   end
 end
