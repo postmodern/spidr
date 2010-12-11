@@ -18,7 +18,7 @@ module Spidr
     # @return [Enumerator]
     #   If no block is given, an enumerator object will be returned.
     #
-    # @since 0.2.8
+    # @since 0.3.0
     #
     def each_meta_redirect
       return enum_for(:each_meta_redirect) unless block_given?
@@ -53,7 +53,7 @@ module Spidr
     # @return [Array<String>]
     #   All meta-redirect links in the page.
     #
-    # @since 0.2.8
+    # @since 0.3.0
     #
     def meta_redirects
       each_meta_redirect.to_a
@@ -71,7 +71,7 @@ module Spidr
     # @return [Enumerator]
     #   If no block is given, an enumerator object will be returned.
     #
-    # @since 0.2.8
+    # @since 0.3.0
     #
     def each_redirect(&block)
       return enum_for(:each_redirect) unless block
@@ -112,7 +112,7 @@ module Spidr
     # @return [Enumerator]
     #   If no block is given, an enumerator object will be returned.
     #
-    # @since 0.2.8
+    # @since 0.3.0
     #
     def each_link
       return enum_for(:each_link) unless block_given?
@@ -169,7 +169,7 @@ module Spidr
     # @return [Enumerator]
     #   If no block is given, an enumerator object will be returned.
     #
-    # @since 0.2.8
+    # @since 0.3.0
     #
     def each_url
       return enum_for(:each_url) unless block_given?

@@ -63,7 +63,7 @@ module Spidr
     #   All meta-redirect links in the page.
     #
     # @deprecated
-    #   Deprecated in 0.2.8 and will be removed in 0.3.0.
+    #   Deprecated in 0.3.0 and will be removed in 0.4.0.
     #   Use {#meta_redirects} instead.
     #
     def meta_redirect
