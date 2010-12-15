@@ -4,9 +4,7 @@ require 'spidr/agent'
 require 'spec_helper'
 
 describe Actions do
-  before(:all) do
-    @url = URI('http://spidr.rubyforge.org/')
-  end
+  let(:url) { URI('http://spidr.rubyforge.org/') }
 
   it "should be able to pause spidering" do
     count = 0
@@ -28,10 +26,10 @@ describe Actions do
       end
     end
 
-    agent.enqueue(@url)
+    agent.enqueue(url)
     agent.continue!
 
-    agent.visited?(@url).should == true
+    agent.visited?(url).should == true
   end
 
   it "should allow skipping of enqueued links" do
@@ -41,7 +39,7 @@ describe Actions do
       end
     end
 
-    agent.enqueue(@url)
+    agent.enqueue(url)
 
     agent.queue.should be_empty
   end
@@ -53,9 +51,9 @@ describe Actions do
       end
     end
 
-    agent.visit_page(@url)
+    agent.visit_page(url)
 
-    agent.history.should == Set[@url]
+    agent.history.should == Set[url]
     agent.queue.should be_empty
   end
 end
