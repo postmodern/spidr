@@ -35,5 +35,9 @@ describe URI do
     it "should preserve the root path" do
       URI.expand_path('/').should == '/'
     end
+
+    it "should default empty paths to the root path" do
+      URI.expand_path('').should == '/'
+    end
   end
 end

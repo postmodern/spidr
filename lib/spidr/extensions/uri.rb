@@ -40,6 +40,10 @@ module URI
       end
     end
 
-    return new_dirs.join
+    unless new_dirs.empty?
+      new_dirs.join
+    else
+      '/'
+    end
   end
 end
