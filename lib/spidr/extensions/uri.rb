@@ -32,9 +32,7 @@ module URI
 
     dirs.each do |dir|
       if (dir == '..' || dir == '../')
-        unless new_dirs == ['/']
-          new_dirs.pop
-        end
+        new_dirs.pop
       elsif (dir != '.' && dir != './')
         new_dirs.push(dir)
       end
