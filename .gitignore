@@ -2,6 +2,7 @@ pkg
 doc
 web
 tmp
+Gemfile.lock
 .DS_Store
 .bundle
 .yardoc
