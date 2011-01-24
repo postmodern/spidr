@@ -4,7 +4,7 @@ require 'spidr/actions/exceptions/skip_page'
 
 module Spidr
   #
-  # The {Actions} module adds methods to {Agent} for controling the
+  # The {Actions} module adds methods to {Agent} for controlling the
   # spidering of links.
   #
   module Actions

@@ -3,7 +3,7 @@ require 'uri'
 module Spidr
   #
   # The {Sanitizers} module adds methods to {Agent} which control the
-  # sanitization of incoming links.
+  # sanitation of incoming links.
   #
   module Sanitizers
     def self.included(base)
@@ -17,7 +17,7 @@ module Spidr
     end
 
     #
-    # Initializes the sanitization rules.
+    # Initializes the Sanitizer rules.
     #
     # @param [Hash] options
     #   Additional options.

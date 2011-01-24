@@ -24,7 +24,7 @@ module Spidr
     # Given a URL, return the most specific matching auth credential.
     #
     # @param [URI] url
-    #   A fully qualified url includig optional path.
+    #   A fully qualified url including optional path.
     #
     # @return [AuthCredential, nil]
     #   Closest matching {AuthCredential} values for the URL,
