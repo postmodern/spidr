@@ -1,3 +1,5 @@
+require 'ore/specification'
+
 source 'https://rubygems.org'
 
 gemspec
