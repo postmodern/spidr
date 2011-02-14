@@ -14,6 +14,6 @@ group :development do
   end
 
   gem 'ore-tasks',    '~> 0.4'
-  gem 'rspec',        '~> 2.2.0'
+  gem 'rspec',        '~> 2.4'
   gem 'wsoc',         '~> 0.1.3'
 end
