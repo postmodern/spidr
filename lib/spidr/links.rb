@@ -209,6 +209,11 @@ module Spidr
         return nil
       end
 
+      # do not handle FTP
+      if url.scheme == 'ftp'
+        return nil
+      end
+
       if new_url.path
         # make sure the path does not contain any .. or . directories,
         # since URI::Generic#merge cannot normalize paths such as
