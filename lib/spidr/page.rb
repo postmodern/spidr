@@ -99,14 +99,16 @@ module Spidr
     #
     # Provides transparent access to the values in `headers`.
     #
-    def method_missing(sym,*args,&block)
-      if (args.empty? && block.nil?)
-        name = sym.id2name.sub('_','-')
+    def method_missing(name,*arguments,&block)
+      if (arguments.empty? && block.nil?)
+        header_name = name.to_s.sub('_','-')
 
-        return @response[name] if @response.key?(name)
+        if @response.key?(header_name)
+          return @response[header_name]
+        end
       end
 
-      return super(sym,*args,&block)
+      return super(name,*arguments,&block)
     end
   
   end
