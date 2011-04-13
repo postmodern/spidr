@@ -126,6 +126,18 @@ module Spidr
     alias txt? plain_text?
 
     #
+    # Determines if the page is a Directory Listing.
+    #
+    # @return [Boolean]
+    #   Specifies whether the page is a Directory Listing.
+    #
+    # @since 0.3.0
+    #
+    def directory?
+      is_content_type?('text/directory')
+    end
+
+    #
     # Determines if the page is HTML document.
     #
     # @return [Boolean]
