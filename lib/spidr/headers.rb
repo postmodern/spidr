@@ -168,6 +168,18 @@ module Spidr
     end
 
     #
+    # Determines if the page is JSON.
+    #
+    # @return [Boolean]
+    #   Specifies whether the page is JSON.
+    #
+    # @since 0.3.0
+    #
+    def json?
+      is_content_type?('application/json')
+    end
+
+    #
     # Determines if the page is a CSS stylesheet.
     #
     # @return [Boolean]
