@@ -142,7 +142,8 @@ module Spidr
     #   Specifies whether the page is XML document.
     #
     def xml?
-      is_content_type?('text/xml')
+      is_content_type?('text/xml') || \
+        is_content_type?('application/xml')
     end
 
     #
