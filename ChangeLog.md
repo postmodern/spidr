@@ -1,19 +1,19 @@
 ### 0.2.7 / 2010-08-17
 
 * Added {Spidr::CookieJar#cookies_for_host} (thanks zapnap).
-* Renamed `Spidr::Page#cookie` to {Spidr::Page#raw_cookie}.
+* Renamed `Spidr::Page#cookie` to `Spidr::Page#raw_cookie`.
 * Rescue `URI::InvalidComponentError` exceptions in
-  {Spidr::Page#to_absolute} (thanks zapnap).
+  `Spidr::Page#to_absolute` (thanks zapnap).
 
 ### 0.2.6 / 2010-07-05
 
-* Fixed a bug in {Spidr::Page#meta_redirect}, by calling
+* Fixed a bug in `Spidr::Page#meta_redirect`, by calling
   `Nokogiri::XML::Element#get_attribute` instead of `attr`.
 
 ### 0.2.5 / 2010-07-02
 
-* Added {Spidr::Page#meta_redirect}.
-* Added {Spidr::Page#meta_redirect?}.
+* Added `Spidr::Page#meta_redirect`.
+* Added `Spidr::Page#meta_redirect?`.
 * Manage development dependencies with Bundler.
 * Support following "old-school" meta-refresh redirects (thanks zapnap).
 * Allow {Spidr::CookieJar} inherit cookies set by a parent domain.
@@ -26,10 +26,10 @@
 * Added {Spidr::Filters#visit_urls_like}.
 * Added {Spidr::Filters#ignore_urls}.
 * Added {Spidr::Filters#ignore_urls_like}.
-* Added {Spidr::Page#is_content_type?}.
-* Default {Spidr::Page#body} to an empty String.
-* Default {Spidr::Page#content_type} to an empty String.
-* Default {Spidr::Page#content_types} to an empty Array.
+* Added `Spidr::Page#is_content_type?`.
+* Default `Spidr::Page#body` to an empty String.
+* Default `Spidr::Page#content_type` to an empty String.
+* Default `Spidr::Page#content_types` to an empty Array.
 * Improved reliability of {Spidr::Page#is_redirect?}.
 * Improved content type detection in {Spidr::Page} to handle `Content-Type`
   headers containing charsets (thanks Josh Lindsey).
@@ -47,10 +47,10 @@
 * Require Web Spider Obstacle Course (WSOC) >= 0.1.1.
 * Integrated the new WSOC into the specs.
 * Removed the built-in Web Spider Obstacle Course.
-* Added {Spidr::Page#content_types}.
-* Added {Spidr::Page#cookie}.
-* Added {Spidr::Page#cookies}.
-* Added {Spidr::Page#cookie_params}.
+* Added `Spidr::Page#content_types`.
+* Added `Spidr::Page#cookie`.
+* Added `Spidr::Page#cookies`.
+* Added `Spidr::Page#cookie_params`.
 * Added {Spidr::Sanitizers}.
 * Added {Spidr::SessionCache}.
 * Added {Spidr::CookieJar} (thanks Nick Plante).
@@ -93,33 +93,33 @@
 ### 0.2.0 / 2009-10-10
 
 * Added {URI.expand_path}.
-* Added {Spidr::Page#search}.
-* Added {Spidr::Page#at}.
-* Added {Spidr::Page#title}.
+* Added `Spidr::Page#search`.
+* Added `Spidr::Page#at`.
+* Added `Spidr::Page#title`.
 * Added {Spidr::Agent#failures=}.
 * Added a HTTP session cache to {Spidr::Agent}, per suggestion of falter.
   * Added `Spidr::Agent#get_session`.
   * Added `Spidr::Agent#kill_session`.
 * Added {Spidr.proxy=}.
 * Added {Spidr.disable_proxy!}.
-* Aliased `Spidr::Page#txt?` to {Spidr::Page#plain_text?}.
-* Aliased `Spidr::Page#ok?` to {Spidr::Page#is_ok?}.
-* Aliased `Spidr::Page#redirect?` to {Spidr::Page#is_redirect?}.
-* Aliased `Spidr::Page#unauthorized?` to {Spidr::Page#is_unauthorized?}.
-* Aliased `Spidr::Page#forbidden?` to {Spidr::Page#is_forbidden?}.
-* Aliased `Spidr::Page#missing?` to {Spidr::Page#is_missing?}.
+* Aliased `Spidr::Page#txt?` to `Spidr::Page#plain_text?`.
+* Aliased `Spidr::Page#ok?` to `Spidr::Page#is_ok?`.
+* Aliased `Spidr::Page#redirect?` to `Spidr::Page#is_redirect?`.
+* Aliased `Spidr::Page#unauthorized?` to `Spidr::Page#is_unauthorized?`.
+* Aliased `Spidr::Page#forbidden?` to `Spidr::Page#is_forbidden?`.
+* Aliased `Spidr::Page#missing?` to `Spidr::Page#is_missing?`.
 * Split URL filtering code out of {Spidr::Agent} and into
   {Spidr::Filters}.
 * Split URL / Page event code out of {Spidr::Agent} and into
   {Spidr::Events}.
 * Split pause! / continue! / skip_link! / skip_page! methods out of
   {Spidr::Agent} and into {Spidr::Actions}.
-* Fixed a bug in {Spidr::Page#code}, where it was not returning an Integer.
-* Make sure {Spidr::Page#doc} returns `Nokogiri::XML::Document` objects for
+* Fixed a bug in `Spidr::Page#code`, where it was not returning an Integer.
+* Make sure `Spidr::Page#doc` returns `Nokogiri::XML::Document` objects for
   RSS/RDF/Atom pages as well.
-* Fixed the handling of the Location header in {Spidr::Page#links}
+* Fixed the handling of the Location header in `Spidr::Page#links`
   (thanks falter).
-* Fixed a bug in {Spidr::Page#to_absolute} where trailing `/` characters on
+* Fixed a bug in `Spidr::Page#to_absolute` where trailing `/` characters on
   URI paths were not being preserved (thanks falter).
 * Fixed a bug where the URI query was not being sent with the request
   in {Spidr::Agent#get_page} (thanks Damian Steer).
@@ -169,7 +169,7 @@
 
 * Added `Spidr::Agent#all_headers`.
 * Fixed a bug where {Spidr::Page#headers} was always `nil`.
-* {Spidr::Spidr::Agent} will now follow the Location header in HTTP 300,
+* {Spidr::Agent} will now follow the Location header in HTTP 300,
   301, 302, 303 and 307 Redirects.
 * {Spidr::Agent} will now follow iframe and frame tags.
 
@@ -189,7 +189,7 @@
 
 ### 0.1.5 / 2009-03-22
 
-* Catch malformed URIs in {Spidr::Page#to_absolute} and return `nil`.
+* Catch malformed URIs in `Spidr::Page#to_absolute` and return `nil`.
 * Filter out `nil` URIs in {Spidr::Page#urls}.
 
 ### 0.1.4 / 2009-01-15
@@ -204,9 +204,9 @@
 
 ### 0.1.2 / 2008-11-06
 
-* Fixed a bug in {Spidr::Page#to_absolute} where URLs with no path were not
+* Fixed a bug in `Spidr::Page#to_absolute` where URLs with no path were not
   receiving a default path of `/`.
-* Fixed a bug in {Spidr::Page#to_absolute} where URL paths were not being
+* Fixed a bug in `Spidr::Page#to_absolute` where URL paths were not being
   expanded, in order to remove `..` and `.` directories.
 * Fixed a bug where absolute URLs could have a blank path, thus causing
   {Spidr::Agent#get_page} to crash when it performed the HTTP request.
