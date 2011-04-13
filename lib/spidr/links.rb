@@ -205,7 +205,7 @@ module Spidr
     def to_absolute(link)
       begin
         new_url = url.merge(link.to_s)
-      rescue URI::InvalidURIError, URI::InvalidComponentError
+      rescue Exception
         return nil
       end
 
