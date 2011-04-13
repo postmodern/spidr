@@ -97,7 +97,19 @@ module Spidr
     protected
 
     #
-    # Provides transparent access to the values in `headers`.
+    # Provides transparent access to the values in {#headers}.
+    #
+    # @param [Symbol] name
+    #   The name of the missing method.
+    #
+    # @param [Array] arguments
+    #   Additional arguments for the missing method.
+    #
+    # @return [String]
+    #   The missing method mapped to a header in {#headers}.
+    #
+    # @raise [NoMethodError]
+    #   The missing method did not map to a header in {#headers}.
     #
     def method_missing(name,*arguments,&block)
       if (arguments.empty? && block.nil?)
