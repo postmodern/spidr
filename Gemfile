@@ -9,5 +9,5 @@ group :development do
   gem 'rspec',        '~> 2.4'
   gem 'wsoc',         '~> 0.1.3'
 
-  gem 'kramdown',     '~> 0.12.0'
+  gem 'kramdown',     '~> 0.12'
 end
