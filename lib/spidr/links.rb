@@ -210,10 +210,17 @@ module Spidr
       end
 
       if new_url.path
+        path = new_url.path
+
+        # ensure that paths begin with a leading '/' for URI::FTP
+        if (new_url.scheme == 'ftp' && path[0,1] != '/')
+          path.insert(0,'/')
+        end
+
         # make sure the path does not contain any .. or . directories,
         # since URI::Generic#merge cannot normalize paths such as
         # "/stuff/../"
-        new_url.path = URI.expand_path(new_url.path)
+        new_url.path = URI.expand_path(path)
       end
 
       return new_url
