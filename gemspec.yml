@@ -4,6 +4,7 @@ description:
   Spidr is a versatile Ruby web spidering library that can spider a site,
   multiple domains, certain links or infinitely. Spidr is designed to be
   fast and easy to use.
+
 license: MIT
 authors: Postmodern
 email: postmodern.mod3@gmail.com
