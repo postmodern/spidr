@@ -190,7 +190,7 @@
 ### 0.1.5 / 2009-03-22
 
 * Catch malformed URIs in `Spidr::Page#to_absolute` and return `nil`.
-* Filter out `nil` URIs in {Spidr::Page#urls}.
+* Filter out `nil` URIs in `Spidr::Page#urls`.
 
 ### 0.1.4 / 2009-01-15
 
