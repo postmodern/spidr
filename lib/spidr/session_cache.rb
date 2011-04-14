@@ -84,6 +84,7 @@ module Spidr
         if url.scheme == 'https'
           session.use_ssl = true
           session.verify_mode = OpenSSL::SSL::VERIFY_NONE
+          session.start
         end
 
         @sessions[key] = session
