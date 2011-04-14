@@ -1,7 +1,7 @@
 ### 0.3.0 / 2011-04-13
 
 * Switched from Jeweler to [Ore](http://github.com/ruby-ore/ore).
-* Split all header related methods out of {Spider::Page} and into
+* Split all header related methods out of {Spidr::Page} and into
   {Spidr::Headers}.
 * Split all body related methods out of {Spidr::Page} and into
   {Spidr::Body}.
@@ -14,7 +14,7 @@
 * Added {Spidr::Links#each_redirect}.
 * Added {Spidr::Links#each_meta_redirect}.
 * Aliased {Spidr::Headers#raw_cookie} to {Spidr::Headers#cookie}.
-* Aliased {Spidr::Page#to_s} to {Spidr::Page#body}.
+* Aliased {Spidr::Body#to_s} to {Spidr::Body#body}.
 * Also check for `application/xml` in {Spidr::Headers#xml?}.
 * Catch all exceptions when merging URIs in {Spidr::Links#to_absolute}.
 * Always prepend a `/` to all FTP URI paths. Fixes a Ruby 1.8 specific
