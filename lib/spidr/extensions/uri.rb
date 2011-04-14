@@ -27,21 +27,26 @@ module URI
   #   # => "/path"
   #
   def URI.expand_path(path)
-    dirs = path.gsub(/[\/]{2,}/,'/').scan(/[^\/]*\/|[^\/]+$/)
+    dirs = path.split(/\/+/)
+
+    # append any tailing '/' chars, lost due to String#split
+    dirs << '' if path[-1,1] == '/'
+
     new_dirs = []
 
     dirs.each do |dir|
-      if (dir == '..' || dir == '../')
+      if dir == '..'
         new_dirs.pop
-      elsif (dir != '.' && dir != './')
+      elsif dir != '.'
         new_dirs.push(dir)
       end
     end
 
-    unless new_dirs.empty?
-      new_dirs.join
-    else
-      '/'
-    end
+    full_path = new_dirs.join('/')
+
+    # default empty paths to '/'
+    full_path = '/' if full_path.empty?
+
+    return full_path
   end
 end
