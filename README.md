@@ -177,7 +177,7 @@ Skip the processing of links:
 
 ## Requirements
 
-* [nokogiri](http://nokogiri.rubyforge.org/) >= 1.3.0
+* [nokogiri](http://nokogiri.rubyforge.org/) ~> 1.3
 
 ## Install
 
