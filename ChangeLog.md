@@ -1,4 +1,4 @@
-### 0.3.0 / 2011-04-13
+### 0.3.0 / 2011-04-14
 
 * Switched from Jeweler to [Ore](http://github.com/ruby-ore/ore).
 * Split all header related methods out of {Spidr::Page} and into
