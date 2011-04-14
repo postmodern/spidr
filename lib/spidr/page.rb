@@ -38,25 +38,6 @@ module Spidr
     end
 
     #
-    # The raw Cookie String sent along with the page.
-    #
-    # @return [String]
-    #   The raw Cookie from the response.
-    #
-    # @deprecated
-    #   Deprecated in 0.2.7 and will be removed in 0.3.0.
-    #   Use {#raw_cookie} instead.
-    #
-    # @since 0.2.2
-    #
-    def cookie
-      STDERR.puts 'DEPRECATION: Spidr::Page#cookie will be removed in 0.3.0'
-      STDERR.puts 'DEPRECATION: Use Spidr::Page#raw_cookie instead'
-
-      return raw_cookie
-    end
-
-    #
     # The meta-redirect links of the page.
     #
     # @return [Array<String>]

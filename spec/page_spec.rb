@@ -100,13 +100,6 @@ describe Page do
     end
 
     it "should provide access to the raw Cookie" do
-      cookie = @page.raw_cookie
-
-      cookie.should_not be_nil
-      cookie.should_not be_empty
-    end
-
-    it "should still support the deprecated #cookie method" do
       cookie = @page.cookie
 
       cookie.should_not be_nil

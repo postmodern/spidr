@@ -260,9 +260,11 @@ module Spidr
     #
     # @since 0.2.7
     #
-    def raw_cookie
+    def cookie
       (response['Set-Cookie'] || '')
     end
+
+    alias raw_cookie cookie
 
     #
     # The Cookie values sent along with the page.
