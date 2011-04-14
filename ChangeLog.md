@@ -1,3 +1,28 @@
+### 0.3.0 / 2011-04-13
+
+* Switched from Jeweler to [Ore](http://github.com/ruby-ore/ore).
+* Split all header related methods out of {Spider::Page} and into
+  {Spidr::Headers}.
+* Split all body related methods out of {Spidr::Page} and into
+  {Spidr::Body}.
+* Split all link related methods out of {Spidr::Page} and into
+  {Spidr::Links}.
+* Added {Spidr::Headers#directory?}.
+* Added {Spidr::Headers#json?}.
+* Added {Spidr::Links#each_url}.
+* Added {Spidr::Links#each_link}.
+* Added {Spidr::Links#each_redirect}.
+* Added {Spidr::Links#each_meta_redirect}.
+* Aliased {Spidr::Headers#raw_cookie} to {Spidr::Headers#cookie}.
+* Aliased {Spidr::Page#to_s} to {Spidr::Page#body}.
+* Also check for `application/xml` in {Spidr::Headers#xml?}.
+* Catch all exceptions when merging URIs in {Spidr::Links#to_absolute}.
+* Always prepend a `/` to all FTP URI paths. Fixes a Ruby 1.8 specific
+  bug, where it expects an absolute path for all FTP URIs.
+* Refactored {URI.expand_path}.
+* Start the session in {Spidr::SessionCache#[]} to prevent multiple
+  `CONNECT` commands being sent to HTTP Proxies (thanks falaise).
+
 ### 0.2.7 / 2010-08-17
 
 * Added {Spidr::CookieJar#cookies_for_host} (thanks zapnap).
