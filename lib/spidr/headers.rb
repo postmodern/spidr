@@ -1,3 +1,5 @@
+require 'set'
+
 module Spidr
   module Headers
     # Reserved names used within Cookie strings
