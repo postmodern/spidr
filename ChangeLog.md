@@ -1,3 +1,7 @@
+### 0.3.1 / 2011-04-22
+
+* Require `set` in `spidr/headers.rb`.
+
 ### 0.3.0 / 2011-04-14
 
 * Switched from Jeweler to [Ore](http://github.com/ruby-ore/ore).
