@@ -57,9 +57,16 @@ module Spidr
     # @yieldparam [URI::HTTP] url
     #   A matching URL.
     #
-    def urls_like(pattern,&block)
+    def every_url_like(pattern,&block)
       @urls_like_blocks[pattern] << block
       return self
+    end
+
+    #
+    # @see #every_url_like
+    #
+    def urls_like(pattern,&block)
+      every_url_like(pattern,&block)
     end
 
     #
