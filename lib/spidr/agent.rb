@@ -152,12 +152,9 @@ module Spidr
     # @yieldparam [Agent] agent
     #   The newly created agent.
     #
-    def self.start_at(url,options={})
-      self.new(options) do |spider|
-        yield spider if block_given?
-
-        spider.start_at(url)
-      end
+    def self.start_at(url,options={},&block)
+      agent = new(options,&block)
+      agent.start_at(url)
     end
 
     #
@@ -177,11 +174,8 @@ module Spidr
     #   The newly created agent.
     #
     def self.host(name,options={})
-      self.new(options.merge(:host => name)) do |spider|
-        yield spider if block_given?
-
-        spider.start_at("http://#{name}/")
-      end
+      agent = new(options.merge(:host => name))
+      agent.start_at("http://#{name}/")
     end
 
     #
@@ -203,11 +197,8 @@ module Spidr
     def self.site(url,options={})
       url = URI(url.to_s)
 
-      return self.new(options.merge(:host => url.host)) do |spider|
-        yield spider if block_given?
-
-        spider.start_at(url)
-      end
+      agent = new(options.merge(:host => url.host),&block)
+      agent.start_at(url)
     end
 
     #
