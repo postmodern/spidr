@@ -461,7 +461,7 @@ module Spidr
         begin
           @every_url_blocks.each { |url_block| url_block.call(url) }
 
-          @urls_like_blocks.each do |pattern,url_blocks|
+          @every_url_like_blocks.each do |pattern,url_blocks|
             match = case pattern
                     when Regexp
                       link =~ pattern
