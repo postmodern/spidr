@@ -158,27 +158,6 @@ module Spidr
     end
 
     #
-    # Creates a new agent and spiders the given host.
-    #
-    # @param [String]
-    #   The host-name to spider.
-    #
-    # @param [Hash] options
-    #   Additional options. See {Agent#initialize}.
-    #
-    # @yield [agent]
-    #   If a block is given, it will be passed the newly created agent
-    #   before it begins spidering.
-    #
-    # @yieldparam [Agent] agent
-    #   The newly created agent.
-    #
-    def self.host(name,options={})
-      agent = new(options.merge(:host => name))
-      agent.start_at("http://#{name}/")
-    end
-
-    #
     # Creates a new agent and spiders the web-site located at the given URL.
     #
     # @param [URI::HTTP, String] url
@@ -194,11 +173,31 @@ module Spidr
     # @yieldparam [Agent] agent
     #   The newly created agent.
     #
-    def self.site(url,options={})
-      url = URI(url.to_s)
+    def self.site(url,options={},&block)
+      url = URI(url.to_s) unless url.kind_of?(URI)
 
       agent = new(options.merge(:host => url.host),&block)
       agent.start_at(url)
+    end
+
+    #
+    # Creates a new agent and spiders the given host.
+    #
+    # @param [String]
+    #   The host-name to spider.
+    #
+    # @param [Hash] options
+    #   Additional options. See {Agent#initialize}.
+    #
+    # @yield [agent]
+    #   If a block is given, it will be passed the newly created agent
+    #   before it begins spidering.
+    #
+    # @yieldparam [Agent] agent
+    #   The newly created agent.
+    #
+    def self.host(name,options={},&block)
+      site(URI::HTTP.build(:host => name, :path => '/'),options,&block)
     end
 
     #
