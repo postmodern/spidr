@@ -6,15 +6,11 @@ module Spidr
   # sanitation of incoming links.
   #
   module Sanitizers
-    def self.included(base)
-      base.module_eval do
-        # Specifies whether the Agent will strip URI fragments
-        attr_accessor :strip_fragments
+    # Specifies whether the Agent will strip URI fragments
+    attr_accessor :strip_fragments
 
-        # Specifies whether the Agent will strip URI queries
-        attr_accessor :strip_query
-      end
-    end
+    # Specifies whether the Agent will strip URI queries
+    attr_accessor :strip_query
 
     #
     # Sanitizes a URL based on filtering options.

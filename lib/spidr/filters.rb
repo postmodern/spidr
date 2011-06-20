@@ -6,12 +6,8 @@ module Spidr
   # URLs the agent will visit.
   #
   module Filters
-    def self.included(base)
-      base.module_eval do
-        # List of acceptable URL schemes to follow
-        attr_reader :schemes
-      end
-    end
+    # List of acceptable URL schemes to follow
+    attr_reader :schemes
 
     #
     # Sets the list of acceptable URL schemes to visit.
