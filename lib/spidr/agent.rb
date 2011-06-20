@@ -131,7 +131,10 @@ module Spidr
       @levels = Hash.new(0)
       @max_depth = options[:max_depth]
 
-      super(options)
+      initialize_sanitizers(options)
+      initialize_filters(options)
+      initialize_actions(options)
+      initialize_events(options)
 
       yield self if block_given?
     end

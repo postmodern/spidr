@@ -17,30 +17,6 @@ module Spidr
     end
 
     #
-    # Initializes the Sanitizer rules.
-    #
-    # @param [Hash] options
-    #   Additional options.
-    #
-    # @option options [Boolean] :strip_fragments (true)
-    #   Specifies whether or not to strip the fragment component from URLs.
-    #
-    # @option options [Boolean] :strip_query (false)
-    #   Specifies whether or not to strip the query component from URLs.
-    #
-    # @since 0.2.2
-    #
-    def initialize(options={})
-      @strip_fragments = true
-      
-      if options.has_key?(:strip_fragments)
-        @strip_fragments = options[:strip_fragments]
-      end
-
-      @strip_query = (options[:strip_query] || false)
-    end
-
-    #
     # Sanitizes a URL based on filtering options.
     #
     # @param [URI::HTTP, URI::HTTPS, String] url
@@ -58,6 +34,32 @@ module Spidr
       url.query = nil if @strip_query
 
       return url
+    end
+
+    protected
+
+    #
+    # Initializes the Sanitizer rules.
+    #
+    # @param [Hash] options
+    #   Additional options.
+    #
+    # @option options [Boolean] :strip_fragments (true)
+    #   Specifies whether or not to strip the fragment component from URLs.
+    #
+    # @option options [Boolean] :strip_query (false)
+    #   Specifies whether or not to strip the query component from URLs.
+    #
+    # @since 0.2.2
+    #
+    def initialize_sanitizers(options={})
+      @strip_fragments = true
+      
+      if options.has_key?(:strip_fragments)
+        @strip_fragments = options[:strip_fragments]
+      end
+
+      @strip_query = (options[:strip_query] || false)
     end
   end
 end

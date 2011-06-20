@@ -8,12 +8,6 @@ module Spidr
   # spidering of links.
   #
   module Actions
-    def initialize(options={})
-      @paused = false
-
-      super(options)
-    end
-
     #
     # Continue spidering.
     #
@@ -78,6 +72,12 @@ module Spidr
     #
     def skip_page!
       raise(SkipPage)
+    end
+
+    protected
+
+    def initialize_actions(options={})
+      @paused = false
     end
   end
 end

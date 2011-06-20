@@ -14,104 +14,6 @@ module Spidr
     end
 
     #
-    # Initializes filtering rules.
-    #
-    # @param [Hash] options
-    #   Additional options.
-    #
-    # @option options [Array] :schemes (['http', 'https'])
-    #   The list of acceptable URI schemes to visit.
-    #   The `https` scheme will be ignored if `net/https` cannot be loaded.
-    #
-    # @option options [String] :host
-    #   The host-name to visit.
-    #
-    # @option options [Array<String, Regexp, Proc>] :hosts
-    #   The patterns which match the host-names to visit.
-    #
-    # @option options [Array<String, Regexp, Proc>] :ignore_hosts
-    #   The patterns which match the host-names to not visit.
-    #
-    # @option options [Array<Integer, Regexp, Proc>] :ports
-    #   The patterns which match the ports to visit.
-    #
-    # @option options [Array<Integer, Regexp, Proc>] :ignore_ports
-    #   The patterns which match the ports to not visit.
-    #
-    # @option options [Array<String, Regexp, Proc>] :links
-    #   The patterns which match the links to visit.
-    #
-    # @option options [Array<String, Regexp, Proc>] :ignore_links
-    #   The patterns which match the links to not visit.
-    #
-    # @option options [Array<String, Regexp, Proc>] :urls
-    #   The patterns which match the URLs to visit.
-    #
-    # @option options [Array<String, Regexp, Proc>] :ignore_urls
-    #   The patterns which match the URLs to not visit.
-    #
-    # @option options [Array<String, Regexp, Proc>] :exts
-    #   The patterns which match the URI path extensions to visit.
-    #
-    # @option options [Array<String, Regexp, Proc>] :ignore_exts
-    #   The patterns which match the URI path extensions to not visit.
-    #
-    def initialize(options={})
-      super(options)
-
-      @schemes = []
-
-      if options[:schemes]
-        @schemes += options[:schemes]
-      else
-        @schemes << 'http'
-
-        begin
-          require 'net/https'
-
-          @schemes << 'https'
-        rescue Gem::LoadError => e
-          raise(e)
-        rescue ::LoadError
-          STDERR.puts "Warning: cannot load 'net/https', https support disabled"
-        end
-      end
-
-      @host_rules = Rules.new(
-        :accept => options[:hosts],
-        :reject => options[:ignore_hosts]
-      )
-      @port_rules = Rules.new(
-        :accept => options[:ports],
-        :reject => options[:ignore_ports]
-      )
-      @link_rules = Rules.new(
-        :accept => options[:links],
-        :reject => options[:ignore_links]
-      )
-      @url_rules = Rules.new(
-        :accept => options[:urls],
-        :reject => options[:ignore_urls]
-      )
-      @ext_rules = Rules.new(
-        :accept => options[:exts],
-        :reject => options[:ignore_exts]
-      )
-
-      if options[:host]
-        visit_hosts_like(options[:host])
-      end
-
-      if options[:queue]
-        self.queue = options[:queue]
-      end
-
-      if options[:history]
-        self.history = options[:history]
-      end
-    end
-
-    #
     # Sets the list of acceptable URL schemes to visit.
     #
     # @param [Array] new_schemes
@@ -457,6 +359,102 @@ module Spidr
     end
 
     protected
+
+    #
+    # Initializes filtering rules.
+    #
+    # @param [Hash] options
+    #   Additional options.
+    #
+    # @option options [Array] :schemes (['http', 'https'])
+    #   The list of acceptable URI schemes to visit.
+    #   The `https` scheme will be ignored if `net/https` cannot be loaded.
+    #
+    # @option options [String] :host
+    #   The host-name to visit.
+    #
+    # @option options [Array<String, Regexp, Proc>] :hosts
+    #   The patterns which match the host-names to visit.
+    #
+    # @option options [Array<String, Regexp, Proc>] :ignore_hosts
+    #   The patterns which match the host-names to not visit.
+    #
+    # @option options [Array<Integer, Regexp, Proc>] :ports
+    #   The patterns which match the ports to visit.
+    #
+    # @option options [Array<Integer, Regexp, Proc>] :ignore_ports
+    #   The patterns which match the ports to not visit.
+    #
+    # @option options [Array<String, Regexp, Proc>] :links
+    #   The patterns which match the links to visit.
+    #
+    # @option options [Array<String, Regexp, Proc>] :ignore_links
+    #   The patterns which match the links to not visit.
+    #
+    # @option options [Array<String, Regexp, Proc>] :urls
+    #   The patterns which match the URLs to visit.
+    #
+    # @option options [Array<String, Regexp, Proc>] :ignore_urls
+    #   The patterns which match the URLs to not visit.
+    #
+    # @option options [Array<String, Regexp, Proc>] :exts
+    #   The patterns which match the URI path extensions to visit.
+    #
+    # @option options [Array<String, Regexp, Proc>] :ignore_exts
+    #   The patterns which match the URI path extensions to not visit.
+    #
+    def initialize_filters(options={})
+      @schemes = []
+
+      if options[:schemes]
+        @schemes += options[:schemes]
+      else
+        @schemes << 'http'
+
+        begin
+          require 'net/https'
+
+          @schemes << 'https'
+        rescue Gem::LoadError => e
+          raise(e)
+        rescue ::LoadError
+          STDERR.puts "Warning: cannot load 'net/https', https support disabled"
+        end
+      end
+
+      @host_rules = Rules.new(
+        :accept => options[:hosts],
+        :reject => options[:ignore_hosts]
+      )
+      @port_rules = Rules.new(
+        :accept => options[:ports],
+        :reject => options[:ignore_ports]
+      )
+      @link_rules = Rules.new(
+        :accept => options[:links],
+        :reject => options[:ignore_links]
+      )
+      @url_rules = Rules.new(
+        :accept => options[:urls],
+        :reject => options[:ignore_urls]
+      )
+      @ext_rules = Rules.new(
+        :accept => options[:exts],
+        :reject => options[:ignore_exts]
+      )
+
+      if options[:host]
+        visit_hosts_like(options[:host])
+      end
+
+      if options[:queue]
+        self.queue = options[:queue]
+      end
+
+      if options[:history]
+        self.history = options[:history]
+      end
+    end
 
     #
     # Determines if a given URI scheme should be visited.

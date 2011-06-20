@@ -5,17 +5,6 @@ module Spidr
   # they are visited.
   #
   module Events
-    def initialize(options={})
-      super(options)
-
-      @every_url_blocks = []
-      @every_failed_url_blocks = []
-      @every_url_like_blocks = Hash.new { |hash,key| hash[key] = [] }
-
-      @every_page_blocks = []
-      @every_link_blocks = []
-    end
-
     #
     # Pass each URL from each page visited to the given block.
     #
@@ -530,6 +519,17 @@ module Spidr
     def every_link(&block)
       @every_link_blocks << block
       return self
+    end
+
+    protected
+
+    def initialize_events(options={})
+      @every_url_blocks = []
+      @every_failed_url_blocks = []
+      @every_url_like_blocks = Hash.new { |hash,key| hash[key] = [] }
+
+      @every_page_blocks = []
+      @every_link_blocks = []
     end
   end
 end
