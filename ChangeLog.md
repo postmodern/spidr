@@ -1,3 +1,12 @@
+### 0.3.2 / 2011-06-20
+
+* Added separate intitialize methods for {Spidr::Actions}, {Spidr::Events},
+  {Spidr::Filters} and {Spidr::Sanitizers}.
+* Aliased {Spidr::Events#urls_like} to {Spidr::Events#every_url_like}.
+* Reduce usage of `self.included` and `module_eval`.
+* Reduce usage of nested-blocks.
+* Reduce usage of `return`.
+
 ### 0.3.1 / 2011-04-22
 
 * Require `set` in `spidr/headers.rb`.
