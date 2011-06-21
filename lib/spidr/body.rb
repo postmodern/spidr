@@ -28,7 +28,7 @@ module Spidr
         begin
           if html?
             @doc ||= Nokogiri::HTML(body)
-          elsif (xml? || xsl? || rss? || atom?)
+          elsif (rss? || atom? || xml? || xsl?)
             @doc ||= Nokogiri::XML(body)
           end
         rescue
