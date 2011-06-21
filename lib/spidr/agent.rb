@@ -227,7 +227,6 @@ module Spidr
     #
     def start_at(url,&block)
       enqueue(url)
-
       return run(&block)
     end
 
@@ -254,7 +253,6 @@ module Spidr
       end
 
       @running = false
-
       @sessions.clear
       return self
     end
@@ -380,10 +378,10 @@ module Spidr
 
       new_failures.each do |url|
         @failures << unless url.kind_of?(URI)
-                    URI(url.to_s)
-                  else
-                    url
-                  end
+                       URI(url.to_s)
+                     else
+                       url
+                     end
       end
 
       return @failures
@@ -646,12 +644,11 @@ module Spidr
     def prepare_request(url,&block)
       host = url.host
       port = url.port
-
-      unless url.path.empty?
-        path = url.path
-      else
-        path = '/'
-      end
+      path = unless url.path.empty?
+               url.path
+             else
+               '/'
+             end
 
       # append the URL query to the path
       path += "?#{url.query}" if url.query
@@ -717,7 +714,7 @@ module Spidr
     #   Specifies whether the given URL should be visited.
     #
     def visit?(url)
-      !(visited?(url)) &&
+      !visited?(url) &&
        visit_scheme?(url.scheme) &&
        visit_host?(url.host) &&
        visit_port?(url.port) &&
