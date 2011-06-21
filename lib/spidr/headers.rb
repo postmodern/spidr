@@ -295,9 +295,9 @@ module Spidr
         cookie.split('; ').each do |key_value|
           key, value = key_value.split('=',2)
 
-          next if RESERVED_COOKIE_NAMES.include?(key)
-
-          params[key] = (value || '')
+          unless RESERVED_COOKIE_NAMES.include?(key)
+            params[key] = (value || '')
+          end
         end
       end
 
