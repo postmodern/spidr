@@ -49,13 +49,8 @@ module Spidr
     # @since 0.2.2
     #
     def initialize_sanitizers(options={})
-      @strip_fragments = true
-      
-      if options.has_key?(:strip_fragments)
-        @strip_fragments = options[:strip_fragments]
-      end
-
-      @strip_query = (options[:strip_query] || false)
+      @strip_fragments = options.fetch(:strip_fragments,true)
+      @strip_query = options.fetch(:strip_query,false)
     end
   end
 end
