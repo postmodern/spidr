@@ -40,17 +40,9 @@ module Spidr
     #
     def accept?(data)
       unless @accept.empty?
-        @accept.each do |rule|
-          return true if test_data(data,rule)
-        end
-
-        return false
+        @accept.any? { |rule| test_data(data,rule) }
       else
-        @reject.each do |rule|
-          return false if test_data(data,rule)
-        end
-
-        return true
+        !@reject.any? { |rule| test_data(data,rule) }
       end
     end
 
@@ -62,7 +54,7 @@ module Spidr
     #   rejection patterns.
     #
     def reject?(data)
-      !(accept?(data))
+      !accept?(data)
     end
 
     protected
@@ -75,11 +67,11 @@ module Spidr
     #
     def test_data(data,rule)
       if rule.kind_of?(Proc)
-        return (rule.call(data) == true)
+        rule.call(data) == true
       elsif rule.kind_of?(Regexp)
-        return !((data.to_s =~ rule).nil?)
+        !((data.to_s =~ rule).nil?)
       else
-        return data == rule
+        data == rule
       end
     end
 
