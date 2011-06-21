@@ -115,15 +115,15 @@ module Spidr
         @host_headers.merge!(options[:host_headers])
       end
 
-      @user_agent = (options[:user_agent] || Spidr.user_agent)
+      @user_agent = options.fetch(:user_agent,Spidr.user_agent)
       @referer = options[:referer]
 
-      @sessions = SessionCache.new(options[:proxy] || Spidr.proxy)
+      @sessions = SessionCache.new(options.fetch(:proxy,Spidr.proxy))
       @cookies = CookieJar.new
       @authorized = AuthStore.new
 
       @running = false
-      @delay = (options[:delay] || 0)
+      @delay = options.fetch(:delay,0)
       @history = Set[]
       @failures = Set[]
       @queue = []
