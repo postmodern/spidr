@@ -24,16 +24,15 @@ module Spidr
     # @see http://nokogiri.rubyforge.org/nokogiri/Nokogiri/HTML/Document.html
     #
     def doc
-      return nil if body.empty?
-
-      begin
-        if html?
-          return @doc ||= Nokogiri::HTML(body)
-        elsif (xml? || xsl? || rss? || atom?)
-          return @doc ||= Nokogiri::XML(body)
+      unless body.empty?
+        begin
+          if html?
+            @doc ||= Nokogiri::HTML(body)
+          elsif (xml? || xsl? || rss? || atom?)
+            @doc ||= Nokogiri::XML(body)
+          end
+        rescue
         end
-      rescue
-        return nil
       end
     end
 
