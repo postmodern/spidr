@@ -85,7 +85,7 @@ module Spidr
         location.each(&block)
       else
         # usually the location header contains a single String
-        block.call(location)
+        yield location
       end
     end
 
