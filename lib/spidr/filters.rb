@@ -414,7 +414,7 @@ module Spidr
         rescue Gem::LoadError => e
           raise(e)
         rescue ::LoadError
-          STDERR.puts "Warning: cannot load 'net/https', https support disabled"
+          warn "Warning: cannot load 'net/https', https support disabled"
         end
       end
 
