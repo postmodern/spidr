@@ -3,6 +3,8 @@
 require 'yaml'
 
 Gem::Specification.new do |gemspec|
+  root = File.dirname(__FILE__)
+  lib_dir = File.join(root,'lib')
   files = if File.directory?('.git')
             `git ls-files`.split($/)
           elsif File.directory?('.hg')
@@ -23,12 +25,12 @@ Gem::Specification.new do |gemspec|
   }
 
   version = {
-    :file => 'lib/spidr/version.rb',
+    :file => 'spidr/version',
     :constant => 'Spidr::VERSION'
   }
 
   defaults = {
-    'name' => File.basename(File.dirname(__FILE__)),
+    'name' => File.basename(root),
     'files' => files,
     'executables' => filter_files['bin/*'].map { |path| File.basename(path) },
     'test_files' => filter_files['{test/{**/}*_test.rb,spec/{**/}*_spec.rb}'],
@@ -40,8 +42,10 @@ Gem::Specification.new do |gemspec|
   gemspec.name = metadata.fetch('name',defaults[:name])
   gemspec.version = if metadata['version']
                       metadata['version']
-                    elsif File.file?(version[:file])
-                      require File.join('.',version[:file])
+                    else
+                      $LOAD_PATH << lib_dir unless $LOAD_PATH.include?(lib_dir)
+
+                      require version[:file]
                       eval(version[:constant])
                     end
 
