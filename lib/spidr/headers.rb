@@ -116,6 +116,24 @@ module Spidr
     end
 
     #
+    # The charset included in the Content-Type.
+    #
+    # @return [String, nil]
+    #   The charset of the content.
+    #
+    # @since 0.4.0
+    #
+    def content_charset
+      content_type.split(';').each do |param|
+        if param.start_with?('charset=')
+          return param.split('=',2).last
+        end
+      end
+
+      return nil
+    end
+
+    #
     # Determines if the page is plain-text.
     #
     # @return [Boolean]
