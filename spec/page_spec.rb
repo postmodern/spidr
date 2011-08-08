@@ -17,7 +17,7 @@ describe Page do
     end
 
     it "should have a content-type" do
-      @page.content_type.should =~ /text\/html/
+      @page.content_type.should include('text/html')
     end
 
     it "should be a html page" do
@@ -54,7 +54,7 @@ describe Page do
     end
 
     it "should have a content-type" do
-      @page.content_type.should =~ /text\/plain/
+      @page.content_type.should include('text/plain')
     end
 
     it "should be a txt page" do
