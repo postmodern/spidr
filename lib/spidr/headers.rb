@@ -149,10 +149,31 @@ module Spidr
     # @return [Boolean]
     #   Specifies whether the page includes the given content-type.
     #
-    # @since 0.2.4
+    # @example Match the Content-Type
+    #   page.is_content_type?('application/json')
+    #
+    # @example Match the sub-type of the Content-Type
+    #   page.is_content_type?('json')
+    #
+    # @since 0.4.0
     #
     def is_content_type?(type)
-      content_types.any? { |content| content.include?(type) }
+      if type.include?('/')
+        # otherwise only match the first param
+        content_types.any? do |value|
+          value = value.split(';',2).first
+
+          value == type
+        end
+      else
+        # otherwise only match the sub-type
+        content_types.any? do |value|
+          value = value.split(';',2).first
+          value = value.split('/',2).last
+
+          value == type
+        end
+      end
     end
 
     #
