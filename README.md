@@ -4,7 +4,7 @@
 * [Source](http://github.com/postmodern/spidr)
 * [Issues](http://github.com/postmodern/spidr/issues)
 * [Mailing List](http://groups.google.com/group/spidr)
-* irc.freenode.net #spidr
+* [IRC](http://webchat.freenode.net/?channels=spidr&uio=d4)
 
 ## Description
 
