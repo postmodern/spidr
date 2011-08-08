@@ -124,9 +124,15 @@ module Spidr
     # @since 0.4.0
     #
     def content_charset
-      content_type.split(';').each do |param|
-        if param.start_with?('charset=')
-          return param.split('=',2).last
+      content_types.each do |value|
+        if value.include?(';')
+          value.split(';').each do |param|
+            param.strip!
+
+            if param.start_with?('charset=')
+              return param.split('=',2).last
+            end
+          end
         end
       end
 
@@ -325,12 +331,14 @@ module Spidr
     def cookie_params
       params = {}
 
-      cookies.each do |cookie|
-        cookie.split('; ').each do |key_value|
-          key, value = key_value.split('=',2)
+      cookies.each do |value|
+        value.split(';').each do |param|
+          param.strip!
 
-          unless RESERVED_COOKIE_NAMES.include?(key)
-            params[key] = (value || '')
+          name, value = param.split('=',2)
+
+          unless RESERVED_COOKIE_NAMES.include?(name)
+            params[name] = (value || '')
           end
         end
       end
