@@ -1,3 +1,12 @@
+### 0.4.0 / 2011-08-07
+
+* Added {Spidr::Headers#content_charset}.
+* Pass the Page `url` and `content_charset` to Nokogiri in {Spidr::Body#doc}.
+  This ensures that Nokogiri will preserve the body encoding.
+* Made {Spidr::Headers#is_content_type?} public.
+* Allow {Spidr::Headers#is_content_type?} to match the full Content-Type
+  or the sub-type.
+
 ### 0.3.2 / 2011-06-20
 
 * Added separate intitialize methods for {Spidr::Actions}, {Spidr::Events},
