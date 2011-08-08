@@ -27,9 +27,9 @@ module Spidr
       unless body.empty?
         begin
           if html?
-            @doc ||= Nokogiri::HTML(body)
+            @doc ||= Nokogiri::HTML(body, @url.to_s, content_charset)
           elsif (rss? || atom? || xml? || xsl?)
-            @doc ||= Nokogiri::XML(body)
+            @doc ||= Nokogiri::XML(body, @url.to_s, content_charset)
           end
         rescue
         end
