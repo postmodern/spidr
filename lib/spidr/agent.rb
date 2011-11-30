@@ -685,7 +685,8 @@ module Spidr
              Timeout::Error,
              SocketError,
              Net::HTTPBadResponse,
-             IOError
+             IOError,
+             NoMethodError
 
         @sessions.kill!(url)
 
