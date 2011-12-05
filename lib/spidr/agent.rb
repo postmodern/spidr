@@ -8,6 +8,7 @@ require 'spidr/cookie_jar'
 require 'spidr/auth_store'
 require 'spidr/spidr'
 
+require 'openssl'
 require 'net/http'
 require 'set'
 
@@ -684,8 +685,9 @@ module Spidr
       rescue SystemCallError,
              Timeout::Error,
              SocketError,
-             Net::HTTPBadResponse,
-             IOError
+             IOError,
+             OpenSSL::SSL::SSLError,
+             Net::HTTPBadResponse
 
         @sessions.kill!(url)
 
