@@ -1,5 +1,9 @@
 source 'https://rubygems.org'
 
+platform :jruby do
+  gem 'jruby-openssl'
+end
+
 gemspec
 
 group :development do
