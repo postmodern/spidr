@@ -1,3 +1,7 @@
+### 0.4.1 / 2011-12-08
+
+* Catch `OpenSSL::SSL::SSLError` exceptions when initiated HTTPS Sessions.
+
 ### 0.4.0 / 2011-08-07
 
 * Added {Spidr::Headers#content_charset}.
