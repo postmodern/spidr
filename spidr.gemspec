@@ -99,7 +99,7 @@ Gem::Specification.new do |gemspec|
   end
 
   if gemspec.respond_to?(:required_rubygems_version=)
-    gemspec.required_rubygems_version = metadata['required_ruby_version']
+    gemspec.required_rubygems_version = metadata['required_rubygems_version']
   end
 
   parse_versions = lambda { |versions|
