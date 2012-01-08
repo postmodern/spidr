@@ -108,6 +108,11 @@ module Spidr
     # @yieldparam [Agent] agent
     #   The newly created agent.
     #
+    # @see #initialize_sanitizers
+    # @see #initialize_filters
+    # @see #initialize_actions
+    # @see #initialize_events
+    #
     def initialize(options={})
       @host_header = options[:host_header]
       @host_headers = {}
