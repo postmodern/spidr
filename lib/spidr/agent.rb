@@ -206,7 +206,8 @@ module Spidr
     #   The newly created agent.
     #
     def self.host(name,options={},&block)
-      site(URI::HTTP.build(:host => name, :path => '/'),options,&block)
+      agent = new(options.merge(:host => name),&block)
+      agent.start_at(URI::HTTP.build(:host => name, :path => '/'))
     end
 
     #
