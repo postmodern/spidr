@@ -124,23 +124,23 @@ module Spidr
       each_redirect(&filter) if is_redirect?
 
       if (html? && doc)
-        doc.search('a[@href]').each do |a|
+        doc.search('//a[@href]').each do |a|
           filter.call(a.get_attribute('href'))
         end
 
-        doc.search('frame[@src]').each do |iframe|
+        doc.search('//frame[@src]').each do |iframe|
           filter.call(iframe.get_attribute('src'))
         end
 
-        doc.search('iframe[@src]').each do |iframe|
+        doc.search('//iframe[@src]').each do |iframe|
           filter.call(iframe.get_attribute('src'))
         end
 
-        doc.search('link[@href]').each do |link|
+        doc.search('//link[@href]').each do |link|
           filter.call(link.get_attribute('href'))
         end
 
-        doc.search('script[@src]').each do |script|
+        doc.search('//script[@src]').each do |script|
           filter.call(script.get_attribute('src'))
         end
       end
