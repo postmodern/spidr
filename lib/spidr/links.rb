@@ -209,6 +209,11 @@ module Spidr
         return nil
       end
 
+      # do not handle FTP
+      if url.scheme == 'ftp'
+        return nil
+      end
+
       if new_url.path
         path = new_url.path
 
