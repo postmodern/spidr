@@ -27,7 +27,7 @@ module Spidr
       url = URI(url.to_s) unless url.kind_of?(URI)
 
       url.fragment = nil if @strip_fragments
-      url.query = nil if @strip_query
+      url.query    = nil if @strip_query
 
       return url
     end
@@ -50,7 +50,7 @@ module Spidr
     #
     def initialize_sanitizers(options={})
       @strip_fragments = options.fetch(:strip_fragments,true)
-      @strip_query = options.fetch(:strip_query,false)
+      @strip_query     = options.fetch(:strip_query,false)
     end
   end
 end

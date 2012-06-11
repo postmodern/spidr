@@ -526,9 +526,9 @@ module Spidr
     protected
 
     def initialize_events(options={})
-      @every_url_blocks = []
+      @every_url_blocks        = []
       @every_failed_url_blocks = []
-      @every_url_like_blocks = Hash.new { |hash,key| hash[key] = [] }
+      @every_url_like_blocks   = Hash.new { |hash,key| hash[key] = [] }
 
       @every_page_blocks = []
       @every_link_blocks = []

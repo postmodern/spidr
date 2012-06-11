@@ -114,7 +114,7 @@ module Spidr
     # @see #initialize_events
     #
     def initialize(options={})
-      @host_header = options[:host_header]
+      @host_header  = options[:host_header]
       @host_headers = {}
 
       if options[:host_headers]
@@ -122,19 +122,19 @@ module Spidr
       end
 
       @user_agent = options.fetch(:user_agent,Spidr.user_agent)
-      @referer = options[:referer]
+      @referer    = options[:referer]
 
-      @sessions = SessionCache.new(options.fetch(:proxy,Spidr.proxy))
-      @cookies = CookieJar.new
+      @sessions   = SessionCache.new(options.fetch(:proxy,Spidr.proxy))
+      @cookies    = CookieJar.new
       @authorized = AuthStore.new
 
-      @running = false
-      @delay = options.fetch(:delay,0)
-      @history = Set[]
+      @running  = false
+      @delay    = options.fetch(:delay,0)
+      @history  = Set[]
       @failures = Set[]
-      @queue = []
+      @queue    = []
 
-      @levels = Hash.new(0)
+      @levels    = Hash.new(0)
       @max_depth = options[:max_depth]
 
       initialize_sanitizers(options)
@@ -672,9 +672,9 @@ module Spidr
         end
       end
 
-      headers['Host'] ||= @host_header if @host_header
+      headers['Host']     ||= @host_header if @host_header
       headers['User-Agent'] = @user_agent if @user_agent
-      headers['Referer'] = @referer if @referer
+      headers['Referer']    = @referer if @referer
 
       if (authorization = @authorized.for_url(url))
         headers['Authorization'] = "Basic #{authorization}"

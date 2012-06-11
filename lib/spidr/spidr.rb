@@ -6,9 +6,9 @@ module Spidr
 
   # Default proxy information.
   DEFAULT_PROXY = {
-    :host => nil,
-    :port => COMMON_PROXY_PORT,
-    :user => nil,
+    :host     => nil,
+    :port     => COMMON_PROXY_PORT,
+    :user     => nil,
     :password => nil
   }
 

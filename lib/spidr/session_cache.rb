@@ -32,7 +32,7 @@ module Spidr
     # @since 0.2.2
     #
     def initialize(proxy=Spidr.proxy)
-      @proxy = proxy
+      @proxy    = proxy
       @sessions = {}
     end
 
@@ -82,7 +82,7 @@ module Spidr
         ).new(url.host,url.port)
 
         if url.scheme == 'https'
-          session.use_ssl = true
+          session.use_ssl     = true
           session.verify_mode = OpenSSL::SSL::VERIFY_NONE
           session.start
         end

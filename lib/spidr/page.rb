@@ -31,10 +31,10 @@ module Spidr
     #   The response from the request for the page.
     #
     def initialize(url,response)
-      @url = url
+      @url      = url
       @response = response
-      @headers = response.to_hash
-      @doc = nil
+      @headers  = response.to_hash
+      @doc      = nil
     end
 
     #

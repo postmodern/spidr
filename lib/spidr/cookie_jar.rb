@@ -18,7 +18,7 @@ module Spidr
     def initialize
       @params = {}
 
-      @dirty = Set[]
+      @dirty   = Set[]
       @cookies = {}
     end
 
@@ -147,7 +147,7 @@ module Spidr
     #
     def cookies_for_host(host)
       host_cookies = (@params[host] || {})
-      sub_domains = host.split('.')
+      sub_domains  = host.split('.')
 
       while sub_domains.length > 2
         sub_domains.shift
