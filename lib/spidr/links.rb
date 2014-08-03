@@ -101,6 +101,42 @@ module Spidr
     end
 
     #
+    # Enumerates over every `mailto:` link in the page.
+    #
+    # @yield [link]
+    #   The given block will be passed every `mailto:` link from the page.
+    #
+    # @yieldparam [String] link
+    #   A `mailto:` link from the page.
+    #
+    # @return [Enumerator]
+    #   If no block is given, an enumerator object will be returned.
+    #
+    # @since 0.5.0
+    #
+    def each_mailto
+      return enum_for(:each_mailto) unless block_given?
+
+      if (html? && doc)
+        doc.search('//a[@href:starts-with("mailto:")]').each do |a|
+          yield a
+        end
+      end
+    end
+
+    #
+    # `mailto:` links in the page.
+    #
+    # @return [Array<String>]
+    #   The `mailto:` links found within the page.
+    #
+    # @since 0.5.0
+    #
+    def mailtos
+      each_mailto.to_a
+    end
+
+    #
     # Enumerates over every link in the page.
     #
     # @yield [link]
