@@ -511,7 +511,7 @@ module Spidr
     #
     # Determines if a given URL should be visited.
     #
-    # @param [URI::HTTP, URI::HTTPS] url
+    # @param [URI::HTTP, URI::HTTPS] link
     #   The URL.
     #
     # @return [Boolean]

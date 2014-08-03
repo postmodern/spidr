@@ -57,10 +57,10 @@ module Spidr
     # 
     # Add an auth credential to the store for supplied base URL.
     #
-    # @param [URI] url_base
+    # @param [URI] url
     #   A URL pattern to associate with a set of auth credentials.
     #
-    # @param [AuthCredential]
+    # @param [AuthCredential] auth
     #   The auth credential for this URL pattern.
     #
     # @return [AuthCredential]

@@ -192,7 +192,7 @@ module Spidr
     #
     # Creates a new agent and spiders the given host.
     #
-    # @param [String]
+    # @param [String] name
     #   The host-name to spider.
     #
     # @param [Hash] options
@@ -371,7 +371,7 @@ module Spidr
     #
     # Sets the list of failed URLs.
     #
-    # @param [#each]
+    # @param [#each] new_failures
     #   The new list of failed URLs.
     #
     # @return [Array<URI::HTTP>]
@@ -414,7 +414,7 @@ module Spidr
     #
     # Sets the queue of URLs to visit.
     #
-    # @param [#each]
+    # @param [#each] new_queue
     #   The new list of URLs to visit.
     #
     # @return [Array<URI::HTTP>]
