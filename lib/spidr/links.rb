@@ -119,7 +119,7 @@ module Spidr
 
       if (html? && doc)
         doc.search('//a[starts-with(@href,"mailto:")]').each do |a|
-          yield a.get_attribute('href')
+          yield a.get_attribute('href')[7..-1]
         end
       end
     end
