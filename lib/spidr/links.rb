@@ -118,7 +118,7 @@ module Spidr
       return enum_for(:each_mailto) unless block_given?
 
       if (html? && doc)
-        doc.search('//a[@href:starts-with("mailto:")]').each do |a|
+        doc.search('//a[starts-with(@href,"mailto:")]').each do |a|
           yield a
         end
       end
