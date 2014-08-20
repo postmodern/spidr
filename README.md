@@ -181,7 +181,7 @@ Skip the processing of links:
 
 ## Install
 
-    $ sudo gem install spidr
+    $ gem install spidr
 
 ## License
 
