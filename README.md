@@ -185,6 +185,6 @@ Skip the processing of links:
 
 ## License
 
-Copyright (c) 2008-2011 Hal Brodigan
+Copyright (c) 2008-2014 Hal Brodigan
 
 See {file:LICENSE.txt} for license information.
