@@ -345,11 +345,9 @@ module Spidr
       @history.clear
 
       new_history.each do |url|
-        @history << unless url.kind_of?(URI)
-                      URI(url.to_s)
-                    else
-                      url
-                    end
+        url = URI(url.to_s) unless url.kind_of?(URI)
+
+        @history << url
       end
 
       return @history
@@ -408,11 +406,9 @@ module Spidr
       @failures.clear
 
       new_failures.each do |url|
-        @failures << unless url.kind_of?(URI)
-                       URI(url.to_s)
-                     else
-                       url
-                     end
+        url = URI(url.to_s) unless url.kind_of?(URI)
+
+        @failures << url
       end
 
       return @failures
@@ -451,11 +447,9 @@ module Spidr
       @queue.clear
 
       new_queue.each do |url|
-        @queue << unless url.kind_of?(URI)
-                    URI(url.to_s)
-                  else
-                    url
-                  end
+        url = URI(url.to_s) unless url.kind_of?(URI)
+
+        @queue << url
       end
 
       return @queue
