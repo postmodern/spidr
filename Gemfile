@@ -8,7 +8,7 @@ gemspec
 
 group :development do
   gem 'rake'
-  gem 'rubygems-tasks', '~> 0.1'
+  gem 'rubygems-tasks', '~> 0.2'
 
   gem 'wsoc',     '~> 0.1.3'
   gem 'rspec',    '~> 2.4'
