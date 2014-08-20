@@ -7,7 +7,7 @@ end
 gemspec
 
 group :development do
-  gem 'rake',           '~> 10.0'
+  gem 'rake'
   gem 'rubygems-tasks', '~> 0.1'
   gem 'rspec',          '~> 2.4'
 
