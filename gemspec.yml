@@ -8,7 +8,7 @@ description:
 license: MIT
 authors: Postmodern
 email: postmodern.mod3@gmail.com
-homepage: http://github.com/postmodern/spidr
+homepage: https://github.com/postmodern/spidr#readme
 has_yard: true
 
 dependencies:

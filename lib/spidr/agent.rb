@@ -21,39 +21,63 @@ module Spidr
     include Actions
 
     # HTTP Host Header to use
+    #
+    # @return [String]
     attr_accessor :host_header
 
     # HTTP Host Headers to use for specific hosts
+    #
+    # @return [Hash{String,Regexp => String}]
     attr_reader :host_headers
 
     # User-Agent to use
+    #
+    # @return [String]
     attr_accessor :user_agent
 
     # HTTP Authentication credentials
+    #
+    # @return [AuthStore]
     attr_accessor :authorized
 
     # Referer to use
+    #
+    # @return [String]
     attr_accessor :referer
 
     # Delay in between fetching pages
+    #
+    # @return [Integer]
     attr_accessor :delay
 
     # History containing visited URLs
+    #
+    # @return [Set<URI::HTTP>]
     attr_reader :history
 
     # List of unreachable URLs
+    #
+    # @return [Set<URI::HTTP>]
     attr_reader :failures
 
     # Queue of URLs to visit
+    #
+    # @return [Array<URI::HTTP>]
     attr_reader :queue
 
     # Cached cookies
+    #
+    # @return [CookieJar]
     attr_reader :cookies
     
     # Maximum depth
+    #
+    # @return [Integer]
     attr_reader :max_depth
 
     # The visited URLs and their depth within a site
+    #
+    # @return [Hash{URI::HTTP => Integer}]
     attr_reader :levels
 
     #
