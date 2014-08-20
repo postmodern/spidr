@@ -566,7 +566,7 @@ module Spidr
     # @since 0.2.2
     #
     def post_page(url,post_data='')
-      url = URI(url.to_s)
+      url = URI(url.to_s) unless url.kind_of?(URI)
 
       prepare_request(url) do |session,path,headers|
         new_page = Page.new(url,session.post(path,post_data,headers))
