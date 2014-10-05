@@ -150,6 +150,10 @@ module Spidr
 
       @sessions   = SessionCache.new(options.fetch(:proxy,Spidr.proxy))
       @cookies    = CookieJar.new
+      if options[:host] && options[:cookies]
+        @cookies[URI(options[:host]).host] = options[:cookies]
+      end
+
       @authorized = AuthStore.new
 
       @running  = false
