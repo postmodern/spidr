@@ -27,7 +27,7 @@ module Spidr
     # @param [URI::HTTP] url
     #   The URL of the page.
     #
-    # @param [Net::HTTP::Response] response
+    # @param [Net::HTTPResponse] response
     #   The response from the request for the page.
     #
     def initialize(url,response)
