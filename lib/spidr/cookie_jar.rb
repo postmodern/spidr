@@ -15,11 +15,12 @@ module Spidr
     #
     # @since 0.2.2
     #
-    def initialize
+    def initialize(host = nil, cookie = nil)
       @params = {}
 
       @dirty   = Set[]
       @cookies = {}
+      self[host] = cookie if host && cookie.is_a?(Hash)
     end
 
     #

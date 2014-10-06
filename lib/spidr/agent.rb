@@ -140,6 +140,7 @@ module Spidr
     def initialize(options={})
       @host_header  = options[:host_header]
       @host_headers = {}
+      @host = URI(options[:host]).host if options[:host]
 
       if options[:host_headers]
         @host_headers.merge!(options[:host_headers])
@@ -149,7 +150,8 @@ module Spidr
       @referer    = options[:referer]
 
       @sessions   = SessionCache.new(options.fetch(:proxy,Spidr.proxy))
-      @cookies    = CookieJar.new
+      @cookies    = CookieJar.new(@host, options[:cookies])
+
       @authorized = AuthStore.new
 
       @running  = false

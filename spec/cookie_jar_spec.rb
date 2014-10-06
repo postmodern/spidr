@@ -140,5 +140,12 @@ describe CookieJar do
       cookie.should include('; ')
       cookie.should include('other=1')
     end
+
+    it 'should include cookie on initialize' do
+      subject = Spidr::CookieJar.new('lol.org', {})
+      subject.for_host('lol.org').should be_nil
+      subject = Spidr::CookieJar.new('zerosum.org', {:tz => 'Europe%2FBerlin'})
+      subject.for_host('zerosum.org').should eq('tz=Europe%2FBerlin')
+    end
   end
 end

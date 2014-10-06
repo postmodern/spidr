@@ -57,6 +57,10 @@ Spider a site:
 
     Spidr.site('http://rubyflow.com/')
 
+Spider a site with cookies:
+
+    Spidr.site('http://rubyflow.com/', :cookies => 'tz=Europe%2FBerlin')
+
 Spider multiple hosts:
 
     Spidr.start_at(

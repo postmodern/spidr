@@ -78,4 +78,10 @@ describe Agent do
     hash[:queue].should be_empty
     hash[:history].should_not be_empty
   end
+
+  it 'can pass cookies as options' do
+    agent = Agent.new(:host => 'http://www.example.com',
+                      :cookies => {:tz => 'Europe%2FBerlin'})
+    agent.cookies.for_host('www.example.com').should eq('tz=Europe%2FBerlin')
+  end
 end
