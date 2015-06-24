@@ -185,6 +185,9 @@ module Spidr
     # @yieldparam [Agent] agent
     #   The newly created agent.
     #
+    # @see #initialize
+    # @see #start_at
+    #
     def self.start_at(url,options={},&block)
       agent = new(options,&block)
       agent.start_at(url)
@@ -205,6 +208,8 @@ module Spidr
     #
     # @yieldparam [Agent] agent
     #   The newly created agent.
+    #
+    # @see #initialize
     #
     def self.site(url,options={},&block)
       url = URI(url.to_s) unless url.kind_of?(URI)
@@ -228,6 +233,8 @@ module Spidr
     #
     # @yieldparam [Agent] agent
     #   The newly created agent.
+    #
+    # @see #initialize
     #
     def self.host(name,options={},&block)
       agent = new(options.merge(:host => name),&block)
