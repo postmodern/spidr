@@ -26,7 +26,7 @@ module URI
   #   URI.expand_path('/test/../path')
   #   # => "/path"
   #
-  def URI.expand_path(path)
+  def self.expand_path(path)
     dirs = path.split(/\/+/)
 
     # append any tailing '/' chars, lost due to String#split
