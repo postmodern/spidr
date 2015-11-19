@@ -6,6 +6,7 @@ require 'spidr/page'
 require 'spidr/session_cache'
 require 'spidr/cookie_jar'
 require 'spidr/auth_store'
+require 'spidr/robots'
 require 'spidr/spidr'
 
 require 'openssl'
@@ -160,6 +161,12 @@ module Spidr
 
       @levels    = Hash.new(0)
       @max_depth = options[:max_depth]
+
+      if options[:robots]
+        @robots = Robots.new(Spidr.user_agent)
+      else
+        @robots = NilRobots.new
+      end
 
       initialize_sanitizers(options)
       initialize_filters(options)
@@ -395,6 +402,19 @@ module Spidr
       url = URI(url.to_s) unless url.kind_of?(URI)
 
       return @history.include?(url)
+    end
+
+    #
+    # Determines whether a URL is allowed by the robot policy.
+    #
+    # @param [URI::HTTP, String] url
+    #   The URL to check.
+    #
+    # @return [Boolean]
+    #   Specifies whether a URL is allowed by the robot policy.
+    #
+    def robot_allowed?(url)
+      @robots.allowed?(url.to_s)
     end
 
     #
@@ -753,7 +773,8 @@ module Spidr
        visit_port?(url.port) &&
        visit_link?(url.to_s) &&
        visit_url?(url) &&
-       visit_ext?(url.path)
+       visit_ext?(url.path) &&
+       robot_allowed?(url.to_s)
     end
 
     #
