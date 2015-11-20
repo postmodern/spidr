@@ -164,8 +164,6 @@ module Spidr
 
       if options[:robots]
         @robots = Robots.new(Spidr.user_agent)
-      else
-        @robots = NilRobots.new
       end
 
       initialize_sanitizers(options)
@@ -414,7 +412,7 @@ module Spidr
     #   Specifies whether a URL is allowed by the robot policy.
     #
     def robot_allowed?(url)
-      @robots.allowed?(url.to_s)
+      @robots ? @robots.allowed?(url) : true
     end
 
     #
