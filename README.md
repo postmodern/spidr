@@ -78,6 +78,13 @@ Do not spider links on certain ports:
       :ignore_ports => [8000, 8010, 8080]
     )
 
+Do not spider links blacklisted in robots.txt:
+
+    Spidr.site(
+      'http://matasano.com/',
+      :robots => true
+    )
+
 Print out visited URLs:
 
     Spidr.site('http://rubyinside.org/') do |spider|
