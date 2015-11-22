@@ -76,6 +76,30 @@ module Spidr
   end
 
   #
+  # Specifies whether `robots.txt` should be honored globally.
+  #
+  # @return [Boolean]
+  #
+  # @since 0.5.0
+  #
+  def Spidr.robots?
+    @robots
+  end
+
+  #
+  # Enables or disables `robots.txt` globally.
+  #
+  # @param [Boolean] mode
+  #
+  # @return [Boolean]
+  #
+  # @since 0.5.0
+  #
+  def Spidr.robots=(mode)
+    @robots = mode
+  end
+
+  #
   # @see Agent.start_at
   #
   def Spidr.start_at(url,options={},&block)
@@ -94,5 +118,8 @@ module Spidr
   #
   def Spidr.site(url,options={},&block)
     Agent.site(url,options,&block)
+  end
+
+  def Spidr.robots
   end
 end

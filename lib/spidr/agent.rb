@@ -166,7 +166,7 @@ module Spidr
       @levels    = Hash.new(0)
       @max_depth = options[:max_depth]
 
-      if options[:robots]
+      if options.fetch(:robots,Spidr.robots?)
         unless Object.const_defined?(:Robots)
           raise(ArgumentError,":robots option given but unable to require 'robots' gem")
         end
