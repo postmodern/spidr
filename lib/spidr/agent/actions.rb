@@ -1,11 +1,33 @@
-require 'spidr/actions/exceptions'
-
 module Spidr
-  #
-  # The {Actions} module adds methods to {Agent} for controlling the
-  # spidering of links.
-  #
-  module Actions
+  class Agent
+    module Actions
+      #
+      # The base {Actions} exception class.
+      #
+      class Action < RuntimeError
+      end
+
+      #
+      # An {Actions} exception class used to pause a running {Agent}.
+      #
+      class Paused < Action
+      end
+
+      #
+      # An {Actions} exception class which causes a running {Agent} to
+      # skip a link.
+      #
+      class SkipLink < Action
+      end
+
+      #
+      # An {Actions} exception class which causes a running {Agent} to
+      # skip a {Page}, and all links within that page.
+      #
+      class SkipPage < Action
+      end
+    end
+
     #
     # Continue spidering.
     #
@@ -38,7 +60,7 @@ module Spidr
     #
     def pause!
       @paused = true
-      raise(Paused)
+      raise(Actions::Paused)
     end
 
     #
@@ -59,7 +81,7 @@ module Spidr
     #   and not enqueued or visited.
     #
     def skip_link!
-      raise(SkipLink)
+      raise(Actions::SkipLink)
     end
 
     #
@@ -69,7 +91,7 @@ module Spidr
     #   Indicates to the agent, that the current page should be skipped.
     #
     def skip_page!
-      raise(SkipPage)
+      raise(Actions::SkipPage)
     end
 
     protected

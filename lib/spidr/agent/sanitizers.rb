@@ -1,11 +1,8 @@
 require 'uri'
 
 module Spidr
-  #
-  # The {Sanitizers} module adds methods to {Agent} which control the
-  # sanitation of incoming links.
-  #
-  module Sanitizers
+  class Agent
+
     # Specifies whether the Agent will strip URI fragments
     attr_accessor :strip_fragments
 
@@ -52,5 +49,6 @@ module Spidr
       @strip_fragments = options.fetch(:strip_fragments,true)
       @strip_query     = options.fetch(:strip_query,false)
     end
+
   end
 end

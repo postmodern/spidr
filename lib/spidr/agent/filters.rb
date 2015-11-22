@@ -1,11 +1,8 @@
 require 'spidr/rules'
 
 module Spidr
-  #
-  # The {Filters} module adds methods to {Agent} for controlling which
-  # URLs the agent will visit.
-  #
-  module Filters
+  class Agent
+
     # List of acceptable URL schemes to follow
     attr_reader :schemes
 
@@ -535,5 +532,6 @@ module Spidr
     def visit_ext?(path)
       @ext_rules.accept?(File.extname(path)[1..-1])
     end
+
   end
 end

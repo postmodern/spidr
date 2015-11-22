@@ -1,7 +1,7 @@
 require 'nokogiri'
 
 module Spidr
-  module Body
+  class Page
     #
     # The body of the response.
     #

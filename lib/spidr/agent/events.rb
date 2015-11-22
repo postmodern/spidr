@@ -1,10 +1,5 @@
 module Spidr
-  #
-  # The {Events} module adds methods to {Agent} for registering
-  # callbacks which will receive URLs, links, headers and pages, when
-  # they are visited.
-  #
-  module Events
+  class Agent
     #
     # Pass each URL from each page visited to the given block.
     #
@@ -533,5 +528,6 @@ module Spidr
       @every_page_blocks = []
       @every_link_blocks = []
     end
+
   end
 end

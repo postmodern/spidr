@@ -1,7 +1,7 @@
-require 'spidr/sanitizers'
-require 'spidr/filters'
-require 'spidr/events'
-require 'spidr/actions'
+require 'spidr/agent/sanitizers'
+require 'spidr/agent/filters'
+require 'spidr/agent/events'
+require 'spidr/agent/actions'
 require 'spidr/page'
 require 'spidr/session_cache'
 require 'spidr/cookie_jar'
@@ -19,11 +19,6 @@ end
 
 module Spidr
   class Agent
-
-    include Sanitizers
-    include Filters
-    include Events
-    include Actions
 
     # HTTP Host Header to use
     #

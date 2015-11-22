@@ -1,7 +1,7 @@
 require 'set'
 
 module Spidr
-  module Headers
+  class Page
     # Reserved names used within Cookie strings
     RESERVED_COOKIE_NAMES = Set['path', 'expires', 'domain']
 

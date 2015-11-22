@@ -1,16 +1,12 @@
-require 'spidr/headers'
-require 'spidr/body'
-require 'spidr/links'
+require 'spidr/page/headers'
+require 'spidr/page/body'
+require 'spidr/page/links'
 
 module Spidr
   #
   # Represents a requested page from a website.
   #
   class Page
-
-    include Headers
-    include Body
-    include Links
 
     # URL of the page
     attr_reader :url

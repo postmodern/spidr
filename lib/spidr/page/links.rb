@@ -2,7 +2,7 @@ require 'spidr/extensions/uri'
 require 'uri'
 
 module Spidr
-  module Links
+  class Page
     include Enumerable
 
     #
