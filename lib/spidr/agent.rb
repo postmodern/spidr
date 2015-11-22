@@ -6,12 +6,16 @@ require 'spidr/page'
 require 'spidr/session_cache'
 require 'spidr/cookie_jar'
 require 'spidr/auth_store'
-require 'spidr/robots'
 require 'spidr/spidr'
 
 require 'openssl'
 require 'net/http'
 require 'set'
+
+begin
+  require 'robots'
+rescue LoadError
+end
 
 module Spidr
   class Agent
@@ -163,6 +167,10 @@ module Spidr
       @max_depth = options[:max_depth]
 
       if options[:robots]
+        unless Object.const_defined?(:Robots)
+          raise(ArgumentError,":robots option given but unable to require 'robots' gem")
+        end
+
         @robots = Robots.new(Spidr.user_agent)
       end
 
