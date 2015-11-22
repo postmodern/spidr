@@ -130,6 +130,9 @@ module Spidr
     # @option options [Integer] :max_depth
     #   The maximum link depth to follow.
     #
+    # @option options [Boolean] :robots (Spidr.robots?)
+    #   Specifies whether `robots.txt` should be honored.
+    #
     # @yield [agent]
     #   If a block is given, it will be passed the newly created agent
     #   for further configuration.
