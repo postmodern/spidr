@@ -742,7 +742,8 @@ module Spidr
              SocketError,
              IOError,
              OpenSSL::SSL::SSLError,
-             Net::HTTPBadResponse
+             Net::HTTPBadResponse,
+             Zlib::Error
 
         @sessions.kill!(url)
 
