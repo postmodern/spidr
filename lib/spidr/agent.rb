@@ -171,7 +171,7 @@ module Spidr
           raise(ArgumentError,":robots option given but unable to require 'robots' gem")
         end
 
-        @robots = Robots.new(Spidr.user_agent)
+        @robots = Robots.new(@user_agent)
       end
 
       initialize_sanitizers(options)
