@@ -4,18 +4,18 @@
 
 ### 0.4.0 / 2011-08-07
 
-* Added {Spidr::Headers#content_charset}.
-* Pass the Page `url` and `content_charset` to Nokogiri in {Spidr::Body#doc}.
+* Added `Spidr::Headers#content_charset`.
+* Pass the Page `url` and `content_charset` to Nokogiri in `Spidr::Body#doc`.
   This ensures that Nokogiri will preserve the body encoding.
-* Made {Spidr::Headers#is_content_type?} public.
-* Allow {Spidr::Headers#is_content_type?} to match the full Content-Type
+* Made `Spidr::Headers#is_content_type?` public.
+* Allow `Spidr::Headers#is_content_type?` to match the full Content-Type
   or the sub-type.
 
 ### 0.3.2 / 2011-06-20
 
-* Added separate intitialize methods for {Spidr::Actions}, {Spidr::Events},
-  {Spidr::Filters} and {Spidr::Sanitizers}.
-* Aliased {Spidr::Events#urls_like} to {Spidr::Events#every_url_like}.
+* Added separate intitialize methods for `Spidr::Actions`, `Spidr::Events`,
+  `Spidr::Filters` and `Spidr::Sanitizers`.
+* Aliased `Spidr::Events#urls_like` to `Spidr::Events#every_url_like`.
 * Reduce usage of `self.included` and `module_eval`.
 * Reduce usage of nested-blocks.
 * Reduce usage of `return`.
@@ -28,21 +28,21 @@
 
 * Switched from Jeweler to [Ore](http://github.com/ruby-ore/ore).
 * Split all header related methods out of {Spidr::Page} and into
-  {Spidr::Headers}.
+  `Spidr::Headers`.
 * Split all body related methods out of {Spidr::Page} and into
-  {Spidr::Body}.
+  `Spidr::Body`.
 * Split all link related methods out of {Spidr::Page} and into
-  {Spidr::Links}.
-* Added {Spidr::Headers#directory?}.
-* Added {Spidr::Headers#json?}.
-* Added {Spidr::Links#each_url}.
-* Added {Spidr::Links#each_link}.
-* Added {Spidr::Links#each_redirect}.
-* Added {Spidr::Links#each_meta_redirect}.
-* Aliased {Spidr::Headers#raw_cookie} to {Spidr::Headers#cookie}.
-* Aliased {Spidr::Body#to_s} to {Spidr::Body#body}.
-* Also check for `application/xml` in {Spidr::Headers#xml?}.
-* Catch all exceptions when merging URIs in {Spidr::Links#to_absolute}.
+  `Spidr::Links`.
+* Added `Spidr::Headers#directory?`.
+* Added `Spidr::Headers#json?`.
+* Added `Spidr::Links#each_url`.
+* Added `Spidr::Links#each_link`.
+* Added `Spidr::Links#each_redirect`.
+* Added `Spidr::Links#each_meta_redirect`.
+* Aliased `Spidr::Headers#raw_cookie` to `Spidr::Headers#cookie`.
+* Aliased `Spidr::Body#to_s` to `Spidr::Body#body`.
+* Also check for `application/xml` in `Spidr::Headers#xml?`.
+* Catch all exceptions when merging URIs in `Spidr::Links#to_absolute`.
 * Always prepend a `/` to all FTP URI paths. Fixes a Ruby 1.8 specific
   bug, where it expects an absolute path for all FTP URIs.
 * Refactored {URI.expand_path}.
@@ -73,10 +73,10 @@
 
 ### 0.2.4 / 2010-05-05
 
-* Added {Spidr::Filters#visit_urls}.
-* Added {Spidr::Filters#visit_urls_like}.
-* Added {Spidr::Filters#ignore_urls}.
-* Added {Spidr::Filters#ignore_urls_like}.
+* Added `Spidr::Filters#visit_urls`.
+* Added `Spidr::Filters#visit_urls_like`.
+* Added `Spidr::Filters#ignore_urls`.
+* Added `Spidr::Filters#ignore_urls_like`.
 * Added `Spidr::Page#is_content_type?`.
 * Default `Spidr::Page#body` to an empty String.
 * Default `Spidr::Page#content_type` to an empty String.
@@ -89,7 +89,7 @@
 
 * Migrated to Jeweler, for the packaging and releasing RubyGems.
 * Switched to MarkDown formatted YARD documentation.
-* Added {Spidr::Events#every_link}.
+* Added `Spidr::Events#every_link`.
 * Added {Spidr::SessionCache#active?}.
 * Added specs for {Spidr::SessionCache}.
 
@@ -102,7 +102,7 @@
 * Added `Spidr::Page#cookie`.
 * Added `Spidr::Page#cookies`.
 * Added `Spidr::Page#cookie_params`.
-* Added {Spidr::Sanitizers}.
+* Added `Spidr::Sanitizers`.
 * Added {Spidr::SessionCache}.
 * Added {Spidr::CookieJar} (thanks Nick Plante).
 * Added {Spidr::AuthStore} (thanks Nick Plante).
@@ -112,31 +112,31 @@
 
 ### 0.2.1 / 2009-11-25
 
-* Added {Spidr::Events#every_ok_page}.
-* Added {Spidr::Events#every_redirect_page}.
-* Added {Spidr::Events#every_timedout_page}.
-* Added {Spidr::Events#every_bad_request_page}.
-* Added {Spidr::Events#every_unauthorized_page}.
-* Added {Spidr::Events#every_forbidden_page}.
-* Added {Spidr::Events#every_missing_page}.
-* Added {Spidr::Events#every_internal_server_error_page}.
-* Added {Spidr::Events#every_txt_page}.
-* Added {Spidr::Events#every_html_page}.
-* Added {Spidr::Events#every_xml_page}.
-* Added {Spidr::Events#every_xsl_page}.
-* Added {Spidr::Events#every_doc}.
-* Added {Spidr::Events#every_html_doc}.
-* Added {Spidr::Events#every_xml_doc}.
-* Added {Spidr::Events#every_xsl_doc}.
-* Added {Spidr::Events#every_rss_doc}.
-* Added {Spidr::Events#every_atom_doc}.
-* Added {Spidr::Events#every_javascript_page}.
-* Added {Spidr::Events#every_css_page}.
-* Added {Spidr::Events#every_rss_page}.
-* Added {Spidr::Events#every_atom_page}.
-* Added {Spidr::Events#every_ms_word_page}.
-* Added {Spidr::Events#every_pdf_page}.
-* Added {Spidr::Events#every_zip_page}.
+* Added `Spidr::Events#every_ok_page`.
+* Added `Spidr::Events#every_redirect_page`.
+* Added `Spidr::Events#every_timedout_page`.
+* Added `Spidr::Events#every_bad_request_page`.
+* Added `Spidr::Events#every_unauthorized_page`.
+* Added `Spidr::Events#every_forbidden_page`.
+* Added `Spidr::Events#every_missing_page`.
+* Added `Spidr::Events#every_internal_server_error_page`.
+* Added `Spidr::Events#every_txt_page`.
+* Added `Spidr::Events#every_html_page`.
+* Added `Spidr::Events#every_xml_page`.
+* Added `Spidr::Events#every_xsl_page`.
+* Added `Spidr::Events#every_doc`.
+* Added `Spidr::Events#every_html_doc`.
+* Added `Spidr::Events#every_xml_doc`.
+* Added `Spidr::Events#every_xsl_doc`.
+* Added `Spidr::Events#every_rss_doc`.
+* Added `Spidr::Events#every_atom_doc`.
+* Added `Spidr::Events#every_javascript_page`.
+* Added `Spidr::Events#every_css_page`.
+* Added `Spidr::Events#every_rss_page`.
+* Added `Spidr::Events#every_atom_page`.
+* Added `Spidr::Events#every_ms_word_page`.
+* Added `Spidr::Events#every_pdf_page`.
+* Added `Spidr::Events#every_zip_page`.
 * Fixed a bug where {Spidr::Agent#delay} was not being used to delay
   requesting pages.
 * Spider `link` and `script` tags in HTML pages (thanks Nick Plante).
@@ -160,11 +160,11 @@
 * Aliased `Spidr::Page#forbidden?` to `Spidr::Page#is_forbidden?`.
 * Aliased `Spidr::Page#missing?` to `Spidr::Page#is_missing?`.
 * Split URL filtering code out of {Spidr::Agent} and into
-  {Spidr::Filters}.
+  `Spidr::Filters`.
 * Split URL / Page event code out of {Spidr::Agent} and into
-  {Spidr::Events}.
+  `Spidr::Events`.
 * Split pause! / continue! / skip_link! / skip_page! methods out of
-  {Spidr::Agent} and into {Spidr::Actions}.
+  {Spidr::Agent} and into `Spidr::Actions`.
 * Fixed a bug in `Spidr::Page#code`, where it was not returning an Integer.
 * Make sure `Spidr::Page#doc` returns `Nokogiri::XML::Document` objects for
   RSS/RDF/Atom pages as well.
