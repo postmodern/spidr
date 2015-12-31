@@ -1,4 +1,5 @@
 require 'uri'
+require 'strscan'
 
 module URI
   #
@@ -27,26 +28,35 @@ module URI
   #   # => "/path"
   #
   def self.expand_path(path)
-    dirs = path.split(/\/+/)
+    if path.start_with?('/')
+      prefix, path = path[0,1], path[1..-1]
+    else
+      prefix = ''
+    end
 
-    # append any tailing '/' chars, lost due to String#split
-    dirs << '' if path[-1,1] == '/'
+    if path.end_with?('/')
+      suffix, path = path[-1,1], path[0..-2]
+    else
+      suffix = ''
+    end
 
-    new_dirs = []
+    scanner = StringScanner.new(path)
+    stack   = []
 
-    dirs.each do |dir|
-      if dir == '..'
-        new_dirs.pop
-      elsif dir != '.'
-        new_dirs.push(dir)
+    until scanner.eos?
+      if (dir = scanner.scan(/^[^\/]+/))
+        case dir
+        when '..' then stack.pop
+        when '.'  then false
+        else           stack.push(dir)
+        end
+      else
+        scanner.skip(/\/+/)
       end
     end
 
-    full_path = new_dirs.join('/')
-
-    # default empty paths to '/'
-    full_path = '/' if full_path.empty?
-
-    return full_path
+    unless stack.empty? then "#{prefix}#{stack.join('/')}#{suffix}"
+    else                     '/'
+    end
   end
 end
