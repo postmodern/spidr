@@ -28,6 +28,10 @@ describe URI do
       URI.expand_path('/test/../../../..').should == '/'
     end
 
+    it "should preserve leading '/'" do
+      URI.expand_path('/../../../foo').should == '/foo'
+    end
+
     it "should preserve absolute paths" do
       URI.expand_path('/test/path').should == '/test/path'
     end
