@@ -13,32 +13,32 @@ describe Page do
     it_should_behave_like "Page"
 
     it "should be OK" do
-      @page.should be_ok
+      expect(@page).to be_ok
     end
 
     it "should have a content-type" do
-      @page.content_type.should include('text/html')
+      expect(@page.content_type).to include('text/html')
     end
 
     it "should be a html page" do
-      @page.should be_html
+      expect(@page).to be_html
     end
 
     it "should have provide a document" do
-      @page.doc.class.should == Nokogiri::HTML::Document
+      expect(@page.doc.class).to eq(Nokogiri::HTML::Document)
     end
 
     it "should allow searching the document" do
-      @page.doc.search('//p').length.should == 2
-      @page.doc.at('//p[2]').inner_text.should == 'Ready! Set! Go!'
+      expect(@page.doc.search('//p').length).to eq(2)
+      expect(@page.doc.at('//p[2]').inner_text).to eq('Ready! Set! Go!')
     end
 
     it "should have a title" do
-      @page.title.should == 'Spidr :: Web-Spider Obstacle Course :: Start'
+      expect(@page.title).to eq('Spidr :: Web-Spider Obstacle Course :: Start')
     end
 
     it "should have links" do
-      @page.links.should_not be_empty
+      expect(@page.links).not_to be_empty
     end
   end
 
@@ -50,47 +50,50 @@ describe Page do
     it_should_behave_like "Page"
 
     it "should be OK" do
-      @page.should be_ok
+      expect(@page).to be_ok
     end
 
     it "should have a content-type" do
-      @page.content_type.should include('text/plain')
+      expect(@page.content_type).to include('text/plain')
     end
 
     it "should be a txt page" do
-      @page.should be_txt
+      expect(@page).to be_txt
     end
 
     it "should not have provide a document" do
-      @page.doc.should be_nil
+      expect(@page.doc).to be_nil
     end
 
     it "should not allow searching the document" do
-      @page.search('//p').should be_empty
-      @page.at('//p').should be_nil
+      expect(@page.search('//p')).to be_empty
+      expect(@page.at('//p')).to be_nil
     end
 
     it "should not have links" do
-      @page.links.should be_empty
+      expect(@page.links).to be_empty
     end
 
     it "should not have a title" do
-      @page.title.should be_nil
+      expect(@page.title).to be_nil
     end
   end
 
   describe "redirects" do
     before(:all) do
       @page = get_page('http://spidr.rubyforge.org/course/start.html')
-      @page.stub!(:body).and_return('<meta HTTP-EQUIV="REFRESH" content="0; url=http://spidr.rubyforge.org/redirected">')
+    end
+
+    before do
+      allow(@page).to receive(:body).and_return('<meta HTTP-EQUIV="REFRESH" content="0; url=http://spidr.rubyforge.org/redirected">')
     end
 
     it "should provide access to page-level redirects" do
-      @page.redirects_to.should == ['http://spidr.rubyforge.org/redirected']
+      expect(@page.redirects_to).to eq(['http://spidr.rubyforge.org/redirected'])
     end 
 
     it "should include meta refresh redirects in the list of links" do
-      @page.links.should include('http://spidr.rubyforge.org/redirected')
+      expect(@page.links).to include('http://spidr.rubyforge.org/redirected')
     end
   end
 
@@ -102,23 +105,23 @@ describe Page do
     it "should provide access to the raw Cookie" do
       cookie = @page.cookie
 
-      cookie.should_not be_nil
-      cookie.should_not be_empty
+      expect(cookie).not_to be_nil
+      expect(cookie).not_to be_empty
     end
 
     it "should provide access to the Cookies" do
       cookies = @page.cookies
       
-      cookies.should_not be_empty
+      expect(cookies).not_to be_empty
     end
 
     it "should provide access to the key->value pairs within the Cookie" do
       params = @page.cookie_params
       
-      params.should_not be_empty
+      expect(params).not_to be_empty
 
       params.each do |key,value|
-        key.should_not be_empty
+        expect(key).not_to be_empty
       end
     end
   end

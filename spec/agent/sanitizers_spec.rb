@@ -12,14 +12,14 @@ describe Agent do
         agent = Agent.new
         clean_url = agent.sanitize_url(URI(url))
 
-        clean_url.host.should == 'host.com'
+        expect(clean_url.host).to eq('host.com')
       end
 
       it "should sanitize URLs given as Strings" do
         agent = Agent.new
         clean_url = agent.sanitize_url(url)
 
-        clean_url.host.should == 'host.com'
+        expect(clean_url.host).to eq('host.com')
       end
     end
 
@@ -30,14 +30,14 @@ describe Agent do
         agent = Agent.new
         clean_url = agent.sanitize_url(url)
 
-        clean_url.fragment.should be_nil
+        expect(clean_url.fragment).to be_nil
       end
 
       it "should allow perserving fragment components" do
         agent = Agent.new(:strip_fragments => false)
         clean_url = agent.sanitize_url(url)
 
-        clean_url.fragment.should == 'lol'
+        expect(clean_url.fragment).to eq('lol')
       end
     end
 
@@ -48,14 +48,14 @@ describe Agent do
         agent = Agent.new
         clean_url = agent.sanitize_url(url)
 
-        clean_url.query.should == 'x=1'
+        expect(clean_url.query).to eq('x=1')
       end
 
       it "should allow stripping of query components" do
         agent = Agent.new(:strip_query => true)
         clean_url = agent.sanitize_url(url)
 
-        clean_url.query.should be_nil
+        expect(clean_url.query).to be_nil
       end
     end
   end

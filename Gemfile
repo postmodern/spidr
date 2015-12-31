@@ -11,7 +11,7 @@ group :development do
   gem 'rubygems-tasks', '~> 0.2'
 
   gem 'wsoc',     '~> 0.1.3'
-  gem 'rspec',    '~> 2.4'
+  gem 'rspec',    '~> 3.0'
 
   gem 'kramdown', '~> 0.12'
   gem 'yard',     '~> 0.8'

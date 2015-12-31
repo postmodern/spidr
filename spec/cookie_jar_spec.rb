@@ -6,39 +6,39 @@ describe CookieJar do
   it "should retrieve cookies for the named host" do
     subject['zerosum.org'] = {'admin' => 'ofcourseiam'}
 
-    subject['zerosum.org'].should == {'admin' => 'ofcourseiam'}
+    expect(subject['zerosum.org']).to eq({'admin' => 'ofcourseiam'})
   end
 
   it "should add a cookie to the jar" do
     subject['zerosum.org'] = {'admin' => 'ofcourseiam'}
 
-    subject['zerosum.org'].should == {'admin' => 'ofcourseiam'}
+    expect(subject['zerosum.org']).to eq({'admin' => 'ofcourseiam'})
   end
 
   it "should merge new cookies into the jar" do
     subject['zerosum.org'] = {'admin' => 'ofcourseiam'}
     subject['zerosum.org'] = {'other' => '1'}
 
-    subject['zerosum.org'].should == {
+    expect(subject['zerosum.org']).to eq({
       'admin' => 'ofcourseiam',
       'other' => '1'
-    }
+    })
   end
 
   it "should override previous cookies in the jar" do
     subject['zerosum.org'] = {'admin' => 'ofcourseiam'}
     subject['zerosum.org'] = {'admin' => 'somethingcompletelydifferent'}
 
-    subject['zerosum.org'].should == {
+    expect(subject['zerosum.org']).to eq({
       'admin' => 'somethingcompletelydifferent'
-    }
+    })
   end
 
   it "should clear all cookies" do
     subject['zerosum.org'] = {'cookie' => 'foobar'}
     subject.clear!
 
-    subject.size.should == 0
+    expect(subject.size).to eq(0)
   end
 
   describe "dirty" do
@@ -48,37 +48,37 @@ describe CookieJar do
       subject['zerosum.org'] = {'admin' => 'ofcourseiam'}
       subject['zerosum.org'] = {'other' => '1'}
 
-      dirty.include?('zerosum.org').should == true
+      expect(dirty.include?('zerosum.org')).to eq(true)
     end
 
     it "should mark a cookie dirty after overriding params" do
       subject['zerosum.org'] = {'admin' => 'ofcourseiam'}
       subject['zerosum.org'] = {'admin' => 'nope'}
 
-      dirty.include?('zerosum.org').should == true
+      expect(dirty.include?('zerosum.org')).to eq(true)
     end
 
     it "should un-mark a cookie as dirty after re-encoding it" do
       subject['zerosum.org'] = {'admin' => 'ofcourseiam'}
       subject['zerosum.org'] = {'admin' => 'nope'}
 
-      dirty.include?('zerosum.org').should == true
+      expect(dirty.include?('zerosum.org')).to eq(true)
 
       subject.for_host('zerosum.org')
 
-      dirty.include?('zerosum.org').should == false
+      expect(dirty.include?('zerosum.org')).to eq(false)
     end
   end
 
   describe "cookies_for_host" do
     it "should return an empty Hash for unknown hosts" do
-      subject.cookies_for_host('lol.com').should be_empty
+      expect(subject.cookies_for_host('lol.com')).to be_empty
     end
 
     it "should return an empty Hash for hosts with no cookie params" do
       subject['lol.com'] = {}
 
-      subject.cookies_for_host('lol.com').should be_empty
+      expect(subject.cookies_for_host('lol.com')).to be_empty
     end
 
     it "should return cookie parameters for the host" do
@@ -87,8 +87,8 @@ describe CookieJar do
 
       cookie = subject.cookies_for_host('zerosum.org')
 
-      cookie['admin'].should == 'ofcourseiam'
-      cookie['other'].should == '1'
+      expect(cookie['admin']).to eq('ofcourseiam')
+      expect(cookie['other']).to eq('1')
     end
 
     it "should include cookies for the parent domain" do
@@ -97,26 +97,26 @@ describe CookieJar do
 
       cookie = subject.cookies_for_host('sub.zerosum.org')
 
-      cookie['admin'].should == 'ofcourseiam'
-      cookie['other'].should == '1'
+      expect(cookie['admin']).to eq('ofcourseiam')
+      expect(cookie['other']).to eq('1')
     end
   end
 
   describe "for_host" do
     it "should return nil for unknown hosts" do
-      subject.for_host('lol.com').should be_nil
+      expect(subject.for_host('lol.com')).to be_nil
     end
 
     it "should return nil for hosts with no cookie params" do
       subject['lol.com'] = {}
 
-      subject.for_host('lol.com').should be_nil
+      expect(subject.for_host('lol.com')).to be_nil
     end
 
     it "should encode single cookie params" do
       subject['zerosum.org'] = {'admin' => 'ofcourseiam'}
 
-      subject.for_host('zerosum.org').should == 'admin=ofcourseiam'
+      expect(subject.for_host('zerosum.org')).to eq('admin=ofcourseiam')
     end
 
     it "should encode multiple cookie params" do
@@ -125,9 +125,9 @@ describe CookieJar do
 
       cookie = subject.for_host('zerosum.org')
 
-      cookie.should include('admin=ofcourseiam')
-      cookie.should include('; ')
-      cookie.should include('other=1')
+      expect(cookie).to include('admin=ofcourseiam')
+      expect(cookie).to include('; ')
+      expect(cookie).to include('other=1')
     end
 
     it "should include cookies for the parent domain" do
@@ -136,9 +136,9 @@ describe CookieJar do
 
       cookie = subject.for_host('sub.zerosum.org')
 
-      cookie.should include('admin=ofcourseiam')
-      cookie.should include('; ')
-      cookie.should include('other=1')
+      expect(cookie).to include('admin=ofcourseiam')
+      expect(cookie).to include('; ')
+      expect(cookie).to include('other=1')
     end
   end
 end

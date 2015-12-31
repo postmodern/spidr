@@ -11,11 +11,11 @@ describe Agent do
   end
 
   it "should provide the history" do
-    @agent.history.should_not be_empty
+    expect(@agent.history).not_to be_empty
   end
 
   it "should provide the queue" do
-    @agent.queue.should be_empty
+    expect(@agent.queue).to be_empty
   end
 
   it "should be able to restore the history" do
@@ -23,7 +23,7 @@ describe Agent do
     previous_history = Set[URI('http://www.example.com')]
 
     agent.history = previous_history
-    agent.history.should == previous_history
+    expect(agent.history).to eq(previous_history)
   end
 
   it "should convert new histories to an Set of URIs" do
@@ -32,8 +32,8 @@ describe Agent do
     expected_history = Set[URI('http://www.example.com')]
 
     agent.history = previous_history
-    agent.history.should_not == previous_history
-    agent.history.should == expected_history
+    expect(agent.history).not_to eq(previous_history)
+    expect(agent.history).to eq(expected_history)
   end
 
   it "should be able to restore the failures" do
@@ -41,7 +41,7 @@ describe Agent do
     previous_failures = Set[URI('http://localhost/')]
 
     agent.failures = previous_failures
-    agent.failures.should == previous_failures
+    expect(agent.failures).to eq(previous_failures)
   end
 
   it "should convert new histories to a Set of URIs" do
@@ -50,8 +50,8 @@ describe Agent do
     expected_failures = Set[URI('http://localhost/')]
 
     agent.failures = previous_failures
-    agent.failures.should_not == previous_failures
-    agent.failures.should == expected_failures
+    expect(agent.failures).not_to eq(previous_failures)
+    expect(agent.failures).to eq(expected_failures)
   end
 
   it "should be able to restore the queue" do
@@ -59,7 +59,7 @@ describe Agent do
     previous_queue = [URI('http://www.example.com')]
 
     agent.queue = previous_queue
-    agent.queue.should == previous_queue
+    expect(agent.queue).to eq(previous_queue)
   end
 
   it "should convert new queues to an Array of URIs" do
@@ -68,14 +68,14 @@ describe Agent do
     expected_queue = [URI('http://www.example.com')]
 
     agent.queue = previous_queue
-    agent.queue.should_not == previous_queue
-    agent.queue.should == expected_queue
+    expect(agent.queue).not_to eq(previous_queue)
+    expect(agent.queue).to eq(expected_queue)
   end
 
   it "should provide a to_hash method that returns the queue and history" do
     hash = @agent.to_hash
 
-    hash[:queue].should be_empty
-    hash[:history].should_not be_empty
+    expect(hash[:queue]).to be_empty
+    expect(hash[:history]).not_to be_empty
   end
 end

@@ -15,20 +15,20 @@ module Helpers
     end
 
     def should_visit_link(url)
-      visited_link?(url).should == true
+      expect(visited_link?(url)).to eq(true)
     end
 
     def should_ignore_link(url)
-      visited_link?(url).should == false
+      expect(visited_link?(url)).to eq(false)
     end
 
     def should_visit_once(url)
-      visited_once?(url).should == true
+      expect(visited_once?(url)).to eq(true)
     end
 
     def should_fail_link(url)
-      visited_link?(url).should == false
-      visit_failed?(url).should == true
+      expect(visited_link?(url)).to eq(false)
+      expect(visit_failed?(url)).to eq(true)
     end
   end
 end

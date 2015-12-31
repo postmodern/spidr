@@ -4,36 +4,36 @@ require 'spec_helper'
 
 describe Spidr do
   it "should have a VERSION constant" do
-    subject.const_defined?('VERSION').should == true
+    expect(subject.const_defined?('VERSION')).to eq(true)
   end
 
   describe "proxy" do
     after(:all) do
-      subject.disable_proxy!
+      Spidr.disable_proxy!
     end
 
     it "should not have proxy settings by default" do
-      subject.proxy[:host].should be_nil
+      expect(subject.proxy[:host]).to be_nil
     end
 
     it "should allow setting new proxy settings" do
       subject.proxy = {:host => 'example.com', :port => 8010}
 
-      subject.proxy[:host].should == 'example.com'
-      subject.proxy[:port].should == 8010
+      expect(subject.proxy[:host]).to eq('example.com')
+      expect(subject.proxy[:port]).to eq(8010)
     end
 
     it "should default the :port option of new proxy settings" do
       subject.proxy = {:host => 'example.com'}
 
-      subject.proxy[:host].should == 'example.com'
-      subject.proxy[:port].should == Spidr::COMMON_PROXY_PORT
+      expect(subject.proxy[:host]).to eq('example.com')
+      expect(subject.proxy[:port]).to eq(Spidr::COMMON_PROXY_PORT)
     end
 
     it "should allow disabling the proxy" do
       subject.disable_proxy!
 
-      subject.proxy[:host].should be_nil
+      expect(subject.proxy[:host]).to be_nil
     end
   end
 end

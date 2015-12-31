@@ -5,49 +5,49 @@ require 'spec_helper'
 describe URI do
   describe "expand_path" do
     it "should preserve single directory paths" do
-      URI.expand_path('path').should == 'path'
+      expect(URI.expand_path('path')).to eq('path')
     end
 
     it "should preserve trailing '/'" do
-      URI.expand_path('test/path/').should == 'test/path/'
+      expect(URI.expand_path('test/path/')).to eq('test/path/')
     end
 
     it "should remove multiple '/' characters" do
-      URI.expand_path('///test///path///').should == '/test/path/'
+      expect(URI.expand_path('///test///path///')).to eq('/test/path/')
     end
 
     it "should remove '.' directories from the path" do
-      URI.expand_path('test/./path').should == 'test/path'
+      expect(URI.expand_path('test/./path')).to eq('test/path')
     end
 
     it "should handle '..' directories properly" do
-      URI.expand_path('test/../path').should == 'path'
+      expect(URI.expand_path('test/../path')).to eq('path')
     end
 
     it "should limit the number of '..' directories resolved" do
-      URI.expand_path('/test/../../../..').should == '/'
+      expect(URI.expand_path('/test/../../../..')).to eq('/')
     end
 
     it "should preserve leading '/'" do
-      URI.expand_path('/../../../foo').should == '/foo'
+      expect(URI.expand_path('/../../../foo')).to eq('/foo')
     end
 
     it "should preserve absolute paths" do
-      URI.expand_path('/test/path').should == '/test/path'
+      expect(URI.expand_path('/test/path')).to eq('/test/path')
     end
 
     it "should preserve the root path" do
-      URI.expand_path('/').should == '/'
+      expect(URI.expand_path('/')).to eq('/')
     end
 
     it "should default empty paths to the root path" do
-      URI.expand_path('').should == '/'
+      expect(URI.expand_path('')).to eq('/')
     end
 
     it "should default zero-sum paths to a '/'" do
-      URI.expand_path('foo/..').should == '/'
-      URI.expand_path('foo/../bar/..').should == '/'
-      URI.expand_path('././././.').should == '/'
+      expect(URI.expand_path('foo/..')).to eq('/')
+      expect(URI.expand_path('foo/../bar/..')).to eq('/')
+      expect(URI.expand_path('././././.')).to eq('/')
     end
   end
 end

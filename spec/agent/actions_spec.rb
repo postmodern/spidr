@@ -15,8 +15,8 @@ describe Agent do
         end
       end
 
-      agent.should be_paused
-      agent.history.length.should == 2
+      expect(agent).to be_paused
+      expect(agent.history.length).to eq(2)
     end
 
     it "should be able to continue spidering after being paused" do
@@ -29,7 +29,7 @@ describe Agent do
       agent.enqueue(url)
       agent.continue!
 
-      agent.visited?(url).should == true
+      expect(agent.visited?(url)).to eq(true)
     end
 
     it "should allow skipping of enqueued links" do
@@ -41,7 +41,7 @@ describe Agent do
 
       agent.enqueue(url)
 
-      agent.queue.should be_empty
+      expect(agent.queue).to be_empty
     end
 
     it "should allow skipping of visited pages" do
@@ -53,8 +53,8 @@ describe Agent do
 
       agent.visit_page(url)
 
-      agent.history.should == Set[url]
-      agent.queue.should be_empty
+      expect(agent.history).to eq(Set[url])
+      expect(agent.queue).to be_empty
     end
   end
 end
