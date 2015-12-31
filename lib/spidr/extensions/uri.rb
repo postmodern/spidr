@@ -29,15 +29,15 @@ module URI
   #
   def self.expand_path(path)
     if path.start_with?('/')
-      prefix, path = path[0,1], path[1..-1]
+      leading_slash, path = path[0,1], path[1..-1]
     else
-      prefix = ''
+      leading_slash = ''
     end
 
     if path.end_with?('/')
-      suffix, path = path[-1,1], path[0..-2]
+      trailing_slash, path = path[-1,1], path[0..-2]
     else
-      suffix = ''
+      trailing_slash = ''
     end
 
     scanner = StringScanner.new(path)
@@ -55,8 +55,10 @@ module URI
       end
     end
 
-    unless stack.empty? then "#{prefix}#{stack.join('/')}#{suffix}"
-    else                     '/'
+    unless stack.empty?
+      "#{leading_slash}#{stack.join('/')}#{trailing_slash}"
+    else
+      '/'
     end
   end
 end
