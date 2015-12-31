@@ -44,7 +44,7 @@ describe Page do
 
   describe "txt" do
     before(:all) do
-      @page = get_page('http://www.ruby-lang.org/en/LICENSE.txt')
+      @page = get_page('https://www.ruby-lang.org/en/LICENSE.txt')
     end
 
     it_should_behave_like "Page"
