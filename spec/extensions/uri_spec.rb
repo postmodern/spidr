@@ -43,5 +43,11 @@ describe URI do
     it "should default empty paths to the root path" do
       URI.expand_path('').should == '/'
     end
+
+    it "should default zero-sum paths to a '/'" do
+      URI.expand_path('foo/..').should == '/'
+      URI.expand_path('foo/../bar/..').should == '/'
+      URI.expand_path('././././.').should == '/'
+    end
   end
 end
