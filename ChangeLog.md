@@ -1,3 +1,18 @@
+### 0.5.0 / 2016-01-01
+
+* Added support for respecting `robots.txt` files.
+
+      Spidr.site('http://reddit.com/', robots: true)
+
+* Added {Spidr.robots=} and {Spidr.robots?}.
+* Added {Spidr::Page#each_mailto} and {Spidr::Page#mailtos}.
+* Fixed a bug in {Spidr::Agent.host} that limited spidering to only `http://`
+  URIs.
+* Rescue `Zlib::Error` to catch `Zlib::DataError` and `Zlib::BufError`
+  exceptions caused by web servers that use incompatible gzip compression.
+* Fixed a bug in {URI.expand_path} where `/../foo` was being expanded to `foo`
+  instead of `/foo`.
+
 ### 0.4.1 / 2011-12-08
 
 * Catch `OpenSSL::SSL::SSLError` exceptions when initiated HTTPS Sessions.
