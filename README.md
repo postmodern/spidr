@@ -184,7 +184,8 @@ Skip the processing of links:
 
 ## Requirements
 
-* [nokogiri](http://nokogiri.rubyforge.org/) ~> 1.3
+* [ruby] >= 1.9.1
+* [nokogiri] ~> 1.3
 
 ## Install
 
@@ -195,3 +196,6 @@ Skip the processing of links:
 Copyright (c) 2008-2016 Hal Brodigan
 
 See {file:LICENSE.txt} for license information.
+
+[ruby]: https://www.ruby-lang.org/
+[nokogiri]: http://nokogiri.rubyforge.org/
