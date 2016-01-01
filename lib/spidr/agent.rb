@@ -225,7 +225,7 @@ module Spidr
     def self.site(url,options={},&block)
       url = URI(url.to_s) unless url.kind_of?(URI)
 
-      agent = new(options.merge(:host => url.host),&block)
+      agent = new(options.merge(host: url.host),&block)
       agent.start_at(url)
     end
 
@@ -248,8 +248,8 @@ module Spidr
     # @see #initialize
     #
     def self.host(name,options={},&block)
-      agent = new(options.merge(:host => name),&block)
-      agent.start_at(URI::HTTP.build(:host => name, :path => '/'))
+      agent = new(options.merge(host: name),&block)
+      agent.start_at(URI::HTTP.build(host: name, path: '/'))
     end
 
     #
@@ -671,7 +671,7 @@ module Spidr
     #   the `queue` of the agent.
     #
     def to_hash
-      {:history => @history, :queue => @queue}
+      {history: @history, queue: @queue}
     end
 
     protected

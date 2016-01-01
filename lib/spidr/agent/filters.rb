@@ -416,24 +416,24 @@ module Spidr
       end
 
       @host_rules = Rules.new(
-        :accept => options[:hosts],
-        :reject => options[:ignore_hosts]
+        accept: options[:hosts],
+        reject: options[:ignore_hosts]
       )
       @port_rules = Rules.new(
-        :accept => options[:ports],
-        :reject => options[:ignore_ports]
+        accept: options[:ports],
+        reject: options[:ignore_ports]
       )
       @link_rules = Rules.new(
-        :accept => options[:links],
-        :reject => options[:ignore_links]
+        accept: options[:links],
+        reject: options[:ignore_links]
       )
       @url_rules = Rules.new(
-        :accept => options[:urls],
-        :reject => options[:ignore_urls]
+        accept: options[:urls],
+        reject: options[:ignore_urls]
       )
       @ext_rules = Rules.new(
-        :accept => options[:exts],
-        :reject => options[:ignore_exts]
+        accept: options[:exts],
+        reject: options[:ignore_exts]
       )
 
       if options[:host]

@@ -17,14 +17,14 @@ describe Spidr do
     end
 
     it "should allow setting new proxy settings" do
-      subject.proxy = {:host => 'example.com', :port => 8010}
+      subject.proxy = {host: 'example.com', port: 8010}
 
       expect(subject.proxy[:host]).to eq('example.com')
       expect(subject.proxy[:port]).to eq(8010)
     end
 
     it "should default the :port option of new proxy settings" do
-      subject.proxy = {:host => 'example.com'}
+      subject.proxy = {host: 'example.com'}
 
       expect(subject.proxy[:host]).to eq('example.com')
       expect(subject.proxy[:port]).to eq(Spidr::COMMON_PROXY_PORT)

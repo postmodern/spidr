@@ -6,10 +6,10 @@ module Spidr
 
   # Default proxy information.
   DEFAULT_PROXY = {
-    :host     => nil,
-    :port     => COMMON_PROXY_PORT,
-    :user     => nil,
-    :password => nil
+    host:     nil,
+    port:     COMMON_PROXY_PORT,
+    user:     nil,
+    password: nil
   }
 
   #
@@ -44,7 +44,7 @@ module Spidr
   #   The new proxy information.
   #
   def Spidr.proxy=(new_proxy)
-    @@spidr_proxy = {:port => COMMON_PROXY_PORT}.merge(new_proxy)
+    @@spidr_proxy = {port: COMMON_PROXY_PORT}.merge(new_proxy)
   end
 
   #

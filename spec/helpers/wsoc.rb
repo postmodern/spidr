@@ -9,8 +9,8 @@ module Helpers
     include History
 
     SERVER_URL = URI::HTTP.build(
-      :host => (ENV['HOST'] || ::WSOC::Config::DEFAULT_HOST),
-      :port => (ENV['PORT'] || ::WSOC::Config::DEFAULT_PORT)
+      host: (ENV['HOST'] || ::WSOC::Config::DEFAULT_HOST),
+      port: (ENV['PORT'] || ::WSOC::Config::DEFAULT_PORT)
     )
 
     SPECS_URL = SERVER_URL.merge(::WSOC::Config::SPECS_PATHS[:json])

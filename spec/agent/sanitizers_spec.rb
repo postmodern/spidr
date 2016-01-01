@@ -34,7 +34,7 @@ describe Agent do
       end
 
       it "should allow perserving fragment components" do
-        agent = Agent.new(:strip_fragments => false)
+        agent = Agent.new(strip_fragments: false)
         clean_url = agent.sanitize_url(url)
 
         expect(clean_url.fragment).to eq('lol')
@@ -52,7 +52,7 @@ describe Agent do
       end
 
       it "should allow stripping of query components" do
-        agent = Agent.new(:strip_query => true)
+        agent = Agent.new(strip_query: true)
         clean_url = agent.sanitize_url(url)
 
         expect(clean_url.query).to be_nil
