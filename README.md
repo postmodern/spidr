@@ -15,9 +15,9 @@ and easy to use.
 ## Features
 
 * Follows:
-  * a tags.
-  * iframe tags.
-  * frame tags.
+  * `a` tags.
+  * `iframe` tags.
+  * `frame` tags.
   * Cookie protected links.
   * HTTP 300, 301, 302, 303 and 307 Redirects.
   * Meta-Refresh Redirects.
@@ -61,7 +61,7 @@ Spider multiple hosts:
 
     Spidr.start_at(
       'http://company.com/',
-      :hosts => [
+      hosts: [
         'company.com',
         /host\d\.company\.com/
       ]
@@ -69,20 +69,20 @@ Spider multiple hosts:
 
 Do not spider certain links:
 
-    Spidr.site('http://matasano.com/', :ignore_links => [/log/])
+    Spidr.site('http://matasano.com/', ignore_links: [/log/])
 
 Do not spider links on certain ports:
 
     Spidr.site(
       'http://sketchy.content.com/',
-      :ignore_ports => [8000, 8010, 8080]
+      ignore_ports: [8000, 8010, 8080]
     )
 
 Do not spider links blacklisted in robots.txt:
 
     Spidr.site(
       'http://matasano.com/',
-      :robots => true
+      robots: true
     )
 
 Print out visited URLs:
