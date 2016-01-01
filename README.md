@@ -198,4 +198,4 @@ Copyright (c) 2008-2016 Hal Brodigan
 See {file:LICENSE.txt} for license information.
 
 [ruby]: https://www.ruby-lang.org/
-[nokogiri]: http://nokogiri.rubyforge.org/
+[nokogiri]: http://www.nokogiri.org/
