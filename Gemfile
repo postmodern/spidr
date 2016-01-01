@@ -6,6 +6,9 @@ end
 
 gemspec
 
+
+gem 'robots', group: :robots
+
 group :development do
   gem 'rake'
   gem 'rubygems-tasks', '~> 0.2'
