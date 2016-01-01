@@ -1,6 +1,6 @@
 # Spidr
 
-* [Homepage](http://spidr.rubyforge.org/)
+* [Homepage](https://github.com/postmodern/spidr#readme)
 * [Source](https://github.com/postmodern/spidr)
 * [Issues](https://github.com/postmodern/spidr/issues)
 * [Mailing List](http://groups.google.com/group/spidr)
