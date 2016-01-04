@@ -51,11 +51,11 @@ Start spidering from a URL:
 
 Spider a host:
 
-    Spidr.host('coderrr.wordpress.com')
+    Spidr.host('solnic.eu')
 
 Spider a site:
 
-    Spidr.site('http://rubyflow.com/')
+    Spidr.site('http://www.rubyflow.com/')
 
 Spider multiple hosts:
 
@@ -63,31 +63,28 @@ Spider multiple hosts:
       'http://company.com/',
       hosts: [
         'company.com',
-        /host\d\.company\.com/
+        /host[\d]+\.company\.com/
       ]
     )
 
 Do not spider certain links:
 
-    Spidr.site('http://matasano.com/', ignore_links: [/log/])
+    Spidr.site('http://company.com/', ignore_links: [%{^/blog/}])
 
 Do not spider links on certain ports:
 
-    Spidr.site(
-      'http://sketchy.content.com/',
-      ignore_ports: [8000, 8010, 8080]
-    )
+    Spidr.site('http://company.com/', ignore_ports: [8000, 8010, 8080])
 
 Do not spider links blacklisted in robots.txt:
 
     Spidr.site(
-      'http://matasano.com/',
+      'http://company.com/',
       robots: true
     )
 
 Print out visited URLs:
 
-    Spidr.site('http://rubyinside.org/') do |spider|
+    Spidr.site('http://www.rubyinside.com/') do |spider|
       spider.every_url { |url| puts url }
     end
 
@@ -103,7 +100,7 @@ Build a URL map of a site:
 
 Print out the URLs that could not be requested:
 
-    Spidr.site('http://sketchy.content.com/') do |spider|
+    Spidr.site('http://company.com/') do |spider|
       spider.every_failed_url { |url| puts url }
     end
 
@@ -125,22 +122,22 @@ Finds all pages which have broken links:
 
 Search HTML and XML pages:
 
-    Spidr.site('http://company.withablog.com/') do |spider|
+    Spidr.site('http://company.com/') do |spider|
       spider.every_page do |page|
-        puts "[-] #{page.url}"
+        puts ">>> #{page.url}"
 
         page.search('//meta').each do |meta|
           name = (meta.attributes['name'] || meta.attributes['http-equiv'])
           value = meta.attributes['content']
 
-          puts "    #{name} = #{value}"
+          puts "  #{name} = #{value}"
         end
       end
     end
 
 Print out the titles from every page:
 
-    Spidr.site('http://www.rubypulse.com/') do |spider|
+    Spidr.site('https://www.ruby-lang.org/') do |spider|
       spider.every_html_page do |page|
         puts page.title
       end
@@ -150,7 +147,7 @@ Find what kinds of web servers a host is using, by accessing the headers:
 
     servers = Set[]
 
-    Spidr.host('generic.company.com') do |spider|
+    Spidr.host('company.com') do |spider|
       spider.all_headers do |headers|
         servers << headers['server']
       end
@@ -158,7 +155,7 @@ Find what kinds of web servers a host is using, by accessing the headers:
 
 Pause the spider on a forbidden page:
 
-    spider = Spidr.host('overnight.startup.com') do |spider|
+    spider = Spidr.host('company.com') do |spider|
       spider.every_forbidden_page do |page|
         spider.pause!
       end
@@ -166,7 +163,7 @@ Pause the spider on a forbidden page:
 
 Skip the processing of a page:
 
-    Spidr.host('sketchy.content.com') do |spider|
+    Spidr.host('company.com') do |spider|
       spider.every_missing_page do |page|
         spider.skip_page!
       end
@@ -174,7 +171,7 @@ Skip the processing of a page:
 
 Skip the processing of links:
 
-    Spidr.host('sketchy.content.com') do |spider|
+    Spidr.host('company.com') do |spider|
       spider.every_url do |url|
         if url.path.split('/').find { |dir| dir.to_i > 1000 }
           spider.skip_link!
