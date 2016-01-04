@@ -1,4 +1,4 @@
-### 0.5.0 / 2016-01-01
+### 0.5.0 / 2016-01-03
 
 * Added support for respecting `robots.txt` files.
 
