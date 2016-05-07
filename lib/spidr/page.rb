@@ -44,8 +44,8 @@ module Spidr
     #   Use {#meta_redirects} instead.
     #
     def meta_redirect
-      STDERR.puts 'DEPRECATION: Spidr::Page#meta_redirect will be removed in 0.3.0'
-      STDERR.puts 'DEPRECATION: Use Spidr::Page#meta_redirects instead'
+      warn 'DEPRECATION: Spidr::Page#meta_redirect will be removed in 0.3.0'
+      warn 'DEPRECATION: Use Spidr::Page#meta_redirects instead'
 
       meta_redirects
     end
