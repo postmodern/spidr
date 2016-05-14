@@ -30,6 +30,11 @@ module Spidr
     # @return [Hash{String,Regexp => String}]
     attr_reader :host_headers
 
+    # HTTP Headers to use for every request
+    #
+    # @return [Hash{String => String}]
+    attr_reader :default_headers
+
     # User-Agent to use
     #
     # @return [String]
@@ -69,7 +74,7 @@ module Spidr
     #
     # @return [CookieJar]
     attr_reader :cookies
-    
+
     # Maximum depth
     #
     # @return [Integer]
@@ -146,6 +151,12 @@ module Spidr
 
       if options[:host_headers]
         @host_headers.merge!(options[:host_headers])
+      end
+
+      @default_headers = {}
+
+      if options[:default_headers]
+        @default_headers.merge!(options[:default_headers])
       end
 
       @user_agent = options.fetch(:user_agent,Spidr.user_agent)
@@ -536,7 +547,7 @@ module Spidr
           return false
         rescue Actions::Action
         end
-        
+
         @queue << url
         @levels[url] = level
         return true
@@ -544,7 +555,7 @@ module Spidr
 
       return false
     end
-    
+
     #
     # Requests and creates a new Page object from a given URL.
     #
@@ -710,7 +721,7 @@ module Spidr
       path += "?#{url.query}" if url.query
 
       # set any additional HTTP headers
-      headers = {}
+      headers = @default_headers.dup
 
       unless @host_headers.empty?
         @host_headers.each do |name,header|
