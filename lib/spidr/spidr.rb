@@ -1,21 +1,14 @@
+require 'spidr/proxy'
 require 'spidr/agent'
 
 module Spidr
-  # Common proxy port.
-  COMMON_PROXY_PORT = 8080
-
   # Default proxy information.
-  DEFAULT_PROXY = {
-    host:     nil,
-    port:     COMMON_PROXY_PORT,
-    user:     nil,
-    password: nil
-  }
+  DEFAULT_PROXY = Proxy.new
 
   #
   # Proxy information used by all newly created Agent objects by default.
   #
-  # @return [Hash]
+  # @return [Proxy]
   #   The Spidr proxy information.
   #
   def Spidr.proxy
@@ -40,11 +33,11 @@ module Spidr
   # @option new_proxy [String] :password
   #   The password to authenticate with the proxy.
   #
-  # @return [Hash]
+  # @return [Proxy]
   #   The new proxy information.
   #
   def Spidr.proxy=(new_proxy)
-    @@spidr_proxy = {port: COMMON_PROXY_PORT}.merge(new_proxy)
+    @@spidr_proxy = Proxy.new(new_proxy)
   end
 
   #

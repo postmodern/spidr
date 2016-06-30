@@ -9,12 +9,14 @@ module Spidr
   class SessionCache
 
     # Proxy to use
+    #
+    # @return [Proxy]
     attr_accessor :proxy
 
     #
     # Creates a new session cache.
     #
-    # @param [Hash] proxy (Spidr.proxy)
+    # @param [Proxy] proxy (Spidr.proxy)
     #   Proxy options.
     #
     # @option proxy [String] :host

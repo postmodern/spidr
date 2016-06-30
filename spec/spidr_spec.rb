@@ -27,7 +27,7 @@ describe Spidr do
       subject.proxy = {host: 'example.com'}
 
       expect(subject.proxy[:host]).to eq('example.com')
-      expect(subject.proxy[:port]).to eq(Spidr::COMMON_PROXY_PORT)
+      expect(subject.proxy[:port]).to eq(Spidr::Proxy::DEFAULT_PORT)
     end
 
     it "should allow disabling the proxy" do
