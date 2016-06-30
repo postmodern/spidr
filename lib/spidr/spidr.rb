@@ -6,6 +6,31 @@ module Spidr
   DEFAULT_PROXY = Proxy.new
 
   class << self
+    # Read timeout.
+    #
+    # @return [Integer, nil]
+    attr_accessor :read_timeout
+
+    # Open timeout.
+    #
+    # @return [Integer, nil]
+    attr_accessor :open_timeout
+
+    # SSL timeout.
+    #
+    # @return [Integer, nil]
+    attr_accessor :ssl_timeout
+
+    # `Continue` timeout.
+    #
+    # @return [Integer, nil]
+    attr_accessor :continue_timeout
+
+    # `Keep-Alive` timeout.
+    #
+    # @return [Integer, nil]
+    attr_accessor :keep_alive_timeout
+
     #
     # The User-Agent string used by all Agent objects by default.
     #

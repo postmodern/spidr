@@ -91,6 +91,21 @@ module Spidr
     # @param [Hash] options
     #   Additional options
     #
+    # @option options [Integer] :open_timeout (Spidr.open_timeout)
+    #   Optional open timeout.
+    #
+    # @option options [Integer] :read_timeout (Spidr.read_timeout)
+    #   Optional read timeout.
+    #
+    # @option options [Integer] :ssl_timeout (Spidr.ssl_timeout)
+    #   Optional ssl timeout.
+    #
+    # @option options [Integer] :continue_timeout (Spidr.continue_timeout)
+    #   Optional continue timeout.
+    #
+    # @option options [Integer] :keep_alive_timeout (Spidr.keep_alive_timeout)
+    #   Optional keep_alive timeout.
+    #
     # @option options [Hash] :proxy (Spidr.proxy)
     #   The proxy information to use.
     #
@@ -162,7 +177,15 @@ module Spidr
       @user_agent = options.fetch(:user_agent,Spidr.user_agent)
       @referer    = options[:referer]
 
-      @sessions   = SessionCache.new(proxy: options[:proxy])
+      @sessions   = SessionCache.new(
+        proxy: options[:proxy],
+
+        open_timeout:       options[:open_timeout],
+        ssl_timeout:        options[:ssl_timeout],
+        read_timeout:       options[:read_timeout],
+        continue_timeout:   options[:continue_timeout],
+        keep_alive_timeout: options[:keep_alive_timeout]
+      )
       @cookies    = CookieJar.new
       @authorized = AuthStore.new
 

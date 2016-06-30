@@ -14,6 +14,31 @@ module Spidr
     # @return [Proxy]
     attr_accessor :proxy
 
+    # Open timeout.
+    #
+    # @return [Integer, nil]
+    attr_accessor :open_timeout
+
+    # SSL timeout.
+    #
+    # @return [Integer, nil]
+    attr_accessor :ssl_timeout
+
+    # Read timeout.
+    #
+    # @return [Integer, nil]
+    attr_accessor :read_timeout
+
+    # `Continue` timeout.
+    #
+    # @return [Integer, nil]
+    attr_accessor :continue_timeout
+
+    # `Keep-Alive` timeout.
+    #
+    # @return [Integer, nil]
+    attr_accessor :keep_alive_timeout
+
     #
     # Creates a new session cache.
     #
@@ -23,6 +48,21 @@ module Spidr
     # @option [Hash] :proxy (Spidr.proxy)
     #   Proxy options.
     #
+    # @option [Integer] :open_timeout
+    #   Optional open timeout.
+    #
+    # @option [Integer] :ssl_timeout
+    #   Optional ssl timeout.
+    #
+    # @option [Integer] :read_timeout
+    #   Optional read timeout.
+    #
+    # @option [Integer] :continue_timeout
+    #   Optional `Continue` timeout.
+    #
+    # @option [Integer] :keep_alive_timeout
+    #   Optional `Keep-Alive` timeout.
+    #
     # @since 0.6.0
     #
     def initialize(options={})
@@ -31,6 +71,12 @@ module Spidr
                else
                  Spidr.proxy
                end
+
+      @open_timeout       = options.fetch(:open_timeout,Spidr.open_timeout)
+      @ssl_timeout        = options.fetch(:ssl_timeout,Spidr.ssl_timeout)
+      @read_timeout       = options.fetch(:read_timeout,Spidr.read_timeout)
+      @continue_timeout   = options.fetch(:continue_timeout,Spidr.continue_timeout)
+      @keep_alive_timeout = options.fetch(:keep_alive_timeout,Spidr.keep_alive_timeout)
 
       @sessions = {}
     end
@@ -80,9 +126,15 @@ module Spidr
           @proxy.password
         ).new(url.host,url.port)
 
+        session.open_timeout       = @open_timeout
+        session.read_timeout       = @read_timeout
+        session.continue_timeout   = @continue_timeout
+        session.keep_alive_timeout = @keep_alive_timeout
+
         if url.scheme == 'https'
           session.use_ssl     = true
           session.verify_mode = OpenSSL::SSL::VERIFY_NONE
+          session.ssl_timeout = @ssl_timeout
           session.start
         end
 
