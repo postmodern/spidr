@@ -109,7 +109,7 @@ module Spidr
       url = URI(url.to_s) unless url.kind_of?(URI)
 
       # session key
-      key = [url.scheme, url.host, url.port]
+      key = key_for(url)
 
       return @sessions.has_key?(key)
     end
@@ -128,7 +128,7 @@ module Spidr
       url = URI(url.to_s) unless url.kind_of?(URI)
 
       # session key
-      key = [url.scheme, url.host, url.port]
+      key = key_for(url)
 
       unless @sessions[key]
         session = Net::HTTP::Proxy(
@@ -171,7 +171,7 @@ module Spidr
       url = URI(url.to_s) unless url.kind_of?(URI)
 
       # session key
-      key = [url.scheme, url.host, url.port]
+      key = key_for(url)
 
       if (sess = @sessions[key])
         begin 
@@ -201,6 +201,21 @@ module Spidr
 
       @sessions.clear
       return self
+    end
+
+    private
+
+    #
+    # Creates a session key based on the URL.
+    #
+    # @param [URI::HTTP] url
+    #   The given URL.
+    #
+    # @return [Array]
+    #   The session key containing the scheme, host and port.
+    #
+    def key_for(url)
+      [url.scheme, url.host, url.port]
     end
 
   end
