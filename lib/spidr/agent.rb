@@ -353,7 +353,7 @@ module Spidr
     #
     # The proxy information the agent uses.
     #
-    # @return [Hash]
+    # @return [Proxy]
     #   The proxy information.
     #
     # @see SessionCache#proxy
@@ -367,7 +367,7 @@ module Spidr
     #
     # Sets the proxy information that the agent uses.
     #
-    # @param [Hash] new_proxy
+    # @param [Proxy] new_proxy
     #   The new proxy information.
     #
     # @return [Hash]
