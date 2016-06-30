@@ -77,10 +77,10 @@ module Spidr
 
       unless @sessions[key]
         session = Net::HTTP::Proxy(
-          @proxy[:host],
-          @proxy[:port],
-          @proxy[:user],
-          @proxy[:password]
+          @proxy.host,
+          @proxy.port,
+          @proxy.user,
+          @proxy.password
         ).new(url.host,url.port)
 
         if url.scheme == 'https'
