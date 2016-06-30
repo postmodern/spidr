@@ -2,6 +2,7 @@ require 'spidr/agent/sanitizers'
 require 'spidr/agent/filters'
 require 'spidr/agent/events'
 require 'spidr/agent/actions'
+require 'spidr/agent/robots'
 require 'spidr/page'
 require 'spidr/session_cache'
 require 'spidr/cookie_jar'
@@ -11,11 +12,6 @@ require 'spidr/spidr'
 require 'openssl'
 require 'net/http'
 require 'set'
-
-begin
-  require 'robots'
-rescue LoadError
-end
 
 module Spidr
   class Agent
@@ -198,18 +194,14 @@ module Spidr
       @levels    = Hash.new(0)
       @max_depth = options[:max_depth]
 
-      if options.fetch(:robots,Spidr.robots?)
-        unless Object.const_defined?(:Robots)
-          raise(ArgumentError,":robots option given but unable to require 'robots' gem")
-        end
-
-        @robots = Robots.new(@user_agent)
-      end
-
       initialize_sanitizers(options)
       initialize_filters(options)
       initialize_actions(options)
       initialize_events(options)
+
+      if options.fetch(:robots,Spidr.robots?)
+        initialize_robots
+      end
 
       yield self if block_given?
     end
@@ -440,19 +432,6 @@ module Spidr
       url = URI(url.to_s) unless url.kind_of?(URI)
 
       return @history.include?(url)
-    end
-
-    #
-    # Determines whether a URL is allowed by the robot policy.
-    #
-    # @param [URI::HTTP, String] url
-    #   The URL to check.
-    #
-    # @return [Boolean]
-    #   Specifies whether a URL is allowed by the robot policy.
-    #
-    def robot_allowed?(url)
-      @robots ? @robots.allowed?(url) : true
     end
 
     #
