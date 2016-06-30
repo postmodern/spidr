@@ -48,19 +48,19 @@ module Spidr
     # @option [Hash] :proxy (Spidr.proxy)
     #   Proxy options.
     #
-    # @option [Integer] :open_timeout
+    # @option [Integer] :open_timeout (Spidr.open_timeout)
     #   Optional open timeout.
     #
-    # @option [Integer] :ssl_timeout
+    # @option [Integer] :ssl_timeout (Spidr.ssl_timeout)
     #   Optional ssl timeout.
     #
-    # @option [Integer] :read_timeout
+    # @option [Integer] :read_timeout (Spidr.read_timeout)
     #   Optional read timeout.
     #
-    # @option [Integer] :continue_timeout
+    # @option [Integer] :continue_timeout (Spidr.continue_timeout)
     #   Optional `Continue` timeout.
     #
-    # @option [Integer] :keep_alive_timeout
+    # @option [Integer] :keep_alive_timeout (Spidr.keep_alive_timeout)
     #   Optional `Keep-Alive` timeout.
     #
     # @since 0.6.0
