@@ -5,6 +5,16 @@ module Spidr
   # Default proxy information.
   DEFAULT_PROXY = Proxy.new
 
+  class << self
+    #
+    # The User-Agent string used by all Agent objects by default.
+    #
+    # @return [String]
+    #   The Spidr User-Agent string.
+    #
+    attr_accessor :user_agent
+  end
+
   #
   # Proxy information used by all newly created Agent objects by default.
   #
@@ -46,26 +56,6 @@ module Spidr
   def self.disable_proxy!
     @@spidr_proxy = DEFAULT_PROXY
     return true
-  end
-
-  #
-  # The User-Agent string used by all Agent objects by default.
-  #
-  # @return [String]
-  #   The Spidr User-Agent string.
-  #
-  def self.user_agent
-    @@spidr_user_agent
-  end
-
-  #
-  # Sets the Spidr User-Agent string.
-  #
-  # @param [String] new_agent
-  #   The new User-Agent string.
-  #
-  def self.user_agent=(new_agent)
-    @@spidr_user_agent = new_agent
   end
 
   #
