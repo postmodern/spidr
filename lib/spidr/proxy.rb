@@ -34,6 +34,24 @@ module Spidr
       )
     end
 
+    #
+    # Determines if the proxy settings are set.
+    #
+    # @return [Boolean]
+    #
+    def enabled?
+      !host.nil?
+    end
+
+    #
+    # Determines if the proxy is not set.
+    #
+    # @return [Boolean]
+    #
+    def disabled?
+      host.nil?
+    end
+
   end
 
   #
