@@ -1,3 +1,4 @@
+require 'spidr/proxy'
 require 'spidr/spidr'
 
 require 'net/http'
@@ -16,25 +17,21 @@ module Spidr
     #
     # Creates a new session cache.
     #
-    # @param [Proxy] proxy (Spidr.proxy)
+    # @param [Hash] options
+    #   Configuration options.
+    #
+    # @option [Hash] :proxy (Spidr.proxy)
     #   Proxy options.
     #
-    # @option proxy [String] :host
-    #   The host the proxy is running on.
+    # @since 0.6.0
     #
-    # @option proxy [Integer] :port
-    #   The port the proxy is running on.
-    #
-    # @option proxy [String] :user
-    #   The user to authenticate as with the proxy.
-    #
-    # @option proxy [String] :password
-    #   The password to authenticate with.
-    #
-    # @since 0.2.2
-    #
-    def initialize(proxy=Spidr.proxy)
-      @proxy    = proxy
+    def initialize(options={})
+      @proxy = if options[:proxy]
+                 Proxy.new(options[:proxy])
+               else
+                 Spidr.proxy
+               end
+
       @sessions = {}
     end
 

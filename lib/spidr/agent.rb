@@ -162,7 +162,7 @@ module Spidr
       @user_agent = options.fetch(:user_agent,Spidr.user_agent)
       @referer    = options[:referer]
 
-      @sessions   = SessionCache.new(options.fetch(:proxy,Spidr.proxy))
+      @sessions   = SessionCache.new(proxy: options[:proxy])
       @cookies    = CookieJar.new
       @authorized = AuthStore.new
 
