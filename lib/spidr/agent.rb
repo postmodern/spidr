@@ -690,6 +690,45 @@ module Spidr
     protected
 
     #
+    # Prepares request headers for the given URL.
+    #
+    # @param [URI::HTTP] url
+    #   The URL to prepare the request headers for.
+    #
+    # @return [Hash{String => String}]
+    #   The prepared headers.
+    #
+    # @since 0.6.0
+    #
+    def prepare_request_headers(url)
+      # set any additional HTTP headers
+      headers = @default_headers.dup
+
+      unless @host_headers.empty?
+        @host_headers.each do |name,header|
+          if host.match(name)
+            headers['Host'] = header
+            break
+          end
+        end
+      end
+
+      headers['Host']     ||= @host_header if @host_header
+      headers['User-Agent'] = @user_agent if @user_agent
+      headers['Referer']    = @referer if @referer
+
+      if (authorization = @authorized.for_url(url))
+        headers['Authorization'] = "Basic #{authorization}"
+      end
+
+      if (header_cookies = @cookies.for_host(url.host))
+        headers['Cookie'] = header_cookies
+      end
+
+      return headers
+    end
+
+    #
     # Normalizes the request path and grabs a session to handle page
     # get and post requests.
     #
@@ -722,29 +761,7 @@ module Spidr
       # append the URL query to the path
       path += "?#{url.query}" if url.query
 
-      # set any additional HTTP headers
-      headers = @default_headers.dup
-
-      unless @host_headers.empty?
-        @host_headers.each do |name,header|
-          if host.match(name)
-            headers['Host'] = header
-            break
-          end
-        end
-      end
-
-      headers['Host']     ||= @host_header if @host_header
-      headers['User-Agent'] = @user_agent if @user_agent
-      headers['Referer']    = @referer if @referer
-
-      if (authorization = @authorized.for_url(url))
-        headers['Authorization'] = "Basic #{authorization}"
-      end
-
-      if (header_cookies = @cookies.for_host(url.host))
-        headers['Cookie'] = header_cookies
-      end
+      headers = prepare_request_headers(url)
 
       begin
         sleep(@delay) if @delay > 0
