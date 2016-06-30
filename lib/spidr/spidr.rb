@@ -61,7 +61,7 @@ module Spidr
   #
   # Sets the proxy information used by Agent objects.
   #
-  # @param [Hash] new_proxy
+  # @param [Hash, nil] new_proxy
   #   The new proxy information.
   #
   # @option new_proxy [String] :host
@@ -80,7 +80,11 @@ module Spidr
   #   The new proxy information.
   #
   def self.proxy=(new_proxy)
-    @@spidr_proxy = Proxy.new(new_proxy)
+    @@spidr_proxy = if new_proxy
+                      Proxy.new(new_proxy)
+                    else
+                      DEFAULT_PROXY
+                    end
   end
 
   #

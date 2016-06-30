@@ -36,4 +36,26 @@ describe Spidr do
       expect(subject.proxy[:host]).to be_nil
     end
   end
+
+  describe "#proxy=" do
+    context "when given a Hash" do
+      let(:host) { 'proxy.example.com' }
+      let(:port) { 9999 }
+
+      before { subject.proxy = {host: host, port: port} }
+
+      it "should initialize the proxy based on the Hash options" do
+        expect(subject.proxy[:host]).to be host
+        expect(subject.proxy[:port]).to be port
+      end
+    end
+
+    context "when given nil" do
+      before { subject.proxy = nil }
+
+      it "should reset the proxy to the DEFAULT_PROXY" do
+        expect(subject.proxy).to be described_class::DEFAULT_PROXY
+      end
+    end
+  end
 end
