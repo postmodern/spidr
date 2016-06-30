@@ -113,6 +113,9 @@ module Spidr
     Agent.site(url,options,&block)
   end
 
+  # 
+  # @abstract
+  #
   def Spidr.robots
   end
 end
