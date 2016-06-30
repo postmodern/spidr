@@ -192,11 +192,10 @@ module Spidr
     # @since 0.2.2
     #
     def clear
-      @sessions.each_value do |sess|
+      @sessions.each_value do |session|
         begin
-          sess.finish
+          session.finish
         rescue IOError
-          nil
         end
       end
 
