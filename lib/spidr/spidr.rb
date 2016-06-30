@@ -11,7 +11,7 @@ module Spidr
   # @return [Proxy]
   #   The Spidr proxy information.
   #
-  def Spidr.proxy
+  def self.proxy
     @@spidr_proxy ||= DEFAULT_PROXY
   end
 
@@ -36,14 +36,14 @@ module Spidr
   # @return [Proxy]
   #   The new proxy information.
   #
-  def Spidr.proxy=(new_proxy)
+  def self.proxy=(new_proxy)
     @@spidr_proxy = Proxy.new(new_proxy)
   end
 
   #
   # Disables the proxy settings used by all newly created Agent objects.
   #
-  def Spidr.disable_proxy!
+  def self.disable_proxy!
     @@spidr_proxy = DEFAULT_PROXY
     return true
   end
@@ -54,7 +54,7 @@ module Spidr
   # @return [String]
   #   The Spidr User-Agent string.
   #
-  def Spidr.user_agent
+  def self.user_agent
     @@spidr_user_agent ||= nil
   end
 
@@ -64,7 +64,7 @@ module Spidr
   # @param [String] new_agent
   #   The new User-Agent string.
   #
-  def Spidr.user_agent=(new_agent)
+  def self.user_agent=(new_agent)
     @@spidr_user_agent = new_agent
   end
 
@@ -75,7 +75,7 @@ module Spidr
   #
   # @since 0.5.0
   #
-  def Spidr.robots?
+  def self.robots?
     @robots
   end
 
@@ -88,34 +88,34 @@ module Spidr
   #
   # @since 0.5.0
   #
-  def Spidr.robots=(mode)
+  def self.robots=(mode)
     @robots = mode
   end
 
   #
   # @see Agent.start_at
   #
-  def Spidr.start_at(url,options={},&block)
+  def self.start_at(url,options={},&block)
     Agent.start_at(url,options,&block)
   end
 
   #
   # @see Agent.host
   #
-  def Spidr.host(name,options={},&block)
+  def self.host(name,options={},&block)
     Agent.host(name,options,&block)
   end
 
   #
   # @see Agent.site
   #
-  def Spidr.site(url,options={},&block)
+  def self.site(url,options={},&block)
     Agent.site(url,options,&block)
   end
 
   # 
   # @abstract
   #
-  def Spidr.robots
+  def self.robots
   end
 end
