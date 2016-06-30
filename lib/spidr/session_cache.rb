@@ -2,6 +2,7 @@ require 'spidr/proxy'
 require 'spidr/spidr'
 
 require 'net/http'
+require 'openssl'
 
 module Spidr
   #
