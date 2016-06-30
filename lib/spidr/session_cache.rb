@@ -13,7 +13,7 @@ module Spidr
     # Proxy to use
     #
     # @return [Proxy]
-    attr_accessor :proxy
+    attr_reader :proxy
 
     # Open timeout.
     #
@@ -68,7 +68,7 @@ module Spidr
     #
     def initialize(options={})
       @proxy = if options[:proxy]
-                 Proxy.new(options[:proxy])
+                 Proxy(options[:proxy])
                else
                  Spidr.proxy
                end
@@ -80,6 +80,17 @@ module Spidr
       @keep_alive_timeout = options.fetch(:keep_alive_timeout,Spidr.keep_alive_timeout)
 
       @sessions = {}
+    end
+
+    #
+    # Sets the proxy.
+    #
+    # @param [Proxy, Hash, nil] new_proxy
+    #
+    # @return [Proxy]
+    #
+    def proxy=(new_proxy)
+      @proxy = Proxy(new_proxy)
     end
 
     #

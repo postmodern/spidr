@@ -2,9 +2,6 @@ require 'spidr/proxy'
 require 'spidr/agent'
 
 module Spidr
-  # Default proxy information.
-  DEFAULT_PROXY = Proxy.new
-
   class << self
     # Read timeout.
     #
@@ -48,6 +45,11 @@ module Spidr
     attr_accessor :user_agent
   end
 
+  # Default proxy information.
+  DEFAULT_PROXY = Proxy.new
+
+  @@proxy = DEFAULT_PROXY
+
   #
   # Proxy information used by all newly created Agent objects by default.
   #
@@ -55,7 +57,7 @@ module Spidr
   #   The Spidr proxy information.
   #
   def self.proxy
-    @@spidr_proxy ||= DEFAULT_PROXY
+    @@proxy
   end
 
   #
@@ -80,18 +82,14 @@ module Spidr
   #   The new proxy information.
   #
   def self.proxy=(new_proxy)
-    @@spidr_proxy = if new_proxy
-                      Proxy.new(new_proxy)
-                    else
-                      DEFAULT_PROXY
-                    end
+    @@proxy = Proxy(new_proxy)
   end
 
   #
   # Disables the proxy settings used by all newly created Agent objects.
   #
   def self.disable_proxy!
-    @@spidr_proxy = DEFAULT_PROXY
+    @@proxy = DEFAULT_PROXY
     return true
   end
 

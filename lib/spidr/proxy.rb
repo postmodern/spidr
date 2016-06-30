@@ -35,4 +35,28 @@ module Spidr
     end
 
   end
+
+  #
+  # Coerces a proxy object.
+  #
+  # @param [Proxy, Hash, nil] proxy
+  #   The proxy to coerce.
+  #
+  # @return [Proxy]
+  #   The coerced proxy.
+  #
+  # @raise [TypeError]
+  #   An object besides a {Proxy}, `Hash` or `nil` was given.
+  #
+  # @since 0.6.0
+  #
+  def self.Proxy(proxy)
+    case proxy
+    when Proxy then proxy
+    when Hash  then Proxy.new(proxy)
+    when nil   then Proxy.new
+    else
+      raise(TypeError,"unsupported proxy type: #{proxy.class}")
+    end
+  end
 end
