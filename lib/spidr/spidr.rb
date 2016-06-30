@@ -76,7 +76,7 @@ module Spidr
   # @since 0.5.0
   #
   def self.robots?
-    @robots
+    @@robots
   end
 
   #
@@ -89,7 +89,7 @@ module Spidr
   # @since 0.5.0
   #
   def self.robots=(mode)
-    @robots = mode
+    @@robots = mode
   end
 
   #
