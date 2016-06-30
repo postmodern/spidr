@@ -55,7 +55,7 @@ module Spidr
   #   The Spidr User-Agent string.
   #
   def self.user_agent
-    @@spidr_user_agent ||= nil
+    @@spidr_user_agent
   end
 
   #
