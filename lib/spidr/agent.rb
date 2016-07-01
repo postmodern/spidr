@@ -69,6 +69,11 @@ module Spidr
     # @return [CookieJar]
     attr_reader :cookies
 
+    # Maximum number of pages to visit.
+    #
+    # @return [Integer]
+    attr_reader :limit
+
     # Maximum depth
     #
     # @return [Integer]
@@ -136,6 +141,9 @@ module Spidr
     # @option options [Set, Array] :history
     #   The initial list of visited URLs.
     #
+    # @option options [Integer] :limit
+    #   The maximum number of pages to visit.
+    #
     # @option options [Integer] :max_depth
     #   The maximum link depth to follow.
     #
@@ -189,6 +197,7 @@ module Spidr
       @failures = Set[]
       @queue    = []
 
+      @limit     = options[:limit]
       @levels    = Hash.new(0)
       @max_depth = options[:max_depth]
 
@@ -277,6 +286,37 @@ module Spidr
     end
 
     #
+    # The proxy information the agent uses.
+    #
+    # @return [Proxy]
+    #   The proxy information.
+    #
+    # @see SessionCache#proxy
+    #
+    # @since 0.2.2
+    #
+    def proxy
+      @sessions.proxy
+    end
+
+    #
+    # Sets the proxy information that the agent uses.
+    #
+    # @param [Proxy] new_proxy
+    #   The new proxy information.
+    #
+    # @return [Hash]
+    #   The new proxy information.
+    #
+    # @see SessionCache#proxy=
+    #
+    # @since 0.2.2
+    #
+    def proxy=(new_proxy)
+      @sessions.proxy = new_proxy
+    end
+
+    #
     # Clears the history of the agent.
     #
     def clear
@@ -316,7 +356,7 @@ module Spidr
     def run(&block)
       @running = true
 
-      until (@queue.empty? || paused?)
+      until (@queue.empty? || paused? || limit_reached?)
         begin
           visit_page(dequeue,&block)
         rescue Actions::Paused
@@ -338,37 +378,6 @@ module Spidr
     #
     def running?
       @running == true
-    end
-
-    #
-    # The proxy information the agent uses.
-    #
-    # @return [Proxy]
-    #   The proxy information.
-    #
-    # @see SessionCache#proxy
-    #
-    # @since 0.2.2
-    #
-    def proxy
-      @sessions.proxy
-    end
-
-    #
-    # Sets the proxy information that the agent uses.
-    #
-    # @param [Proxy] new_proxy
-    #   The new proxy information.
-    #
-    # @return [Hash]
-    #   The new proxy information.
-    #
-    # @see SessionCache#proxy=
-    #
-    # @since 0.2.2
-    #
-    def proxy=(new_proxy)
-      @sessions.proxy = new_proxy
     end
 
     #
@@ -788,6 +797,17 @@ module Spidr
     #
     def dequeue
       @queue.shift
+    end
+
+    #
+    # Determines if the maximum limit has been reached.
+    #
+    # @return [Boolean]
+    #
+    # @since 0.6.0
+    #
+    def limit_reached?
+      @limit && @history.length >= @limit
     end
 
     #
