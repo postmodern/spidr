@@ -2,7 +2,7 @@ module Spidr
   #
   # @since 0.6.0
   #
-  module HasTimeouts
+  module Timeouts
     # Read timeout.
     #
     # @return [Integer, nil]

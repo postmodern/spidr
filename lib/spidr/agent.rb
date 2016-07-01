@@ -1,3 +1,4 @@
+require 'spidr/settings/user_agent'
 require 'spidr/agent/sanitizers'
 require 'spidr/agent/filters'
 require 'spidr/agent/events'
@@ -16,6 +17,8 @@ require 'set'
 module Spidr
   class Agent
 
+    include Settings::UserAgent
+
     # HTTP Host Header to use
     #
     # @return [String]
@@ -30,11 +33,6 @@ module Spidr
     #
     # @return [Hash{String => String}]
     attr_reader :default_headers
-
-    # User-Agent to use
-    #
-    # @return [String]
-    attr_accessor :user_agent
 
     # HTTP Authentication credentials
     #

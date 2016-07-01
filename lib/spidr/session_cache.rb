@@ -1,5 +1,5 @@
-require 'spidr/has_proxy'
-require 'spidr/has_timeouts'
+require 'spidr/settings/proxy'
+require 'spidr/settings/timeouts'
 require 'spidr/spidr'
 
 require 'net/http'
@@ -11,8 +11,8 @@ module Spidr
   #
   class SessionCache
 
-    include HasProxy
-    include HasTimeouts
+    include Settings::Proxy
+    include Settings::Timeouts
 
     #
     # Creates a new session cache.

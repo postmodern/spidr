@@ -1,19 +1,12 @@
-require 'spidr/proxy'
-require 'spidr/has_proxy'
-require 'spidr/has_timeouts'
+require 'spidr/settings/proxy'
+require 'spidr/settings/timeouts'
+require 'spidr/settings/user_agent'
 require 'spidr/agent'
 
 module Spidr
-  extend HasProxy
-  extend HasTimeouts
-
-  class << self
-    # The User-Agent string used by all Agent objects by default.
-    #
-    # @return [String]
-    #   The Spidr User-Agent string.
-    attr_accessor :user_agent
-  end
+  extend Settings::Proxy
+  extend Settings::Timeouts
+  extend Settings::UserAgent
 
   #
   # Specifies whether `robots.txt` should be honored globally.
