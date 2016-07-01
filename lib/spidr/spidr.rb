@@ -1,7 +1,10 @@
 require 'spidr/proxy'
+require 'spidr/has_proxy'
 require 'spidr/agent'
 
 module Spidr
+  extend HasProxy
+
   class << self
     # Read timeout.
     #
@@ -43,54 +46,6 @@ module Spidr
     # @return [String]
     #   The Spidr User-Agent string.
     attr_accessor :user_agent
-  end
-
-  # Default proxy information.
-  DEFAULT_PROXY = Proxy.new
-
-  @@proxy = DEFAULT_PROXY
-
-  #
-  # Proxy information used by all newly created Agent objects by default.
-  #
-  # @return [Proxy]
-  #   The Spidr proxy information.
-  #
-  def self.proxy
-    @@proxy
-  end
-
-  #
-  # Sets the proxy information used by Agent objects.
-  #
-  # @param [Hash, nil] new_proxy
-  #   The new proxy information.
-  #
-  # @option new_proxy [String] :host
-  #   The host-name of the proxy.
-  #
-  # @option new_proxy [Integer] :port (COMMON_PROXY_PORT)
-  #   The port of the proxy.
-  #
-  # @option new_proxy [String] :user
-  #   The user to authenticate with the proxy as.
-  #
-  # @option new_proxy [String] :password
-  #   The password to authenticate with the proxy.
-  #
-  # @return [Proxy]
-  #   The new proxy information.
-  #
-  def self.proxy=(new_proxy)
-    @@proxy = Proxy(new_proxy)
-  end
-
-  #
-  # Disables the proxy settings used by all newly created Agent objects.
-  #
-  def self.disable_proxy!
-    @@proxy = DEFAULT_PROXY
-    return true
   end
 
   #

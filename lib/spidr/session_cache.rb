@@ -1,4 +1,4 @@
-require 'spidr/proxy'
+require 'spidr/has_proxy'
 require 'spidr/spidr'
 
 require 'net/http'
@@ -10,10 +10,7 @@ module Spidr
   #
   class SessionCache
 
-    # Proxy to use
-    #
-    # @return [Proxy]
-    attr_reader :proxy
+    include HasProxy
 
     # Open timeout.
     #
@@ -67,11 +64,7 @@ module Spidr
     # @since 0.6.0
     #
     def initialize(options={})
-      @proxy = if options[:proxy]
-                 Proxy(options[:proxy])
-               else
-                 Spidr.proxy
-               end
+      @proxy = options.fetch(:proxy,Spidr.proxy)
 
       @open_timeout       = options.fetch(:open_timeout,Spidr.open_timeout)
       @ssl_timeout        = options.fetch(:ssl_timeout,Spidr.ssl_timeout)
@@ -80,17 +73,6 @@ module Spidr
       @keep_alive_timeout = options.fetch(:keep_alive_timeout,Spidr.keep_alive_timeout)
 
       @sessions = {}
-    end
-
-    #
-    # Sets the proxy.
-    #
-    # @param [Proxy, Hash, nil] new_proxy
-    #
-    # @return [Proxy]
-    #
-    def proxy=(new_proxy)
-      @proxy = Proxy(new_proxy)
     end
 
     #
