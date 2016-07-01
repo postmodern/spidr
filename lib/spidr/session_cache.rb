@@ -1,4 +1,5 @@
 require 'spidr/has_proxy'
+require 'spidr/has_timeouts'
 require 'spidr/spidr'
 
 require 'net/http'
@@ -11,31 +12,7 @@ module Spidr
   class SessionCache
 
     include HasProxy
-
-    # Open timeout.
-    #
-    # @return [Integer, nil]
-    attr_accessor :open_timeout
-
-    # SSL timeout.
-    #
-    # @return [Integer, nil]
-    attr_accessor :ssl_timeout
-
-    # Read timeout.
-    #
-    # @return [Integer, nil]
-    attr_accessor :read_timeout
-
-    # `Continue` timeout.
-    #
-    # @return [Integer, nil]
-    attr_accessor :continue_timeout
-
-    # `Keep-Alive` timeout.
-    #
-    # @return [Integer, nil]
-    attr_accessor :keep_alive_timeout
+    include HasTimeouts
 
     #
     # Creates a new session cache.

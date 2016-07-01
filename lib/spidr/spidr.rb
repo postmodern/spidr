@@ -1,46 +1,13 @@
 require 'spidr/proxy'
 require 'spidr/has_proxy'
+require 'spidr/has_timeouts'
 require 'spidr/agent'
 
 module Spidr
   extend HasProxy
+  extend HasTimeouts
 
   class << self
-    # Read timeout.
-    #
-    # @return [Integer, nil]
-    #
-    # @since 0.6.0
-    attr_accessor :read_timeout
-
-    # Open timeout.
-    #
-    # @return [Integer, nil]
-    #
-    # @since 0.6.0
-    attr_accessor :open_timeout
-
-    # SSL timeout.
-    #
-    # @return [Integer, nil]
-    #
-    # @since 0.6.0
-    attr_accessor :ssl_timeout
-
-    # `Continue` timeout.
-    #
-    # @return [Integer, nil]
-    #
-    # @since 0.6.0
-    attr_accessor :continue_timeout
-
-    # `Keep-Alive` timeout.
-    #
-    # @return [Integer, nil]
-    #
-    # @since 0.6.0
-    attr_accessor :keep_alive_timeout
-
     # The User-Agent string used by all Agent objects by default.
     #
     # @return [String]
