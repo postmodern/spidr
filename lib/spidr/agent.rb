@@ -179,15 +179,7 @@ module Spidr
       @user_agent = options.fetch(:user_agent,Spidr.user_agent)
       @referer    = options[:referer]
 
-      @sessions   = SessionCache.new(
-        proxy: options[:proxy],
-
-        open_timeout:       options[:open_timeout],
-        ssl_timeout:        options[:ssl_timeout],
-        read_timeout:       options[:read_timeout],
-        continue_timeout:   options[:continue_timeout],
-        keep_alive_timeout: options[:keep_alive_timeout]
-      )
+      @sessions   = SessionCache.new(options)
       @cookies    = CookieJar.new
       @authorized = AuthStore.new
 
