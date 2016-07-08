@@ -1,6 +1,7 @@
 require 'spidr/session_cache'
 
 require 'spec_helper'
+require 'settings/proxy_examples'
 
 describe SessionCache do
   describe "#initialize" do
@@ -99,7 +100,9 @@ describe SessionCache do
     end
   end
 
-  describe "empty" do
+  it_should_behave_like "includes Spidr::Settings::Proxy"
+
+  context "when empty" do
     before(:all) do
       @sessions = SessionCache.new
     end
@@ -117,7 +120,7 @@ describe SessionCache do
     end
   end
 
-  describe "not-empty" do
+  context "when not-empty" do
     before(:all) do
       @url = URI('http://example.com/')
 
