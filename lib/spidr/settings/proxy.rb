@@ -52,7 +52,7 @@ module Spidr
       #
       # Disables the proxy settings used by all newly created Agent objects.
       #
-      def self.disable_proxy!
+      def disable_proxy!
         @proxy = Spidr::Proxy.new
         return true
       end
