@@ -15,7 +15,7 @@ module Spidr
       #   The Spidr proxy information.
       #
       def proxy
-        @proxy || Spidr::Proxy.new
+        @proxy ||= Spidr::Proxy.new
       end
 
       #
