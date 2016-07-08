@@ -53,8 +53,8 @@ describe Spidr do
     context "when given nil" do
       before { subject.proxy = nil }
 
-      it "should reset the proxy to the DEFAULT_PROXY" do
-        expect(subject.proxy).to be described_class::DEFAULT_PROXY
+      it "should reset the proxy to disabled" do
+        expect(subject.proxy).to be_disabled
       end
     end
   end
