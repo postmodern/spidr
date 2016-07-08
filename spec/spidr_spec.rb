@@ -2,6 +2,7 @@ require 'spidr'
 
 require 'spec_helper'
 require 'settings/proxy_examples'
+require 'settings/timeouts_examples'
 
 describe Spidr do
   it "should have a VERSION constant" do
@@ -9,4 +10,5 @@ describe Spidr do
   end
 
   it_should_behave_like "includes Spidr::Settings::Proxy"
+  it_should_behave_like "includes Spidr::Settings::Timeouts"
 end

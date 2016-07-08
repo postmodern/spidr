@@ -2,6 +2,7 @@ require 'spidr/session_cache'
 
 require 'spec_helper'
 require 'settings/proxy_examples'
+require 'settings/timeouts_examples'
 
 describe SessionCache do
   describe "#initialize" do
@@ -101,6 +102,7 @@ describe SessionCache do
   end
 
   it_should_behave_like "includes Spidr::Settings::Proxy"
+  it_should_behave_like "includes Spidr::Settings::Timeouts"
 
   context "when empty" do
     before(:all) do
