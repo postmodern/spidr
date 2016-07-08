@@ -1,6 +1,7 @@
 require 'spidr/agent'
 
 require 'spec_helper'
+require 'settings/user_agent_examples'
 require 'helpers/wsoc'
 
 describe Agent do
@@ -9,6 +10,8 @@ describe Agent do
   before(:all) do
     @agent = run_course
   end
+
+  it_should_behave_like "includes Spidr::Settings::UserAgent"
 
   it "should provide the history" do
     expect(@agent.history).not_to be_empty
