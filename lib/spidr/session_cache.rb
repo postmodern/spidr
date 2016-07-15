@@ -97,10 +97,10 @@ module Spidr
           @proxy.password
         ).new(url.host,url.port)
 
-        session.open_timeout       = @open_timeout
-        session.read_timeout       = @read_timeout
-        session.continue_timeout   = @continue_timeout
-        session.keep_alive_timeout = @keep_alive_timeout
+        session.open_timeout       = @open_timeout       if @open_timeout
+        session.read_timeout       = @read_timeout       if @read_timeout
+        session.continue_timeout   = @continue_timeout   if @continue_timeout
+        session.keep_alive_timeout = @keep_alive_timeout if @keep_alive_timeout
 
         if url.scheme == 'https'
           session.use_ssl     = true
