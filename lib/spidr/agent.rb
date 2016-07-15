@@ -122,6 +122,9 @@ module Spidr
     # @option :proxy [String] :password
     #   The password to authenticate with.
     #
+    # @option options [Hash{String => String}] :default_headers
+    #   Default headers to set for every request.
+    #
     # @option options [String] :host_header
     #   The HTTP Host header to use with each request.
     #
