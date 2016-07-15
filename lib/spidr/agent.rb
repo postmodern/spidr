@@ -32,6 +32,8 @@ module Spidr
     # HTTP Headers to use for every request
     #
     # @return [Hash{String => String}]
+    #
+    # @since 0.6.0
     attr_reader :default_headers
 
     # HTTP Authentication credentials
