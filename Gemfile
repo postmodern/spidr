@@ -6,7 +6,6 @@ end
 
 gemspec
 
-
 gem 'robots', group: :robots
 
 group :development do
