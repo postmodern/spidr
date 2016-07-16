@@ -198,6 +198,14 @@ module Spidr
       @levels    = Hash.new(0)
       @max_depth = options[:max_depth]
 
+      if options[:queue]
+        self.queue = options[:queue]
+      end
+
+      if options[:history]
+        self.history = options[:history]
+      end
+
       initialize_sanitizers(options)
       initialize_filters(options)
       initialize_actions(options)

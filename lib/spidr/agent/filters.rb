@@ -439,14 +439,6 @@ module Spidr
       if options[:host]
         visit_hosts_like(options[:host])
       end
-
-      if options[:queue]
-        self.queue = options[:queue]
-      end
-
-      if options[:history]
-        self.history = options[:history]
-      end
     end
 
     #
