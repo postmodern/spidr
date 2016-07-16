@@ -400,7 +400,7 @@ module Spidr
       @schemes = []
 
       if options[:schemes]
-        @schemes += options[:schemes]
+        self.schemes = options[:schemes]
       else
         @schemes << 'http'
 
