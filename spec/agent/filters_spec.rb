@@ -3,60 +3,77 @@ require 'spidr/agent'
 require 'spec_helper'
 
 describe Agent do
-  describe "filters" do
-    it "should allow setting the acceptable schemes" do
-      agent = Agent.new
+  describe "#initialize_filters" do
+    describe ":schemes" do
+      it "should override the default schemes" do
+        agent = described_class.new(schemes: [:https])
 
-      agent.schemes = [:http]
-      expect(agent.schemes).to eq(['http'])
+        expect(agent.schemes).to be == ['https']
+      end
     end
 
-    it "should provide the hosts that will be visited" do
-      agent = Agent.new(hosts: ['spidr.rubyforge.org'])
+    describe ":hosts" do
+      it "should set the hosts that will be visited" do
+        agent = described_class.new(hosts: ['spidr.rubyforge.org'])
 
-      expect(agent.visit_hosts).to eq(['spidr.rubyforge.org'])
+        expect(agent.visit_hosts).to be == ['spidr.rubyforge.org']
+      end
     end
 
-    it "should provide the hosts that will not be visited" do
-      agent = Agent.new(ignore_hosts: ['example.com'])
+    describe ":ignore_hosts" do
+      it "should set the hosts that will not be visited" do
+        agent = described_class.new(ignore_hosts: ['example.com'])
 
-      expect(agent.ignore_hosts).to eq(['example.com'])
+        expect(agent.ignore_hosts).to be == ['example.com']
+      end
     end
 
-    it "should provide the ports that will be visited" do
-      agent = Agent.new(ports: [80, 443, 8000])
+    describe ":ports" do
+      it "should set the ports that will be visited" do
+        agent = described_class.new(ports: [80, 443, 8000])
 
-      expect(agent.visit_ports).to eq([80, 443, 8000])
+        expect(agent.visit_ports).to be == [80, 443, 8000]
+      end
     end
 
-    it "should provide the ports that will not be visited" do
-      agent = Agent.new(ignore_ports: [8000, 8080])
+    describe ":ignore_ports" do
+      it "should set the ports that will not be visited" do
+        agent = described_class.new(ignore_ports: [8000, 8080])
 
-      expect(agent.ignore_ports).to eq([8000, 8080])
+        expect(agent.ignore_ports).to be == [8000, 8080]
+      end
     end
 
-    it "should provide the links that will be visited" do
-      agent = Agent.new(links: ['index.php'])
+    describe ":links" do
+      it "should set the links that will be visited" do
+        agent = described_class.new(links: ['index.php'])
 
-      expect(agent.visit_links).to eq(['index.php'])
+        expect(agent.visit_links).to be == ['index.php']
+      end
     end
 
-    it "should provide the links that will not be visited" do
-      agent = Agent.new(ignore_links: [/login/])
+    describe ":ignore_links" do
+      it "should set the links that will not be visited" do
+        agent = described_class.new(ignore_links: [/login/])
 
-      expect(agent.ignore_links).to eq([/login/])
+        expect(agent.ignore_links).to be == [/login/]
+      end
     end
 
-    it "should provide the exts that will be visited" do
-      agent = Agent.new(exts: ['htm'])
+    describe ":exts" do
+      it "should set the exts that will be visited" do
+        agent = described_class.new(exts: ['htm'])
 
-      expect(agent.visit_exts).to eq(['htm'])
+        expect(agent.visit_exts).to be == ['htm']
+      end
     end
 
-    it "should provide the exts that will not be visited" do
-      agent = Agent.new(ignore_exts: ['cfm'])
+    describe ":ignore_exts" do
+      it "should set the exts that will not be visited" do
+        agent = described_class.new(ignore_exts: ['cfm'])
 
-      expect(agent.ignore_exts).to eq(['cfm'])
+        expect(agent.ignore_exts).to be == ['cfm']
+      end
     end
   end
 end

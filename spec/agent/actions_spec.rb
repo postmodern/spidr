@@ -6,55 +6,76 @@ describe Agent do
   describe "actions" do
     let(:url) { URI('http://spidr.rubyforge.org/') }
 
-    it "should be able to pause spidering" do
-      count = 0
-      agent = Agent.host('spidr.rubyforge.org') do |spider|
-        spider.every_page do |page|
-          count += 1
-          spider.pause! if count >= 2
+    describe "#pause!" do
+      subject do
+        count = 0
+
+        described_class.host('spidr.rubyforge.org') do |spider|
+          spider.every_page do |page|
+            count += 1
+            spider.pause! if count >= 2
+          end
         end
       end
 
-      expect(agent).to be_paused
-      expect(agent.history.length).to eq(2)
+      it "should be able to pause spidering" do
+        expect(subject).to be_paused
+        expect(subject.history.length).to eq(2)
+      end
     end
 
-    it "should be able to continue spidering after being paused" do
-      agent = Agent.new do |spider|
-        spider.every_page do |page|
-          spider.pause!
+    describe "#continue!" do
+      subject do
+        described_class.new do |spider|
+          spider.every_page do |page|
+            spider.pause!
+          end
         end
       end
 
-      agent.enqueue(url)
-      agent.continue!
+      before do
+        subject.enqueue(url)
+        subject.continue!
+      end
 
-      expect(agent.visited?(url)).to eq(true)
+      it "should be able to continue spidering after being paused" do
+        expect(subject.visited?(url)).to eq(true)
+      end
     end
 
-    it "should allow skipping of enqueued links" do
-      agent = Agent.new do |spider|
-        spider.every_url do |url|
-          spider.skip_link!
+    describe "#skip_link!" do
+      subject do
+        described_class.new do |spider|
+          spider.every_url do |url|
+            spider.skip_link!
+          end
         end
       end
 
-      agent.enqueue(url)
+      before do
+        subject.enqueue(url)
+      end
 
-      expect(agent.queue).to be_empty
+      it "should allow skipping of enqueued links" do
+        expect(subject.queue).to be_empty
+      end
     end
 
-    it "should allow skipping of visited pages" do
-      agent = Agent.new do |spider|
-        spider.every_page do |url|
-          spider.skip_page!
+    describe "#skip_page!" do
+      subject do
+        described_class.new do |spider|
+          spider.every_page do |url|
+            spider.skip_page!
+          end
         end
       end
 
-      agent.visit_page(url)
+      before { subject.visit_page(url) }
 
-      expect(agent.history).to eq(Set[url])
-      expect(agent.queue).to be_empty
+      it "should allow skipping of visited pages" do
+        expect(subject.history).to eq(Set[url])
+        expect(subject.queue).to be_empty
+      end
     end
   end
 end
