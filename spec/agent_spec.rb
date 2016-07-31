@@ -1,10 +1,13 @@
-require 'spidr/agent'
-
 require 'spec_helper'
 require 'settings/user_agent_examples'
 
+require 'spidr/agent'
+require 'sinatra/base'
+
 describe Agent do
   it_should_behave_like "includes Spidr::Settings::UserAgent"
+
+  let(:host) { 'example.com' }
 
   describe "#initialize" do
     it "should not be running" do
@@ -145,5 +148,659 @@ describe Agent do
         queue:   queue
       }
     end
+  end
+
+  def self.app(&block)
+    let(:app) do
+      klass = Class.new(Sinatra::Base)
+      klass.set :host, host
+      klass.set :port, 80
+      klass.class_eval(&block)
+      return klass
+    end
+
+    before do
+      stub_request(:any, /#{Regexp.escape(host)}/).to_rack(app)
+
+      subject.start_at("http://#{host}/")
+    end
+
+    after { WebMock.reset! }
+  end
+
+  describe "spidering" do
+    subject { described_class.new(host: host) }
+
+    context "local links" do
+      context "relative paths" do
+        app do
+          get '/' do
+            %{<html><body><a href="link">relative link</a></body></html>}
+          end
+
+          get '/link' do
+            '<html><body>got here</body></html>'
+          end
+        end
+
+        it "should expand relative paths of links" do
+          expect(subject.history).to be == Set[
+            URI("http://#{host}/"),
+            URI("http://#{host}/link")
+          ]
+        end
+
+        context "that contain directory escapes" do
+          app do
+            get '/' do
+              %{<html><body><a href="foo/./../../../../link">link</a></body></html>}
+            end
+
+            get '/link' do
+              '<html><body>got here</body></html>'
+            end
+          end
+
+          it "should expand relative paths before visiting them" do
+            expect(subject.history).to be == Set[
+              URI("http://#{host}/"),
+              URI("http://#{host}/link")
+            ]
+          end
+        end
+      end
+
+      context "absolute paths" do
+        app do
+          get '/' do
+            %{<html><body><a href="/link">absolute path</a></body></html>}
+          end
+
+          get '/link' do
+            '<html><body>got here</body></html>'
+          end
+        end
+
+        it "should visit links with absolute paths" do
+          expect(subject.history).to be == Set[
+            URI("http://#{host}/"),
+            URI("http://#{host}/link")
+          ]
+        end
+
+        context "that contain directory escapes" do
+          app do
+            get '/' do
+              %{<html><body><a href="/foo/./../../../../link">link</a></body></html>}
+            end
+
+            get '/link' do
+              '<html><body>got here</body></html>'
+            end
+          end
+
+          it "should expand absolute links before visiting them" do
+            expect(subject.history).to be == Set[
+              URI("http://#{host}/"),
+              URI("http://#{host}/link")
+            ]
+          end
+        end
+
+      end
+    end
+
+    context "remote links" do
+      app do
+        get '/' do
+          %{<html><body><a href="http://#{settings.host}/link">absolute link</a></body></html>}
+        end
+
+        get '/link' do
+          '<html><body>got here</body></html>'
+        end
+      end
+
+      it "should visit absolute links" do
+        expect(subject.history).to be == Set[
+          URI("http://#{host}/"),
+          URI("http://#{host}/link")
+        ]
+      end
+
+      context "that contain directory escapes" do
+        app do
+          get '/' do
+            %{<html><body><a href="http://#{settings.host}/foo/./../../../../link">link</a></body></html>}
+          end
+
+          get '/link' do
+            '<html><body>got here</body></html>'
+          end
+        end
+
+        it "should expand absolute links before visiting them" do
+          expect(subject.history).to be == Set[
+            URI("http://#{host}/"),
+            URI("http://#{host}/link")
+          ]
+        end
+      end
+    end
+
+    context "self-referential links" do
+      app do
+        get '/' do
+          %{<html><body><a href="/">same page</a></body></html>}
+        end
+      end
+
+      it "should ignore self-referential links" do
+        expect(subject.history).to be == Set[
+          URI("http://#{host}/")
+        ]
+      end
+    end
+
+    context "circular links" do
+      app do
+        get '/' do
+          %{<html><body><a href="/link">link</a></body></html>}
+        end
+
+        get '/link' do
+          %{<html><body><a href="/">previous page</a></body></html>}
+        end
+      end
+
+      it "should ignore links that have been previous visited" do
+        expect(subject.history).to be == Set[
+          URI("http://#{host}/"),
+          URI("http://#{host}/link")
+        ]
+      end
+    end
+
+    context "link cycles" do
+      app do
+        get '/' do
+          %{<html><body><a href="/link1">first link</a></body></html>}
+        end
+
+        get '/link1' do
+          %{<html><body><a href="/link2">next link</a></body></html>}
+        end
+
+        get '/link2' do
+          %{<html><body><a href="/">back to the beginning</a></body></html>}
+        end
+      end
+
+      it "should ignore links that have been previous visited" do
+        expect(subject.history).to be == Set[
+          URI("http://#{host}/"),
+          URI("http://#{host}/link1"),
+          URI("http://#{host}/link2"),
+        ]
+      end
+    end
+
+    context "fragment links" do
+      app do
+        get '/' do
+          %{<html><body><a href="#fragment">fragment link</a></body></html>}
+        end
+      end
+
+      it "should ignore fragment links" do
+        expect(subject.history).to be == Set[
+          URI("http://#{host}/")
+        ]
+      end
+    end
+
+    context "empty links" do
+      context "empty href" do
+        app do
+          get '/' do
+            %{<html><body><a href="">empty link</a> <a href=" ">blank link</a> <a>no href</a></body></html>}
+          end
+        end
+
+        it "should ignore links with empty hrefs" do
+          expect(subject.history).to be == Set[
+            URI("http://#{host}/")
+          ]
+        end
+      end
+
+      context "whitespace href" do
+        app do
+          get '/' do
+            %{<html><body><a href=" ">blank link</a></body></html>}
+          end
+        end
+
+        it "should ignore links containing only whitespace" do
+          expect(subject.history).to be == Set[
+            URI("http://#{host}/")
+          ]
+        end
+      end
+
+      context "missing href" do
+        app do
+          get '/' do
+            %{<html><body><a>no href</a></body></html>}
+          end
+        end
+
+        it "should ignore links with no href" do
+          expect(subject.history).to be == Set[
+            URI("http://#{host}/")
+          ]
+        end
+      end
+    end
+
+    context "frames" do
+      app do
+        get '/' do
+          %{<html><body><frameset><frame src="/frame" /></frameset></body></html>}
+        end
+
+        get '/frame' do
+          %{<html><body><a href="/link">link</a></body></html>}
+        end
+
+        get '/link' do
+          %{<html><body>got here</body></html>}
+        end
+      end
+
+      it "should visit the frame and links within the frame" do
+        expect(subject.history).to be == Set[
+          URI("http://#{host}/"),
+          URI("http://#{host}/frame"),
+          URI("http://#{host}/link")
+        ]
+      end
+    end
+
+    context "iframes" do
+      app do
+        get '/' do
+          %{<html><body><iframe src="/iframe" /></body></html>}
+        end
+
+        get '/iframe' do
+          %{<html><body><a href="/link">link</a></body></html>}
+        end
+
+        get '/link' do
+          %{<html><body>got here</body></html>}
+        end
+      end
+
+      it "should visit the iframe and links within the iframe" do
+        expect(subject.history).to be == Set[
+          URI("http://#{host}/"),
+          URI("http://#{host}/iframe"),
+          URI("http://#{host}/link")
+        ]
+      end
+    end
+
+    context "javascript links" do
+      app do
+        get '/' do
+          %{<html><body><a href="javascript:fail();">javascript link</a></body></html>}
+        end
+      end
+
+      it "should ignore javascript: links" do
+        expect(subject.history).to be == Set[
+          URI("http://#{host}/")
+        ]
+      end
+
+      context "when the link has an onclick action" do
+        app do
+          get '/' do
+            %{<html><body><a href="#" onclick="javascript:fail();">onclick link</a></body></html>}
+          end
+        end
+
+        it "should ignore links with onclick actions" do
+          expect(subject.history).to be == Set[
+            URI("http://#{host}/")
+          ]
+        end
+      end
+    end
+
+    context "cookies" do
+      app do
+        get '/' do
+          response.set_cookie 'visited', 'true'
+
+          %{<html><body><a href="/link">link</a></body></html>}
+        end
+
+        get '/link' do
+          if request.cookies['visited'] == 'true'
+            %{<html><body>got here</body></html>}
+          else
+            halt 401, "Cookie not set"
+          end
+        end
+      end
+
+      it "should record cookies and send them with each request" do
+        expect(subject.history).to be == Set[
+          URI("http://#{host}/"),
+          URI("http://#{host}/link"),
+        ]
+
+        expect(subject.cookies[host]).to be == {'visited' => 'true'}
+      end
+    end
+
+    context "redirects" do
+      context "300" do
+        app do
+          get '/' do
+            %{<html><body><a href="/redirect">redirect</a></body></html>}
+          end
+
+          get '/redirect' do
+            redirect to('/link'), 300
+          end
+
+          get '/link' do
+            %{<html><body>got here</body></html>}
+          end
+        end
+
+        it "should follow HTTP 300 redirects" do
+          expect(subject.history).to be == Set[
+            URI("http://#{host}/"),
+            URI("http://#{host}/redirect"),
+            URI("http://#{host}/link"),
+          ]
+        end
+      end
+
+      context "301" do
+        app do
+          get '/' do
+            %{<html><body><a href="/redirect">redirect</a></body></html>}
+          end
+
+          get '/redirect' do
+            redirect to('/link'), 301
+          end
+
+          get '/link' do
+            %{<html><body>got here</body></html>}
+          end
+        end
+
+        it "should follow HTTP 301 redirects" do
+          expect(subject.history).to be == Set[
+            URI("http://#{host}/"),
+            URI("http://#{host}/redirect"),
+            URI("http://#{host}/link"),
+          ]
+        end
+      end
+
+      context "302" do
+        app do
+          get '/' do
+            %{<html><body><a href="/redirect">redirect</a></body></html>}
+          end
+
+          get '/redirect' do
+            redirect to('/link'), 302
+          end
+
+          get '/link' do
+            %{<html><body>got here</body></html>}
+          end
+        end
+
+        it "should follow HTTP 302 redirects" do
+          expect(subject.history).to be == Set[
+            URI("http://#{host}/"),
+            URI("http://#{host}/redirect"),
+            URI("http://#{host}/link"),
+          ]
+        end
+      end
+
+      context "303" do
+        app do
+          get '/' do
+            %{<html><body><a href="/redirect">redirect</a></body></html>}
+          end
+
+          get '/redirect' do
+            redirect to('/link'), 303
+          end
+
+          get '/link' do
+            %{<html><body>got here</body></html>}
+          end
+        end
+
+        it "should follow HTTP 303 redirects" do
+          expect(subject.history).to be == Set[
+            URI("http://#{host}/"),
+            URI("http://#{host}/redirect"),
+            URI("http://#{host}/link"),
+          ]
+        end
+      end
+
+      context "307" do
+        app do
+          get '/' do
+            %{<html><body><a href="/redirect">redirect</a></body></html>}
+          end
+
+          get '/redirect' do
+            redirect to('/link'), 307
+          end
+
+          get '/link' do
+            %{<html><body>got here</body></html>}
+          end
+        end
+
+        it "should follow HTTP 307 redirects" do
+          expect(subject.history).to be == Set[
+            URI("http://#{host}/"),
+            URI("http://#{host}/redirect"),
+            URI("http://#{host}/link"),
+          ]
+        end
+      end
+
+      context "meta-refresh" do
+        app do
+          get '/' do
+            %{<html><body><a href="/redirect">redirect</a></body></html>}
+          end
+
+          get '/redirect' do
+            %{<html><head><meta http-equiv="refresh" content="0; url=http://#{settings.host}/link" /></head><body>Redirecting...</body></html>}
+          end
+
+          get '/link' do
+            %{<html><body>got here</body></html>}
+          end
+        end
+
+        it "should follow meta-refresh redirects" do
+          expect(subject.history).to be == Set[
+            URI("http://#{host}/"),
+            URI("http://#{host}/redirect"),
+            URI("http://#{host}/link"),
+          ]
+        end
+      end
+    end
+
+    context "Basic-Auth" do
+      app do
+        set :user,     'admin'
+        set :password, 'swordfish'
+
+        get '/' do
+          %{<html><body><a href="/private">private link</a></body></html>}
+        end
+
+        get '/private' do
+          auth =  Rack::Auth::Basic::Request.new(request.env)
+
+          if auth.provided? && auth.basic? && auth.credentials && \
+             auth.credentials == [settings.user, settings.password]
+            %{<html><body>got here</body></html>}
+          else
+            headers['WWW-Authenticate'] = %{Basic realm="Restricted Area"}
+            halt 401, "<html><body><h1>Not authorized</h1></body></html>"
+          end
+        end
+      end
+
+      before do
+        subject.authorized.add("http://#{host}/private", app.user, app.password)
+      end
+
+      it "should send HTTP Basic-Auth credentials for protected URLs" do
+        expect(subject.history).to be == Set[
+          URI("http://#{host}/"),
+          URI("http://#{host}/private")
+        ]
+      end
+    end
+  end
+
+  context "when :host is specified" do
+    subject { described_class.new(host: host) }
+
+    app do
+      get '/' do
+        %{<html><body><a href="http://google.com/">external link</a> <a href="/link">local link</a></body></html>}
+      end
+
+      get '/link' do
+        %{<html><body>got here</body></html>}
+      end
+    end
+
+    it "should only visit links on the host" do
+      expect(subject.history).to be == Set[
+        URI("http://#{host}/"),
+        URI("http://#{host}/link")
+      ]
+    end
+  end
+
+  context "when :limit is set" do
+    let(:limit) { 10 }
+
+    subject { described_class.new(host: host, limit: limit) }
+
+    app do
+      get '/' do
+        i = Integer(params['i'] || 0)
+
+        %{<html><body><a href="/?i=#{i+1}">next link</a></body></html>}
+      end
+    end
+
+    it "must only visit the maximum number of links" do
+      expect(subject.history).to be == Set[
+        URI("http://#{host}/"),
+        URI("http://#{host}/?i=1"),
+        URI("http://#{host}/?i=2"),
+        URI("http://#{host}/?i=3"),
+        URI("http://#{host}/?i=4"),
+        URI("http://#{host}/?i=5"),
+        URI("http://#{host}/?i=6"),
+        URI("http://#{host}/?i=7"),
+        URI("http://#{host}/?i=8"),
+        URI("http://#{host}/?i=9"),
+      ]
+    end
+  end
+
+  context "when :depth is set" do
+    app do
+      get '/' do
+        %{<html><body><a href="/left?d=1">left</a><a href="/right?d=1">right</a></body></html>}
+      end
+
+      get %r{^/left|/right} do
+        d = Integer(params['d'])
+
+        %{<html><body><a href="/left?d=#{d+1}">left</a><a href="/right?d=#{d+1}">right</a></body></html>}
+      end
+    end
+
+    context "depth 0" do
+      subject { described_class.new(host: host, max_depth: 0) }
+
+      it "must only visit the first page" do
+        expect(subject.history).to be == Set[URI("http://#{host}/")]
+      end
+    end
+
+    context "depth > 0" do
+      subject { described_class.new(host: host, max_depth: 2) }
+
+      it "must visit links below the maximum depth" do
+        expect(subject.history).to be == Set[
+          URI("http://#{host}/"),
+          URI("http://#{host}/left?d=1"),
+          URI("http://#{host}/right?d=1"),
+          URI("http://#{host}/left?d=2"),
+          URI("http://#{host}/right?d=2")
+        ]
+      end
+    end
+  end
+
+  context "when :robots is enabled" do
+    subject { described_class.new(host: host, robots: true) }
+
+    app do
+      get '/' do
+        %{<html><body><a href="/secret">don't follow this link</a> <a href="/pub">follow this link</a></body></html>}
+      end
+
+      get '/pub' do
+        %{<html><body>got here</body></html>}
+      end
+
+      get '/robots.txt' do
+        content_type 'text/plain'
+
+        [
+          'User-agent: *',
+          'Disallow: /secret',
+        ].join($/)
+      end
+    end
+
+    it "should not follow links Disallowed by robots.txt" do
+      expect(subject.history).to be == Set[
+        URI("http://#{host}/"),
+        URI("http://#{host}/pub")
+      ]
+    end
+
   end
 end
