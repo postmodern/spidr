@@ -66,6 +66,13 @@ module Spidr
     # @return [Array<URI::HTTP>]
     attr_reader :queue
 
+    # The session cache
+    #
+    # @return [SessionCache]
+    #
+    # @since 0.6.0
+    attr_reader :sessions
+
     # Cached cookies
     #
     # @return [CookieJar]
