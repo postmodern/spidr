@@ -2,83 +2,148 @@ require 'spidr/agent'
 
 require 'spec_helper'
 require 'settings/user_agent_examples'
-require 'helpers/wsoc'
 
 describe Agent do
-  include Helpers::WSOC
-
-  before(:all) do
-    @agent = run_course
-  end
-
   it_should_behave_like "includes Spidr::Settings::UserAgent"
 
-  it "should provide the history" do
-    expect(@agent.history).not_to be_empty
+  describe "#initialize" do
+    it "should not be running" do
+      expect(subject).to_not be_running
+    end
+
+    it "should default :delay to 0" do
+      expect(subject.delay).to be 0
+    end
+
+    it "should initialize #history" do
+      expect(subject.history).to be_empty
+    end
+
+    it "should initialize #failures" do
+      expect(subject.failures).to be_empty
+    end
+
+    it "should initialize #queue" do
+      expect(subject.queue).to be_empty
+    end
+
+    it "should initialize the #session_cache" do
+      expect(subject.sessions).to be_kind_of(SessionCache)
+    end
+
+    it "should initialize the #cookie_jar" do
+      expect(subject.cookies).to be_kind_of(CookieJar)
+    end
+
+    it "should initialize the #auth_store" do
+      expect(subject.authorized).to be_kind_of(AuthStore)
+    end
   end
 
-  it "should provide the queue" do
-    expect(@agent.queue).to be_empty
+  describe "#history=" do
+    let(:previous_history) { Set[URI('http://example.com')] }
+
+    before { subject.history = previous_history }
+
+    it "should be able to restore the history" do
+      expect(subject.history).to eq(previous_history)
+    end
+
+    context "when given an Array of URIs" do
+      let(:previous_history)  { [URI('http://example.com')] }
+      let(:converted_history) { Set.new(previous_history) }
+
+      it "should convert the Array to a Set" do
+        expect(subject.history).to eq(converted_history)
+      end
+    end
+
+    context "when given an Set of Strings" do
+      let(:previous_history)  { Set['http://example.com'] }
+      let(:converted_history) do
+        previous_history.map { |url| URI(url) }.to_set
+      end
+
+      it "should convert the Strings to URIs" do
+        expect(subject.history).to eq(converted_history)
+      end
+    end
   end
 
-  it "should be able to restore the history" do
-    agent = Agent.new
-    previous_history = Set[URI('http://www.example.com')]
+  describe "#failures=" do
+    let(:previous_failures) { Set[URI('http://example.com')] }
 
-    agent.history = previous_history
-    expect(agent.history).to eq(previous_history)
+    before { subject.failures = previous_failures }
+
+    it "should be able to restore the failures" do
+      expect(subject.failures).to eq(previous_failures)
+    end
+
+    context "when given an Array of URIs" do
+      let(:previous_failures)  { [URI('http://example.com')] }
+      let(:converted_failures) { Set.new(previous_failures) }
+
+      it "should convert the Array to a Set" do
+        expect(subject.failures).to eq(converted_failures)
+      end
+    end
+
+    context "when given an Set of Strings" do
+      let(:previous_failures)  { Set['http://example.com'] }
+      let(:converted_failures) do
+        previous_failures.map { |url| URI(url) }.to_set
+      end
+
+      it "should convert the Strings to URIs" do
+        expect(subject.failures).to eq(converted_failures)
+      end
+    end
   end
 
-  it "should convert new histories to an Set of URIs" do
-    agent = Agent.new
-    previous_history = ['http://www.example.com']
-    expected_history = Set[URI('http://www.example.com')]
+  describe "#queue=" do
+    let(:previous_queue) { [URI('http://example.com')] }
 
-    agent.history = previous_history
-    expect(agent.history).not_to eq(previous_history)
-    expect(agent.history).to eq(expected_history)
+    before { subject.queue = previous_queue }
+
+    it "should be able to restore the queue" do
+      expect(subject.queue).to eq(previous_queue)
+    end
+
+    context "when given an Set of URIs" do
+      let(:previous_queue)  { Set[URI('http://example.com')] }
+      let(:converted_queue) { previous_queue.to_a }
+
+      it "should convert the Set to an Array" do
+        expect(subject.queue).to eq(converted_queue)
+      end
+    end
+
+    context "when given an Array of Strings" do
+      let(:previous_queue)  { Set['http://example.com'] }
+      let(:converted_queue) { previous_queue.map { |url| URI(url) } }
+
+      it "should convert the Strings to URIs" do
+        expect(subject.queue).to eq(converted_queue)
+      end
+    end
   end
 
-  it "should be able to restore the failures" do
-    agent = Agent.new
-    previous_failures = Set[URI('http://localhost/')]
+  describe "#to_hash" do
+    let(:queue)   { [URI("http://example.com/link")] }
+    let(:history) { Set[URI("http://example.com/")]  }
 
-    agent.failures = previous_failures
-    expect(agent.failures).to eq(previous_failures)
-  end
+    subject do
+      described_class.new do |agent|
+        agent.queue   = queue
+        agent.history = history
+      end
+    end
 
-  it "should convert new histories to a Set of URIs" do
-    agent = Agent.new
-    previous_failures = ['http://localhost/']
-    expected_failures = Set[URI('http://localhost/')]
-
-    agent.failures = previous_failures
-    expect(agent.failures).not_to eq(previous_failures)
-    expect(agent.failures).to eq(expected_failures)
-  end
-
-  it "should be able to restore the queue" do
-    agent = Agent.new
-    previous_queue = [URI('http://www.example.com')]
-
-    agent.queue = previous_queue
-    expect(agent.queue).to eq(previous_queue)
-  end
-
-  it "should convert new queues to an Array of URIs" do
-    agent = Agent.new
-    previous_queue = ['http://www.example.com']
-    expected_queue = [URI('http://www.example.com')]
-
-    agent.queue = previous_queue
-    expect(agent.queue).not_to eq(previous_queue)
-    expect(agent.queue).to eq(expected_queue)
-  end
-
-  it "should provide a to_hash method that returns the queue and history" do
-    hash = @agent.to_hash
-
-    expect(hash[:queue]).to be_empty
-    expect(hash[:history]).not_to be_empty
+    it "should return the queue and history" do
+      expect(subject.to_hash).to be == {
+        history: history,
+        queue:   queue
+      }
+    end
   end
 end
