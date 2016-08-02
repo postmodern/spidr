@@ -1,3 +1,4 @@
+require 'spidr/page/status_codes'
 require 'spidr/page/headers'
 require 'spidr/page/body'
 require 'spidr/page/links'
@@ -49,27 +50,6 @@ module Spidr
 
       meta_redirects
     end
-
-    #
-    # Determines if the response code is `300`, `301`, `302`, `303`
-    # or `307`. Also checks for "soft" redirects added at the page 
-    # level by a meta refresh tag.
-    #
-    # @return [Boolean]
-    #   Specifies whether the response code is a HTTP Redirect code.
-    #
-    def is_redirect?
-      case code
-      when 300..303, 307
-        true
-      when 200
-        meta_redirect?
-      else
-        false
-      end
-    end
-
-    alias redirect? is_redirect?
 
     protected
 
