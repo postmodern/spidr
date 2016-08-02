@@ -1,5 +1,6 @@
 require 'spidr/page/status_codes'
-require 'spidr/page/headers'
+require 'spidr/page/content_types'
+require 'spidr/page/cookies'
 require 'spidr/page/body'
 require 'spidr/page/links'
 
