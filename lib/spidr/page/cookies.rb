@@ -3,7 +3,7 @@ require 'set'
 module Spidr
   class Page
     # Reserved names used within Cookie strings
-    RESERVED_COOKIE_NAMES = Set['path', 'expires', 'domain']
+    RESERVED_COOKIE_NAMES = /^(?:Path|Expires|Domain|Secure|HTTPOnly)$/i
 
     #
     # The raw Cookie String sent along with the page.
@@ -48,7 +48,7 @@ module Spidr
 
           name, value = param.split('=',2)
 
-          unless RESERVED_COOKIE_NAMES.include?(name)
+          unless name =~ RESERVED_COOKIE_NAMES
             params[name] = (value || '')
           end
         end
