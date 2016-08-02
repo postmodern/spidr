@@ -90,7 +90,7 @@ module Spidr
     #
     def method_missing(name,*arguments,&block)
       if (arguments.empty? && block.nil?)
-        header_name = name.to_s.sub('_','-')
+        header_name = name.to_s.tr('_','-')
 
         if @response.key?(header_name)
           return @response[header_name]
