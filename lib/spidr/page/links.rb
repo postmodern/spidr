@@ -245,9 +245,7 @@ module Spidr
         return nil
       end
 
-      if new_url.path
-        path = new_url.path
-
+      if (path = new_url.path)
         # ensure that paths begin with a leading '/' for URI::FTP
         if (new_url.scheme == 'ftp' && !path.start_with?('/'))
           path.insert(0,'/')
