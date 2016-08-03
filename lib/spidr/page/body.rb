@@ -25,13 +25,17 @@ module Spidr
     #
     def doc
       unless body.empty?
-        begin
-          if html?
-            @doc ||= Nokogiri::HTML(body, @url.to_s, content_charset)
-          elsif (rss? || atom? || xml? || xsl?)
-            @doc ||= Nokogiri::XML(body, @url.to_s, content_charset)
+        doc_class = if html?
+                      Nokogiri::HTML::Document
+                    elsif rss? || atom? || xml? || xsl?
+                      Nokogiri::XML::Document
+                    end
+
+        if doc_class
+          begin
+            @doc ||= doc_class.parse(body, @url.to_s, content_charset)
+          rescue
           end
-        rescue
         end
       end
     end
