@@ -239,11 +239,12 @@ module Spidr
     #   The normalized URI.
     #
     def to_absolute(link)
-      begin
-        new_url = url.merge(link.to_s)
-      rescue Exception
-        return nil
-      end
+      link    = link.to_s
+      new_url = begin
+                  url.merge(link)
+                rescue Exception
+                  return
+                end
 
       if (path = new_url.path)
         # ensure that paths begin with a leading '/' for URI::FTP
