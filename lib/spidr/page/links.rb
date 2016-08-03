@@ -21,7 +21,7 @@ module Spidr
     # @since 0.3.0
     #
     def each_meta_redirect
-      return enum_for(:each_meta_redirect) unless block_given?
+      return enum_for(__method__) unless block_given?
 
       if (html? && doc)
         search('//meta[@http-equiv and @content]').each do |node|
@@ -74,7 +74,7 @@ module Spidr
     # @since 0.3.0
     #
     def each_redirect(&block)
-      return enum_for(:each_redirect) unless block
+      return enum_for(__method__) unless block
 
       location = headers['location']
 
@@ -115,7 +115,7 @@ module Spidr
     # @since 0.5.0
     #
     def each_mailto
-      return enum_for(:each_mailto) unless block_given?
+      return enum_for(__method__) unless block_given?
 
       if (html? && doc)
         doc.search('//a[starts-with(@href,"mailto:")]').each do |a|
@@ -151,7 +151,7 @@ module Spidr
     # @since 0.3.0
     #
     def each_link
-      return enum_for(:each_link) unless block_given?
+      return enum_for(__method__) unless block_given?
 
       filter = lambda { |url|
         yield url unless (url.nil? || url.empty?)
@@ -208,7 +208,7 @@ module Spidr
     # @since 0.3.0
     #
     def each_url
-      return enum_for(:each_url) unless block_given?
+      return enum_for(__method__) unless block_given?
 
       each_link do |link|
         if (url = to_absolute(link))
