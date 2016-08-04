@@ -11,9 +11,13 @@ RSpec.shared_context "example Page" do
     Net::HTTPResponse.new('1.1', code.to_s, msg).tap do |response|
       response.set_content_type(content_type) if content_type
 
-      headers.each do |name,value|
-        if value then response.add_field(name,value)
-        else          response.remove_field(name)
+      headers.each do |name,values|
+        if values
+          Array(values).each do |value|
+            response.add_field(name,value)
+          end
+        else
+          response.remove_field(name)
         end
       end
 
