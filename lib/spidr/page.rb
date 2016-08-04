@@ -39,6 +39,8 @@ module Spidr
       (response.body || '')
     end
 
+    alias to_s body
+
     #
     # Returns a parsed document object for HTML, XML, RSS and Atom pages.
     #

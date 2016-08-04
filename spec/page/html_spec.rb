@@ -23,10 +23,4 @@ describe Page do
       end
     end
   end
-
-  describe "#to_s" do
-    it "should return the body" do
-      expect(subject.to_s).to be body
-    end
-  end
 end

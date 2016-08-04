@@ -16,8 +16,6 @@ module Spidr
       end
     end
 
-    alias to_s body
-
     #
     # Enumerates over the meta-redirect links in the page.
     #
