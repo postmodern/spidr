@@ -14,7 +14,7 @@ module Spidr
     # @since 0.2.7
     #
     def cookie
-      (@response['Set-Cookie'] || '')
+      @response['Set-Cookie'] || ''
     end
 
     alias raw_cookie cookie

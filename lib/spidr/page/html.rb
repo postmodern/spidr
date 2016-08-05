@@ -56,7 +56,7 @@ module Spidr
     #   Specifies whether the page includes page-level redirects.
     #
     def meta_redirect?
-      !(each_meta_redirect.first.nil?)
+      !each_meta_redirect.first.nil?
     end
 
     #
