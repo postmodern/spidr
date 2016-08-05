@@ -23,7 +23,5 @@ RSpec.shared_context "example App" do
 
       subject.start_at("http://#{host}/")
     end
-
-    after { WebMock.reset! }
   end
 end
