@@ -1,3 +1,21 @@
+### 0.6.0 / 2016-08-04
+
+* Added {Spidr::Proxy}.
+* Added more options to {Spidr::Agent#initialize}:
+  * `:default_headers`: specifies the default headers to set in all requests
+    (@maccman).
+  * `:limit`: specify the maximum number of links to visit.
+  * `:open_timeout`, `:read_timeout`, `:ssl_timeout`, `:continue_timeout`,
+    and `:keep_alive_timeout`: sets `Net::HTTP` timeouts.
+* Allow {Spidr::Settings::Proxy#proxy= Spidr.proxy=} to accept `nil`.
+* Use `Net::HTTPResponse#get_fields` in {Spidr::Page} to correctly return
+  multiple values for repeated headers.
+* Fixed a bug in {Spidr::Page#method_missing} where method names were not being
+  correctly converted to header names.
+* Fixed a bug in {Spidr::Page#cookie_params} where `Set-Cookie` flags were not
+  being filtered out.
+* Rewrote the specs to use webmock and increased spec coverage.
+
 ### 0.5.0 / 2016-01-03
 
 * Added support for respecting `robots.txt` files.
@@ -166,8 +184,8 @@
 * Added a HTTP session cache to {Spidr::Agent}, per suggestion of falter.
   * Added `Spidr::Agent#get_session`.
   * Added `Spidr::Agent#kill_session`.
-* Added {Spidr.proxy=}.
-* Added {Spidr.disable_proxy!}.
+* Added {Spidr::Settings::Proxy#proxy= Spidr.proxy=}.
+* Added {Spidr::Settings::Proxy#disable_proxy! Spidr.disable_proxy!}.
 * Aliased `Spidr::Page#txt?` to `Spidr::Page#plain_text?`.
 * Aliased `Spidr::Page#ok?` to `Spidr::Page#is_ok?`.
 * Aliased `Spidr::Page#redirect?` to `Spidr::Page#is_redirect?`.
