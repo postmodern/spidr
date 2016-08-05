@@ -29,6 +29,7 @@ and easy to use.
   * Port number
   * Full link
   * URL extension
+  * Optional `/robots.txt` support.
 * Provides call-backs for:
   * Every visited Page.
   * Every visited URL.
