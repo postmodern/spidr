@@ -30,7 +30,7 @@ and easy to use.
   * Full link
   * URL extension
   * Optional `/robots.txt` support.
-* Provides call-backs for:
+* Provides callbacks for:
   * Every visited Page.
   * Every visited URL.
   * Every visited URL that matches a specified pattern.
