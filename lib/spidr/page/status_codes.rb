@@ -7,7 +7,7 @@ module Spidr
     #   Response code from the page.
     #
     def code
-      response.code.to_i
+      @response.code.to_i
     end
 
     #
