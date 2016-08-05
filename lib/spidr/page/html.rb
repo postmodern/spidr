@@ -105,16 +105,12 @@ module Spidr
     def each_redirect(&block)
       return enum_for(__method__) unless block
 
-      location = headers['location']
-
-      if location.nil?
+      if (locations = @response.get_fields('Location'))
+        # Location headers override any meta-refresh redirects in the HTML
+        locations.each(&block)
+      else
         # check page-level meta redirects if there isn't a location header
         each_meta_redirect(&block)
-      elsif location.kind_of?(Array)
-        location.each(&block)
-      else
-        # usually the location header contains a single String
-        yield location
       end
     end
 
