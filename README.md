@@ -183,7 +183,7 @@ Skip the processing of links:
 
 ## Requirements
 
-* [ruby] >= 1.9.1
+* [ruby] >= 2.0.0
 * [nokogiri] ~> 1.3
 
 ## Install

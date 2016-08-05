@@ -11,7 +11,7 @@ email: postmodern.mod3@gmail.com
 homepage: https://github.com/postmodern/spidr#readme
 has_yard: true
 
-required_ruby_version: ">= 1.9.1"
+required_ruby_version: ">= 2.0.0"
 
 dependencies:
   nokogiri: ~> 1.3
