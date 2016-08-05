@@ -1,80 +1,185 @@
+require 'spec_helper'
+require 'example_app'
+
 require 'spidr/agent'
 
-require 'spec_helper'
-
 describe Agent do
-  describe "actions" do
-    let(:url) { URI('http://spidr.rubyforge.org/') }
+  describe "#continue!" do
+    before { subject.pause = true }
+    before { subject.continue!    }
 
-    describe "#pause!" do
+    it "should un-pause the Agent" do
+      expect(subject.paused?).to be false
+    end
+  end
+
+  describe "#pause=" do
+    it "should change the paused state" do
+      subject.pause = true
+
+      expect(subject.paused?).to be true
+    end
+  end
+
+  describe "#pause!" do
+    it "should raise Action::Paused" do
+      expect {
+        subject.pause!
+      }.to raise_error(described_class::Actions::Paused)
+    end
+  end
+
+  describe "#paused?" do
+    context "when the agent is paused" do
+      before do
+        begin
+          subject.pause!
+        rescue described_class::Actions::Paused
+        end
+      end
+
+      it { expect(subject.paused?).to be true }
+    end
+
+    context "when the agent is not paused" do
+      it { expect(subject.paused?).to be false }
+    end
+  end
+
+  describe "#skip_link!" do
+    it "should raise Actions::SkipLink" do
+      expect {
+        subject.skip_link!
+      }.to raise_error(described_class::Actions::SkipLink)
+    end
+  end
+
+  describe "#skip_page!" do
+    it "should raise Actions::SkipPage" do
+      expect {
+        subject.skip_page!
+      }.to raise_error(described_class::Actions::SkipPage)
+    end
+  end
+
+  context "when spidering" do
+    include_context "example App"
+
+    context "when pause! is called" do
+      app do
+        get '/' do
+          %{<html><body><a href="/link">link</a></body></html>}
+        end
+
+        get '/link' do
+          %{<html><body>should not get here</body></html>}
+        end
+      end
+
       subject do
-        count = 0
-
-        described_class.host('spidr.rubyforge.org') do |spider|
-          spider.every_page do |page|
-            count += 1
-            spider.pause! if count >= 2
+        described_class.new(host: host) do |agent|
+          agent.every_page do |page|
+            if page.url.path == '/'
+              agent.pause!
+            end
           end
         end
       end
 
-      it "should be able to pause spidering" do
+      it "should pause spidering" do
         expect(subject).to be_paused
-        expect(subject.history.length).to eq(2)
+        expect(subject.history).to be == Set[
+          URI("http://#{host}/")
+        ]
+      end
+
+      context "and continue! is called afterwards" do
+        before do
+          subject.enqueue "http://#{host}/link"
+          subject.continue!
+        end
+
+        it "should continue spidering" do
+          expect(subject.history).to be == Set[
+            URI("http://#{host}/"),
+            URI("http://#{host}/link")
+          ]
+        end
       end
     end
 
-    describe "#continue!" do
+    context "when skip_link! is called" do
+      app do
+        get '/' do
+          %{<html><body><a href="/link1">link1</a> <a href="/link2">link2</a> <a href="/link3">link3</a></body></html>}
+        end
+
+        get '/link1' do
+          %{<html><body>link1</body></html>}
+        end
+
+        get '/link2' do
+          %{<html><body>link2</body></html>}
+        end
+
+        get '/link3' do
+          %{<html><body>link3</body></html>}
+        end
+      end
+
       subject do
-        described_class.new do |spider|
-          spider.every_page do |page|
-            spider.pause!
+        described_class.new(host: host) do |agent|
+          agent.every_url do |url|
+            if url.path == '/link2'
+              agent.skip_link!
+            end
           end
         end
       end
 
-      before do
-        subject.enqueue(url)
-        subject.continue!
-      end
-
-      it "should be able to continue spidering after being paused" do
-        expect(subject.visited?(url)).to eq(true)
+      it "should skip all links on the page" do
+        expect(subject.history).to be == Set[
+          URI("http://#{host}/"),
+          URI("http://#{host}/link1"),
+          URI("http://#{host}/link3")
+        ]
       end
     end
 
-    describe "#skip_link!" do
+    context "when skip_page! is called" do
+      app do
+        get '/' do
+          %{<html><body><a href="/link">entry link</a></body></html>}
+        end
+
+        get '/link' do
+          %{<html><body><a href="/link1">link1</a> <a href="/link2">link2</a></body></html>}
+        end
+
+        get '/link1' do
+          %{<html><body>should not get here</body></html>}
+        end
+
+        get '/link2' do
+          %{<html><body>should not get here</body></html>}
+        end
+      end
+
       subject do
-        described_class.new do |spider|
-          spider.every_url do |url|
-            spider.skip_link!
+        described_class.new(host: host) do |agent|
+          agent.every_page do |page|
+            if page.url.path == '/link'
+              agent.skip_page!
+            end
           end
         end
       end
 
-      before do
-        subject.enqueue(url)
-      end
-
-      it "should allow skipping of enqueued links" do
-        expect(subject.queue).to be_empty
-      end
-    end
-
-    describe "#skip_page!" do
-      subject do
-        described_class.new do |spider|
-          spider.every_page do |url|
-            spider.skip_page!
-          end
-        end
-      end
-
-      before { subject.visit_page(url) }
-
-      it "should allow skipping of visited pages" do
-        expect(subject.history).to eq(Set[url])
-        expect(subject.queue).to be_empty
+      it "should skip all links on the page" do
+        expect(subject.history).to be == Set[
+          URI("http://#{host}/"),
+          URI("http://#{host}/link")
+        ]
       end
     end
   end
