@@ -1,13 +1,11 @@
 require 'spec_helper'
+require 'example_app'
 require 'settings/user_agent_examples'
 
 require 'spidr/agent'
-require 'sinatra/base'
 
 describe Agent do
   it_should_behave_like "includes Spidr::Settings::UserAgent"
-
-  let(:host) { 'example.com' }
 
   describe "#initialize" do
     it "should not be running" do
@@ -150,26 +148,8 @@ describe Agent do
     end
   end
 
-  def self.app(&block)
-    let(:app) do
-      klass = Class.new(Sinatra::Base)
-      klass.set :host, host
-      klass.set :port, 80
-      klass.class_eval(&block)
-      return klass
-    end
-
-    before do
-      stub_request(:any, /#{Regexp.escape(host)}/).to_rack(app)
-
-      subject.start_at("http://#{host}/")
-    end
-
-    after { WebMock.reset! }
-  end
-
   describe "spidering" do
-    subject { described_class.new(host: host) }
+    include_context "example App"
 
     context "local links" do
       context "relative paths" do
@@ -688,6 +668,8 @@ describe Agent do
   end
 
   context "when :host is specified" do
+    include_context "example App"
+
     subject { described_class.new(host: host) }
 
     app do
@@ -709,6 +691,8 @@ describe Agent do
   end
 
   context "when :limit is set" do
+    include_context "example App"
+
     let(:limit) { 10 }
 
     subject { described_class.new(host: host, limit: limit) }
@@ -738,6 +722,8 @@ describe Agent do
   end
 
   context "when :depth is set" do
+    include_context "example App"
+
     app do
       get '/' do
         %{<html><body><a href="/left?d=1">left</a><a href="/right?d=1">right</a></body></html>}
@@ -774,6 +760,8 @@ describe Agent do
   end
 
   context "when :robots is enabled" do
+    include_context "example App"
+
     subject { described_class.new(host: host, robots: true) }
 
     app do
@@ -801,6 +789,5 @@ describe Agent do
         URI("http://#{host}/pub")
       ]
     end
-
   end
 end
