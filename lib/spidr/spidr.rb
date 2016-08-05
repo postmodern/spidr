@@ -48,6 +48,15 @@ module Spidr
   end
 
   #
+  # @see Agent.domain
+  #
+  # @since 0.7.0
+  #
+  def self.domain(name,options={},&block)
+    Agent.domain(name,options,&block)
+  end
+
+  #
   # @see Agent.site
   #
   def self.site(url,**kwargs,&block)

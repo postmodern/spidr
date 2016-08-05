@@ -336,6 +336,31 @@ module Spidr
     end
 
     #
+    # Creates a new agent and spiders the entire domain.
+    #
+    # @param [String] name
+    #   The top-level domain to spider.
+    #
+    # @param [Hash] options
+    #   Additional options. See {Agent#initialize}.
+    #
+    # @yield [agent]
+    #   If a block is given, it will be passed the newly created agent
+    #   before it begins spidering.
+    #
+    # @yieldparam [Agent] agent
+    #   The newly created agent.
+    #
+    # @see #initialize
+    #
+    # @since 0.7.0
+    #
+    def self.domain(name,options={},&block)
+      agent = new(options.merge(host: /(^|\.)#{Regexp.escape(name)}$/),&block)
+      agent.start_at(URI::HTTP.build(host: name, path: '/'))
+    end
+
+    #
     # The proxy information the agent uses.
     #
     # @return [Proxy]
