@@ -762,7 +762,15 @@ describe Agent do
   context "when :robots is enabled" do
     include_context "example App"
 
-    subject { described_class.new(host: host, robots: true) }
+    let(:user_agent) { 'Ruby' }
+
+    subject do
+      described_class.new(
+        host: host,
+        user_agent: user_agent,
+        robots: true
+      )
+    end
 
     app do
       get '/' do
@@ -777,13 +785,15 @@ describe Agent do
         content_type 'text/plain'
 
         [
-          'User-agent: *',
-          'Disallow: /secret',
+          "User-agent: *",
+          'Disallow: /',
         ].join($/)
       end
     end
 
     it "should not follow links Disallowed by robots.txt" do
+      pending "https://github.com/bblimke/webmock/issues/642"
+
       expect(subject.history).to be == Set[
         URI("http://#{host}/"),
         URI("http://#{host}/pub")
