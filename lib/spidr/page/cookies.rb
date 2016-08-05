@@ -28,7 +28,7 @@ module Spidr
     # @since 0.2.2
     #
     def cookies
-      (headers['set-cookie'] || [])
+      (response.get_fields('Set-Cookie') || [])
     end
 
     #

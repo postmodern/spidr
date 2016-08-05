@@ -19,7 +19,7 @@ module Spidr
     # @since 0.2.2
     #
     def content_types
-      (headers['content-type'] || [])
+      (response.get_fields('content-type') || [])
     end
 
     #
