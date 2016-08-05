@@ -148,7 +148,7 @@ describe Agent do
     end
   end
 
-  describe "spidering" do
+  context "when spidering" do
     include_context "example App"
 
     context "local links" do
