@@ -16,7 +16,7 @@ module Spidr
     #   agent.schemes = ['http']
     #
     def schemes=(new_schemes)
-      @schemes = new_schemes.map { |scheme| scheme.to_s }
+      @schemes = new_schemes.map(&:to_s)
     end
 
     #

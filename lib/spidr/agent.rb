@@ -423,7 +423,7 @@ module Spidr
     #   The links which have been visited.
     #
     def visited_links
-      @history.map { |url| url.to_s }
+      @history.map(&:to_s)
     end
 
     #
@@ -433,7 +433,7 @@ module Spidr
     #   The hosts which have been visited.
     #
     def visited_hosts
-      visited_urls.map { |uri| uri.host }.uniq
+      visited_urls.map(&:host).uniq
     end
 
     #
