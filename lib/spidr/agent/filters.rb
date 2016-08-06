@@ -452,9 +452,9 @@ module Spidr
     #
     def visit_scheme?(scheme)
       if scheme
-        return @schemes.include?(scheme)
+        @schemes.include?(scheme)
       else
-        return true
+        true
       end
     end
 
