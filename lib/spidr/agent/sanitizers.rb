@@ -21,7 +21,7 @@ module Spidr
     # @since 0.2.2
     #
     def sanitize_url(url)
-      url = URI(url.to_s) unless url.kind_of?(URI)
+      url = URI(url)
 
       url.fragment = nil if @strip_fragments
       url.query    = nil if @strip_query

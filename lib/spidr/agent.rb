@@ -268,7 +268,7 @@ module Spidr
     # @see #initialize
     #
     def self.site(url,options={},&block)
-      url = URI(url.to_s) unless url.kind_of?(URI)
+      url = URI(url)
 
       agent = new(options.merge(host: url.host),&block)
       agent.start_at(url)
@@ -408,9 +408,7 @@ module Spidr
       @history.clear
 
       new_history.each do |url|
-        url = URI(url.to_s) unless url.kind_of?(URI)
-
-        @history << url
+        @history << URI(url)
       end
 
       return @history
@@ -448,9 +446,7 @@ module Spidr
     #   Specifies whether a URL was visited.
     #
     def visited?(url)
-      url = URI(url.to_s) unless url.kind_of?(URI)
-
-      return @history.include?(url)
+      @history.include?(URI(url))
     end
 
     #
@@ -469,9 +465,7 @@ module Spidr
       @failures.clear
 
       new_failures.each do |url|
-        url = URI(url.to_s) unless url.kind_of?(URI)
-
-        @failures << url
+        @failures << URI(url)
       end
 
       return @failures
@@ -487,9 +481,7 @@ module Spidr
     #   Specifies whether the given URL was unable to be visited.
     #
     def failed?(url)
-      url = URI(url.to_s) unless url.kind_of?(URI)
-
-      return @failures.include?(url)
+      @failures.include?(URI(url))
     end
 
     alias pending_urls queue
@@ -510,9 +502,7 @@ module Spidr
       @queue.clear
 
       new_queue.each do |url|
-        url = URI(url.to_s) unless url.kind_of?(URI)
-
-        @queue << url
+        @queue << URI(url)
       end
 
       return @queue
@@ -594,7 +584,7 @@ module Spidr
     #   The page for the response, or `nil` if the request failed.
     #
     def get_page(url)
-      url = URI(url.to_s)
+      url = URI(url)
 
       prepare_request(url) do |session,path,headers|
         new_page = Page.new(url,session.get(path,headers))
@@ -629,7 +619,7 @@ module Spidr
     # @since 0.2.2
     #
     def post_page(url,post_data='')
-      url = URI(url.to_s) unless url.kind_of?(URI)
+      url = URI(url)
 
       prepare_request(url) do |session,path,headers|
         new_page = Page.new(url,session.post(path,post_data,headers))

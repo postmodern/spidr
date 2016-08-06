@@ -65,7 +65,7 @@ module Spidr
     #
     def active?(url)
       # normalize the url
-      url = URI(url.to_s) unless url.kind_of?(URI)
+      url = URI(url)
 
       # session key
       key = key_for(url)
@@ -84,7 +84,7 @@ module Spidr
     #
     def [](url)
       # normalize the url
-      url = URI(url.to_s) unless url.kind_of?(URI)
+      url = URI(url)
 
       # session key
       key = key_for(url)
@@ -127,7 +127,7 @@ module Spidr
     #
     def kill!(url)
       # normalize the url
-      url = URI(url.to_s) unless url.kind_of?(URI)
+      url = URI(url)
 
       # session key
       key = key_for(url)

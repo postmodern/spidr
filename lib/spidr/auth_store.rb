@@ -34,7 +34,7 @@ module Spidr
     #
     def [](url)
       # normalize the url
-      url = URI(url.to_s) unless url.kind_of?(URI)
+      url = URI(url)
 
       key = [url.scheme, url.host, url.port]
       paths = @credentials[key]
@@ -70,7 +70,7 @@ module Spidr
     #
     def []=(url,auth)
       # normalize the url
-      url = URI(url.to_s) unless url.kind_of?(URI)
+      url = URI(url)
 
       # normalize the URL path
       path = URI.expand_path(url.path)
