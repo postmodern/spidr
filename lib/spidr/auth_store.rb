@@ -144,7 +144,11 @@ module Spidr
     # @since 0.2.2
     #
     def size
-      @credentials.inject(0) { |res, arr| res + arr[1].length }
+      total = 0
+
+      @credentials.each_value { |paths| total += paths.length }
+
+      return total
     end
 
     #
