@@ -759,8 +759,6 @@ module Spidr
     # @since 0.2.2
     #
     def prepare_request(url,&block)
-      host = url.host
-      port = url.port
       path = unless url.path.empty?
                url.path
              else
