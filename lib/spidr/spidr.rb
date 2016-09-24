@@ -16,6 +16,7 @@ module Spidr
   # @since 0.5.0
   #
   def self.robots?
+    @robots ||= false
     @robots
   end
 
