@@ -42,7 +42,7 @@ module Spidr
       return nil unless paths
 
       # longest path first
-      ordered_paths = paths.keys.sort_by { |key| -key.length }
+      ordered_paths = paths.keys.sort_by { |path_key| -path_key.length }
 
       # directories of the path
       path_dirs = URI.expand_path(url.path).split('/')
