@@ -14,4 +14,4 @@ matrix:
   allow_failures:
     - rvm: jruby
     - rvm: rbx
-script: rake spec
+script: bundle exec rake spec
