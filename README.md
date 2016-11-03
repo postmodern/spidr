@@ -157,7 +157,7 @@ Find what kinds of web servers a host is using, by accessing the headers:
 
 Pause the spider on a forbidden page:
 
-    spider = Spidr.host('company.com') do |spider|
+    Spidr.host('company.com') do |spider|
       spider.every_forbidden_page do |page|
         spider.pause!
       end
