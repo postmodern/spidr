@@ -520,5 +520,17 @@ describe Page do
         end
       end
     end
+
+    context "when the page has a base tag" do
+      let(:base_href) { "http://www.google.com/" }
+      let(:body) { %{<html><head><base href="#{base_href}"><title>example</title></head><body><p>hello</p></body></html>} }
+      let(:link) { "/foo/" }
+
+      subject { super().to_absolute(link) }
+
+      it "should set the hostname to that of the base tag instead of the page's URL" do
+        expect(subject).to be == URI("#{base_href}").merge(link)
+      end
+    end
   end
 end
