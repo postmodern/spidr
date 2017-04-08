@@ -715,7 +715,7 @@ module Spidr
 
       unless @host_headers.empty?
         @host_headers.each do |name,header|
-          if host.match(name)
+          if url.host.match(name)
             headers['Host'] = header
             break
           end
