@@ -13,7 +13,7 @@ describe Agent do
     end
 
     it "should default :delay to 0" do
-      expect(subject.delay).to be 0
+      expect(subject.delay.call).to be 0
     end
 
     it "should initialize #history" do
@@ -756,6 +756,31 @@ describe Agent do
           URI("http://#{host}/right?d=2")
         ]
       end
+    end
+  end
+
+  context "when :delay is specified through a lambda" do
+    include_context "example App"
+
+    subject do
+      described_class.new(
+        delay: -> { history.empty? ? 0.1: 0.2 }
+      )
+    end
+
+    before do
+      allow(subject).to receive(:sleep)
+    end
+
+    app do
+      get '/' do
+        %{<html><body><a href="/foobar">foobar</a></body></html>}
+      end
+    end
+
+    it "should use the delays specified in the lambda" do
+      expect(subject).to have_received(:sleep).with(0.1)
+      expect(subject).to have_received(:sleep).with(0.2)
     end
   end
 

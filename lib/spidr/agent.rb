@@ -196,7 +196,15 @@ module Spidr
       @authorized = AuthStore.new
 
       @running  = false
-      @delay    = options.fetch(:delay,0)
+
+      delay_int_or_proc = options.fetch(:delay, 0)
+
+      @delay    = if delay_int_or_proc.respond_to?(:to_int)
+                     -> { delay_int_or_proc }
+                   else
+                     delay_int_or_proc
+                   end
+
       @history  = Set[]
       @failures = Set[]
       @queue    = []
@@ -771,7 +779,8 @@ module Spidr
       headers = prepare_request_headers(url)
 
       begin
-        sleep(@delay) if @delay > 0
+        seconds_delay = instance_exec(&@delay)
+        sleep(seconds_delay) if seconds_delay > 0
 
         yield @sessions[url], path, headers
       rescue SystemCallError,
