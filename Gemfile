@@ -17,5 +17,5 @@ group :development do
   gem 'sinatra',  '~> 1.0'
 
   gem 'kramdown', '~> 0.12'
-  gem 'yard',     '~> 0.8'
+  gem 'yard',     '~> 0.9'
 end
