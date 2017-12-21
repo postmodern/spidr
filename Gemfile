@@ -16,6 +16,6 @@ group :development do
   gem 'webmock',  '~> 2.0'
   gem 'sinatra',  '~> 1.0'
 
-  gem 'kramdown', '~> 0.12'
+  gem 'kramdown'
   gem 'yard',     '~> 0.9'
 end
