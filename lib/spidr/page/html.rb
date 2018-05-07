@@ -204,6 +204,10 @@ module Spidr
         doc.search('//script[@src]').each do |script|
           filter.call(script.get_attribute('src'))
         end
+
+        doc.search('//img[@src]').each do |img|
+          filter.call(img.get_attribute('src'))
+        end
       end
     end
 
@@ -211,7 +215,7 @@ module Spidr
     # The links from within the page.
     #
     # @return [Array<String>]
-    #   All links within the HTML page, frame/iframe source URLs and any
+    #   All links within the HTML page, frame/iframe/img source URLs and any
     #   links in the `Location` header.
     #
     def links
