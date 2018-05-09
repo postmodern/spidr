@@ -377,6 +377,7 @@ module Spidr
     #   A page which has been visited.
     #
     def start_with(html,&block)
+
       response = Class.new do
         attr_reader :body, :code, :to_hash
         def initialize(body)
@@ -390,8 +391,21 @@ module Spidr
         end
       end.new(html)
 
+
       url = URI("")
       page = Page.new(url, response)
+
+      begin
+        @every_page_blocks.each { |page_block| page_block.call(page) }
+
+        yield page if block_given?
+      rescue Actions::Paused => action
+        raise(action)
+      rescue Actions::SkipPage
+        return nil
+      rescue Actions::Action
+      end
+
       page.each_url do |next_url|
         begin
           @every_link_blocks.each do |link_block|
@@ -409,6 +423,9 @@ module Spidr
         end
     
       end
+
+      return run(&block)
+
     end
 
     #
