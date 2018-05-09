@@ -34,6 +34,14 @@ module Spidr
   end
 
   #
+  # @see Agent.start_with
+  #
+  def self.start_with(html, options={},&block)
+    Agent.start_with(html, options,&block)
+  end
+
+
+  #
   # @see Agent.start_at
   #
   def self.start_at(url,options={},&block)

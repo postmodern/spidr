@@ -228,6 +228,31 @@ module Spidr
     #
     # Creates a new agent and begin spidering at the given URL.
     #
+    # @param [String] html
+    #   The html to start spidering at.
+    #
+    # @param [Hash] options
+    #   Additional options. See {Agent#initialize}.
+    #
+    # @yield [agent]
+    #   If a block is given, it will be passed the newly created agent
+    #   before it begins spidering.
+    #
+    # @yieldparam [Agent] agent
+    #   The newly created agent.
+    #
+    # @see #initialize
+    # @see #start_with
+    #
+    def self.start_with(html,options={},&block)
+      agent = new(options,&block)
+      agent.start_with(html)
+    end
+
+
+    #
+    # Creates a new agent and begin spidering at the given URL.
+    #
     # @param [URI::HTTP, String] url
     #   The URL to start spidering at.
     #
@@ -336,6 +361,71 @@ module Spidr
       @history.clear
       @failures.clear
       return self
+    end
+
+
+    #
+    # Start spidering at a given URL.
+    #
+    # @param [String] html
+    #   The html to start spidering at.
+    #
+    # @yield [page]
+    #   If a block is given, it will be passed every page visited.
+    #
+    # @yieldparam [Page] page
+    #   A page which has been visited.
+    #
+    def start_with(html,&block)
+
+      response = Class.new do
+        attr_reader :body, :code, :to_hash
+        def initialize(body)
+          @body = body
+          @code = 200
+          @to_hash = {}
+        end
+
+        def get_fields(field)
+          { "content-type" => ["text/html"] }[field]
+        end
+      end.new(html)
+
+
+      url = URI("")
+      page = Page.new(url, response)
+
+      begin
+        @every_page_blocks.each { |page_block| page_block.call(page) }
+
+        yield page if block_given?
+      rescue Actions::Paused => action
+        raise(action)
+      rescue Actions::SkipPage
+        return nil
+      rescue Actions::Action
+      end
+
+      page.each_url do |next_url|
+        begin
+          @every_link_blocks.each do |link_block|
+            link_block.call(page.url,next_url)
+          end
+        rescue Actions::Paused => action
+          raise(action)
+        rescue Actions::SkipLink
+          next
+        rescue Actions::Action
+        end
+
+        if (@max_depth.nil? || @max_depth > @levels[url])
+          enqueue(next_url,@levels[url] + 1)
+        end
+    
+      end
+
+      return run(&block)
+
     end
 
     #

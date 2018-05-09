@@ -329,6 +329,20 @@ describe Page do
         }.to yield_successive_args(javascript1, javascript2)
       end
     end
+
+    context "when the page contains remote javascript" do
+      let(:image1) { '/image1.js' }
+      let(:image2) { '/image2.js' }
+      let(:body)   { %{<html><body><img src="#{image1}" /><img src="#{image2}" /></body></html>} }
+
+      it "should yield each img/@src value" do
+        expect { |b|
+          subject.each_link(&b)
+        }.to yield_successive_args(image1, image2)
+      end
+    end
+
+
   end
 
   describe "#links" do
@@ -336,6 +350,7 @@ describe Page do
       let(:link) { '/link' }
       let(:frame) { '/frame' }
       let(:iframe) { '/iframe' }
+      let(:img) { '/img' }
       let(:stylesheet) { '/stylesheet.css' }
       let(:javascript) { '/script.js' }
       let(:body) do
@@ -348,6 +363,7 @@ describe Page do
             %{<a href="#{link}">link</a>} +
             %{<frameset><frame src="#{frame}" /></frameset>} +
             %{<iframe src="#{iframe}" />} +
+            %{<img src="#{img}" />} +
           %{</body>} +
         %{</html>}
       end
@@ -358,7 +374,8 @@ describe Page do
           frame,
           iframe,
           stylesheet,
-          javascript
+          javascript,
+          img
         ]
       end
     end
@@ -373,6 +390,7 @@ describe Page do
       let(:link) { '/link' }
       let(:frame) { '/frame' }
       let(:iframe) { '/iframe' }
+      let(:img) { '/img' }
       let(:stylesheet) { '/stylesheet.css' }
       let(:javascript) { '/script.js' }
       let(:body) do
@@ -385,6 +403,7 @@ describe Page do
             %{<a href="#{link}">link</a>} +
             %{<frameset><frame src="#{frame}" /></frameset>} +
             %{<iframe src="#{iframe}" />} +
+            %{<img src="#{img}" />} +
           %{</body>} +
         %{</html>}
       end
@@ -395,7 +414,8 @@ describe Page do
           URI("http://#{host}#{frame}"),
           URI("http://#{host}#{iframe}"),
           URI("http://#{host}#{stylesheet}"),
-          URI("http://#{host}#{javascript}")
+          URI("http://#{host}#{javascript}"),
+          URI("http://#{host}#{img}")
         )
       end
     end
@@ -414,6 +434,7 @@ describe Page do
       let(:link) { '/link' }
       let(:frame) { '/frame' }
       let(:iframe) { '/iframe' }
+      let(:img) { '/mg' }
       let(:stylesheet) { '/stylesheet.css' }
       let(:javascript) { '/script.js' }
       let(:body) do
@@ -426,6 +447,7 @@ describe Page do
             %{<a href="#{link}">link</a>} +
             %{<frameset><frame src="#{frame}" /></frameset>} +
             %{<iframe src="#{iframe}" />} +
+            %{<img src="#{img}" />} +
           %{</body>} +
         %{</html>}
       end
@@ -436,7 +458,8 @@ describe Page do
           URI("http://#{host}#{frame}"),
           URI("http://#{host}#{iframe}"),
           URI("http://#{host}#{stylesheet}"),
-          URI("http://#{host}#{javascript}")
+          URI("http://#{host}#{javascript}"),
+          URI("http://#{host}#{img}")
         ]
       end
     end
