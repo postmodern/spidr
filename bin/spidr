@@ -1,0 +1,146 @@
+#!/usr/bin/env ruby
+
+# for dev purposes
+require 'bundler/setup' if ENV['SPIDR_GEM_DEV']
+require 'spidr'
+
+require 'csv'
+require 'optparse'
+
+argv = ARGV
+
+start_at = argv.first
+header = false
+columns = %w[url]
+
+# Spidr::Agent options
+spidr_options = {}
+
+OptionParser.new do |parser|
+  parser.banner = 'Usage: spidr [url] [options]'
+  parser.default_argv = argv
+
+  parser.on('--url=val', String, 'Starting point for Spidr') do |value|
+    start_at = value
+  end
+
+  parser.on('--columns=[val1,val2]', Array, 'Columns in output') do |value|
+    columns = value || columns
+  end
+
+  parser.on('--[no-]header', 'Include the header') do |value|
+    header = value
+  end
+
+  # Spidr::Agent options
+  parser.on('--open-timeout=val', Integer, 'Optional open timeout') do |value|
+    spidr_options[:open_timeout] = value
+  end
+
+  parser.on('--read-timeout=val', Integer, 'Optional read timeout') do |value|
+    spidr_options[:read_timeout] = value
+  end
+
+  parser.on('--ssl-timeout=val', Integer, 'Optional ssl timeout') do |value|
+    spidr_options[:ssl_timeout] = value
+  end
+
+  parser.on('--continue-timeout=val', Integer, 'Optional continue timeout') do |value|
+    spidr_options[:continue_timeout] = value
+  end
+
+  parser.on('--keep-alive-timeout=val', Integer, 'Optional keep_alive timeout') do |value|
+    spidr_options[:keep_alive_timeout] = value
+  end
+
+  parser.on('--proxy-host=val', String, 'The host the proxy is running on') do |value|
+    spidr_options.fetch(:proxy, {})[:host] = value
+  end
+
+  parser.on('--proxy-port=val', Integer, 'The port the proxy is running on') do |value|
+    spidr_options.fetch(:proxy, {})[:port] = value
+  end
+
+  parser.on('--proxy-user=val', String, 'The user to authenticate as with the proxy') do |value|
+    spidr_options.fetch(:proxy, {})[:user] = value
+  end
+
+  parser.on('--proxy-password=val', String, 'The password to authenticate with') do |value|
+    spidr_options.fetch(:proxy, {})[:password] = value
+  end
+
+  # TODO: Implement this option?
+  # @option options [Hash{String => String}] :default_headers
+  #   Default headers to set for every request.
+
+  parser.on('--host-header=val', String, 'The HTTP Host header to use with each request') do |value|
+    spidr_options[:host_header] = value
+  end
+
+  # TODO: Implement this option?
+  # @option options [Hash{String,Regexp => String}] :host_headers
+  #   The HTTP Host headers to use for specific hosts.
+  #
+
+  parser.on('--user-agent=val', String, 'The User-Agent string to send with each requests') do |value|
+    spidr_options[:user_agent] = value
+  end
+
+  parser.on('--referer=val', String, 'The Referer URL to send with each request') do |value|
+    spidr_options[:referer] = value
+  end
+
+  parser.on('--referer=val', Integer, 'The number of seconds to pause between each request') do |value|
+    spidr_options[:delay] = value
+  end
+
+  parser.on('--queue=[val1,val2]', Array, 'The initial queue of URLs to visit') do |value|
+    spidr_options[:queue] = value
+  end
+
+  parser.on('--history=[val1,val2]', Array, 'The initial list of visited URLs') do |value|
+    spidr_options[:history] = value
+  end
+
+  parser.on('--limit=val', Integer, 'The maximum number of pages to visit') do |value|
+    spidr_options[:limit] = value
+  end
+
+  parser.on('--max-depth=val', Integer, 'The maximum link depth to follow') do |value|
+    spidr_options[:max_depth] = value
+  end
+
+  parser.on('--[no-]robots', 'Respect Robots.txt') do |value|
+    spidr_options[:robots] = value
+  end
+
+  # Boilerplate CLI
+  parser.on('-h', '--help', 'How to use') do
+    puts parser
+    exit
+  end
+
+  parser.on_tail('--version', 'Show version') do
+    puts "Spidr version #{Spidr::VERSION}"
+    exit
+  end
+
+  # No argument, shows at tail. This will print an options summary.
+  parser.on_tail('-h', '--help', 'Show this message') do
+    puts parser
+    exit
+  end
+end.parse!
+
+if start_at.nil? || start_at.empty?
+  raise(ArgumentError, "--url can't be blank")
+end
+
+# main
+puts CSV.generate_line(columns) if header
+Spidr.site(start_at, spidr_options) do |spider|
+  spider.every_page do |page|
+    row = columns.map { |column| page.public_send(column) }
+    puts CSV.generate_line(row)
+  end
+end
