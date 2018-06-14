@@ -12,6 +12,7 @@ argv = ARGV
 start_at = argv.first
 header = false
 columns = %w[url]
+content_types = nil
 
 # Spidr::Agent options
 spidr_options = {}
@@ -26,6 +27,10 @@ OptionParser.new do |parser|
 
   parser.on('--columns=[val1,val2]', Array, 'Columns in output') do |value|
     columns = value || columns
+  end
+
+  parser.on('--content-types=[val1,val2]', Array, 'Formats to output (html, javascript, css, json, ..)') do |value|
+    content_types = value
   end
 
   parser.on('--[no-]header', 'Include the header') do |value|
@@ -139,6 +144,8 @@ end
 puts CSV.generate_line(columns) if header
 Spidr.site(start_at, spidr_options) do |spider|
   spider.every_page do |page|
+    next if content_types && content_types.all? { |type| !page.is_content_type?(type) }
+
     row = columns.map { |column| page.public_send(column) }
     puts CSV.generate_line(row)
   end
