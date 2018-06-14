@@ -7,9 +7,7 @@ require 'spidr'
 require 'csv'
 require 'optparse'
 
-argv = ARGV
-
-start_at = argv.first
+start_at = nil
 header = false
 columns = %w[url]
 content_types = nil
@@ -17,13 +15,13 @@ content_types = nil
 # Spidr::Agent options
 spidr_options = {}
 
-OptionParser.new do |parser|
-  parser.banner = 'Usage: spidr [url] [options]'
-  parser.default_argv = argv
+opt_parser = nil
 
-  parser.on('--url=val', String, 'Starting point for Spidr') do |value|
-    start_at = value
-  end
+OptionParser.new do |parser|
+  opt_parser = parser
+
+  parser.banner = 'Usage: spidr [options] <url>'
+  parser.default_argv = ARGV
 
   parser.on('--columns=[val1,val2]', Array, 'Columns in output') do |value|
     columns = value || columns
@@ -136,8 +134,10 @@ OptionParser.new do |parser|
   end
 end.parse!
 
+start_at = ARGV.last
 if start_at.nil? || start_at.empty?
-  raise(ArgumentError, "--url can't be blank")
+  puts opt_parser
+  raise(ArgumentError, "<url> can't be blank")
 end
 
 # main
