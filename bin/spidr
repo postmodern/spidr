@@ -74,7 +74,7 @@ OptionParser.new do |parser|
     spidr_options.fetch(:proxy, {})[:password] = value
   end
 
-  parser.on('--default_headers=[key1=val1,key2=val2]', Array, 'Default headers to set for every request') do |value|
+  parser.on('--default-headers=[key1=val1,key2=val2]', Array, 'Default headers to set for every request') do |value|
     spidr_options[:default_headers] = (value || []).map { |v| v.split('=') }.to_h
   end
 
@@ -82,7 +82,7 @@ OptionParser.new do |parser|
     spidr_options[:host_header] = value
   end
 
-  parser.on('--host_headers=[key1=val1,key2=val2]', Array, 'The HTTP Host headers to use for specific hosts') do |value|
+  parser.on('--host-headers=[key1=val1,key2=val2]', Array, 'The HTTP Host headers to use for specific hosts') do |value|
     spidr_options[:host_headers] = (value || []).map { |v| v.split('=') }.to_h
   end
 
