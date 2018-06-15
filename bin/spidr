@@ -92,7 +92,7 @@ OptionParser.new do |parser|
     spidr_options[:referer] = value
   end
 
-  parser.on('--referer=val', Integer, 'The number of seconds to pause between each request') do |value|
+  parser.on('--delay=val', Integer, 'The number of seconds to pause between each request') do |value|
     spidr_options[:delay] = value
   end
 
