@@ -221,5 +221,15 @@ module Spidr
     def zip?
       is_content_type?('application/zip')
     end
+
+    #
+    # Determines if the page is a Gzip archive.
+    #
+    # @return [Boolean]
+    #   Specifies whether the page is a Gzip archive.
+    #
+    def gzip?
+      is_content_type?('application/gzip')
+    end
   end
 end
