@@ -1,5 +1,8 @@
 ---
 language: ruby
+sudo: false
+cache:
+  - bundler
 rvm:
   - 2.1.9
   - 2.2.4
@@ -10,4 +13,4 @@ matrix:
   allow_failures:
     - rvm: jruby
     - rvm: rbx
-script: rake spec
+script: bundle exec rake spec
