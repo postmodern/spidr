@@ -1,6 +1,6 @@
 ### 0.6.1 / 2019-10-24
 
-* Check for opaque component of URIs before attempting to set the path
+* Check for the opaque component of URIs before attempting to set the path
   component (@kyaroch). This fixes `URI::InvalidURIError: path conflicts with
   opaque` exceptions.
 * Fix `@robots` instance variable warning (@spk).
