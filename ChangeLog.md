@@ -1,3 +1,10 @@
+### 0.6.1 / 2019-10-24
+
+* Check for opaque component of URIs before attempting to set the path
+  component (@kyaroch). This fixes `URI::InvalidURIError: path conflicts with
+  opaque` exceptions.
+* Fix `@robots` instance variable warning (@spk).
+
 ### 0.6.0 / 2016-08-04
 
 * Added {Spidr::Proxy}.
