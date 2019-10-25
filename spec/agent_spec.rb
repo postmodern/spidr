@@ -786,14 +786,12 @@ describe Agent do
 
         [
           "User-agent: *",
-          'Disallow: /',
+          'Disallow: /secret',
         ].join($/)
       end
     end
 
     it "should not follow links Disallowed by robots.txt" do
-      pending "https://github.com/bblimke/webmock/issues/642"
-
       expect(subject.history).to be == Set[
         URI("http://#{host}/"),
         URI("http://#{host}/pub")
