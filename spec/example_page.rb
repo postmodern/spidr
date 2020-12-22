@@ -1,4 +1,6 @@
 require 'rspec'
+require 'net/http'
+require 'uri'
 
 RSpec.shared_context "example Page" do
   let(:code)          { 200 }
