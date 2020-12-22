@@ -729,7 +729,7 @@ describe Agent do
         %{<html><body><a href="/left?d=1">left</a><a href="/right?d=1">right</a></body></html>}
       end
 
-      get %r{^/left|/right} do
+      get %r{/left|/right} do
         d = Integer(params['d'])
 
         %{<html><body><a href="/left?d=#{d+1}">left</a><a href="/right?d=#{d+1}">right</a></body></html>}
