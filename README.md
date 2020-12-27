@@ -5,7 +5,6 @@
 * [Issues](https://github.com/postmodern/spidr/issues)
 * [Mailing List](http://groups.google.com/group/spidr)
 * [IRC](http://webchat.freenode.net/?channels=spidr&uio=d4)
-* [![Build Status](https://travis-ci.org/postmodern/spidr.svg)](https://travis-ci.org/postmodern/spidr)
 
 ## Description
 
