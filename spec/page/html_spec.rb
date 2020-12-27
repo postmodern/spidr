@@ -297,7 +297,7 @@ describe Page do
     context "when the page contains iframes" do
       let(:iframe1) { '/iframe1' }
       let(:iframe2) { '/iframe2' }
-      let(:body)   { %{<html><body><iframe src="#{iframe1}" /><iframe src="#{iframe2}" /></body></html>} }
+      let(:body)   { %{<html><body><iframe src="#{iframe1}"></iframe><iframe src="#{iframe2}"></iframe></body></html>} }
 
       it "should yield each iframe/@src value" do
         expect { |b|
@@ -332,32 +332,100 @@ describe Page do
   end
 
   describe "#links" do
-    context "when the page contains links" do
+    context "when the page contains an 'a' link" do
       let(:link) { '/link' }
-      let(:frame) { '/frame' }
-      let(:iframe) { '/iframe' }
-      let(:stylesheet) { '/stylesheet.css' }
-      let(:javascript) { '/script.js' }
       let(:body) do
-        %{<html>} +
-          %{<head>} +
-            %{<link rel="stylesheet" type="text/css" href="#{stylesheet}" />} +
-            %{<script type="text/javascript" src="#{javascript}"></script>} +
-          %{</head>} +
-          %{<body>} +
-            %{<a href="#{link}">link</a>} +
-            %{<frameset><frame src="#{frame}" /></frameset>} +
-            %{<iframe src="#{iframe}" />} +
-          %{</body>} +
-        %{</html>}
+        <<-HTML
+        <html>
+          <body>
+            <a href="#{link}">link</a>
+          </body>
+        </html>
+        HTML
       end
 
       it "should return an Array of links" do
         expect(subject.links).to be == [
-          link,
-          frame,
-          iframe,
-          stylesheet,
+          link
+        ]
+      end
+    end
+
+    context "when the page contains a 'frame'" do
+      let(:frame) { '/frame' }
+      let(:body) do
+        <<-HTML
+        <html>
+          <frameset>
+            <frame src="#{frame}"></frame>
+          </frameset>
+        </html>
+        HTML
+      end
+
+      it "should return an Array of links" do
+        expect(subject.links).to be == [
+          frame
+        ]
+      end
+    end
+
+    context "when the page contains a 'iframe'" do
+      let(:iframe) { '/iframe' }
+      let(:body) do
+        <<-HTML
+        <html>
+          <body>
+            <iframe src="#{iframe}"></iframe>
+          </body>
+        </html>
+        HTML
+      end
+
+      it "should return an Array of links" do
+        expect(subject.links).to be == [
+          iframe
+        ]
+      end
+    end
+
+    context "when the page contains a 'link' element" do
+      let(:stylesheet) { '/stylesheet.css' }
+      let(:body) do
+        <<-HTML
+        <html>
+          <head>
+            <link type="stylesheet" href="#{stylesheet}" />
+          </head>
+          <body>
+          </body>
+        </html>
+        HTML
+      end
+
+      it "should return an Array of links" do
+        expect(subject.links).to be == [
+          stylesheet
+        ]
+      end
+    end
+
+    context "when the page contains a 'script' element" do
+      let(:javascript) { '/script.js' }
+      let(:body) do
+        <<-HTML
+        <html>
+          <head>
+            <script src="#{javascript}" />
+          </head>
+          <body>
+          </body>
+        </html>
+        HTML
+      end
+
+      it "should return an Array of links" do
+        expect(subject.links).to be == [
           javascript
         ]
       end
@@ -369,32 +437,100 @@ describe Page do
   end
 
   describe "#each_url" do
-    context "when the page contains links" do
+    context "when the page contains an 'a' link" do
       let(:link) { '/link' }
-      let(:frame) { '/frame' }
-      let(:iframe) { '/iframe' }
-      let(:stylesheet) { '/stylesheet.css' }
-      let(:javascript) { '/script.js' }
       let(:body) do
-        %{<html>} +
-          %{<head>} +
-            %{<link rel="stylesheet" type="text/css" href="#{stylesheet}" />} +
-            %{<script type="text/javascript" src="#{javascript}"></script>} +
-          %{</head>} +
-          %{<body>} +
-            %{<a href="#{link}">link</a>} +
-            %{<frameset><frame src="#{frame}" /></frameset>} +
-            %{<iframe src="#{iframe}" />} +
-          %{</body>} +
-        %{</html>}
+        <<-HTML
+        <html>
+          <body>
+            <a href="#{link}">link</a>
+          </body>
+        </html>
+        HTML
       end
 
-      it "should return an Array of absolute URIs" do
+      it "should yield successive absolute URIs" do
         expect { |b| subject.each_url(&b) }.to yield_successive_args(
-          URI("http://#{host}#{link}"),
-          URI("http://#{host}#{frame}"),
-          URI("http://#{host}#{iframe}"),
-          URI("http://#{host}#{stylesheet}"),
+          URI("http://#{host}#{link}")
+        )
+      end
+    end
+
+    context "when the page contains a 'frame'" do
+      let(:frame) { '/frame' }
+      let(:body) do
+        <<-HTML
+        <html>
+          <frameset>
+            <frame src="#{frame}"></frame>
+          </frameset>
+        </html>
+        HTML
+      end
+
+      it "should yield successive absolute URIs" do
+        expect { |b| subject.each_url(&b) }.to yield_successive_args(
+          URI("http://#{host}#{frame}")
+        )
+      end
+    end
+
+    context "when the page contains a 'iframe'" do
+      let(:iframe) { '/iframe' }
+      let(:body) do
+        <<-HTML
+        <html>
+          <body>
+            <iframe src="#{iframe}"></iframe>
+          </body>
+        </html>
+        HTML
+      end
+
+      it "should yield successive absolute URIs" do
+        expect { |b| subject.each_url(&b) }.to yield_successive_args(
+          URI("http://#{host}#{iframe}")
+        )
+      end
+    end
+
+    context "when the page contains a 'link' element" do
+      let(:stylesheet) { '/stylesheet.css' }
+      let(:body) do
+        <<-HTML
+        <html>
+          <head>
+            <link type="stylesheet" href="#{stylesheet}" />
+          </head>
+          <body>
+          </body>
+        </html>
+        HTML
+      end
+
+      it "should yield successive absolute URIs" do
+        expect { |b| subject.each_url(&b) }.to yield_successive_args(
+          URI("http://#{host}#{stylesheet}")
+        )
+      end
+    end
+
+    context "when the page contains a 'script' element" do
+      let(:javascript) { '/script.js' }
+      let(:body) do
+        <<-HTML
+        <html>
+          <head>
+            <script src="#{javascript}" />
+          </head>
+          <body>
+          </body>
+        </html>
+        HTML
+      end
+
+      it "should yield successive absolute URIs" do
+        expect { |b| subject.each_url(&b) }.to yield_successive_args(
           URI("http://#{host}#{javascript}")
         )
       end
@@ -410,32 +546,100 @@ describe Page do
   end
 
   describe "#urls" do
-    context "when the page contains links" do
+    context "when the page contains an 'a' link" do
       let(:link) { '/link' }
-      let(:frame) { '/frame' }
-      let(:iframe) { '/iframe' }
-      let(:stylesheet) { '/stylesheet.css' }
-      let(:javascript) { '/script.js' }
       let(:body) do
-        %{<html>} +
-          %{<head>} +
-            %{<link rel="stylesheet" type="text/css" href="#{stylesheet}" />} +
-            %{<script type="text/javascript" src="#{javascript}"></script>} +
-          %{</head>} +
-          %{<body>} +
-            %{<a href="#{link}">link</a>} +
-            %{<frameset><frame src="#{frame}" /></frameset>} +
-            %{<iframe src="#{iframe}" />} +
-          %{</body>} +
-        %{</html>}
+        <<-HTML
+        <html>
+          <body>
+            <a href="#{link}">link</a>
+          </body>
+        </html>
+        HTML
       end
 
       it "should return an Array of absolute URIs" do
         expect(subject.urls).to be == [
-          URI("http://#{host}#{link}"),
-          URI("http://#{host}#{frame}"),
-          URI("http://#{host}#{iframe}"),
-          URI("http://#{host}#{stylesheet}"),
+          URI("http://#{host}#{link}")
+        ]
+      end
+    end
+
+    context "when the page contains a 'frame'" do
+      let(:frame) { '/frame' }
+      let(:body) do
+        <<-HTML
+        <html>
+          <frameset>
+            <frame src="#{frame}"></frame>
+          </frameset>
+        </html>
+        HTML
+      end
+
+      it "should return an Array of absolute URIs" do
+        expect(subject.urls).to be == [
+          URI("http://#{host}#{frame}")
+        ]
+      end
+    end
+
+    context "when the page contains a 'iframe'" do
+      let(:iframe) { '/iframe' }
+      let(:body) do
+        <<-HTML
+        <html>
+          <body>
+            <iframe src="#{iframe}"></iframe>
+          </body>
+        </html>
+        HTML
+      end
+
+      it "should return an Array of absolute URIs" do
+        expect(subject.urls).to be == [
+          URI("http://#{host}#{iframe}")
+        ]
+      end
+    end
+
+    context "when the page contains a 'link' element" do
+      let(:stylesheet) { '/stylesheet.css' }
+      let(:body) do
+        <<-HTML
+        <html>
+          <head>
+            <link type="stylesheet" href="#{stylesheet}" />
+          </head>
+          <body>
+          </body>
+        </html>
+        HTML
+      end
+
+      it "should return an Array of absolute URIs" do
+        expect(subject.urls).to be == [
+          URI("http://#{host}#{stylesheet}")
+        ]
+      end
+    end
+
+    context "when the page contains a 'script' element" do
+      let(:javascript) { '/script.js' }
+      let(:body) do
+        <<-HTML
+        <html>
+          <head>
+            <script src="#{javascript}" />
+          </head>
+          <body>
+          </body>
+        </html>
+        HTML
+      end
+
+      it "should return an Array of absolute URIs" do
+        expect(subject.urls).to be == [
           URI("http://#{host}#{javascript}")
         ]
       end
