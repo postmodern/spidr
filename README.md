@@ -1,5 +1,7 @@
 # Spidr
 
+[![CI](https://github.com/postmodern/spidr/actions/workflows/ruby.yml/badge.svg)](https://github.com/postmodern/spidr/actions/workflows/ruby.yml)
+
 * [Homepage](https://github.com/postmodern/spidr#readme)
 * [Source](https://github.com/postmodern/spidr)
 * [Issues](https://github.com/postmodern/spidr/issues)
