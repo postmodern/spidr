@@ -142,7 +142,7 @@ module Spidr
 
       return super(name,*arguments,&block)
     end
-  
+
   end
 end
 
@@ -150,3 +150,4 @@ require 'spidr/page/status_codes'
 require 'spidr/page/content_types'
 require 'spidr/page/cookies'
 require 'spidr/page/html'
+require 'spidr/page/sitemap'
