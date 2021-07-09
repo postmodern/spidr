@@ -26,13 +26,13 @@ describe Spidr::Proxy do
       it { expect(subject.enabled?).to be true }
     end
 
-    context "when hist is not set" do
+    context "when host is not set" do
       it { expect(subject.enabled?).to be false }
     end
   end
 
   describe "#disabled?" do
-    context "when hist is not set" do
+    context "when host is not set" do
       it { expect(subject.disabled?).to be true }
     end
 
