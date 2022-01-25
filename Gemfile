@@ -17,5 +17,6 @@ group :development do
   gem 'sinatra',  '~> 2.0'
 
   gem 'kramdown'
-  gem 'yard',     '~> 0.9'
+  gem 'redcarpet', platform: :mri
+  gem 'yard',      '~> 0.9'
 end
