@@ -11,6 +11,12 @@ email: postmodern.mod3@gmail.com
 homepage: https://github.com/postmodern/spidr#readme
 has_yard: true
 
+metadata:
+  documentation_uri: https://rubydoc.info/gems/spidr
+  source_code_uri:   https://github.com/postmodern/spidr.rb
+  bug_tracker_uri:   https://github.com/postmodern/spidr.rb/issues
+  changelog_uri:     https://github.com/postmodern/spidr.rb/blob/master/ChangeLog.md
+
 required_ruby_version: ">= 2.0.0"
 
 dependencies:
