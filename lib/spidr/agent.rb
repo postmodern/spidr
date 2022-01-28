@@ -279,12 +279,16 @@ module Spidr
     # @yieldparam [Agent] agent
     #   The newly created agent.
     #
+    # @return [Agent]
+    #   The created agent object.
+    #
     # @see #initialize
     # @see #start_at
     #
     def self.start_at(url,**kwargs,&block)
       agent = new(**kwargs,&block)
       agent.start_at(url)
+      return agent
     end
 
     #
@@ -303,6 +307,9 @@ module Spidr
     # @yieldparam [Agent] agent
     #   The newly created agent.
     #
+    # @return [Agent]
+    #   The created agent object.
+    #
     # @see #initialize
     #
     def self.site(url,**kwargs,&block)
@@ -310,6 +317,7 @@ module Spidr
 
       agent = new(host: url.host, **kwargs, &block)
       agent.start_at(url)
+      return agent
     end
 
     #
@@ -328,11 +336,15 @@ module Spidr
     # @yieldparam [Agent] agent
     #   The newly created agent.
     #
+    # @return [Agent]
+    #   The created agent object.
+    #
     # @see #initialize
     #
     def self.host(name,**kwargs,&block)
       agent = new(host: name, **kwargs, &block)
       agent.start_at(URI::HTTP.build(host: name, path: '/'))
+      return agent
     end
 
     #
@@ -351,6 +363,9 @@ module Spidr
     # @yieldparam [Agent] agent
     #   The newly created agent.
     #
+    # @return [Agent]
+    #   The created agent object.
+    #
     # @see #initialize
     #
     # @since 0.7.0
@@ -358,6 +373,7 @@ module Spidr
     def self.domain(name,options={},&block)
       agent = new(options.merge(host: /(^|\.)#{Regexp.escape(name)}$/),&block)
       agent.start_at(URI::HTTP.build(host: name, path: '/'))
+      return agent
     end
 
     #
