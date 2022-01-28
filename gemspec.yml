@@ -16,6 +16,7 @@ metadata:
   source_code_uri:   https://github.com/postmodern/spidr.rb
   bug_tracker_uri:   https://github.com/postmodern/spidr.rb/issues
   changelog_uri:     https://github.com/postmodern/spidr.rb/blob/master/ChangeLog.md
+  rubygems_mfa_required: 'true'
 
 required_ruby_version: ">= 2.0.0"
 
