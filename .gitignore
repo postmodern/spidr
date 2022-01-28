@@ -1,6 +1,5 @@
 pkg
 doc
-web
 coverage
 Gemfile.lock
 .DS_Store
