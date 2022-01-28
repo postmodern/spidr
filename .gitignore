@@ -1,7 +1,6 @@
 pkg
 doc
 web
-tmp
 coverage
 Gemfile.lock
 .DS_Store
