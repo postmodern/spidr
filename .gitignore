@@ -1,7 +1,7 @@
-pkg
-doc
-coverage
 Gemfile.lock
+coverage
+doc
+pkg
 .DS_Store
 .bundle
 .yardoc
