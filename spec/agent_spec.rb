@@ -386,7 +386,15 @@ describe Agent do
     context "frames" do
       app do
         get '/' do
-          %{<html><body><frameset><frame src="/frame" /></frameset></body></html>}
+          <<~HTML
+            <html>
+              <body>
+                <frameset>
+                  <frame src="/frame" />
+                </frameset>
+              </body>
+            </html>
+          HTML
         end
 
         get '/frame' do
@@ -614,7 +622,14 @@ describe Agent do
           end
 
           get '/redirect' do
-            %{<html><head><meta http-equiv="refresh" content="0; url=http://#{settings.host}/link" /></head><body>Redirecting...</body></html>}
+            <<~HTML
+              <html>
+                <head>
+                  <meta http-equiv="refresh" content="0; url=http://#{settings.host}/link" />
+                </head>
+                <body>Redirecting...</body>
+              </html>
+            HTML
           end
 
           get '/link' do
@@ -674,7 +689,14 @@ describe Agent do
 
     app do
       get '/' do
-        %{<html><body><a href="http://google.com/">external link</a> <a href="/link">local link</a></body></html>}
+        <<~HTML
+          <html>
+            <body>
+              <a href="http://google.com/">external link</a>
+              <a href="/link">local link</a>
+            </body>
+          </html>
+        HTML
       end
 
       get '/link' do
@@ -726,13 +748,27 @@ describe Agent do
 
     app do
       get '/' do
-        %{<html><body><a href="/left?d=1">left</a><a href="/right?d=1">right</a></body></html>}
+        <<~HTML
+          <html>
+            <body>
+              <a href="/left?d=1">left</a>
+              <a href="/right?d=1">right</a>
+            </body>
+          </html>
+        HTML
       end
 
       get %r{/left|/right} do
         d = Integer(params['d'])
 
-        %{<html><body><a href="/left?d=#{d+1}">left</a><a href="/right?d=#{d+1}">right</a></body></html>}
+        <<~HTML
+          <html>
+            <body>
+              <a href="/left?d=#{d+1}">left</a>
+              <a href="/right?d=#{d+1}">right</a>
+            </body>
+          </html>
+        HTML
       end
     end
 
@@ -774,7 +810,14 @@ describe Agent do
 
     app do
       get '/' do
-        %{<html><body><a href="/secret">don't follow this link</a> <a href="/pub">follow this link</a></body></html>}
+        <<~HTML
+          <html>
+            <body>
+              <a href="/secret">don't follow this link</a>
+              <a href="/pub">follow this link</a>
+            </body>
+          </html>
+        HTML
       end
 
       get '/pub' do
