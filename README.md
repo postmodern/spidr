@@ -171,6 +171,16 @@ Spidr.site('https://www.ruby-lang.org/') do |spider|
 end
 ```
 
+Print out every HTTP redirect:
+
+```ruby
+Spidr.host('company.com') do |spider|
+  spider.every_redirect_page do |page|
+    puts "#{page.url} -> #{page.headers['Location']}"
+  end
+end
+```
+
 Find what kinds of web servers a host is using, by accessing the headers:
 
 ```ruby
