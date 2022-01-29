@@ -14,21 +14,18 @@ module Spidr
     #
     # Creates a new Rules object.
     #
-    # @param [Hash] options
-    #   Additional options.
-    #
-    # @option options [Array<String, Regexp, Proc>] :accept
+    # @param [Array<String, Regexp, Proc>, nil] accept
     #   The patterns to accept data with.
     #
-    # @option options [Array<String, Regexp, Proc>] :reject
+    # @param [Array<String, Regexp, Proc>, nil] reject
     #   The patterns to reject data with.
     #
-    def initialize(options={})
+    def initialize(accept: nil, reject: nil)
       @accept = []
       @reject = []
 
-      @accept += options[:accept] if options[:accept]
-      @reject += options[:reject] if options[:reject]
+      @accept += accept if accept
+      @reject += reject if reject
     end
 
     #

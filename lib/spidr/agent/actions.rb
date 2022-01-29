@@ -96,7 +96,7 @@ module Spidr
 
     protected
 
-    def initialize_actions(options={})
+    def initialize_actions
       @paused = false
     end
   end

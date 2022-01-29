@@ -10,28 +10,20 @@ module Spidr
     #
     # Initializes the proxy.
     #
-    # @param [Hash] attributes
-    #   Attributes for the proxy.
-    #
-    # @option attributes [String] :host
+    # @param [String] host
     #   The host the proxy is running on.
     #
-    # @option attributes [Integer] :port
+    # @param [Integer] port
     #   The port the proxy is running on.
     #
-    # @option attributes [String] :user
+    # @param [String] user
     #   The user to authenticate as with the proxy.
     #
-    # @option attributes [String] :password
+    # @param [String] password
     #   The password to authenticate with.
     #
-    def initialize(attributes={})
-      super(
-        attributes[:host],
-        attributes.fetch(:port,DEFAULT_PORT),
-        attributes[:user],
-        attributes[:password]
-      )
+    def initialize(host: nil, port: DEFAULT_PORT, user: nil, password: nil)
+      super(host,port,user,password)
     end
 
     #

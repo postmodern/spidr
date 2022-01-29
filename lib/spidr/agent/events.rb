@@ -520,7 +520,7 @@ module Spidr
 
     protected
 
-    def initialize_events(options={})
+    def initialize_events
       @every_url_blocks        = []
       @every_failed_url_blocks = []
       @every_url_like_blocks   = Hash.new { |hash,key| hash[key] = [] }

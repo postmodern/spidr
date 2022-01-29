@@ -96,70 +96,67 @@ module Spidr
     #
     # Creates a new Agent object.
     #
-    # @param [Hash] options
-    #   Additional options
-    #
-    # @option options [Integer] :open_timeout (Spidr.open_timeout)
+    # @param [Integer] open_timeout
     #   Optional open timeout.
     #
-    # @option options [Integer] :read_timeout (Spidr.read_timeout)
+    # @param [Integer] read_timeout
     #   Optional read timeout.
     #
-    # @option options [Integer] :ssl_timeout (Spidr.ssl_timeout)
+    # @param [Integer] ssl_timeout
     #   Optional ssl timeout.
     #
-    # @option options [Integer] :continue_timeout (Spidr.continue_timeout)
+    # @param [Integer] continue_timeout
     #   Optional continue timeout.
     #
-    # @option options [Integer] :keep_alive_timeout (Spidr.keep_alive_timeout)
+    # @param [Integer] keep_alive_timeout
     #   Optional keep_alive timeout.
     #
-    # @option options [Hash] :proxy (Spidr.proxy)
+    # @param [Hash] proxy
     #   The proxy information to use.
     #
-    # @option :proxy [String] :host
+    # @option proxy [String] :host
     #   The host the proxy is running on.
     #
-    # @option :proxy [Integer] :port
+    # @option proxy [Integer] :port
     #   The port the proxy is running on.
     #
-    # @option :proxy [String] :user
+    # @option proxy [String] :user
     #   The user to authenticate as with the proxy.
     #
-    # @option :proxy [String] :password
+    # @option proxy [String] :password
     #   The password to authenticate with.
     #
-    # @option options [Hash{String => String}] :default_headers
+    # @param [Hash{String => String}] default_headers
     #   Default headers to set for every request.
     #
-    # @option options [String] :host_header
+    # @param [String] host_header
     #   The HTTP Host header to use with each request.
     #
-    # @option options [Hash{String,Regexp => String}] :host_headers
+    # @param [Hash{String,Regexp => String}] host_headers
     #   The HTTP Host headers to use for specific hosts.
     #
-    # @option options [String] :user_agent (Spidr.user_agent)
+    # @param [String] user_agent
     #   The User-Agent string to send with each requests.
     #
-    # @option options [String] :referer
+    # @param [String] referer
     #   The Referer URL to send with each request.
     #
-    # @option options [Integer] :delay (0)
+    # @param [Integer] delay
     #   The number of seconds to pause between each request.
     #
-    # @option options [Set, Array] :queue
+    # @param [Set, Array] queue
     #   The initial queue of URLs to visit.
     #
-    # @option options [Set, Array] :history
+    # @param [Set, Array] history
     #   The initial list of visited URLs.
     #
-    # @option options [Integer] :limit
+    # @param [Integer] limit
     #   The maximum number of pages to visit.
     #
-    # @option options [Integer] :max_depth
+    # @param [Integer] max_depth
     #   The maximum link depth to follow.
     #
-    # @option options [Boolean] :robots (Spidr.robots?)
+    # @param [Boolean] robots
     #   Specifies whether `robots.txt` should be honored.
     #
     # @yield [agent]
@@ -169,58 +166,98 @@ module Spidr
     # @yieldparam [Agent] agent
     #   The newly created agent.
     #
-    # @see #initialize_sanitizers
-    # @see #initialize_filters
-    # @see #initialize_actions
-    # @see #initialize_events
-    #
-    def initialize(options={})
-      @host_header  = options[:host_header]
-      @host_headers = {}
+    def initialize(# header keyword arguments
+                   host_header:        nil,
+                   host_headers:       {},
+                   default_headers:    {},
+                   user_agent:         Spidr.user_agent,
+                   referer:            nil,
+                   # session cache keyword arguments
+                   proxy:              Spidr.proxy,
+                   open_timeout:       Spidr.open_timeout,
+                   ssl_timeout:        Spidr.ssl_timeout,
+                   read_timeout:       Spidr.read_timeout,
+                   continue_timeout:   Spidr.continue_timeout,
+                   keep_alive_timeout: Spidr.keep_alive_timeout,
+                   # spidering controls keyword arguments
+                   delay:     0,
+                   limit:     nil,
+                   max_depth: nil,
+                   # history keyword arguments
+                   queue:   nil,
+                   history: nil,
+                   # sanitizer keyword arguments
+                   strip_fragments: true,
+                   strip_query:     false,
+                   # filtering keyword arguments
+                   schemes:      self.class.default_schemes,
+                   host:         nil,
+                   hosts:        nil,
+                   ignore_hosts: nil,
+                   ports:        nil,
+                   ignore_ports: nil,
+                   links:        nil,
+                   ignore_links: nil,
+                   urls:         nil,
+                   ignore_urls:  nil,
+                   exts:         nil,
+                   ignore_exts:  nil,
+                   # robots keyword arguments
+                   robots:       Spidr.robots?)
+      @host_header  = host_header
+      @host_headers = host_headers
 
-      if options[:host_headers]
-        @host_headers.merge!(options[:host_headers])
-      end
+      @default_headers = default_headers
 
-      @default_headers = {}
+      @user_agent = user_agent
+      @referer    = referer
 
-      if options[:default_headers]
-        @default_headers.merge!(options[:default_headers])
-      end
-
-      @user_agent = options.fetch(:user_agent,Spidr.user_agent)
-      @referer    = options[:referer]
-
-      @sessions   = SessionCache.new(options)
+      @sessions   = SessionCache.new(
+        open_timeout:       open_timeout,
+        ssl_timeout:        ssl_timeout,
+        read_timeout:       read_timeout,
+        continue_timeout:   continue_timeout,
+        keep_alive_timeout: keep_alive_timeout
+      )
       @cookies    = CookieJar.new
       @authorized = AuthStore.new
 
       @running  = false
-      @delay    = options.fetch(:delay,0)
+      @delay    = delay
       @history  = Set[]
       @failures = Set[]
       @queue    = []
 
-      @limit     = options[:limit]
+      @limit     = limit
       @levels    = Hash.new(0)
-      @max_depth = options[:max_depth]
+      @max_depth = max_depth
 
-      if options[:queue]
-        self.queue = options[:queue]
-      end
+      self.queue   = queue   if queue
+      self.history = history if history
 
-      if options[:history]
-        self.history = options[:history]
-      end
+      initialize_sanitizers(
+        strip_fragments: strip_fragments,
+        strip_query:     strip_query
+      )
 
-      initialize_sanitizers(options)
-      initialize_filters(options)
-      initialize_actions(options)
-      initialize_events(options)
+      initialize_filters(
+        schemes:      schemes,
+        host:         host,
+        hosts:        hosts,
+        ignore_hosts: ignore_hosts,
+        ports:        ports,
+        ignore_ports: ignore_ports,
+        links:        links,
+        ignore_links: ignore_links,
+        urls:         urls,
+        ignore_urls:  ignore_urls,
+        exts:         exts,
+        ignore_exts:  ignore_exts
+      )
+      initialize_actions
+      initialize_events
 
-      if options.fetch(:robots,Spidr.robots?)
-        initialize_robots
-      end
+      initialize_robots if robots
 
       yield self if block_given?
     end
@@ -231,8 +268,8 @@ module Spidr
     # @param [URI::HTTP, String] url
     #   The URL to start spidering at.
     #
-    # @param [Hash] options
-    #   Additional options. See {Agent#initialize}.
+    # @param [Hash{Symbol => Object}] kwargs
+    #   Additional keyword arguments. See {Agent#initialize}.
     #
     # @yield [agent]
     #   If a block is given, it will be passed the newly created agent
@@ -244,8 +281,8 @@ module Spidr
     # @see #initialize
     # @see #start_at
     #
-    def self.start_at(url,options={},&block)
-      agent = new(options,&block)
+    def self.start_at(url,**kwargs,&block)
+      agent = new(**kwargs,&block)
       agent.start_at(url)
     end
 
@@ -255,8 +292,8 @@ module Spidr
     # @param [URI::HTTP, String] url
     #   The web-site to spider.
     #
-    # @param [Hash] options
-    #   Additional options. See {Agent#initialize}.
+    # @param [Hash{Symbol => Object}] kwargs
+    #   Additional keyword arguments. See {Agent#initialize}.
     #
     # @yield [agent]
     #   If a block is given, it will be passed the newly created agent
@@ -267,10 +304,10 @@ module Spidr
     #
     # @see #initialize
     #
-    def self.site(url,options={},&block)
+    def self.site(url,**kwargs,&block)
       url = URI(url)
 
-      agent = new(options.merge(host: url.host),&block)
+      agent = new(host: url.host, **kwargs, &block)
       agent.start_at(url)
     end
 
@@ -280,8 +317,8 @@ module Spidr
     # @param [String] name
     #   The host-name to spider.
     #
-    # @param [Hash] options
-    #   Additional options. See {Agent#initialize}.
+    # @param [Hash{Symbol => Object}] kwargs
+    #   Additional keyword arguments. See {Agent#initialize}.
     #
     # @yield [agent]
     #   If a block is given, it will be passed the newly created agent
@@ -292,8 +329,8 @@ module Spidr
     #
     # @see #initialize
     #
-    def self.host(name,options={},&block)
-      agent = new(options.merge(host: name),&block)
+    def self.host(name,**kwargs,&block)
+      agent = new(host: name, **kwargs, &block)
       agent.start_at(URI::HTTP.build(host: name, path: '/'))
     end
 

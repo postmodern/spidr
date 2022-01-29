@@ -34,20 +34,17 @@ module Spidr
     #
     # Initializes the Sanitizer rules.
     #
-    # @param [Hash] options
-    #   Additional options.
-    #
-    # @option options [Boolean] :strip_fragments (true)
+    # @param [Boolean] strip_fragments
     #   Specifies whether or not to strip the fragment component from URLs.
     #
-    # @option options [Boolean] :strip_query (false)
+    # @param [Boolean] strip_query
     #   Specifies whether or not to strip the query component from URLs.
     #
     # @since 0.2.2
     #
-    def initialize_sanitizers(options={})
-      @strip_fragments = options.fetch(:strip_fragments,true)
-      @strip_query     = options.fetch(:strip_query,false)
+    def initialize_sanitizers(strip_fragments: true, strip_query: false)
+      @strip_fragments = strip_fragments
+      @strip_query     = strip_query
     end
 
   end

@@ -36,22 +36,22 @@ module Spidr
   #
   # @see Agent.start_at
   #
-  def self.start_at(url,options={},&block)
-    Agent.start_at(url,options,&block)
+  def self.start_at(url,**kwargs,&block)
+    Agent.start_at(url,**kwargs,&block)
   end
 
   #
   # @see Agent.host
   #
-  def self.host(name,options={},&block)
-    Agent.host(name,options,&block)
+  def self.host(name,**kwargs,&block)
+    Agent.host(name,**kwargs,&block)
   end
 
   #
   # @see Agent.site
   #
-  def self.site(url,options={},&block)
-    Agent.site(url,options,&block)
+  def self.site(url,**kwargs,&block)
+    Agent.site(url,**kwargs,&block)
   end
 
   # 

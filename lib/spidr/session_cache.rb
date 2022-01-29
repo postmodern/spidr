@@ -17,37 +17,39 @@ module Spidr
     #
     # Creates a new session cache.
     #
-    # @param [Hash] options
-    #   Configuration options.
-    #
-    # @option [Hash] :proxy (Spidr.proxy)
+    # @param [Hash] proxy
     #   Proxy options.
     #
-    # @option [Integer] :open_timeout (Spidr.open_timeout)
+    # @param [Integer] open_timeout
     #   Optional open timeout.
     #
-    # @option [Integer] :ssl_timeout (Spidr.ssl_timeout)
+    # @param [Integer] ssl_timeout
     #   Optional ssl timeout.
     #
-    # @option [Integer] :read_timeout (Spidr.read_timeout)
+    # @param [Integer] read_timeout
     #   Optional read timeout.
     #
-    # @option [Integer] :continue_timeout (Spidr.continue_timeout)
+    # @param [Integer] continue_timeout
     #   Optional `Continue` timeout.
     #
-    # @option [Integer] :keep_alive_timeout (Spidr.keep_alive_timeout)
+    # @param [Integer] keep_alive_timeout
     #   Optional `Keep-Alive` timeout.
     #
     # @since 0.6.0
     #
-    def initialize(options={})
-      @proxy = options.fetch(:proxy,Spidr.proxy)
+    def initialize(proxy:              Spidr.proxy,
+                   open_timeout:       Spidr.open_timeout,
+                   ssl_timeout:        Spidr.ssl_timeout,
+                   read_timeout:       Spidr.read_timeout,
+                   continue_timeout:   Spidr.continue_timeout,
+                   keep_alive_timeout: Spidr.keep_alive_timeout)
+      @proxy = proxy
 
-      @open_timeout       = options.fetch(:open_timeout,Spidr.open_timeout)
-      @ssl_timeout        = options.fetch(:ssl_timeout,Spidr.ssl_timeout)
-      @read_timeout       = options.fetch(:read_timeout,Spidr.read_timeout)
-      @continue_timeout   = options.fetch(:continue_timeout,Spidr.continue_timeout)
-      @keep_alive_timeout = options.fetch(:keep_alive_timeout,Spidr.keep_alive_timeout)
+      @open_timeout       = open_timeout
+      @ssl_timeout        = ssl_timeout
+      @read_timeout       = read_timeout
+      @continue_timeout   = continue_timeout
+      @keep_alive_timeout = keep_alive_timeout
 
       @sessions = {}
     end

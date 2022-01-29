@@ -356,89 +356,88 @@ module Spidr
     #
     # Initializes filtering rules.
     #
-    # @param [Hash] options
-    #   Additional options.
-    #
-    # @option options [Array] :schemes (['http', 'https'])
+    # @param [Array<String>] schemes
     #   The list of acceptable URI schemes to visit.
     #   The `https` scheme will be ignored if `net/https` cannot be loaded.
     #
-    # @option options [String] :host
+    # @param [String] host
     #   The host-name to visit.
     #
-    # @option options [Array<String, Regexp, Proc>] :hosts
+    # @param [Array<String, Regexp, Proc>] hosts
     #   The patterns which match the host-names to visit.
     #
-    # @option options [Array<String, Regexp, Proc>] :ignore_hosts
+    # @param [Array<String, Regexp, Proc>] ignore_hosts
     #   The patterns which match the host-names to not visit.
     #
-    # @option options [Array<Integer, Regexp, Proc>] :ports
+    # @param [Array<Integer, Regexp, Proc>] ports
     #   The patterns which match the ports to visit.
     #
-    # @option options [Array<Integer, Regexp, Proc>] :ignore_ports
+    # @param [Array<Integer, Regexp, Proc>] ignore_ports
     #   The patterns which match the ports to not visit.
     #
-    # @option options [Array<String, Regexp, Proc>] :links
+    # @param [Array<String, Regexp, Proc>] links
     #   The patterns which match the links to visit.
     #
-    # @option options [Array<String, Regexp, Proc>] :ignore_links
+    # @param [Array<String, Regexp, Proc>] ignore_links
     #   The patterns which match the links to not visit.
     #
-    # @option options [Array<String, Regexp, Proc>] :urls
+    # @param [Array<String, Regexp, Proc>] urls
     #   The patterns which match the URLs to visit.
     #
-    # @option options [Array<String, Regexp, Proc>] :ignore_urls
+    # @param [Array<String, Regexp, Proc>] ignore_urls
     #   The patterns which match the URLs to not visit.
     #
-    # @option options [Array<String, Regexp, Proc>] :exts
+    # @param [Array<String, Regexp, Proc>] exts
     #   The patterns which match the URI path extensions to visit.
     #
-    # @option options [Array<String, Regexp, Proc>] :ignore_exts
+    # @param [Array<String, Regexp, Proc>] ignore_exts
     #   The patterns which match the URI path extensions to not visit.
     #
-    def initialize_filters(options={})
-      @schemes = []
+    def initialize_filters(schemes:      self.class.default_schemes,
+                           host:         nil,
+                           hosts:        nil,
+                           ignore_hosts: nil,
+                           ports:        nil,
+                           ignore_ports: nil,
+                           links:        nil,
+                           ignore_links: nil,
+                           urls:         nil,
+                           ignore_urls:  nil,
+                           exts:         nil,
+                           ignore_exts:  nil)
+      @schemes = schemes.map(&:to_s)
 
-      if options[:schemes]
-        self.schemes = options[:schemes]
-      else
-        @schemes << 'http'
+      @host_rules = Rules.new(accept: hosts, reject: ignore_hosts)
+      @port_rules = Rules.new(accept: ports, reject: ignore_ports)
+      @link_rules = Rules.new(accept: links, reject: ignore_links)
+      @url_rules  = Rules.new(accept: urls,  reject: ignore_urls)
+      @ext_rules  = Rules.new(accept: exts,  reject: ignore_exts)
 
-        begin
-          require 'net/https'
+      visit_hosts_like(host) if host
+    end
 
-          @schemes << 'https'
-        rescue Gem::LoadError => e
-          raise(e)
-        rescue ::LoadError
-          warn "Warning: cannot load 'net/https', https support disabled"
-        end
+    #
+    # Determines the default URI schemes to follow.
+    #
+    # @return [Array<String>]
+    #   The default URI schemes to follow.
+    #
+    # @since 0.6.2
+    #
+    def self.default_schemes
+      schemes = ['http']
+
+      begin
+        require 'net/https'
+
+        schemes << 'https'
+      rescue Gem::LoadError => e
+        raise(e)
+      rescue ::LoadError
+        warn "Warning: cannot load 'net/https', https support disabled"
       end
 
-      @host_rules = Rules.new(
-        accept: options[:hosts],
-        reject: options[:ignore_hosts]
-      )
-      @port_rules = Rules.new(
-        accept: options[:ports],
-        reject: options[:ignore_ports]
-      )
-      @link_rules = Rules.new(
-        accept: options[:links],
-        reject: options[:ignore_links]
-      )
-      @url_rules = Rules.new(
-        accept: options[:urls],
-        reject: options[:ignore_urls]
-      )
-      @ext_rules = Rules.new(
-        accept: options[:exts],
-        reject: options[:ignore_exts]
-      )
-
-      if options[:host]
-        visit_hosts_like(options[:host])
-      end
+      return schemes
     end
 
     #
