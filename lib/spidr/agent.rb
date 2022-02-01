@@ -353,8 +353,8 @@ module Spidr
     # @param [String] name
     #   The top-level domain to spider.
     #
-    # @param [Hash] options
-    #   Additional options. See {Agent#initialize}.
+    # @param [Hash{Symbol => Object}] kwargs
+    #   Additional keyword arguments. See {Agent#initialize}.
     #
     # @yield [agent]
     #   If a block is given, it will be passed the newly created agent
@@ -370,8 +370,8 @@ module Spidr
     #
     # @since 0.7.0
     #
-    def self.domain(name,options={},&block)
-      agent = new(options.merge(host: /(^|\.)#{Regexp.escape(name)}$/),&block)
+    def self.domain(name,**kwargs,&block)
+      agent = new(host: /(^|\.)#{Regexp.escape(name)}$/, **kwargs, &block)
       agent.start_at(URI::HTTP.build(host: name, path: '/'))
       return agent
     end
