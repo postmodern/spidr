@@ -16,7 +16,7 @@ shared_examples "includes Spidr::Settings::Proxy" do
       end
 
       it "should retain the default value" do
-        expect(subject.proxy.object_id).to be subject.proxy.object_id
+        expect(subject.proxy.object_id).to be(subject.proxy.object_id)
       end
     end
 
@@ -26,7 +26,7 @@ shared_examples "includes Spidr::Settings::Proxy" do
       end
 
       it "should return the set @proxy" do
-        expect(subject.proxy).to be proxy
+        expect(subject.proxy).to be(proxy)
       end
     end
   end
@@ -38,7 +38,7 @@ shared_examples "includes Spidr::Settings::Proxy" do
       before { subject.proxy = proxy }
 
       it "should save it" do
-        expect(subject.proxy).to be proxy
+        expect(subject.proxy).to be(proxy)
       end
     end
 
@@ -49,8 +49,8 @@ shared_examples "includes Spidr::Settings::Proxy" do
 
       it "should create a new Proxy object" do
         expect(subject.proxy).to be_kind_of(Proxy)
-        expect(subject.proxy[:host]).to be proxy_host
-        expect(subject.proxy[:port]).to be proxy_port
+        expect(subject.proxy[:host]).to be(proxy_host)
+        expect(subject.proxy[:port]).to be(proxy_port)
       end
     end
 
