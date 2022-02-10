@@ -96,64 +96,64 @@ module Spidr
     #
     # Creates a new Agent object.
     #
-    # @param [Integer] open_timeout
+    # @param [Integer, nil] open_timeout
     #   Optional open timeout.
     #
-    # @param [Integer] read_timeout
+    # @param [Integer, nil] read_timeout
     #   Optional read timeout.
     #
-    # @param [Integer] ssl_timeout
+    # @param [Integer, nil] ssl_timeout
     #   Optional ssl timeout.
     #
-    # @param [Integer] continue_timeout
+    # @param [Integer, nil] continue_timeout
     #   Optional continue timeout.
     #
-    # @param [Integer] keep_alive_timeout
+    # @param [Integer, nil] keep_alive_timeout
     #   Optional keep_alive timeout.
     #
-    # @param [Spidr::Proxy, Hash, URI::HTTP, String] proxy
+    # @param [Spidr::Proxy, Hash, URI::HTTP, String, nil] proxy
     #   The proxy information to use.
     #
     # @option proxy [String] :host
     #   The host the proxy is running on.
     #
-    # @option proxy [Integer] :port
+    # @option proxy [Integer] :port (8080)
     #   The port the proxy is running on.
     #
-    # @option proxy [String] :user
+    # @option proxy [String, nil] :user
     #   The user to authenticate as with the proxy.
     #
-    # @option proxy [String] :password
+    # @option proxy [String, nil] :password
     #   The password to authenticate with.
     #
     # @param [Hash{String => String}] default_headers
     #   Default headers to set for every request.
     #
-    # @param [String] host_header
+    # @param [String, nil] host_header
     #   The HTTP Host header to use with each request.
     #
     # @param [Hash{String,Regexp => String}] host_headers
     #   The HTTP Host headers to use for specific hosts.
     #
-    # @param [String] user_agent
+    # @param [String, nil] user_agent
     #   The User-Agent string to send with each requests.
     #
-    # @param [String] referer
+    # @param [String, nil] referer
     #   The Referer URL to send with each request.
     #
     # @param [Integer] delay
     #   The number of seconds to pause between each request.
     #
-    # @param [Set, Array] queue
+    # @param [Set, Array, nil] queue
     #   The initial queue of URLs to visit.
     #
-    # @param [Set, Array] history
+    # @param [Set, Array, nil] history
     #   The initial list of visited URLs.
     #
-    # @param [Integer] limit
+    # @param [Integer, nil] limit
     #   The maximum number of pages to visit.
     #
-    # @param [Integer] max_depth
+    # @param [Integer, nil] max_depth
     #   The maximum link depth to follow.
     #
     # @param [Boolean] robots
