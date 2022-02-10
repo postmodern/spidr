@@ -35,9 +35,7 @@ shared_examples "includes Spidr::Settings::Proxy" do
     context "when given a Proxy object" do
       let(:proxy) { Proxy.new(host: proxy_host, port: proxy_port) }
 
-      before do
-        subject.proxy = proxy
-      end
+      before { subject.proxy = proxy }
 
       it "should save it" do
         expect(subject.proxy).to be proxy
@@ -57,9 +55,7 @@ shared_examples "includes Spidr::Settings::Proxy" do
     end
 
     context "when given nil" do
-      before do
-        subject.proxy = nil
-      end
+      before { subject.proxy = nil }
 
       it "should leave an empty proxy" do
         expect(subject.proxy).to be_kind_of(Proxy)
