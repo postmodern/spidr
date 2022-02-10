@@ -54,6 +54,30 @@ shared_examples "includes Spidr::Settings::Proxy" do
       end
     end
 
+    context "when given a URI::HTTP" do
+      let(:uri) { URI::HTTP.build(host: proxy_host, port: proxy_port) }
+
+      before { subject.proxy = uri }
+
+      it "should create a new Proxy object based on the URI" do
+        expect(subject.proxy).to be_kind_of(Proxy)
+        expect(subject.proxy[:host]).to eq(proxy_host)
+        expect(subject.proxy[:port]).to eq(proxy_port)
+      end
+    end
+
+    context "when given a String" do
+      let(:url) { "http://#{proxy_host}:#{proxy_port}" }
+
+      before { subject.proxy = url }
+
+      it "should parse the String as a URI and create a new Proxy object" do
+        expect(subject.proxy).to be_kind_of(Proxy)
+        expect(subject.proxy[:host]).to eq(proxy_host)
+        expect(subject.proxy[:port]).to eq(proxy_port)
+      end
+    end
+
     context "when given nil" do
       before { subject.proxy = nil }
 
