@@ -111,7 +111,7 @@ module Spidr
     # @param [Integer] keep_alive_timeout
     #   Optional keep_alive timeout.
     #
-    # @param [Hash] proxy
+    # @param [Spidr::Proxy, Hash, URI::HTTP, String] proxy
     #   The proxy information to use.
     #
     # @option proxy [String] :host
