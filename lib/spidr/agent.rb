@@ -396,7 +396,7 @@ module Spidr
     # @param [Spidr::Proxy, Hash, URI::HTTP, String, nil] new_proxy
     #   The new proxy information.
     #
-    # @return [Hash]
+    # @return [Proxy]
     #   The new proxy information.
     #
     # @see SessionCache#proxy=
