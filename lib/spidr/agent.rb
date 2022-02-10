@@ -393,7 +393,7 @@ module Spidr
     #
     # Sets the proxy information that the agent uses.
     #
-    # @param [Proxy] new_proxy
+    # @param [Spidr::Proxy, Hash, URI::HTTP, String, nil] new_proxy
     #   The new proxy information.
     #
     # @return [Hash]
