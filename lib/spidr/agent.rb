@@ -213,6 +213,7 @@ module Spidr
       @referer    = referer
 
       @sessions   = SessionCache.new(
+        proxy:              proxy,
         open_timeout:       open_timeout,
         ssl_timeout:        ssl_timeout,
         read_timeout:       read_timeout,
