@@ -209,6 +209,68 @@ describe Agent do
       expect(subject.sessions).to be_kind_of(SessionCache)
     end
 
+    context "when the proxy: keyword argument is given" do
+      let(:proxy) do
+        Spidr::Proxy.new(host: 'example.com')
+      end
+
+      subject { described_class.new(proxy: proxy) }
+
+      it "must initialize the #proxy of #session_cache" do
+        expect(subject.sessions.proxy).to be(proxy)
+      end
+    end
+
+    context "when the open_timeout: keyword argument is given" do
+      let(:open_timeout) { 5 }
+
+      subject { described_class.new(open_timeout: open_timeout) }
+
+      it "must initialize the #open_timeout of #session_cache" do
+        expect(subject.sessions.open_timeout).to eq(open_timeout)
+      end
+    end
+
+    context "when the ssl_timeout: keyword argument is given" do
+      let(:ssl_timeout) { 5 }
+
+      subject { described_class.new(ssl_timeout: ssl_timeout) }
+
+      it "must initialize the #ssl_timeout of #session_cache" do
+        expect(subject.sessions.ssl_timeout).to eq(ssl_timeout)
+      end
+    end
+
+    context "when the read_timeout: keyword argument is given" do
+      let(:read_timeout) { 5 }
+
+      subject { described_class.new(read_timeout: read_timeout) }
+
+      it "must initialize the #read_timeout of #session_cache" do
+        expect(subject.sessions.read_timeout).to eq(read_timeout)
+      end
+    end
+
+    context "when the continue_timeout: keyword argument is given" do
+      let(:continue_timeout) { 5 }
+
+      subject { described_class.new(continue_timeout: continue_timeout) }
+
+      it "must initialize the #continue_timeout of #session_cache" do
+        expect(subject.sessions.continue_timeout).to eq(continue_timeout)
+      end
+    end
+
+    context "when the keep_alive_timeout: keyword argument is given" do
+      let(:keep_alive_timeout) { 5 }
+
+      subject { described_class.new(keep_alive_timeout: keep_alive_timeout) }
+
+      it "must initialize the #keep_alive_timeout of #session_cache" do
+        expect(subject.sessions.keep_alive_timeout).to eq(keep_alive_timeout)
+      end
+    end
+
     it "should initialize the #cookie_jar" do
       expect(subject.cookies).to be_kind_of(CookieJar)
     end
