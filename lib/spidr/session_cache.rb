@@ -43,13 +43,13 @@ module Spidr
                    read_timeout:       Spidr.read_timeout,
                    continue_timeout:   Spidr.continue_timeout,
                    keep_alive_timeout: Spidr.keep_alive_timeout)
-      @proxy = proxy
+      self.proxy = proxy
 
-      @open_timeout       = open_timeout
-      @ssl_timeout        = ssl_timeout
-      @read_timeout       = read_timeout
-      @continue_timeout   = continue_timeout
-      @keep_alive_timeout = keep_alive_timeout
+      self.open_timeout       = open_timeout
+      self.ssl_timeout        = ssl_timeout
+      self.read_timeout       = read_timeout
+      self.continue_timeout   = continue_timeout
+      self.keep_alive_timeout = keep_alive_timeout
 
       @sessions = {}
     end
