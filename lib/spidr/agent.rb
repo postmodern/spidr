@@ -572,7 +572,7 @@ module Spidr
     def enqueue(url,level=0)
       url = sanitize_url(url)
 
-      if (!(queued?(url)) && visit?(url))
+      if (!queued?(url) && visit?(url))
         link = url.to_s
 
         begin
