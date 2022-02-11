@@ -105,7 +105,9 @@ module Spidr
     def each_redirect(&block)
       return enum_for(__method__) unless block
 
-      if (locations = @response.get_fields('Location'))
+      locations = @response.get_fields('Location')
+
+      unless (locations.nil? || locations.empty?)
         # Location headers override any meta-refresh redirects in the HTML
         locations.each(&block)
       else
@@ -175,34 +177,30 @@ module Spidr
     #
     # @since 0.3.0
     #
-    def each_link
+    def each_link(&block)
       return enum_for(__method__) unless block_given?
 
-      filter = lambda { |url|
-        yield url unless (url.nil? || url.empty?)
-      }
-
-      each_redirect(&filter) if is_redirect?
+      each_redirect(&block) if is_redirect?
 
       if (html? && doc)
-        doc.search('//a[@href]').each do |a|
-          filter.call(a.get_attribute('href'))
+        doc.search('//a[@href[string()]]').each do |a|
+          yield a.get_attribute('href')
         end
 
-        doc.search('//frame[@src]').each do |iframe|
-          filter.call(iframe.get_attribute('src'))
+        doc.search('//frame[@src[string()]]').each do |iframe|
+          yield iframe.get_attribute('src')
         end
 
-        doc.search('//iframe[@src]').each do |iframe|
-          filter.call(iframe.get_attribute('src'))
+        doc.search('//iframe[@src[string()]]').each do |iframe|
+          yield iframe.get_attribute('src')
         end
 
-        doc.search('//link[@href]').each do |link|
-          filter.call(link.get_attribute('href'))
+        doc.search('//link[@href[string()]]').each do |link|
+          yield link.get_attribute('href')
         end
 
-        doc.search('//script[@src]').each do |script|
-          filter.call(script.get_attribute('src'))
+        doc.search('//script[@src[string()]]').each do |script|
+          yield script.get_attribute('src')
         end
       end
     end
