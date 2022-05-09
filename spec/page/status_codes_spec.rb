@@ -26,10 +26,6 @@ describe Page do
     include_examples "status code method", :is_ok?, {200 => true, 500 => false}
   end
 
-  describe "#timedout?" do
-    include_examples "status code method", :timedout?, {308 => true, 200 => false}
-  end
-
   describe "#bad_request?" do
     include_examples "status code method", :bad_request?, {400 => true, 200 => false}
   end
@@ -44,6 +40,10 @@ describe Page do
 
   describe "#is_missing?" do
     include_examples "status code method", :is_missing?, {404 => true, 200 => false}
+  end
+
+  describe "#is_timedout?" do
+    include_examples "status code method", :is_timedout?, {408 => true, 200 => false}
   end
 
   describe "#had_internal_server_error?" do
