@@ -23,16 +23,6 @@ module Spidr
     alias ok? is_ok?
 
     #
-    # Determines if the response code is `308`.
-    #
-    # @return [Boolean]
-    #   Specifies whether the response code is `308`.
-    #
-    def timedout?
-      code == 308
-    end
-
-    #
     # Determines if the response code is `400`.
     #
     # @return [Boolean]
@@ -77,6 +67,18 @@ module Spidr
     end
 
     alias missing? is_missing?
+
+    #
+    # Determines if the response code is `408`.
+    #
+    # @return [Boolean]
+    #   Specifies whether the response code is `408`.
+    #
+    def is_timedout?
+      code == 408
+    end
+
+    alias timedout? is_timedout?
 
     #
     # Determines if the response code is `500`.
