@@ -4,6 +4,7 @@ require 'spidr/agent/filters'
 require 'spidr/agent/events'
 require 'spidr/agent/actions'
 require 'spidr/agent/robots'
+require 'spidr/agent/sitemap'
 require 'spidr/page'
 require 'spidr/session_cache'
 require 'spidr/cookie_jar'
@@ -260,6 +261,10 @@ module Spidr
 
       initialize_robots if robots
 
+      if options.fetch(:sitemap,false)
+        initialize_sitemap
+      end
+
       yield self if block_given?
     end
 
@@ -389,6 +394,8 @@ module Spidr
     #   A page which has been visited.
     #
     def start_at(url,&block)
+      sitemap_urls(url).each { |u| enqueue(u) }
+
       enqueue(url)
       return run(&block)
     end
