@@ -159,4 +159,14 @@ describe Page do
   describe "#jpeg?" do
     include_examples "Content-Type method", :jpeg?, 'image/jpeg'
   end
+
+  describe "#ico?" do
+    context "when 'Content-Type' is 'image/x-icon'" do
+      include_examples "Content-Type method", :ico?, 'image/x-icon'
+    end
+
+    context "when 'Content-Type' is 'image/vnd.microsoft.icon'" do
+      include_examples "Content-Type method", :ico?, 'image/vnd.microsoft.icon'
+    end
+  end
 end

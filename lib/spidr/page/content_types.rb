@@ -257,5 +257,18 @@ module Spidr
     def jpeg?
       is_content_type?('image/jpeg')
     end
+
+    #
+    # Determines if the page is a ICO image.
+    #
+    # @return [Boolean]
+    #   Specifies whether the page is a ICO image.
+    #
+    # @since 0.7.0
+    #
+    def ico?
+      is_content_type?('image/x-icon') ||
+        is_content_type?('image/vnd.microsoft.icon')
+    end
   end
 end
