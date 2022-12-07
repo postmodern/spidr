@@ -245,5 +245,17 @@ module Spidr
     def gif?
       is_content_type?('image/gif')
     end
+
+    #
+    # Determines if the page is a JPEG image.
+    #
+    # @return [Boolean]
+    #   Specifies whether the page is a JPEG image.
+    #
+    # @since 0.7.0
+    #
+    def jpeg?
+      is_content_type?('image/jpeg')
+    end
   end
 end
