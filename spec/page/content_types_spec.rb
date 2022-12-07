@@ -155,4 +155,8 @@ describe Page do
   describe "#gif?" do
     include_examples "Content-Type method", :gif?, 'image/gif'
   end
+
+  describe "#jpeg?" do
+    include_examples "Content-Type method", :jpeg?, 'image/jpeg'
+  end
 end
