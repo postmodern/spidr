@@ -270,5 +270,7 @@ module Spidr
       is_content_type?('image/x-icon') ||
         is_content_type?('image/vnd.microsoft.icon')
     end
+
+    alias icon? ico?
   end
 end
