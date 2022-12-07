@@ -147,4 +147,8 @@ describe Page do
   describe "#zip?" do
     include_examples "Content-Type method", :zip?, 'application/zip'
   end
+
+  describe "#png?" do
+    include_examples "Content-Type method", :png?, 'image/png'
+  end
 end

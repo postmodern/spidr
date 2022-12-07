@@ -221,5 +221,17 @@ module Spidr
     def zip?
       is_content_type?('application/zip')
     end
+
+    #
+    # Determines if the page is a PNG image.
+    #
+    # @return [Boolean]
+    #   Specifies whether the page is a PNG image.
+    #
+    # @since 0.7.0
+    #
+    def png?
+      is_content_type?('image/png')
+    end
   end
 end
