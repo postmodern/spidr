@@ -233,5 +233,17 @@ module Spidr
     def png?
       is_content_type?('image/png')
     end
+
+    #
+    # Determines if the page is a GIF image.
+    #
+    # @return [Boolean]
+    #   Specifies whether the page is a GIF image.
+    #
+    # @since 0.7.0
+    #
+    def gif?
+      is_content_type?('image/gif')
+    end
   end
 end
