@@ -96,6 +96,21 @@ module Spidr
     #
     # Creates a new Agent object.
     #
+    # @param [String] host_header
+    #   The HTTP `Host` header to use with each request.
+    #
+    # @param [Hash{String,Regexp => String}] host_headers
+    #   The HTTP `Host` headers to use for specific hosts.
+    #
+    # @param [Hash{String => String}] default_headers
+    #   Default headers to set for every request.
+    #
+    # @param [String] user_agent
+    #   The `User-Agent` string to send with each requests.
+    #
+    # @param [String] referer
+    #   The `Referer` URL to send with each request.
+    #
     # @param [Integer] open_timeout
     #   Optional open connection timeout.
     #
@@ -125,21 +140,6 @@ module Spidr
     #
     # @option proxy [String] :password
     #   The password to authenticate with.
-    #
-    # @param [Hash{String => String}] default_headers
-    #   Default headers to set for every request.
-    #
-    # @param [String] host_header
-    #   The HTTP `Host` header to use with each request.
-    #
-    # @param [Hash{String,Regexp => String}] host_headers
-    #   The HTTP `Host` headers to use for specific hosts.
-    #
-    # @param [String] user_agent
-    #   The `User-Agent` string to send with each requests.
-    #
-    # @param [String] referer
-    #   The `Referer` URL to send with each request.
     #
     # @param [Integer] delay
     #   The number of seconds to pause between each request.
