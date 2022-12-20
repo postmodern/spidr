@@ -156,6 +156,12 @@ module Spidr
     # @param [Integer] max_depth
     #   The maximum link depth to follow.
     #
+    # @param [Boolean] strip_fragments
+    #   Controls whether to strip the fragment components from the URLs.
+    #
+    # @param [Boolean] strip_query
+    #   Controls whether to strip the query components from the URLs.
+    #
     # @param [Boolean] robots
     #   Specifies whether `robots.txt` should be honored.
     #
