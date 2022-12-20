@@ -162,6 +162,43 @@ module Spidr
     # @param [Boolean] strip_query
     #   Controls whether to strip the query components from the URLs.
     #
+    # @param [Array<String>] schemes
+    #   The list of acceptable URI schemes to visit.
+    #   The `https` scheme will be ignored if `net/https` cannot be loaded.
+    #
+    # @param [String] host
+    #   The host-name to visit.
+    #
+    # @param [Array<String, Regexp, Proc>] hosts
+    #   The patterns which match the host-names to visit.
+    #
+    # @param [Array<String, Regexp, Proc>] ignore_hosts
+    #   The patterns which match the host-names to not visit.
+    #
+    # @param [Array<Integer, Regexp, Proc>] ports
+    #   The patterns which match the ports to visit.
+    #
+    # @param [Array<Integer, Regexp, Proc>] ignore_ports
+    #   The patterns which match the ports to not visit.
+    #
+    # @param [Array<String, Regexp, Proc>] links
+    #   The patterns which match the links to visit.
+    #
+    # @param [Array<String, Regexp, Proc>] ignore_links
+    #   The patterns which match the links to not visit.
+    #
+    # @param [Array<String, Regexp, Proc>] urls
+    #   The patterns which match the URLs to visit.
+    #
+    # @param [Array<String, Regexp, Proc>] ignore_urls
+    #   The patterns which match the URLs to not visit.
+    #
+    # @param [Array<String, Regexp, Proc>] exts
+    #   The patterns which match the URI path extensions to visit.
+    #
+    # @param [Array<String, Regexp, Proc>] ignore_exts
+    #   The patterns which match the URI path extensions to not visit.
+    #
     # @param [Boolean] robots
     #   Specifies whether `robots.txt` should be honored.
     #
