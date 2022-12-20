@@ -19,12 +19,12 @@ module Spidr
 
     include Settings::UserAgent
 
-    # HTTP Host Header to use
+    # HTTP Host `Header` to use
     #
     # @return [String]
     attr_accessor :host_header
 
-    # HTTP Host Headers to use for specific hosts
+    # HTTP `Host` Headers to use for specific hosts
     #
     # @return [Hash{String,Regexp => String}]
     attr_reader :host_headers
@@ -97,19 +97,19 @@ module Spidr
     # Creates a new Agent object.
     #
     # @param [Integer] open_timeout
-    #   Optional open timeout.
+    #   Optional open connection timeout.
     #
     # @param [Integer] read_timeout
     #   Optional read timeout.
     #
     # @param [Integer] ssl_timeout
-    #   Optional ssl timeout.
+    #   Optional SSL connection timeout.
     #
     # @param [Integer] continue_timeout
     #   Optional continue timeout.
     #
     # @param [Integer] keep_alive_timeout
-    #   Optional keep_alive timeout.
+    #   Optional `Keep-Alive` timeout.
     #
     # @param [Hash] proxy
     #   The proxy information to use.
@@ -130,16 +130,16 @@ module Spidr
     #   Default headers to set for every request.
     #
     # @param [String] host_header
-    #   The HTTP Host header to use with each request.
+    #   The HTTP `Host` header to use with each request.
     #
     # @param [Hash{String,Regexp => String}] host_headers
-    #   The HTTP Host headers to use for specific hosts.
+    #   The HTTP `Host` headers to use for specific hosts.
     #
     # @param [String] user_agent
-    #   The User-Agent string to send with each requests.
+    #   The `User-Agent` string to send with each requests.
     #
     # @param [String] referer
-    #   The Referer URL to send with each request.
+    #   The `Referer` URL to send with each request.
     #
     # @param [Integer] delay
     #   The number of seconds to pause between each request.
