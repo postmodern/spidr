@@ -144,17 +144,17 @@ module Spidr
     # @param [Integer] delay
     #   The number of seconds to pause between each request.
     #
-    # @param [Set, Array] queue
-    #   The initial queue of URLs to visit.
-    #
-    # @param [Set, Array] history
-    #   The initial list of visited URLs.
-    #
     # @param [Integer] limit
     #   The maximum number of pages to visit.
     #
     # @param [Integer] max_depth
     #   The maximum link depth to follow.
+    #
+    # @param [Set, Array] queue
+    #   The initial queue of URLs to visit.
+    #
+    # @param [Set, Array] history
+    #   The initial list of visited URLs.
     #
     # @param [Boolean] strip_fragments
     #   Controls whether to strip the fragment components from the URLs.
