@@ -45,7 +45,7 @@ module Spidr
                  when Hash         then Spidr::Proxy.new(**new_proxy)
                  when nil          then Spidr::Proxy.new
                  else
-                   raise(TypeError,"#{self.class}#{__method__} only accepts Proxy, Hash or nil")
+                   raise(TypeError,"#{self.class}#{__method__} only accepts Spidr::Proxy, URI::HTTP, Hash, or nil")
                  end
       end
 
