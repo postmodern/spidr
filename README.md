@@ -59,6 +59,12 @@ Spider a host:
 Spidr.host('solnic.eu')
 ```
 
+Spider a domain (and any sub-domains):
+
+```ruby
+Spidr.domain('ruby-lang.org')
+```
+
 Spider a site:
 
 ```ruby
