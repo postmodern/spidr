@@ -16,7 +16,7 @@ shared_examples "includes Spidr::Settings::Proxy" do
       end
 
       it "should retain the default value" do
-        expect(subject.proxy.object_id).to be subject.proxy.object_id
+        expect(subject.proxy.object_id).to be(subject.proxy.object_id)
       end
     end
 
@@ -26,7 +26,7 @@ shared_examples "includes Spidr::Settings::Proxy" do
       end
 
       it "should return the set @proxy" do
-        expect(subject.proxy).to be proxy
+        expect(subject.proxy).to be(proxy)
       end
     end
   end
@@ -35,12 +35,10 @@ shared_examples "includes Spidr::Settings::Proxy" do
     context "when given a Proxy object" do
       let(:proxy) { Proxy.new(host: proxy_host, port: proxy_port) }
 
-      before do
-        subject.proxy = proxy
-      end
+      before { subject.proxy = proxy }
 
       it "should save it" do
-        expect(subject.proxy).to be proxy
+        expect(subject.proxy).to be(proxy)
       end
     end
 
@@ -51,15 +49,37 @@ shared_examples "includes Spidr::Settings::Proxy" do
 
       it "should create a new Proxy object" do
         expect(subject.proxy).to be_kind_of(Proxy)
-        expect(subject.proxy[:host]).to be proxy_host
-        expect(subject.proxy[:port]).to be proxy_port
+        expect(subject.proxy[:host]).to be(proxy_host)
+        expect(subject.proxy[:port]).to be(proxy_port)
+      end
+    end
+
+    context "when given a URI::HTTP" do
+      let(:uri) { URI::HTTP.build(host: proxy_host, port: proxy_port) }
+
+      before { subject.proxy = uri }
+
+      it "should create a new Proxy object based on the URI" do
+        expect(subject.proxy).to be_kind_of(Proxy)
+        expect(subject.proxy[:host]).to eq(proxy_host)
+        expect(subject.proxy[:port]).to eq(proxy_port)
+      end
+    end
+
+    context "when given a String" do
+      let(:url) { "http://#{proxy_host}:#{proxy_port}" }
+
+      before { subject.proxy = url }
+
+      it "should parse the String as a URI and create a new Proxy object" do
+        expect(subject.proxy).to be_kind_of(Proxy)
+        expect(subject.proxy[:host]).to eq(proxy_host)
+        expect(subject.proxy[:port]).to eq(proxy_port)
       end
     end
 
     context "when given nil" do
-      before do
-        subject.proxy = nil
-      end
+      before { subject.proxy = nil }
 
       it "should leave an empty proxy" do
         expect(subject.proxy).to be_kind_of(Proxy)

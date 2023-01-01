@@ -221,5 +221,56 @@ module Spidr
     def zip?
       is_content_type?('application/zip')
     end
+
+    #
+    # Determines if the page is a PNG image.
+    #
+    # @return [Boolean]
+    #   Specifies whether the page is a PNG image.
+    #
+    # @since 0.7.0
+    #
+    def png?
+      is_content_type?('image/png')
+    end
+
+    #
+    # Determines if the page is a GIF image.
+    #
+    # @return [Boolean]
+    #   Specifies whether the page is a GIF image.
+    #
+    # @since 0.7.0
+    #
+    def gif?
+      is_content_type?('image/gif')
+    end
+
+    #
+    # Determines if the page is a JPEG image.
+    #
+    # @return [Boolean]
+    #   Specifies whether the page is a JPEG image.
+    #
+    # @since 0.7.0
+    #
+    def jpeg?
+      is_content_type?('image/jpeg')
+    end
+
+    #
+    # Determines if the page is a ICO image.
+    #
+    # @return [Boolean]
+    #   Specifies whether the page is a ICO image.
+    #
+    # @since 0.7.0
+    #
+    def ico?
+      is_content_type?('image/x-icon') ||
+        is_content_type?('image/vnd.microsoft.icon')
+    end
+
+    alias icon? ico?
   end
 end

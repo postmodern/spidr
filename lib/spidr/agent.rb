@@ -96,7 +96,7 @@ module Spidr
     #
     # Creates a new Agent object.
     #
-    # @param [String] host_header
+    # @param [String, nil] host_header
     #   The HTTP `Host` header to use with each request.
     #
     # @param [Hash{String,Regexp => String}] host_headers
@@ -105,55 +105,55 @@ module Spidr
     # @param [Hash{String => String}] default_headers
     #   Default headers to set for every request.
     #
-    # @param [String] user_agent
+    # @param [String, nil] user_agent
     #   The `User-Agent` string to send with each requests.
     #
-    # @param [String] referer
+    # @param [String, nil] referer
     #   The `Referer` URL to send with each request.
     #
-    # @param [Integer] open_timeout
+    # @param [Integer, nil] open_timeout
     #   Optional open connection timeout.
     #
-    # @param [Integer] read_timeout
+    # @param [Integer, nil] read_timeout
     #   Optional read timeout.
     #
-    # @param [Integer] ssl_timeout
+    # @param [Integer, nil] ssl_timeout
     #   Optional SSL connection timeout.
     #
-    # @param [Integer] continue_timeout
+    # @param [Integer, nil] continue_timeout
     #   Optional continue timeout.
     #
-    # @param [Integer] keep_alive_timeout
+    # @param [Integer, nil] keep_alive_timeout
     #   Optional `Keep-Alive` timeout.
     #
-    # @param [Hash] proxy
+    # @param [Spidr::Proxy, Hash, URI::HTTP, String, nil] proxy
     #   The proxy information to use.
     #
     # @option proxy [String] :host
     #   The host the proxy is running on.
     #
-    # @option proxy [Integer] :port
+    # @option proxy [Integer] :port (8080)
     #   The port the proxy is running on.
     #
-    # @option proxy [String] :user
+    # @option proxy [String, nil] :user
     #   The user to authenticate as with the proxy.
     #
-    # @option proxy [String] :password
+    # @option proxy [String, nil] :password
     #   The password to authenticate with.
     #
     # @param [Integer] delay
     #   The number of seconds to pause between each request.
     #
-    # @param [Integer] limit
+    # @param [Integer, nil] limit
     #   The maximum number of pages to visit.
     #
-    # @param [Integer] max_depth
+    # @param [Integer, nil] max_depth
     #   The maximum link depth to follow.
     #
-    # @param [Set, Array] queue
+    # @param [Set, Array, nil] queue
     #   The initial queue of URLs to visit.
     #
-    # @param [Set, Array] history
+    # @param [Set, Array, nil] history
     #   The initial list of visited URLs.
     #
     # @param [Boolean] strip_fragments
@@ -322,12 +322,16 @@ module Spidr
     # @yieldparam [Agent] agent
     #   The newly created agent.
     #
+    # @return [Agent]
+    #   The created agent object.
+    #
     # @see #initialize
     # @see #start_at
     #
     def self.start_at(url,**kwargs,&block)
       agent = new(**kwargs,&block)
       agent.start_at(url)
+      return agent
     end
 
     #
@@ -346,6 +350,9 @@ module Spidr
     # @yieldparam [Agent] agent
     #   The newly created agent.
     #
+    # @return [Agent]
+    #   The created agent object.
+    #
     # @see #initialize
     #
     def self.site(url,**kwargs,&block)
@@ -353,6 +360,7 @@ module Spidr
 
       agent = new(host: url.host, **kwargs, &block)
       agent.start_at(url)
+      return agent
     end
 
     #
@@ -371,11 +379,44 @@ module Spidr
     # @yieldparam [Agent] agent
     #   The newly created agent.
     #
+    # @return [Agent]
+    #   The created agent object.
+    #
     # @see #initialize
     #
     def self.host(name,**kwargs,&block)
       agent = new(host: name, **kwargs, &block)
       agent.start_at(URI::HTTP.build(host: name, path: '/'))
+      return agent
+    end
+
+    #
+    # Creates a new agent and spiders the entire domain.
+    #
+    # @param [String] name
+    #   The top-level domain to spider.
+    #
+    # @param [Hash{Symbol => Object}] kwargs
+    #   Additional keyword arguments. See {Agent#initialize}.
+    #
+    # @yield [agent]
+    #   If a block is given, it will be passed the newly created agent
+    #   before it begins spidering.
+    #
+    # @yieldparam [Agent] agent
+    #   The newly created agent.
+    #
+    # @return [Agent]
+    #   The created agent object.
+    #
+    # @see #initialize
+    #
+    # @since 0.7.0
+    #
+    def self.domain(name,**kwargs,&block)
+      agent = new(host: /(^|\.)#{Regexp.escape(name)}$/, **kwargs, &block)
+      agent.start_at(URI::HTTP.build(host: name, path: '/'))
+      return agent
     end
 
     #
@@ -395,10 +436,10 @@ module Spidr
     #
     # Sets the proxy information that the agent uses.
     #
-    # @param [Proxy] new_proxy
+    # @param [Proxy, Hash, URI::HTTP, String, nil] new_proxy
     #   The new proxy information.
     #
-    # @return [Hash]
+    # @return [Proxy]
     #   The new proxy information.
     #
     # @see SessionCache#proxy=

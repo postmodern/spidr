@@ -184,6 +184,73 @@ describe Agent do
     end
   end
 
+  describe ".domain" do
+    module TestAgentDomain
+      class ExampleApp < Sinatra::Base
+
+        set :host, 'example.com'
+        set :port, 80
+
+        get '/' do
+          <<~HTML
+            <html>
+              <body>
+                <a href="/link1">link1</a>
+                <a href="http://sub.example.com/subdomain-link">subdomain link</a>
+                <a href="/link2">link2</a>
+              </body>
+            </html>
+          HTML
+        end
+
+        get '/link1' do
+          '<html><body>got here</body></html>'
+        end
+
+        get '/link2' do
+          '<html><body>got here</body></html>'
+        end
+
+      end
+
+      class SubDomainApp < Sinatra::Base
+
+        set :host, 'sub.example.com'
+        set :port, 80
+
+        get '/subdomain-link' do
+          '<html><body>should get here</body></html>'
+        end
+
+      end
+    end
+
+    subject { described_class }
+
+    let(:domain)        { 'example.com' }
+    let(:domain_app)    { TestAgentDomain::ExampleApp }
+
+    let(:subdomain)     { 'sub.example.com' }
+    let(:subdomain_app) { TestAgentDomain::SubDomainApp }
+
+    before do
+      stub_request(:any, /#{Regexp.escape(subdomain)}/).to_rack(subdomain_app)
+      stub_request(:any, /#{Regexp.escape(domain)}/).to_rack(domain_app)
+    end
+
+    it "must spider the domain and subdomains starting at the given domain" do
+      agent = subject.domain(domain)
+
+      # XXX: for some reason Set#== was returning false, so convert to an Array
+      expect(agent.history.to_a).to be == [
+        URI("http://#{domain}/"),
+        URI("http://#{domain}/link1"),
+        URI("http://#{subdomain}/subdomain-link"),
+        URI("http://#{domain}/link2")
+      ]
+    end
+  end
+
   describe "#initialize" do
     it "should not be running" do
       expect(subject).to_not be_running

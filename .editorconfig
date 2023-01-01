@@ -1,0 +1,11 @@
+root = true
+
+[*]
+end_of_line = lf
+insert_final_newline = true
+tab_width = 8
+trim_trailing_whitespace = true
+
+[{Gemfile,Rakefile,*.rb,*.gemspec,*.yml}]
+indent_style = space
+indent_size = 2

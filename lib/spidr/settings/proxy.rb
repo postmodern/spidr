@@ -1,5 +1,7 @@
 require 'spidr/proxy'
 
+require 'uri/http'
+
 module Spidr
   module Settings
     #
@@ -21,7 +23,7 @@ module Spidr
       #
       # Sets the proxy information used by Agent objects.
       #
-      # @param [Spidr::Proxy, Hash, nil] new_proxy
+      # @param [Spidr::Proxy, Hash, URI::HTTP, String, nil] new_proxy
       #   The new proxy information.
       #
       # @option new_proxy [String] :host
@@ -41,9 +43,21 @@ module Spidr
       #
       def proxy=(new_proxy)
         @proxy = case new_proxy
-                 when Spidr::Proxy then new_proxy
-                 when Hash         then Spidr::Proxy.new(**new_proxy)
-                 when nil          then Spidr::Proxy.new
+                 when Spidr::Proxy
+                   new_proxy
+                 when Hash
+                   Spidr::Proxy.new(**new_proxy)
+                 when String, URI::HTTP
+                   proxy_uri = URI(new_proxy)
+
+                   Spidr::Proxy.new(
+                      host:     proxy_uri.host,
+                      port:     proxy_uri.port,
+                      user:     proxy_uri.user,
+                      password: proxy_uri.password
+                   )
+                 when nil
+                   Spidr::Proxy.new
                  else
                    raise(TypeError,"#{self.class}#{__method__} only accepts Spidr::Proxy, URI::HTTP, Hash, or nil")
                  end
