@@ -1,3 +1,13 @@
+### 0.7.0 / 2022-12-31
+
+* Added {Spidr.domain} and {Spidr::Agent.domain}.
+* Added {Spidr::Page#gif?}.
+* Added {Spidr::Page#jpeg?}.
+* Added {Spidr::Page#icon?} and {Spidr::Page#ico?}.
+* Added {Spidr::Page#png?}.
+* {Spidr.proxy=} and {Spidr::Agent#proxy=} can now accept a `String` or a
+  `URI::HTTP` object.
+
 ### 0.6.1 / 2019-10-24
 
 * Check for the opaque component of URIs before attempting to set the path
