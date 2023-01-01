@@ -50,58 +50,65 @@ and easy to use.
 Start spidering from a URL:
 
 ```ruby
-Spidr.start_at('http://tenderlovemaking.com/')
+Spidr.start_at('http://tenderlovemaking.com/') do |agent|
+  # ...
+end
 ```
 
 Spider a host:
 
 ```ruby
-Spidr.host('solnic.eu')
+Spidr.host('solnic.eu') do |agent|
+  # ...
+end
 ```
 
 Spider a domain (and any sub-domains):
 
 ```ruby
-Spidr.domain('ruby-lang.org')
+Spidr.domain('ruby-lang.org') do |agent|
+  # ...
+end
 ```
 
 Spider a site:
 
 ```ruby
-Spidr.site('http://www.rubyflow.com/')
+Spidr.site('http://www.rubyflow.com/') do |agent|
+  # ...
+end
 ```
 
 Spider multiple hosts:
 
 ```ruby
-Spidr.start_at(
-  'http://company.com/',
-  hosts: [
-    'company.com',
-    /host[\d]+\.company\.com/
-  ]
-)
+Spidr.start_at('http://company.com/', hosts: ['company.com', /host[\d]+\.company\.com/]) do |agent|
+  # ...
+end
 ```
 
 Do not spider certain links:
 
 ```ruby
-Spidr.site('http://company.com/', ignore_links: [%{^/blog/}])
+Spidr.site('http://company.com/', ignore_links: [%{^/blog/}]) do |agent|
+  # ...
+end
 ```
 
 Do not spider links on certain ports:
 
 ```ruby
-Spidr.site('http://company.com/', ignore_ports: [8000, 8010, 8080])
+Spidr.site('http://company.com/', ignore_ports: [8000, 8010, 8080]) do |agent|
+  # ...
+end
 ```
 
 Do not spider links blacklisted in robots.txt:
 
 ```ruby
-Spidr.site(
-  'http://company.com/',
-  robots: true
-)
+Spidr.site('http://company.com/', robots: true) do |agent|
+  # ...
+end
 ```
 
 Print out visited URLs:
