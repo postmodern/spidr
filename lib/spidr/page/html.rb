@@ -209,7 +209,7 @@ module Spidr
     # The links from within the page.
     #
     # @return [Array<String>]
-    #   All links within the HTML page, frame/iframe source URLs and any
+    #   All links within the HTML page, `frame`/`iframe` source URLs and any
     #   links in the `Location` header.
     #
     def links

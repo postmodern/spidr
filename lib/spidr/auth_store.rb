@@ -109,7 +109,7 @@ module Spidr
     # or `nil` if no authorization exists.
     #
     # @param [URI] url
-    #   The url.
+    #   The URL.
     #
     # @return [String, nil]
     #   The base64 encoded authorizatio string or `nil`.

@@ -755,7 +755,7 @@ module Spidr
     end
 
     #
-    # Visits a given URL, and enqueus the links recovered from the URL
+    # Visits a given URL, and enqueues the links recovered from the URL
     # to be visited later.
     #
     # @param [URI::HTTP, String] url

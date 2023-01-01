@@ -21,10 +21,10 @@ module Spidr
     #   Proxy options.
     #
     # @param [Integer] open_timeout
-    #   Optional open timeout.
+    #   Optional open connection timeout.
     #
     # @param [Integer] ssl_timeout
-    #   Optional ssl timeout.
+    #   Optional SSL connection timeout.
     #
     # @param [Integer] read_timeout
     #   Optional read timeout.
