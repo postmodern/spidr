@@ -52,8 +52,8 @@ module Spidr
   #
   # @since 0.7.0
   #
-  def self.domain(name,options={},&block)
-    Agent.domain(name,options,&block)
+  def self.domain(name,**kwargs,&block)
+    Agent.domain(name,**kwargs,&block)
   end
 
   #
@@ -63,7 +63,7 @@ module Spidr
     Agent.site(url,**kwargs,&block)
   end
 
-  # 
+  #
   # @abstract
   #
   def self.robots
