@@ -265,7 +265,7 @@ module Spidr
       link    = link.to_s
       new_url = begin
                   url.merge(link)
-                rescue Exception
+                rescue URI::Error
                   return
                 end
 
