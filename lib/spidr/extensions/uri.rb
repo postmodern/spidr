@@ -60,7 +60,7 @@ module URI
     unless stack.empty?
       "#{leading_slash}#{stack.join('/')}#{trailing_slash}"
     else
-      '/'
+      String.new('/')
     end
   end
 end
