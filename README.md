@@ -251,8 +251,6 @@ $ gem install spidr
 
 ## License
 
-Copyright (c) 2008-2022 Hal Brodigan
-
 See {file:LICENSE.txt} for license information.
 
 [ruby]: https://www.ruby-lang.org/
