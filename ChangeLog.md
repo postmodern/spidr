@@ -1,3 +1,11 @@
+### 0.7.1 / 2024-01-24
+
+* Switched to using `require_relative` to improve load-times.
+* Added `# frozen_string_literal: true` to all files.
+* Use keyword arguments for {Spidr.domain}.
+* Rescue `URI::Error` instead of `Exception` when calling `URI::HTTP#merge` in
+  {Spidr::Page#to_absolute}.
+
 ### 0.7.0 / 2022-12-31
 
 * Added {Spidr.domain} and {Spidr::Agent.domain}.
