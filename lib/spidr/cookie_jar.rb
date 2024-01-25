@@ -1,4 +1,4 @@
-require 'spidr/page'
+require_relative 'page'
 
 require 'set'
 
@@ -42,8 +42,8 @@ module Spidr
       @params.each(&block)
     end
 
-    # 
-    # Return all relevant cookies in a single string for the 
+    #
+    # Return all relevant cookies in a single string for the
     # named host or domain (in browser request format).
     #
     # @param [String] host
@@ -59,7 +59,7 @@ module Spidr
       @params[host] ||= {}
     end
 
-    # 
+    #
     # Add a cookie to the jar for a particular domain.
     #
     # @param [String] host
@@ -166,7 +166,7 @@ module Spidr
       return host_cookies
     end
 
-    # 
+    #
     # Clear out the jar, removing all stored cookies.
     #
     # @since 0.2.2

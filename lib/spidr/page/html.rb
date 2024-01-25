@@ -1,5 +1,6 @@
+require_relative '../extensions/uri'
+
 require 'nokogiri'
-require 'spidr/extensions/uri'
 
 module Spidr
   class Page

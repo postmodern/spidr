@@ -1,1 +1,1 @@
-require 'spidr/extensions/uri'
+require_relative 'extensions/uri'

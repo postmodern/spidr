@@ -1,7 +1,7 @@
-require 'spidr/settings/proxy'
-require 'spidr/settings/timeouts'
-require 'spidr/settings/user_agent'
-require 'spidr/agent'
+require_relative 'settings/proxy'
+require_relative 'settings/timeouts'
+require_relative 'settings/user_agent'
+require_relative 'agent'
 
 module Spidr
   extend Settings::Proxy

@@ -1,4 +1,4 @@
-require 'spidr/rules'
+require_relative '../rules'
 
 module Spidr
   class Agent
@@ -170,7 +170,7 @@ module Spidr
     #
     # @yieldparam [String] link
     #   A link to accept or reject.
-    # 
+    #
     # @since 0.2.4
     #
     def visit_links_like(pattern=nil,&block)
@@ -238,7 +238,7 @@ module Spidr
     #
     # @yieldparam [URI::HTTP, URI::HTTPS] url
     #   A URL to accept or reject.
-    # 
+    #
     # @since 0.2.4
     #
     def visit_urls_like(pattern=nil,&block)

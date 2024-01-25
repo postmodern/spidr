@@ -1,3 +1,3 @@
-require 'spidr/agent'
-require 'spidr/spidr'
-require 'spidr/version'
+require_relative 'spidr/agent'
+require_relative 'spidr/spidr'
+require_relative 'spidr/version'

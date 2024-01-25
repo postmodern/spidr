@@ -1,4 +1,4 @@
-require 'spidr/proxy'
+require_relative '../proxy'
 
 require 'uri/http'
 

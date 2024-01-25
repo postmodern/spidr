@@ -1,6 +1,6 @@
-require 'spidr/settings/proxy'
-require 'spidr/settings/timeouts'
-require 'spidr/spidr'
+require_relative 'settings/proxy'
+require_relative 'settings/timeouts'
+require_relative 'spidr'
 
 require 'net/http'
 require 'openssl'
@@ -135,7 +135,7 @@ module Spidr
       key = key_for(url)
 
       if (sess = @sessions[key])
-        begin 
+        begin
           sess.finish
         rescue IOError
         end

@@ -1,6 +1,6 @@
-require 'spidr/extensions/uri'
-require 'spidr/auth_credential'
-require 'spidr/page'
+require_relative 'extensions/uri'
+require_relative 'auth_credential'
+require_relative 'page'
 
 require 'base64'
 
@@ -20,7 +20,7 @@ module Spidr
       @credentials = {}
     end
 
-    # 
+    #
     # Given a URL, return the most specific matching auth credential.
     #
     # @param [URI] url
@@ -54,7 +54,7 @@ module Spidr
       return nil
     end
 
-    # 
+    #
     # Add an auth credential to the store for supplied base URL.
     #
     # @param [URI] url
@@ -122,7 +122,7 @@ module Spidr
       end
     end
 
-    # 
+    #
     # Clear the contents of the auth store.
     #
     # @return [AuthStore]
