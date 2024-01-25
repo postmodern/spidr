@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spidr
   #
   # @since 0.6.0

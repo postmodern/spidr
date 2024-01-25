@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spidr
   #
   # The {Rules} class represents collections of acceptance and rejection

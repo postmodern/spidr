@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'extensions/uri'
 require_relative 'auth_credential'
 require_relative 'page'

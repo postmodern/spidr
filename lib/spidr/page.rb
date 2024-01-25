@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spidr
   #
   # Represents a requested page from a website.
@@ -142,7 +144,7 @@ module Spidr
 
       return super(name,*arguments,&block)
     end
-  
+
   end
 end
 

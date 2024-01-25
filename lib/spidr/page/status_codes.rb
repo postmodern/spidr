@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spidr
   class Page
     #
@@ -92,7 +94,7 @@ module Spidr
 
     #
     # Determines if the response code is `300`, `301`, `302`, `303`
-    # or `307`. Also checks for "soft" redirects added at the page 
+    # or `307`. Also checks for "soft" redirects added at the page
     # level by a meta refresh tag.
     #
     # @return [Boolean]
