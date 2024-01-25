@@ -1,4 +1,4 @@
-### 0.7.1 / 2024-01-24
+### 0.7.1 / 2024-01-25
 
 * Switched to using `require_relative` to improve load-times.
 * Added `# frozen_string_literal: true` to all files.
