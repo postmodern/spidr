@@ -1,3 +1,7 @@
+### 0.7.2 / 2025-02-02
+
+* Added the `base64` gem as a dependency to satisfy Bundler.
+
 ### 0.7.1 / 2024-01-25
 
 * Switched to using `require_relative` to improve load-times.
