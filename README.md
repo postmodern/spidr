@@ -58,7 +58,7 @@ end
 Spider a host:
 
 ```ruby
-Spidr.host('solnic.eu') do |agent|
+Spidr.host('solnic.dev') do |agent|
   # ...
 end
 ```
