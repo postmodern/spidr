@@ -82,7 +82,7 @@ end
 Spider multiple hosts:
 
 ```ruby
-Spidr.start_at('http://company.com/', hosts: ['company.com', /host[\d]+\.company\.com\z/]) do |agent|
+Spidr.start_at('http://company.com/', hosts: ['company.com', /.*\.company\.com\z/]) do |agent|
   # ...
 end
 ```
