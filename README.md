@@ -82,7 +82,7 @@ end
 Spider multiple hosts:
 
 ```ruby
-Spidr.start_at('http://company.com/', hosts: ['company.com', /host[\d]+\.company\.com/]) do |agent|
+Spidr.start_at('http://company.com/', hosts: ['company.com', /host[\d]+\.company\.com\z/]) do |agent|
   # ...
 end
 ```
@@ -90,7 +90,7 @@ end
 Do not spider certain links:
 
 ```ruby
-Spidr.site('http://company.com/', ignore_links: [%r{^/blog/}]) do |agent|
+Spidr.site('http://company.com/', ignore_links: [%r{\A/blog/}]) do |agent|
   # ...
 end
 ```
