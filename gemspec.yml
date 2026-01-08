@@ -25,4 +25,4 @@ dependencies:
   nokogiri: ~> 1.3
 
 development_dependencies:
-  bundler: ~> 2.0
+  bundler: ">= 2.0.0"
